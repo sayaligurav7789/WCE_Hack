@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evidence Visualization - Question 46</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 30px;
+        }
+        
+        .header h1 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        
+        .header .question {
+            font-size: 18px;
+            opacity: 0.9;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 10px;
+            line-height: 1.5;
+        }
+        
+        .keywords-bar {
+            background: #f0f0f0;
+            padding: 15px 30px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .keywords-title {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+        
+        .keyword-badge {
+            display: inline-block;
+            background: #ffeb3b;
+            color: #333;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            margin: 0 5px 5px 0;
+            font-weight: 500;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .answer-section {
+            padding: 30px;
+            background: #f8f9fa;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .answer-section h3 {
+            color: #333;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .answer-section h3 i {
+            color: #667eea;
+        }
+        
+        .answer-content {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            line-height: 1.8;
+            color: #444;
+            border-left: 4px solid #667eea;
+        }
+        
+        .answer-content mark {
+            background-color: #ffeb3b;
+            padding: 2px 0;
+            font-weight: 500;
+        }
+        
+        .evidence-section {
+            padding: 30px;
+        }
+        
+        .evidence-section h3 {
+            color: #333;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .evidence-section h3 i {
+            color: #667eea;
+        }
+        
+        .evidence-card {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-left: 4px solid #667eea;
+        }
+        
+        .evidence-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .section-name {
+            font-weight: 600;
+            color: #333;
+            background: #e8eaf6;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+        }
+        
+        .page-number {
+            color: #666;
+            background: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .relevance {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+        }
+        
+        .term-badge {
+            display: inline-block;
+            background: #ffeb3b;
+            color: #333;
+            padding: 3px 10px;
+            border-radius: 15px;
+            font-size: 12px;
+            margin: 0 5px 5px 0;
+            font-weight: 500;
+        }
+        
+        .evidence-text {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            color: #555;
+            line-height: 1.6;
+            margin: 15px 0 0 0;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .evidence-text mark {
+            background-color: #ffeb3b;
+            padding: 2px 0;
+            font-weight: 500;
+        }
+        
+        .highlighted-context {
+            padding: 30px;
+            background: #f8f9fa;
+            border-top: 1px solid #e0e0e0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .highlighted-context h3 {
+            color: #333;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .context-box {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            max-height: 400px;
+            overflow-y: auto;
+            border: 1px solid #e0e0e0;
+            line-height: 1.8;
+            font-size: 14px;
+        }
+        
+        .context-box mark {
+            background-color: #ffeb3b;
+            padding: 2px 0;
+            font-weight: 500;
+        }
+        
+        .stats {
+            display: flex;
+            gap: 15px;
+            padding: 20px 30px;
+            background: white;
+            flex-wrap: wrap;
+        }
+        
+        .stat-item {
+            background: #f8f9fa;
+            padding: 10px 20px;
+            border-radius: 10px;
+            flex: 1;
+            min-width: 120px;
+            text-align: center;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .stat-label {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 5px;
+        }
+        
+        .stat-value {
+            font-size: 24px;
+            font-weight: 600;
+            color: #667eea;
+        }
+        
+        .footer {
+            padding: 20px 30px;
+            background: #f0f0f0;
+            text-align: center;
+            color: #666;
+            font-size: 14px;
+            border-top: 1px solid #e0e0e0;
+        }
+        
+        @media (max-width: 768px) {
+            .header {
+                padding: 20px;
+            }
+            
+            .answer-section,
+            .evidence-section,
+            .highlighted-context {
+                padding: 20px;
+            }
+            
+            .evidence-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📚 Evidence Visualization</h1>
+            <div class="question">
+                <strong>Question 46:</strong> 
+            </div>
+        </div>
+        
+        <div class="keywords-bar">
+            <div class="keywords-title">🔑 Extracted Keywords:</div>
+
+        </div>
+        
+        <div class="answer-section">
+            <h3><i class="fas fa-robot"></i> Generated Answer</h3>
+            <div class="answer-content">
+                The scientific process of hypothesis testing involves deriving hypotheses from theories and then testing those hypotheses. If the results are consistent with the theory, then the theory is supported. If the results are not consistent, then the theory should be modified and new hypotheses will be generated. This process involves deductive reasoning, where a generalization is tested against real-world observations. The hypothesis is a testable prediction about how the world will behave if our idea is correct, and it is often worded as an if-then statement. The results of the test are then analyzed to determine if they support or reject the hypothesis, and the theory is refined or modified accordingly.
+            </div>
+        </div>
+        
+        <div class="evidence-section">
+            <h3><i class="fas fa-book"></i> Evidence by Section</h3>
+
+            <div class="evidence-card">
+                <div class="evidence-header">
+                    <span class="section-name">📖 1.1 What Is Psychology</span>
+                    <span class="page-number">📄 Page 20</span>
+                    <span class="relevance">⭐ Relevance: 0.7</span>
+                </div>
+                <div>
+
+                </div>
+                <div class="evidence-text">
+                    This section discusses 1.1 what is psychology. The content here is relevant to your question about ...
+                </div>
+            </div>
+
+            <div class="evidence-card">
+                <div class="evidence-header">
+                    <span class="section-name">📖 11.18 This image from the Thematic Apperception Tests</span>
+                    <span class="page-number">📄 Page 51</span>
+                    <span class="relevance">⭐ Relevance: 0.75</span>
+                </div>
+                <div>
+
+                </div>
+                <div class="evidence-text">
+                    This section discusses 11.18 this image from the thematic apperception tests. The content here is relevant to your question about ...
+                </div>
+            </div>
+
+            <div class="evidence-card">
+                <div class="evidence-header">
+                    <span class="section-name">📖 16.3 Treatment Modalities
+LEARNING OBJECTIVES
+By the end of this section</span>
+                    <span class="page-number">📄 Page 52</span>
+                    <span class="relevance">⭐ Relevance: 0.8</span>
+                </div>
+                <div>
+
+                </div>
+                <div class="evidence-text">
+                    This section discusses 16.3 treatment modalities
+learning objectives
+by the end of this section. The content here is relevant to your question about ...
+                </div>
+            </div>
+
+            <div class="evidence-card">
+                <div class="evidence-header">
+                    <span class="section-name">📖 2.1 Why Is Research Important</span>
+                    <span class="page-number">📄 Page 54</span>
+                    <span class="relevance">⭐ Relevance: 0.85</span>
+                </div>
+                <div>
+
+                </div>
+                <div class="evidence-text">
+                    This section discusses 2.1 why is research important. The content here is relevant to your question about ...
+                </div>
+            </div>
+
+            <div class="evidence-card">
+                <div class="evidence-header">
+                    <span class="section-name">📖 2.14 Many people believe that a full moon makes people behave oddly</span>
+                    <span class="page-number">📄 Page 63</span>
+                    <span class="relevance">⭐ Relevance: 0.9</span>
+                </div>
+                <div>
+
+                </div>
+                <div class="evidence-text">
+                    This section discusses 2.14 many people believe that a full moon makes people behave oddly. The content here is relevant to your question about ...
+                </div>
+            </div>
+
+        </div>
+        
+        <div class="highlighted-context">
+            <h3><i class="fas fa-highlighter"></i> Highlighted Context</h3>
+            <div class="context-box">
+                hypothesis may lead to a logical but incorrect conclusion. Consider this argument: all ducks are born with the ability to see. Quackers is a duck. Therefore, Quackers was born with the ability to see. Scientists use deductive reasoning to empirically test their hypotheses. Returning to the example of the ducks, researchers might design a study to test the hypothesis that if all living things require energy to survive, then ducks will be found to require energy to survive. Deductive reasoning starts with a generalization that is tested against real-world observations; however, inductive reasoning moves in the opposite direction. Inductive reasoning uses empirical observations to 2.1 • Why Is Research Important? 39
+
+construct broad generalizations. Unlike deductive reasoning, conclusions drawn from inductive reasoning may or may not be correct, regardless of the observations on which they are based. For instance, you may notice that your favorite fruits—apples, bananas, and oranges—all grow on trees; therefore, you assume that all fruit must grow on trees. This would be an example of inductive reasoning, and, clearly, the existence of strawberries, blueberries, and kiwi demonstrate that this generalization is not correct despite it being based on a number of direct observations. Scientists use inductive reasoning to formulate theories, which in turn generate hypotheses that are tested with deductive reasoning. In the end, science involves both deductive and inductive processes. For example, case studies, which you will read about in the next section, are heavily weighted on the side of empirical observations. Thus, case studies are closely associated with inductive processes as researchers gather massive amounts of observations and seek interesting patterns (new ideas) in the data. Experimental research, on the other hand, puts great emphasis on deductive reasoning. We’ve stated that theories and hypotheses are ideas, but what sort of ideas are they, exactly? A theory is a well- developed set of ideas that propose an explanation for observed phenomena. Theories are repeatedly checked against the world, but they tend to be too complex to be tested all at once; instead, researchers create hypotheses to test specific aspects of a theory. A hypothesis is a testable prediction about how the world will behave if our idea is correct, and it is often worded as an if-then statement (e.g., if I study all night, I will get a passing grade on the test). The hypothesis is extremely important because it bridges the gap between the realm of ideas and the real world. As specific hypotheses are tested, theories are modified and refined to reflect and incorporate the result of these tests Figure 2.5. FIGURE 2.5 The scientific method involves deriving hypotheses from theories and then testing those hypotheses. If the results are consistent with the theory, then the theory is supported. If the results are not consistent, then the theory should be modified and new hypotheses will be generated. To see how this process works, let’s consider a specific theory and a hypothesis that might be generated from that theory. As you’ll learn in a later chapter, the James-Lange theory of emotion asserts that emotional experience relies
+
+example, if you think that the use of technology in the classroom has negative impacts on learning, then you have basically formulated a hypothesis—namely, that the use of technology in the classroom should be limited because it decreases learning. How might you have arrived at this particular hypothesis? You may have noticed that your classmates who take notes on their laptops perform at lower levels on class exams than those who take notes by hand, or those who receive a lesson via a computer program versus via an in-person teacher have different levels of performance when tested (Figure 2.15). 2.3 • Analyzing Findings 51
+
+able to do so by coming up with theories that generate hypotheses that are testable and falsifiable. Theories that stand up to their tests are retained and refined, while those that do not are discarded or modified. In this way, research enables scientists to separate fact from simple opinion. Having good information generated from research aids in making wise decisions both in public policy and in our personal lives. 2.2 Approaches to Research The clinical or case study involves studying just a few individuals for an extended period of time. While this approach provides an incredible depth of information, the ability to generalize these observations to the larger population is problematic. Naturalistic observation involves observing behavior in a natural setting and allows 64 2 • Summary Access for free at openstax.org
+
+explain behavior and the cognitive and biological processes that underlie it. Some methods rely on observational techniques. Other approaches involve interactions between the researcher and the individuals who are being studied—ranging from a series of simple questions to extensive, in-depth interviews—to well- controlled experiments. Each of these research methods has unique strengths and weaknesses, and each method may only be appropriate for certain types of research questions. For example, studies that rely primarily on observation produce incredible amounts of information, but the ability to apply this information to the larger population is somewhat limited because of small sample sizes. Survey research, on the other hand, allows researchers to easily collect data from relatively large samples. While this allows for results to be generalized to the larger population more easily, the information that can be collected on any given survey is somewhat limited and subject to problems associated with any type of self-reported data. Some researchers conduct archival research by using existing records. While this can be a fairly inexpensive way to collect data that can provide insight into a number of research questions, researchers using this approach have no control on how or what kind of data was collected. All of the methods described thus far are correlational in nature. This means that researchers can speak to important relationships that might exist between two or more variables of interest. However, correlational data cannot be used to make claims about cause-and-effect relationships. Correlational research can find a relationship between two variables, but the only way a researcher can claim that the relationship between the variables is cause and effect is to perform an experiment. In experimental research, which will be discussed later in this chapter, there is a tremendous amount of control over variables of interest. While this is a powerful approach, experiments are often conducted in artificial settings. This calls into question the validity of experimental findings with regard to how they would apply in real-world settings. In addition, many of the questions that psychologists would like to answer cannot be pursued through experimental research because of ethical concerns. Clinical or Case Studies In 2011, the New York Times published a feature story on Krista and Tatiana Hogan, Canadian twin girls. These particular twins are unique because Krista and Tatiana are conjoined twins, connected at the head. There is evidence that the two girls are connected in a part of
+
+experiments require the experimenter to manipulate an independent variable, and that can complicate many questions that psychologists might want to address. For instance, imagine that you want to know what effect sex (the independent variable) has on spatial memory (the dependent variable). Although you can certainly look for differences between males and females on a task that taps into spatial memory, you cannot directly control a person’s sex. We categorize this type of research approach as quasi-experimental and recognize that we cannot make cause-and-effect claims in these circumstances. Experimenters are also limited by ethical constraints. For instance, you would not be able to conduct an experiment designed to determine if experiencing abuse as a child leads to lower levels of self-esteem among adults. To conduct such an experiment, you would need to randomly assign some experimental participants to a group that receives abuse, and that experiment would be unethical. Interpreting Experimental Findings Once data is collected from both the experimental and the control groups, a statistical analysis is conducted to find out if there are meaningful differences between the two groups. A statistical analysis determines how likely any difference found is due to chance (and thus not meaningful). For example, if an experiment is done on the effectiveness of a nutritional supplement, and those taking a placebo pill (and not the supplement) have the same result as those taking the supplement, then the experiment has shown that the nutritional supplement is not effective. Generally, psychologists consider differences to be statistically significant if there is less than a five percent chance of observing them if the groups did not actually differ from one another. Stated another way, psychologists want to limit the chances of making “false positive” claims to five percent or less. The greatest strength of experiments is the ability to assert that any significant differences in the findings are caused by the independent variable. This occurs because random selection, random assignment, and a design that limits the effects of both experimenter bias and participant expectancy should create groups that are similar in composition and treatment. Therefore, any difference between the groups is attributable to the independent variable, and now we can finally make a causal statement. If we find that watching a violent television program results in more violent behavior than watching a nonviolent program, we can safely say that watching violent television programs causes an increase in the
+
+2002). Nash was the subject of the 2001 movie A Beautiful Mind. Why did these people have these experiences? How does the human brain work? And what is the connection between the brain’s internal processes and people’s external behaviors? This textbook will introduce you to various ways that the field of psychology has explored these questions. 1.1 What Is Psychology? LEARNING OBJECTIVES By the end of this section, you will be able to: • Define psychology • Understand the merits of an education in psychology What is creativity? What are prejudice and discrimination? What is consciousness? The field of psychology explores questions like these. Psychology refers to the scientific study of the mind and behavior. Psychologists use the scientific method to acquire knowledge. To apply the scientific method, a researcher with a question about how or why something happens will propose a tentative explanation, called a hypothesis, to explain the phenomenon. A hypothesis should fit into the context of a scientific theory, which is a broad explanation or group of explanations for some aspect of the natural world that is consistently supported by evidence over time. A theory is the best understanding we have of that part of the natural world. The researcher then makes observations or carries out an experiment to test the validity of the hypothesis. Those results are then published or presented at research conferences so that others can replicate or build on the results. Scientists test that which is perceivable and measurable. For example, the hypothesis that a bird sings because it is happy is not a hypothesis that can be tested since we have no way to measure the happiness of a bird. We must ask a different question, perhaps about the brain state of the bird, since this can be measured. However, we can ask individuals about whether they sing because they are happy since they are able to tell us. Thus, psychological science is empirical, based on measurable data. In general, science deals only with
+            </div>
+        </div>
+        
+        <div class="stats">
+            <div class="stat-item">
+                <div class="stat-label">Sections Used</div>
+                <div class="stat-value">11</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-label">Pages Referenced</div>
+                <div class="stat-value">12</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-label">Keywords Found</div>
+                <div class="stat-value">0</div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            Generated from Psychology 2e Textbook • Question 46 • 2026-02-26
+        </div>
+    </div>
+    
+    <!-- Font Awesome for icons -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
+</body>
+</html>

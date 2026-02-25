@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evidence Visualization - Question 11</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 30px;
+        }
+        
+        .header h1 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        
+        .header .question {
+            font-size: 18px;
+            opacity: 0.9;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 10px;
+            line-height: 1.5;
+        }
+        
+        .keywords-bar {
+            background: #f0f0f0;
+            padding: 15px 30px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .keywords-title {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+        
+        .keyword-badge {
+            display: inline-block;
+            background: #ffeb3b;
+            color: #333;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            margin: 0 5px 5px 0;
+            font-weight: 500;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .answer-section {
+            padding: 30px;
+            background: #f8f9fa;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .answer-section h3 {
+            color: #333;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .answer-section h3 i {
+            color: #667eea;
+        }
+        
+        .answer-content {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            line-height: 1.8;
+            color: #444;
+            border-left: 4px solid #667eea;
+        }
+        
+        .answer-content mark {
+            background-color: #ffeb3b;
+            padding: 2px 0;
+            font-weight: 500;
+        }
+        
+        .evidence-section {
+            padding: 30px;
+        }
+        
+        .evidence-section h3 {
+            color: #333;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .evidence-section h3 i {
+            color: #667eea;
+        }
+        
+        .evidence-card {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-left: 4px solid #667eea;
+        }
+        
+        .evidence-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .section-name {
+            font-weight: 600;
+            color: #333;
+            background: #e8eaf6;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+        }
+        
+        .page-number {
+            color: #666;
+            background: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .relevance {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+        }
+        
+        .term-badge {
+            display: inline-block;
+            background: #ffeb3b;
+            color: #333;
+            padding: 3px 10px;
+            border-radius: 15px;
+            font-size: 12px;
+            margin: 0 5px 5px 0;
+            font-weight: 500;
+        }
+        
+        .evidence-text {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            color: #555;
+            line-height: 1.6;
+            margin: 15px 0 0 0;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .evidence-text mark {
+            background-color: #ffeb3b;
+            padding: 2px 0;
+            font-weight: 500;
+        }
+        
+        .highlighted-context {
+            padding: 30px;
+            background: #f8f9fa;
+            border-top: 1px solid #e0e0e0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .highlighted-context h3 {
+            color: #333;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .context-box {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            max-height: 400px;
+            overflow-y: auto;
+            border: 1px solid #e0e0e0;
+            line-height: 1.8;
+            font-size: 14px;
+        }
+        
+        .context-box mark {
+            background-color: #ffeb3b;
+            padding: 2px 0;
+            font-weight: 500;
+        }
+        
+        .stats {
+            display: flex;
+            gap: 15px;
+            padding: 20px 30px;
+            background: white;
+            flex-wrap: wrap;
+        }
+        
+        .stat-item {
+            background: #f8f9fa;
+            padding: 10px 20px;
+            border-radius: 10px;
+            flex: 1;
+            min-width: 120px;
+            text-align: center;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .stat-label {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 5px;
+        }
+        
+        .stat-value {
+            font-size: 24px;
+            font-weight: 600;
+            color: #667eea;
+        }
+        
+        .footer {
+            padding: 20px 30px;
+            background: #f0f0f0;
+            text-align: center;
+            color: #666;
+            font-size: 14px;
+            border-top: 1px solid #e0e0e0;
+        }
+        
+        @media (max-width: 768px) {
+            .header {
+                padding: 20px;
+            }
+            
+            .answer-section,
+            .evidence-section,
+            .highlighted-context {
+                padding: 20px;
+            }
+            
+            .evidence-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📚 Evidence Visualization</h1>
+            <div class="question">
+                <strong>Question 11:</strong> 
+            </div>
+        </div>
+        
+        <div class="keywords-bar">
+            <div class="keywords-title">🔑 Extracted Keywords:</div>
+
+        </div>
+        
+        <div class="answer-section">
+            <h3><i class="fas fa-robot"></i> Generated Answer</h3>
+            <div class="answer-content">
+                The history of psychology is a diverse and complex one. Before the late 1800s, the workings of the mind were considered under the auspices of philosophy. It was not until the late 1800s that psychology became accepted as its own academic discipline. 
+
+Some of the key figures and perspectives in the history of psychology include:
+
+* William James, the first American psychologist, who focused on functionalism and the adaptive responses of organisms to their environment.
+* Sigmund Freud, who believed that understanding the unconscious mind was critical to understanding conscious behavior and developed psychoanalytic theory.
+* Gestalt psychology, which took a holistic view of individuals and their experiences and was influential in Europe, particularly in Germany.
+* Behaviorism, which focused on making psychology an objective science by studying overt behavior and deemphasizing the importance of unobservable mental processes. John Watson and B.F. Skinner were key figures in this movement.
+* Humanistic psychology, which focused on the potential of all people for good and was influenced by the work of Maslow and Rogers.
+
+The history of psychology has also been influenced by the contributions of women and ethnic minorities, who have often been overlooked or undervalued. Examples include Margaret Floy Washburn, Mary Whiton Calkins, Mary Cover Jones, Martha Bernal, and Inez Beverly Prosser, who made significant contributions to the field despite facing obstacles and discrimination.
+
+Overall, the history of psychology is a rich and complex one, shaped by the contributions of many individuals and perspectives over time.
+            </div>
+        </div>
+        
+        <div class="evidence-section">
+            <h3><i class="fas fa-book"></i> Evidence by Section</h3>
+
+            <div class="evidence-card">
+                <div class="evidence-header">
+                    <span class="section-name">📖 06.003
+Blann</span>
+                    <span class="page-number">📄 Page 20</span>
+                    <span class="relevance">⭐ Relevance: 0.7</span>
+                </div>
+                <div>
+
+                </div>
+                <div class="evidence-text">
+                    This section discusses 06.003
+blann. The content here is relevant to your question about ...
+                </div>
+            </div>
+
+            <div class="evidence-card">
+                <div class="evidence-header">
+                    <span class="section-name">📖 1.1 What Is Psychology</span>
+                    <span class="page-number">📄 Page 21</span>
+                    <span class="relevance">⭐ Relevance: 0.75</span>
+                </div>
+                <div>
+
+                </div>
+                <div class="evidence-text">
+                    This section discusses 1.1 what is psychology. The content here is relevant to your question about ...
+                </div>
+            </div>
+
+            <div class="evidence-card">
+                <div class="evidence-header">
+                    <span class="section-name">📖 1.2 History of Psychology
+LEARNING OBJECTIVES
+By the end of this section</span>
+                    <span class="page-number">📄 Page 23</span>
+                    <span class="relevance">⭐ Relevance: 0.8</span>
+                </div>
+                <div>
+
+                </div>
+                <div class="evidence-text">
+                    This section discusses 1.2 history of psychology
+learning objectives
+by the end of this section. The content here is relevant to your question about ...
+                </div>
+            </div>
+
+            <div class="evidence-card">
+                <div class="evidence-header">
+                    <span class="section-name">📖 1.3 Contemporary Psychology
+LEARNING OBJECTIVES
+By the end of this section</span>
+                    <span class="page-number">📄 Page 24</span>
+                    <span class="relevance">⭐ Relevance: 0.85</span>
+                </div>
+                <div>
+
+                </div>
+                <div class="evidence-text">
+                    This section discusses 1.3 contemporary psychology
+learning objectives
+by the end of this section. The content here is relevant to your question about ...
+                </div>
+            </div>
+
+            <div class="evidence-card">
+                <div class="evidence-header">
+                    <span class="section-name">📖 1.3 Contemporary Psychology
+Psychology is a diverse discipline that is made up of several major subdivisions with unique perspectives</span>
+                    <span class="page-number">📄 Page 25</span>
+                    <span class="relevance">⭐ Relevance: 0.9</span>
+                </div>
+                <div>
+
+                </div>
+                <div class="evidence-text">
+                    This section discusses 1.3 contemporary psychology
+psychology is a diverse discipline that is made up of several major subdivisions with unique perspectives. The content here is relevant to your question about ...
+                </div>
+            </div>
+
+        </div>
+        
+        <div class="highlighted-context">
+            <h3><i class="fas fa-highlighter"></i> Highlighted Context</h3>
+            <div class="context-box">
+                including experimentation, rather than a method based only on forms of logical argument or previous authorities. It was not until the late 1800s that psychology became accepted as its own academic discipline. Before this time, the workings of the mind were considered under the auspices of philosophy. Given that any behavior is, at its roots, biological, some areas of psychology take on aspects of a natural science like biology. No biological organism exists in isolation, and our behavior is influenced by our interactions with others. Therefore, psychology is also a social science. WHY STUDY PSYCHOLOGY? Often, students take their first psychology course because they are interested in helping others and want to learn more about themselves and why they act the way they do. Sometimes, students take a psychology course because it either satisfies a general education requirement or is required for a program of study such as nursing or pre-med. Many of these students develop such an interest in the area that they go on to declare psychology as their major. As a result, psychology is one of the most popular majors on college campuses across the United States (Johnson & Lubin, 2011). A number of well-known individuals were psychology majors. Just a few famous names on this list are Facebook’s creator Mark Zuckerberg, television personality and political satirist Jon Stewart, actress Natalie Portman, and filmmaker Wes Craven (Halonen, 2011). About 6 percent of all bachelor degrees granted in the United States are in the discipline of psychology (U.S. Department of Education, 2016). 8 1 • Introduction to Psychology Access for free at openstax.org
+
+of psychology and therefore influencing its development. They also suffered from the attitudes of White male psychologists who were not immune to the nonscientific attitudes prevalent in the society in which they DIG DEEPER 16 1 • Introduction to Psychology Access for free at openstax.org
+
+William James was the first American psychologist, and he was a proponent of functionalism. This particular perspective focused on how mental activities served as adaptive responses to an organism’s environment. Like Wundt, James also relied on introspection; however, his research approach also incorporated more objective measures as well. Sigmund Freud believed that understanding the unconscious mind was absolutely critical to understand conscious behavior. This was especially true for individuals that he saw who suffered from various hysterias and neuroses. Freud relied on dream analysis, slips of the tongue, and free association as means to access the unconscious. Psychoanalytic theory remained a dominant force in clinical psychology for several decades. Gestalt psychology was very influential in Europe. Gestalt psychology takes a holistic view of an individual and his experiences. As the Nazis came to power in Germany, Wertheimer, Koffka, and Köhler immigrated to the United States. Although they left their laboratories and their research behind, they did introduce America to Gestalt ideas. Some of the principles of Gestalt psychology are still very influential in the study of sensation and perception. One of the most influential schools of thought within psychology’s history was behaviorism. Behaviorism focused on making psychology an objective science by studying overt behavior and deemphasizing the importance of unobservable mental processes. John Watson is often considered the father of behaviorism, and B. F. Skinner’s contributions to our understanding of principles of operant conditioning cannot be underestimated. As behaviorism and psychoanalytic theory took hold of so many aspects of psychology, some began to become dissatisfied with psychology’s picture of human nature. Thus, a humanistic movement within psychology began to take hold. Humanism focuses on the potential of all people for good. Both Maslow and Rogers were influential in shaping humanistic psychology. During the 1950s, the landscape of psychology began to change. A science of behavior began to shift back to its roots of focus on mental processes. The emergence of neuroscience and computer science aided this transition. Ultimately, the cognitive revolution took hold, and people came to realize that cognition was crucial to a true appreciation and understanding of behavior. 1.3 Contemporary Psychology Psychology is a diverse discipline that is made up of several major subdivisions with unique perspectives. Biological psychology involves the study of the biological bases of behavior. Sensation and perception refer to the area of psychology that is focused on how information from our sensory modalities is
+
+LINK TO LEARNING Listen to a podcast about the influence of an African American's psychology research on the historic Brown v. Board of Education civil rights case (http://openstax.org/l/crogers2) to learn more. The American Psychological Association has several ethnically based organizations for professional psychologists that facilitate interactions among members. Since psychologists belonging to specific ethnic groups or cultures have the most interest in studying the psychology of their communities, these organizations provide an opportunity for the growth of research on the interplay between culture and psychology. WOMEN IN PSYCHOLOGY Although rarely given credit, women have been contributing to psychology since its inception as a field of study. In 1894, Margaret Floy Washburn was the first woman awarded the doctoral degree in psychology. She wrote The Animal Mind: A Textbook of Comparative Psychology, and it was the standard in the field for over 20 years. In the mid 1890s, Mary Whiton Calkins completed all requirements toward the PhD in psychology, but Harvard University refused to award her that degree because she was a woman. She had been taught and mentored by William James, who tried and failed to convince Harvard to award her the doctoral degree. Her memory research studied primacy and recency (Madigan & O’Hara, 1992), and she also wrote about how structuralism and functionalism both explained self-psychology (Calkins, 1906). Another influential woman, Mary Cover Jones, conducted a study she considered to be a sequel to John B. Watson’s study of Little Albert (you’ll learn about this study in the chapter on Learning). Jones unconditioned fear in Little Peter, who had been afraid of rabbits (Jones, 1924). Ethnic minority women contributing to the field of psychology include Martha Bernal and Inez Beverly Prosser; their studies were related to education. Bernal, the first Latina to earn her doctoral degree in psychology (1962) conducted much of her research with Mexican American children. Prosser was the first African American woman awarded the PhD in 1933 at the University of Cincinnati (Benjamin, Henry, & McMahon, 2005). 1.3 Contemporary Psychology LEARNING OBJECTIVES By the end of this section, you will be able to: • Appreciate the diversity of interests and foci within psychology • Understand basic interests and applications in each of the described areas of psychology • Demonstrate familiarity with some of the major concepts or important figures in each of the described areas of psychology Contemporary psychology is a diverse field that is influenced
+
+2002). Nash was the subject of the 2001 movie A Beautiful Mind. Why did these people have these experiences? How does the human brain work? And what is the connection between the brain’s internal processes and people’s external behaviors? This textbook will introduce you to various ways that the field of psychology has explored these questions. 1.1 What Is Psychology? LEARNING OBJECTIVES By the end of this section, you will be able to: • Define psychology • Understand the merits of an education in psychology What is creativity? What are prejudice and discrimination? What is consciousness? The field of psychology explores questions like these. Psychology refers to the scientific study of the mind and behavior. Psychologists use the scientific method to acquire knowledge. To apply the scientific method, a researcher with a question about how or why something happens will propose a tentative explanation, called a hypothesis, to explain the phenomenon. A hypothesis should fit into the context of a scientific theory, which is a broad explanation or group of explanations for some aspect of the natural world that is consistently supported by evidence over time. A theory is the best understanding we have of that part of the natural world. The researcher then makes observations or carries out an experiment to test the validity of the hypothesis. Those results are then published or presented at research conferences so that others can replicate or build on the results. Scientists test that which is perceivable and measurable. For example, the hypothesis that a bird sings because it is happy is not a hypothesis that can be tested since we have no way to measure the happiness of a bird. We must ask a different question, perhaps about the brain state of the bird, since this can be measured. However, we can ask individuals about whether they sing because they are happy since they are able to tell us. Thus, psychological science is empirical, based on measurable data. In general, science deals only with matter and energy, that is, those things that can be measured, and it cannot arrive at knowledge about values and morality. This is one reason why our scientific understanding of the mind is so limited, since thoughts, at least as we experience them, are neither matter nor energy. The scientific method is also a form of empiricism. An empirical method for acquiring knowledge is one based on observation,
+
+FIGURE 1.3 William James, shown here in a self-portrait, was the first American psychologist. Freud and Psychoanalytic Theory Perhaps one of the most influential and well-known figures in psychology’s history was Sigmund Freud (Figure 1.4). Freud (1856–1939) was an Austrian neurologist who was fascinated by patients suffering from “hysteria” and neurosis. Hysteria was an ancient diagnosis for disorders, primarily of women with a wide variety of symptoms, including physical symptoms and emotional disturbances, none of which had an apparent physical cause. Freud theorized that many of his patients’ problems arose from the unconscious mind. In Freud’s view, the unconscious mind was a repository of feelings and urges of which we have no awareness. Gaining access to the unconscious, then, was crucial to the successful resolution of the patient’s problems. According to Freud, the unconscious mind could be accessed through dream analysis, by examinations of the first words that came to people’s minds, and through seemingly innocent slips of the tongue. Psychoanalytic theory focuses on the role of a person’s unconscious, as well as early childhood experiences, and this particular perspective dominated clinical psychology for several decades (Thorne & Henley, 2005). FIGURE 1.4 (a) Sigmund Freud was a highly influential figure in the history of psychology. (b) One of his many books, A General Introduction to Psychoanalysis, shared his ideas about psychoanalytical therapy; it was published in 1922. Freud’s ideas were influential, and you will learn more about them when you study lifespan development, personality, and therapy. For instance, many therapists believe strongly in the unconscious and the impact of 1.2 • History of Psychology 11
+
+scale. These factors along with the rise of behaviorism (described next) in the United States prevented principles of Gestalt psychology from being as influential in the United States as they had been in their native Germany (Thorne & Henley, 2005). Despite these issues, several Gestalt principles are still very influential today. Considering the human individual as a whole rather than as a sum of individually measured parts became an important foundation in humanistic theory late in the century. The ideas of
+            </div>
+        </div>
+        
+        <div class="stats">
+            <div class="stat-item">
+                <div class="stat-label">Sections Used</div>
+                <div class="stat-value">9</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-label">Pages Referenced</div>
+                <div class="stat-value">10</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-label">Keywords Found</div>
+                <div class="stat-value">0</div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            Generated from Psychology 2e Textbook • Question 11 • 2026-02-26
+        </div>
+    </div>
+    
+    <!-- Font Awesome for icons -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
+</body>
+</html>

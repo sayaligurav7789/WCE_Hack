@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evidence Visualization - Question 47</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 30px;
+        }
+        
+        .header h1 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        
+        .header .question {
+            font-size: 18px;
+            opacity: 0.9;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 10px;
+            line-height: 1.5;
+        }
+        
+        .keywords-bar {
+            background: #f0f0f0;
+            padding: 15px 30px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .keywords-title {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+        
+        .keyword-badge {
+            display: inline-block;
+            background: #ffeb3b;
+            color: #333;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            margin: 0 5px 5px 0;
+            font-weight: 500;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .answer-section {
+            padding: 30px;
+            background: #f8f9fa;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .answer-section h3 {
+            color: #333;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .answer-section h3 i {
+            color: #667eea;
+        }
+        
+        .answer-content {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            line-height: 1.8;
+            color: #444;
+            border-left: 4px solid #667eea;
+        }
+        
+        .answer-content mark {
+            background-color: #ffeb3b;
+            padding: 2px 0;
+            font-weight: 500;
+        }
+        
+        .evidence-section {
+            padding: 30px;
+        }
+        
+        .evidence-section h3 {
+            color: #333;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .evidence-section h3 i {
+            color: #667eea;
+        }
+        
+        .evidence-card {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-left: 4px solid #667eea;
+        }
+        
+        .evidence-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .section-name {
+            font-weight: 600;
+            color: #333;
+            background: #e8eaf6;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+        }
+        
+        .page-number {
+            color: #666;
+            background: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .relevance {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+        }
+        
+        .term-badge {
+            display: inline-block;
+            background: #ffeb3b;
+            color: #333;
+            padding: 3px 10px;
+            border-radius: 15px;
+            font-size: 12px;
+            margin: 0 5px 5px 0;
+            font-weight: 500;
+        }
+        
+        .evidence-text {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            color: #555;
+            line-height: 1.6;
+            margin: 15px 0 0 0;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .evidence-text mark {
+            background-color: #ffeb3b;
+            padding: 2px 0;
+            font-weight: 500;
+        }
+        
+        .highlighted-context {
+            padding: 30px;
+            background: #f8f9fa;
+            border-top: 1px solid #e0e0e0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .highlighted-context h3 {
+            color: #333;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .context-box {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            max-height: 400px;
+            overflow-y: auto;
+            border: 1px solid #e0e0e0;
+            line-height: 1.8;
+            font-size: 14px;
+        }
+        
+        .context-box mark {
+            background-color: #ffeb3b;
+            padding: 2px 0;
+            font-weight: 500;
+        }
+        
+        .stats {
+            display: flex;
+            gap: 15px;
+            padding: 20px 30px;
+            background: white;
+            flex-wrap: wrap;
+        }
+        
+        .stat-item {
+            background: #f8f9fa;
+            padding: 10px 20px;
+            border-radius: 10px;
+            flex: 1;
+            min-width: 120px;
+            text-align: center;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .stat-label {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 5px;
+        }
+        
+        .stat-value {
+            font-size: 24px;
+            font-weight: 600;
+            color: #667eea;
+        }
+        
+        .footer {
+            padding: 20px 30px;
+            background: #f0f0f0;
+            text-align: center;
+            color: #666;
+            font-size: 14px;
+            border-top: 1px solid #e0e0e0;
+        }
+        
+        @media (max-width: 768px) {
+            .header {
+                padding: 20px;
+            }
+            
+            .answer-section,
+            .evidence-section,
+            .highlighted-context {
+                padding: 20px;
+            }
+            
+            .evidence-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📚 Evidence Visualization</h1>
+            <div class="question">
+                <strong>Question 47:</strong> 
+            </div>
+        </div>
+        
+        <div class="keywords-bar">
+            <div class="keywords-title">🔑 Extracted Keywords:</div>
+
+        </div>
+        
+        <div class="answer-section">
+            <h3><i class="fas fa-robot"></i> Generated Answer</h3>
+            <div class="answer-content">
+                According to the provided textbook context, applications of psychology in education include research on education in segregated versus integrated schools, which was conducted by Inez Beverly Prosser, an African American woman who was the first to earn a PhD in psychology. Her work was influential in the landmark Brown v. Board of Education Supreme Court ruling that segregation of public schools was unconstitutional. Additionally, Martha Bernal, a Latina psychologist, conducted research with Mexican American children, which also relates to education.
+            </div>
+        </div>
+        
+        <div class="evidence-section">
+            <h3><i class="fas fa-book"></i> Evidence by Section</h3>
+
+            <div class="evidence-card">
+                <div class="evidence-header">
+                    <span class="section-name">📖 1.1
+LINK TO LEARNING
+The APA provides career information</span>
+                    <span class="page-number">📄 Page 20</span>
+                    <span class="relevance">⭐ Relevance: 0.7</span>
+                </div>
+                <div>
+
+                </div>
+                <div class="evidence-text">
+                    This section discusses 1.1
+link to learning
+the apa provides career information. The content here is relevant to your question about ...
+                </div>
+            </div>
+
+            <div class="evidence-card">
+                <div class="evidence-header">
+                    <span class="section-name">📖 1.1 What Is Psychology</span>
+                    <span class="page-number">📄 Page 21</span>
+                    <span class="relevance">⭐ Relevance: 0.75</span>
+                </div>
+                <div>
+
+                </div>
+                <div class="evidence-text">
+                    This section discusses 1.1 what is psychology. The content here is relevant to your question about ...
+                </div>
+            </div>
+
+            <div class="evidence-card">
+                <div class="evidence-header">
+                    <span class="section-name">📖 1.2 History of Psychology
+LEARNING OBJECTIVES
+By the end of this section</span>
+                    <span class="page-number">📄 Page 28</span>
+                    <span class="relevance">⭐ Relevance: 0.8</span>
+                </div>
+                <div>
+
+                </div>
+                <div class="evidence-text">
+                    This section discusses 1.2 history of psychology
+learning objectives
+by the end of this section. The content here is relevant to your question about ...
+                </div>
+            </div>
+
+            <div class="evidence-card">
+                <div class="evidence-header">
+                    <span class="section-name">📖 1.3 Contemporary Psychology
+LEARNING OBJECTIVES
+By the end of this section</span>
+                    <span class="page-number">📄 Page 30</span>
+                    <span class="relevance">⭐ Relevance: 0.85</span>
+                </div>
+                <div>
+
+                </div>
+                <div class="evidence-text">
+                    This section discusses 1.3 contemporary psychology
+learning objectives
+by the end of this section. The content here is relevant to your question about ...
+                </div>
+            </div>
+
+            <div class="evidence-card">
+                <div class="evidence-header">
+                    <span class="section-name">📖 1.3 Contemporary Psychology
+Psychology is a diverse discipline that is made up of several major subdivisions with unique perspectives</span>
+                    <span class="page-number">📄 Page 41</span>
+                    <span class="relevance">⭐ Relevance: 0.9</span>
+                </div>
+                <div>
+
+                </div>
+                <div class="evidence-text">
+                    This section discusses 1.3 contemporary psychology
+psychology is a diverse discipline that is made up of several major subdivisions with unique perspectives. The content here is relevant to your question about ...
+                </div>
+            </div>
+
+        </div>
+        
+        <div class="highlighted-context">
+            <h3><i class="fas fa-highlighter"></i> Highlighted Context</h3>
+            <div class="context-box">
+                including experimentation, rather than a method based only on forms of logical argument or previous authorities. It was not until the late 1800s that psychology became accepted as its own academic discipline. Before this time, the workings of the mind were considered under the auspices of philosophy. Given that any behavior is, at its roots, biological, some areas of psychology take on aspects of a natural science like biology. No biological organism exists in isolation, and our behavior is influenced by our interactions with others. Therefore, psychology is also a social science. WHY STUDY PSYCHOLOGY? Often, students take their first psychology course because they are interested in helping others and want to learn more about themselves and why they act the way they do. Sometimes, students take a psychology course because it either satisfies a general education requirement or is required for a program of study such as nursing or pre-med. Many of these students develop such an interest in the area that they go on to declare psychology as their major. As a result, psychology is one of the most popular majors on college campuses across the United States (Johnson & Lubin, 2011). A number of well-known individuals were psychology majors. Just a few famous names on this list are Facebook’s creator Mark Zuckerberg, television personality and political satirist Jon Stewart, actress Natalie Portman, and filmmaker Wes Craven (Halonen, 2011). About 6 percent of all bachelor degrees granted in the United States are in the discipline of psychology (U.S. Department of Education, 2016). 8 1 • Introduction to Psychology Access for free at openstax.org
+
+2002). Nash was the subject of the 2001 movie A Beautiful Mind. Why did these people have these experiences? How does the human brain work? And what is the connection between the brain’s internal processes and people’s external behaviors? This textbook will introduce you to various ways that the field of psychology has explored these questions. 1.1 What Is Psychology? LEARNING OBJECTIVES By the end of this section, you will be able to: • Define psychology • Understand the merits of an education in psychology What is creativity? What are prejudice and discrimination? What is consciousness? The field of psychology explores questions like these. Psychology refers to the scientific study of the mind and behavior. Psychologists use the scientific method to acquire knowledge. To apply the scientific method, a researcher with a question about how or why something happens will propose a tentative explanation, called a hypothesis, to explain the phenomenon. A hypothesis should fit into the context of a scientific theory, which is a broad explanation or group of explanations for some aspect of the natural world that is consistently supported by evidence over time. A theory is the best understanding we have of that part of the natural world. The researcher then makes observations or carries out an experiment to test the validity of the hypothesis. Those results are then published or presented at research conferences so that others can replicate or build on the results. Scientists test that which is perceivable and measurable. For example, the hypothesis that a bird sings because it is happy is not a hypothesis that can be tested since we have no way to measure the happiness of a bird. We must ask a different question, perhaps about the brain state of the bird, since this can be measured. However, we can ask individuals about whether they sing because they are happy since they are able to tell us. Thus, psychological science is empirical, based on measurable data. In general, science deals only with matter and energy, that is, those things that can be measured, and it cannot arrive at knowledge about values and morality. This is one reason why our scientific understanding of the mind is so limited, since thoughts, at least as we experience them, are neither matter nor energy. The scientific method is also a form of empiricism. An empirical method for acquiring knowledge is one based on observation,
+
+of psychology and therefore influencing its development. They also suffered from the attitudes of White male psychologists who were not immune to the nonscientific attitudes prevalent in the society in which they DIG DEEPER 16 1 • Introduction to Psychology Access for free at openstax.org
+
+then, that individuals earning bachelor’s degrees in psychology find themselves in a number of different careers, as shown in Table 1.1. Examples of a few such careers can involve serving as case managers, working in sales, working in human resource departments, and teaching in high schools. The rapidly growing realm of healthcare professions is another field in which an education in psychology is helpful and sometimes required. For example, the Medical College Admission Test (MCAT) exam that people must take to be admitted to medical school now includes a section on the psychological foundations of behavior. Top Occupations Employing Graduates with a BA in Psychology (Fogg, Harrington, Harrington, & Shatkin, 2012) Ranking Occupation 1 Mid- and top-level management (executive, administrator) 2 Sales 3 Social work 4 Other management positions 5 Human resources (personnel, training) 6 Other administrative positions 7 Insurance, real estate, business 8 Marketing and sales 9 Healthcare (nurse, pharmacist, therapist) 10 Finance (accountant, auditor) TABLE 1.1 LINK TO LEARNING The APA provides career information (http://openstax.org/l/careers) about various areas of psychology. 1.4 • Careers in Psychology 29
+
+rigidly and compulsively, leading a person to become alienated from others. 11.4 Learning Approaches LEARNING OBJECTIVES By the end of this section, you will be able to: • Describe the behaviorist perspective on personality • Describe the cognitive perspective on personality • Describe the social cognitive perspective on personality In contrast to the psychodynamic approaches of Freud and the neo-Freudians, which relate personality to inner (and hidden) processes, the learning approaches focus only on observable behavior. This illustrates one significant advantage of the learning approaches over psychodynamics: Because learning approaches involve observable, measurable phenomena, they can be scientifically tested. 11.4 • Learning Approaches 373
+
+LINK TO LEARNING Listen to a podcast about the influence of an African American's psychology research on the historic Brown v. Board of Education civil rights case (http://openstax.org/l/crogers2) to learn more. The American Psychological Association has several ethnically based organizations for professional psychologists that facilitate interactions among members. Since psychologists belonging to specific ethnic groups or cultures have the most interest in studying the psychology of their communities, these organizations provide an opportunity for the growth of research on the interplay between culture and psychology. WOMEN IN PSYCHOLOGY Although rarely given credit, women have been contributing to psychology since its inception as a field of study. In 1894, Margaret Floy Washburn was the first woman awarded the doctoral degree in psychology. She wrote The Animal Mind: A Textbook of Comparative Psychology, and it was the standard in the field for over 20 years. In the mid 1890s, Mary Whiton Calkins completed all requirements toward the PhD in psychology, but Harvard University refused to award her that degree because she was a woman. She had been taught and mentored by William James, who tried and failed to convince Harvard to award her the doctoral degree. Her memory research studied primacy and recency (Madigan & O’Hara, 1992), and she also wrote about how structuralism and functionalism both explained self-psychology (Calkins, 1906). Another influential woman, Mary Cover Jones, conducted a study she considered to be a sequel to John B. Watson’s study of Little Albert (you’ll learn about this study in the chapter on Learning). Jones unconditioned fear in Little Peter, who had been afraid of rabbits (Jones, 1924). Ethnic minority women contributing to the field of psychology include Martha Bernal and Inez Beverly Prosser; their studies were related to education. Bernal, the first Latina to earn her doctoral degree in psychology (1962) conducted much of her research with Mexican American children. Prosser was the first African American woman awarded the PhD in 1933 at the University of Cincinnati (Benjamin, Henry, & McMahon, 2005). 1.3 Contemporary Psychology LEARNING OBJECTIVES By the end of this section, you will be able to: • Appreciate the diversity of interests and foci within psychology • Understand basic interests and applications in each of the described areas of psychology • Demonstrate familiarity with some of the major concepts or important figures in each of the described areas of psychology Contemporary psychology is a diverse field that is influenced
+
+applied behavior analysis (ABA), social communication groups, social skills groups, occupational therapy, and even medication options. If Maria asked you for advice or guidance, what would you do? You would likely want to review the research and learn about the efficacy of each treatment so you could best advise your sister. In the end, research is what makes the difference between facts and opinions. Facts are observable realities, and opinions are personal judgments, conclusions, or attitudes that may or may not be accurate. In the scientific community, facts can be established only using evidence collected through empirical research. NOTABLE RESEARCHERS Psychological research has a long history involving important figures from diverse backgrounds. While the introductory chapter discussed several researchers who made significant contributions to the discipline, there are many more individuals who deserve attention in considering how psychology has advanced as a science through their work (Figure 2.3). For instance, Margaret Floy Washburn (1871–1939) was the first woman to earn a PhD in psychology. Her research focused on animal behavior and cognition (Margaret Floy Washburn, PhD, n.d.). Mary Whiton Calkins (1863–1930) was a preeminent first-generation American psychologist who opposed the behaviorist movement, conducted significant research into memory, and established one of the earliest experimental psychology labs in the United States (Mary Whiton Calkins, n.d.). Francis Sumner (1895–1954) was the first African American to receive a PhD in psychology in 1920. His dissertation focused on issues related to psychoanalysis. Sumner also had research interests in racial bias and educational justice. Sumner was one of the founders of Howard University’s department of psychology, and because of his accomplishments, he is sometimes referred to as the “Father of Black Psychology.” Thirteen years later, Inez Beverly Prosser (1895–1934) became the first African American woman to receive a PhD in psychology. Prosser’s research highlighted issues related to education in segregated versus integrated schools, and ultimately, her work was very influential in the hallmark Brown v. Board of Education Supreme Court ruling that segregation of public schools was unconstitutional (Ethnicity and Health in America Series: Featured Psychologists, n.d.). FIGURE 2.3 (a) Margaret Floy Washburn was the first woman to earn a doctorate degree in psychology. (b) The outcome of Brown v. Board of Education was influenced by the research of psychologist Inez Beverly Prosser, who was the first African American woman to earn a PhD in psychology. Although the establishment of psychology’s scientific roots occurred first
+
+An education in psychology is valuable for a number of reasons. Psychology students hone critical thinking skills and are trained in the use of the scientific method. Critical thinking is the active application of a set of skills to information for the understanding and evaluation o
+            </div>
+        </div>
+        
+        <div class="stats">
+            <div class="stat-item">
+                <div class="stat-label">Sections Used</div>
+                <div class="stat-value">11</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-label">Pages Referenced</div>
+                <div class="stat-value">11</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-label">Keywords Found</div>
+                <div class="stat-value">0</div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            Generated from Psychology 2e Textbook • Question 47 • 2026-02-26
+        </div>
+    </div>
+    
+    <!-- Font Awesome for icons -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
+</body>
+</html>

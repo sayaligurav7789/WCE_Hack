@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evidence Visualization - Question 6</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 30px;
+        }
+        
+        .header h1 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        
+        .header .question {
+            font-size: 18px;
+            opacity: 0.9;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 10px;
+            line-height: 1.5;
+        }
+        
+        .keywords-bar {
+            background: #f0f0f0;
+            padding: 15px 30px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .keywords-title {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+        
+        .keyword-badge {
+            display: inline-block;
+            background: #ffeb3b;
+            color: #333;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            margin: 0 5px 5px 0;
+            font-weight: 500;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .answer-section {
+            padding: 30px;
+            background: #f8f9fa;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .answer-section h3 {
+            color: #333;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .answer-section h3 i {
+            color: #667eea;
+        }
+        
+        .answer-content {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            line-height: 1.8;
+            color: #444;
+            border-left: 4px solid #667eea;
+        }
+        
+        .answer-content mark {
+            background-color: #ffeb3b;
+            padding: 2px 0;
+            font-weight: 500;
+        }
+        
+        .evidence-section {
+            padding: 30px;
+        }
+        
+        .evidence-section h3 {
+            color: #333;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .evidence-section h3 i {
+            color: #667eea;
+        }
+        
+        .evidence-card {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-left: 4px solid #667eea;
+        }
+        
+        .evidence-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .section-name {
+            font-weight: 600;
+            color: #333;
+            background: #e8eaf6;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+        }
+        
+        .page-number {
+            color: #666;
+            background: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .relevance {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+        }
+        
+        .term-badge {
+            display: inline-block;
+            background: #ffeb3b;
+            color: #333;
+            padding: 3px 10px;
+            border-radius: 15px;
+            font-size: 12px;
+            margin: 0 5px 5px 0;
+            font-weight: 500;
+        }
+        
+        .evidence-text {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            color: #555;
+            line-height: 1.6;
+            margin: 15px 0 0 0;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .evidence-text mark {
+            background-color: #ffeb3b;
+            padding: 2px 0;
+            font-weight: 500;
+        }
+        
+        .highlighted-context {
+            padding: 30px;
+            background: #f8f9fa;
+            border-top: 1px solid #e0e0e0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .highlighted-context h3 {
+            color: #333;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .context-box {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            max-height: 400px;
+            overflow-y: auto;
+            border: 1px solid #e0e0e0;
+            line-height: 1.8;
+            font-size: 14px;
+        }
+        
+        .context-box mark {
+            background-color: #ffeb3b;
+            padding: 2px 0;
+            font-weight: 500;
+        }
+        
+        .stats {
+            display: flex;
+            gap: 15px;
+            padding: 20px 30px;
+            background: white;
+            flex-wrap: wrap;
+        }
+        
+        .stat-item {
+            background: #f8f9fa;
+            padding: 10px 20px;
+            border-radius: 10px;
+            flex: 1;
+            min-width: 120px;
+            text-align: center;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .stat-label {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 5px;
+        }
+        
+        .stat-value {
+            font-size: 24px;
+            font-weight: 600;
+            color: #667eea;
+        }
+        
+        .footer {
+            padding: 20px 30px;
+            background: #f0f0f0;
+            text-align: center;
+            color: #666;
+            font-size: 14px;
+            border-top: 1px solid #e0e0e0;
+        }
+        
+        @media (max-width: 768px) {
+            .header {
+                padding: 20px;
+            }
+            
+            .answer-section,
+            .evidence-section,
+            .highlighted-context {
+                padding: 20px;
+            }
+            
+            .evidence-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📚 Evidence Visualization</h1>
+            <div class="question">
+                <strong>Question 6:</strong> 
+            </div>
+        </div>
+        
+        <div class="keywords-bar">
+            <div class="keywords-title">🔑 Extracted Keywords:</div>
+
+        </div>
+        
+        <div class="answer-section">
+            <h3><i class="fas fa-robot"></i> Generated Answer</h3>
+            <div class="answer-content">
+                According to the textbook, the three stages of memory are:
+
+1. Sensory Memory: storage of brief sensory events, such as sights, sounds, and tastes, which lasts for a period of less than a second to a few seconds.
+2. Short-Term Memory (STM): holds about seven bits of information before it is forgotten or stored, as well as information that has been retrieved and is being used.
+3. Long-Term Memory: permanent storage of information, which has a practically limitless storage capacity and is divided into implicit and explicit memory.
+            </div>
+        </div>
+        
+        <div class="evidence-section">
+            <h3><i class="fas fa-book"></i> Evidence by Section</h3>
+
+            <div class="evidence-card">
+                <div class="evidence-header">
+                    <span class="section-name">📖 7.1 What Is Cognition</span>
+                    <span class="page-number">📄 Page 226</span>
+                    <span class="relevance">⭐ Relevance: 0.7</span>
+                </div>
+                <div>
+
+                </div>
+                <div class="evidence-text">
+                    This section discusses 7.1 what is cognition. The content here is relevant to your question about ...
+                </div>
+            </div>
+
+            <div class="evidence-card">
+                <div class="evidence-header">
+                    <span class="section-name">📖 7.2 Sensations and information are received by our brains</span>
+                    <span class="page-number">📄 Page 227</span>
+                    <span class="relevance">⭐ Relevance: 0.75</span>
+                </div>
+                <div>
+
+                </div>
+                <div class="evidence-text">
+                    This section discusses 7.2 sensations and information are received by our brains. The content here is relevant to your question about ...
+                </div>
+            </div>
+
+            <div class="evidence-card">
+                <div class="evidence-header">
+                    <span class="section-name">📖 8.1 How Memory Functions
+LEARNING OBJECTIVES
+By the end of this section</span>
+                    <span class="page-number">📄 Page 260</span>
+                    <span class="relevance">⭐ Relevance: 0.8</span>
+                </div>
+                <div>
+
+                </div>
+                <div class="evidence-text">
+                    This section discusses 8.1 how memory functions
+learning objectives
+by the end of this section. The content here is relevant to your question about ...
+                </div>
+            </div>
+
+            <div class="evidence-card">
+                <div class="evidence-header">
+                    <span class="section-name">📖 8.1 How Memory Functions
+Memory is a system or process that stores what we learn for future use</span>
+                    <span class="page-number">📄 Page 262</span>
+                    <span class="relevance">⭐ Relevance: 0.85</span>
+                </div>
+                <div>
+
+                </div>
+                <div class="evidence-text">
+                    This section discusses 8.1 how memory functions
+memory is a system or process that stores what we learn for future use. The content here is relevant to your question about ...
+                </div>
+            </div>
+
+            <div class="evidence-card">
+                <div class="evidence-header">
+                    <span class="section-name">📖 8.17 Sometimes forgetting is caused by a failure to retrieve information</span>
+                    <span class="page-number">📄 Page 263</span>
+                    <span class="relevance">⭐ Relevance: 0.9</span>
+                </div>
+                <div>
+
+                </div>
+                <div class="evidence-text">
+                    This section discusses 8.17 sometimes forgetting is caused by a failure to retrieve information. The content here is relevant to your question about ...
+                </div>
+            </div>
+
+        </div>
+        
+        <div class="highlighted-context">
+            <h3><i class="fas fa-highlighter"></i> Highlighted Context</h3>
+            <div class="context-box">
+                8.1 How Memory Functions LEARNING OBJECTIVES By the end of this section, you will be able to: • Discuss the three basic functions of memory • Describe the three stages of memory storage • Describe and distinguish between procedural and declarative memory and semantic and episodic memory Memory is an information processing system; therefore, we often compare it to a computer. Memory is the set of processes used to encode, store, and retrieve information over different periods of time (Figure 8.2). FIGURE 8.2 Encoding involves the input of information into the memory system. Storage is the retention of the encoded information. Retrieval, or getting the information out of memory and back into awareness, is the third function. LINK TO LEARNING Watch this video about the neuroscience of memory (http://openstax.org/l/unexpectfact) to learn more. Encoding We get information into our brains through a process called encoding, which is the input of information into the memory system. Once we receive sensory information from the environment, our brains label or code it. We organize the information with other similar information and connect new concepts to existing concepts. Encoding information occurs through automatic processing and effortful processing. If someone asks you what you ate for lunch today, more than likely you could recall this information quite easily. This is known as automatic processing, or the encoding of details like time, space, frequency, and the meaning of words. Automatic processing is usually done without any conscious awareness. Recalling the last time you studied for a test is another example of automatic processing. But what about the actual test material you studied? It probably required a lot of work and attention on your part in order to encode that information. This is known as effortful processing (Figure 8.3). FIGURE 8.3 When you first learn new skills such as driving a car, you have to put forth effort and attention to encode information about how to start a car, how to brake, how to handle a turn, and so on. Once you know how to drive, you can encode additional information about this skill automatically. (credit: Robert Couse-Baker) What are the most effective ways to ensure that important memories are well encoded? Even a simple sentence is easier to recall when it is meaningful (Anderson, 1984). Read the following sentences (Bransford & 248 8 • Memory Access for free at openstax.org
+
+attempt to memorize the concepts in this chapter? Storage Once the information has been encoded, we have to somehow retain it. Our brains take the encoded information and place it in storage. Storage is the creation of a permanent record of information. In order for a memory to go into storage (i.e., long-term memory), it has to pass through three distinct stages: Sensory Memory, Short-Term Memory, and finally Long-Term Memory. These stages were first proposed by Richard Atkinson and Richard Shiffrin (1968). Their model of human memory (Figure 8.4), called Atkinson and Shiffrin's model, is based on the belief that we process memories in the same way that a computer processes information. FIGURE 8.4 According to the Atkinson-Shiffrin model of memory, information passes through three distinct stages in order for it to be stored in long-term memory. Atkinson and Shiffrin's model is not the only model of memory. Baddeley and Hitch (1974) proposed a working memory model in which short-term memory has different forms. In their model, storing memories in short- term memory is like opening different files on a computer and adding information. The working memory files hold a limited amount of information. The type of short-term memory (or computer file) depends on the type of information received. There are memories in visual-spatial form, as well as memories of spoken or written material, and they are stored in three short-term systems: a visuospatial sketchpad, an episodic buffer (Baddeley, 2000), and a phonological loop. According to Baddeley and Hitch, a central executive part of memory supervises or controls the flow of information to and from the three short-term systems, and the central executive is responsible for moving information into long-term memory. Sensory Memory In the Atkinson-Shiffrin model, stimuli from the environment are processed first in sensory memory: storage of brief sensory events, such as sights, sounds, and tastes. It is very brief storage—up to a couple of seconds. We are constantly bombarded with sensory information. We cannot absorb all of it, or even most of it. And most of it has no impact on our lives. For example, what was your professor wearing the last class period? As long as the professor was dressed appropriately, it does not really matter what she was wearing. Sensory information about sights, sounds, smells, and even textures, which we do not view as valuable information, we discard. If we view something as valuable, the
+
+cue reconstruction process of bringing up old memories that might be distorted by new information rehearsal repetition of information to be remembered relearning learning information that was previously learned retrieval act of getting information out of long-term memory storage and back into conscious awareness retroactive interference information learned more recently hinders the recall of older information retrograde amnesia loss of memory for events that occurred prior to brain trauma self-reference effect tendency for an individual to have better memory for information that relates to oneself in comparison to material that has less personal relevance semantic encoding input of words and their meaning semantic memory type of declarative memory about words, concepts, and language-based knowledge and facts sensory memory storage of brief sensory events, such as sights, sounds, and tastes short-term memory (STM) holds about seven bits of information before it is forgotten or stored, as well as information that has been retrieved and is being used storage creation of a permanent record of information suggestibility effects of misinformation from external sources that leads to the creation of false memories transience memory error in which unused memories fade with the passage of time visual encoding input of images Summary 8.1 How Memory Functions Memory is a system or process that stores what we learn for future use. Our memory has three basic functions: encoding, storing, and retrieving information. Encoding is the act of getting information into our memory system through automatic or effortful processing. Storage is retention of the information, and retrieval is the act of getting information out of storage and into conscious awareness through recall, recognition, and relearning. The idea that information is processed through three memory systems is called the Atkinson-Shiffrin model of memory. First, environmental stimuli enter our sensory memory for a period of less than a second to a few seconds. Those stimuli that we notice and pay attention to then move into short-term memory. According to the Atkinson-Shiffrin model, if we rehearse this information, then it moves into long-term memory for permanent storage. Other models like that of Baddeley and Hitch suggest there is more of a feedback loop between short-term memory and long-term memory. Long-term memory has a practically limitless storage capacity and is divided into implicit and explicit memory. 8.2 Parts of the Brain Involved with Memory Beginning with Karl Lashley, researchers and psychologists have been searching for the engram, which is the
+
+be recalled using prompts. For example, you might easily recall a fact, such as the capital of the United States, but you might struggle to recall the name of the restaurant at which you had dinner when you visited a nearby city last summer. A prompt, such as that the restaurant was named after its owner, might help you recall the name of the restaurant. Explicit memory is sometimes referred to as declarative memory, because it can be put into words. Explicit memory is divided into episodic memory and semantic memory. LINK TO LEARNING View this video that explains short-term and long-term memory (http://openstax.org/l/HMbrain) to learn more about how memories are stored and retrieved. Episodic memory is information about events we have personally experienced (i.e., an episode). For instance, the memory of your last birthday is an episodic memory. Usually, episodic memory is reported as a story. The concept of episodic memory was first proposed about in the 1970s (Tulving, 1972). Since then, Tulving and others have reformulated the theory, and currently scientists believe that episodic memory is memory about happenings in particular places at particular times—the what, where, and when of an event (Tulving, 2002). It involves recollection of visual imagery as well as the feeling of familiarity (Hassabis & Maguire, 2007). Semantic memory is knowledge about words, concepts, and language-based knowledge and facts. Semantic memory is typically reported as facts. Semantic means having to do with language and knowledge about language. For example, answers to the following questions like “what is the definition of psychology” and “who was the first African American president of the United States” are stored in your semantic memory. Implicit memories are long-term memories that are not part of our consciousness. Although implicit memories are learned outside of our awareness and cannot be consciously recalled, implicit memory is demonstrated in the performance of some task (Roediger, 1990; Schacter, 1987). Implicit memory has been 252 8 • Memory Access for free at openstax.org
+
+introduced to H. M. and then you left the room for a few minutes, he would not know you upon your return and would introduce himself to you again. However, when presented the same puzzle several days in a row, although he did not remember having seen the puzzle before, his speed at solving it became faster each day (because of relearning) (Corkin, 1965, 1968). FIGURE 8.10 This diagram illustrates the timeline of retrograde and anterograde amnesia. Memory problems that extend back in time before the injury and prevent retrieval of information previously stored in long-term memory are known as retrograde amnesia. Conversely, memory problems that extend forward in time from the point of injury and prevent the formation of new memories are called anterograde amnesia. 8.3 • Problems with Memory 259
+
+physical trace of memory. Lashley did not find the engram, but he did suggest that memories are distributed throughout the entire brain rather than stored in one specific area. Now we know that three brain areas do play significant roles in the processing and storage of different types of memories: cerebellum, hippocampus, and amygdala. The cerebellum’s job is to process procedural memories; the hippocampus is where new memories are encoded; the amygdala helps determine what memories to store, and it plays a part in determining where the memories are stored based on whether we have a strong or weak emotional response to the event. Strong emotional experiences can trigger the release of neurotransmitters, as well as hormones, which strengthen memory, so that memory for an emotional event is usually stronger than memory for a non-emotional event. This is shown by what is known as the flashbulb memory phenomenon: our ability to remember significant life events. However, our memory for life events (autobiographical memory) is not always accurate. 274 8 • Summary Access for free at openstax.org
+
+7.1 What Is Cognition? LEARNING OBJECTIVES By the end of this section, you will be able to: • Describe cognition • Distinguish concepts and prototypes • Explain the difference between natural and artificial concepts • Describe how schemata are organized and constructed Imagine all of your thoughts as if they were physical entities, swirling rapidly inside your mind. Ho
+            </div>
+        </div>
+        
+        <div class="stats">
+            <div class="stat-item">
+                <div class="stat-label">Sections Used</div>
+                <div class="stat-value">9</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-label">Pages Referenced</div>
+                <div class="stat-value">11</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-label">Keywords Found</div>
+                <div class="stat-value">0</div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            Generated from Psychology 2e Textbook • Question 6 • 2026-02-26
+        </div>
+    </div>
+    
+    <!-- Font Awesome for icons -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
+</body>
+</html>

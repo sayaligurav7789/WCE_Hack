@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evidence Visualization - Question 2</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 30px;
+        }
+        
+        .header h1 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        
+        .header .question {
+            font-size: 18px;
+            opacity: 0.9;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 10px;
+            line-height: 1.5;
+        }
+        
+        .keywords-bar {
+            background: #f0f0f0;
+            padding: 15px 30px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .keywords-title {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+        
+        .keyword-badge {
+            display: inline-block;
+            background: #ffeb3b;
+            color: #333;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            margin: 0 5px 5px 0;
+            font-weight: 500;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .answer-section {
+            padding: 30px;
+            background: #f8f9fa;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .answer-section h3 {
+            color: #333;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .answer-section h3 i {
+            color: #667eea;
+        }
+        
+        .answer-content {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            line-height: 1.8;
+            color: #444;
+            border-left: 4px solid #667eea;
+        }
+        
+        .answer-content mark {
+            background-color: #ffeb3b;
+            padding: 2px 0;
+            font-weight: 500;
+        }
+        
+        .evidence-section {
+            padding: 30px;
+        }
+        
+        .evidence-section h3 {
+            color: #333;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .evidence-section h3 i {
+            color: #667eea;
+        }
+        
+        .evidence-card {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-left: 4px solid #667eea;
+        }
+        
+        .evidence-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .section-name {
+            font-weight: 600;
+            color: #333;
+            background: #e8eaf6;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+        }
+        
+        .page-number {
+            color: #666;
+            background: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .relevance {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+        }
+        
+        .term-badge {
+            display: inline-block;
+            background: #ffeb3b;
+            color: #333;
+            padding: 3px 10px;
+            border-radius: 15px;
+            font-size: 12px;
+            margin: 0 5px 5px 0;
+            font-weight: 500;
+        }
+        
+        .evidence-text {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            color: #555;
+            line-height: 1.6;
+            margin: 15px 0 0 0;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .evidence-text mark {
+            background-color: #ffeb3b;
+            padding: 2px 0;
+            font-weight: 500;
+        }
+        
+        .highlighted-context {
+            padding: 30px;
+            background: #f8f9fa;
+            border-top: 1px solid #e0e0e0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .highlighted-context h3 {
+            color: #333;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .context-box {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            max-height: 400px;
+            overflow-y: auto;
+            border: 1px solid #e0e0e0;
+            line-height: 1.8;
+            font-size: 14px;
+        }
+        
+        .context-box mark {
+            background-color: #ffeb3b;
+            padding: 2px 0;
+            font-weight: 500;
+        }
+        
+        .stats {
+            display: flex;
+            gap: 15px;
+            padding: 20px 30px;
+            background: white;
+            flex-wrap: wrap;
+        }
+        
+        .stat-item {
+            background: #f8f9fa;
+            padding: 10px 20px;
+            border-radius: 10px;
+            flex: 1;
+            min-width: 120px;
+            text-align: center;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .stat-label {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 5px;
+        }
+        
+        .stat-value {
+            font-size: 24px;
+            font-weight: 600;
+            color: #667eea;
+        }
+        
+        .footer {
+            padding: 20px 30px;
+            background: #f0f0f0;
+            text-align: center;
+            color: #666;
+            font-size: 14px;
+            border-top: 1px solid #e0e0e0;
+        }
+        
+        @media (max-width: 768px) {
+            .header {
+                padding: 20px;
+            }
+            
+            .answer-section,
+            .evidence-section,
+            .highlighted-context {
+                padding: 20px;
+            }
+            
+            .evidence-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📚 Evidence Visualization</h1>
+            <div class="question">
+                <strong>Question 2:</strong> 
+            </div>
+        </div>
+        
+        <div class="keywords-bar">
+            <div class="keywords-title">🔑 Extracted Keywords:</div>
+
+        </div>
+        
+        <div class="answer-section">
+            <h3><i class="fas fa-robot"></i> Generated Answer</h3>
+            <div class="answer-content">
+                According to the provided textbook context, the basic parts of a neuron are:
+
+1. Soma (cell body): contains the cell nucleus
+2. Dendrites: branching extensions that serve as input sites where signals are received from other neurons
+3. Axon: a major extension from the soma that transmits signals electrically
+4. Terminal buttons: contain synaptic vesicles that house neurotransmitters, the chemical messengers of the nervous system
+
+These parts work together to allow the neuron to receive, process, and transmit information.
+            </div>
+        </div>
+        
+        <div class="evidence-section">
+            <h3><i class="fas fa-book"></i> Evidence by Section</h3>
+
+            <div class="evidence-card">
+                <div class="evidence-header">
+                    <span class="section-name">📖 3.1 Different brain imaging techniques provide scientists with insight into different aspects of how the
+human brain functions</span>
+                    <span class="page-number">📄 Page 83</span>
+                    <span class="relevance">⭐ Relevance: 0.7</span>
+                </div>
+                <div>
+
+                </div>
+                <div class="evidence-text">
+                    This section discusses 3.1 different brain imaging techniques provide scientists with insight into different aspects of how the
+human brain functions. The content here is relevant to your question about ...
+                </div>
+            </div>
+
+            <div class="evidence-card">
+                <div class="evidence-header">
+                    <span class="section-name">📖 3.1 Human Genetics
+Genes are sequences of DNA that code for a particular trait</span>
+                    <span class="page-number">📄 Page 90</span>
+                    <span class="relevance">⭐ Relevance: 0.75</span>
+                </div>
+                <div>
+
+                </div>
+                <div class="evidence-text">
+                    This section discusses 3.1 human genetics
+genes are sequences of dna that code for a particular trait. The content here is relevant to your question about ...
+                </div>
+            </div>
+
+            <div class="evidence-card">
+                <div class="evidence-header">
+                    <span class="section-name">📖 3.12 Reuptake involves moving a neurotransmitter from the synapse back into the axon terminal from
+which it was released</span>
+                    <span class="page-number">📄 Page 91</span>
+                    <span class="relevance">⭐ Relevance: 0.8</span>
+                </div>
+                <div>
+
+                </div>
+                <div class="evidence-text">
+                    This section discusses 3.12 reuptake involves moving a neurotransmitter from the synapse back into the axon terminal from
+which it was released. The content here is relevant to your question about ...
+                </div>
+            </div>
+
+            <div class="evidence-card">
+                <div class="evidence-header">
+                    <span class="section-name">📖 3.14 The sympathetic and parasympathetic divisions of the autonomic nervous system have the opposite
+effects on various systems</span>
+                    <span class="page-number">📄 Page 92</span>
+                    <span class="relevance">⭐ Relevance: 0.85</span>
+                </div>
+                <div>
+
+                </div>
+                <div class="evidence-text">
+                    This section discusses 3.14 the sympathetic and parasympathetic divisions of the autonomic nervous system have the opposite
+effects on various systems. The content here is relevant to your question about ...
+                </div>
+            </div>
+
+            <div class="evidence-card">
+                <div class="evidence-header">
+                    <span class="section-name">📖 3.17 The brain and its parts can be divided into three main categories: the forebrain</span>
+                    <span class="page-number">📄 Page 94</span>
+                    <span class="relevance">⭐ Relevance: 0.9</span>
+                </div>
+                <div>
+
+                </div>
+                <div class="evidence-text">
+                    This section discusses 3.17 the brain and its parts can be divided into three main categories: the forebrain. The content here is relevant to your question about ...
+                </div>
+            </div>
+
+        </div>
+        
+        <div class="highlighted-context">
+            <h3><i class="fas fa-highlighter"></i> Highlighted Context</h3>
+            <div class="context-box">
+                the other hand, serve as interconnected information processors that are essential for all of the tasks of the nervous system. This section briefly describes the structure and function of neurons. Neuron Structure Neurons are the central building blocks of the nervous system, 100 billion strong at birth. Like all cells, neurons consist of several different parts, each serving a specialized function (Figure 3.8). A neuron’s outer surface is made up of a semipermeable membrane. This membrane allows smaller molecules and molecules without an electrical charge to pass through it, while stopping larger or highly charged molecules. FIGURE 3.8 This illustration shows a prototypical neuron, which is being myelinated by a glial cell. The nucleus of the neuron is located in the soma, or cell body. The soma has branching extensions known as dendrites. The neuron is a small information processor, and dendrites serve as input sites where signals are received from other neurons. These signals are transmitted electrically across the soma and down a major extension from the soma known as the axon, which ends at multiple terminal buttons. The terminal buttons contain synaptic vesicles that house neurotransmitters, the chemical messengers of the nervous system. Axons range in length from a fraction of an inch to several feet. In some axons, glial cells form a fatty substance known as the myelin sheath, which coats the axon and acts as an insulator, increasing the speed at which the signal travels. The myelin sheath is not continuous and there are small gaps that occur down the length of the axon. These gaps in the myelin sheath are known as the Nodes of Ranvier. The myelin sheath is crucial for the normal operation of the neurons within the nervous system: the loss of the insulation it provides can be detrimental to normal function. To understand how this works, let’s consider an example. PKU, a genetic disorder discussed earlier, causes a reduction in myelin and abnormalities in white matter cortical and subcortical structures. The disorder is associated with a variety of issues including severe cognitive deficits, exaggerated reflexes, and seizures (Anderson & Leuzzi, 2010; Huttenlocher, 2000). Another disorder, multiple sclerosis (MS), an autoimmune disorder, involves a large-scale loss of the myelin sheath on axons throughout the nervous system. The resulting interference in the electrical signal prevents the quick transmittal of information by neurons and can lead to a number of symptoms, such as dizziness,
+
+specialized structures. The soma contains the cell nucleus, and the dendrites extend from the soma in tree-like branches. The axon is another major extension of the cell body; axons are often covered by a myelin sheath, which increases the speed of transmission of neural impulses. At the end of the axon are terminal buttons that contain synaptic vesicles filled with neurotransmitters. Neuronal communication is an electrochemical event. The dendrites contain receptors for neurotransmitters released by nearby neurons. If the signals received from other neurons are sufficiently strong, an action potential will travel down the length of the axon to the terminal buttons, resulting in the release of neurotransmitters into the synaptic cleft. Action potentials operate on the all-or-none principle and involve 102 3 • Summary Access for free at openstax.org
+
+nervous system. The somatic nervous system is associated with activities traditionally thought of as conscious or voluntary. It is involved in the relay of sensory and motor information to and from the CNS; therefore, it consists of motor neurons and sensory neurons. Motor neurons, carrying instructions from the CNS to the muscles, are efferent fibers (efferent means “moving away from”). Sensory neurons, carrying sensory information to the CNS, are afferent fibers (afferent means “moving toward”). A helpful way to remember this is that efferent = exit and afferent = arrive. Each nerve is basically a bundle of neurons forming a two-way superhighway, containing thousands of axons, both efferent and afferent. The autonomic nervous system controls our internal organs and glands and is generally considered to be outside the realm of voluntary control. It can be further subdivided into the sympathetic and parasympathetic divisions (Figure 3.14). The sympathetic nervous system is involved in preparing the body for stress-related activities; the parasympathetic nervous system is associated with returning the body to routine, day-to-day operations. The two systems have complementary functions, operating in tandem to maintain the body’s homeostasis. Homeostasis is a state of equilibrium, or balance, in which biological conditions (such as body temperature) are maintained at optimal levels. FIGURE 3.14 The sympathetic and parasympathetic divisions of the autonomic nervous system have the opposite effects on various systems. The sympathetic nervous system is activated when we are faced with stressful or high-arousal situations. The activity of this system was adaptive for our ancestors, increasing their chances of survival. Imagine, for example, that one of our early ancestors, out hunting small game, suddenly disturbs a large bear with her cubs. At that moment, the hunter's body undergoes a series of changes—a direct function of sympathetic activation—preparing them to face the threat. The pupils dilate, the heart rate and blood pressure increase, the bladder relaxes, and the liver releases glucose; adrenaline surges into the bloodstream. This constellation of 3.3 • Parts of the Nervous System 85
+
+Explain how drugs act as agonists or antagonists for a given neurotransmitter system Psychologists striving to understand the human mind may study the nervous system. Learning how the body's cells and organs function can help us understand the biological basis of human psychology. The nervous system is composed of two basic cell types: glial cells (also known as glia) and neurons. Glial cells are traditionally thought to play a supportive role to neurons, both physically and metabolically. Glial cells provide scaffolding on which the nervous system is built, help neurons line up closely with each other to allow neuronal communication, provide insulation to neurons, transport nutrients and waste products, and mediate immune responses. For years, researchers believed that there were many more glial cells than neurons; however, more recent work from Suzanna Herculano-Houzel's laboratory has called this long-standing assumption into question and has provided important evidence that there may be a nearly 1:1 ratio of glia cells to neurons. This is important because it suggests that human brains are more similar to other primate brains than previously thought (Azevedo et al, 2009; Herculano-Houzel, 2012; Herculano-Houzel, 2009). Neurons, on 78 3 • Biopsychology Access for free at openstax.org
+
+the brain interact with one another to provide the foundation for our thoughts and behaviors. In this section, we discuss the overall organization of the brain and the functions associated with different brain areas, beginning with what can be seen as an extension of the brain, the spinal cord. The Spinal Cord It can be said that the spinal cord is what connects the brain to the outside world. Because of it, the brain can act. The spinal cord is like a relay station, but a very smart one. It not only routes messages to and from the brain, but it also has its own system of automatic processes, called reflexes. The top of the spinal cord is a bundle of nerves that merges with the brain stem, where the basic processes of life are controlled, such as breathing and digestion. In the opposite direction, the spinal cord ends just below the ribs—contrary to what we might expect, it does not extend all the way to the base of the spine. The spinal cord is functionally organized in 30 segments, corresponding with the vertebrae. Each segment is connected to a specific part of the body through the peripheral nervous system. Nerves branch out from the spine at each vertebra. Sensory nerves bring messages in; motor nerves send messages out to the muscles and organs. Messages travel to and from the brain through every segment. Some sensory messages are immediately acted on by the spinal cord, without any input from the brain. 86 3 • Biopsychology Access for free at openstax.org
+
+resting potential the state of readiness of a neuron membrane’s potential between signals reticular formation midbrain structure important in regulating the sleep/wake cycle, arousal, alertness, and motor activity reuptake neurotransmitter is pumped back into the neuron that released it semipermeable membrane cell membrane that allows smaller molecules or molecules without an electrical charge to pass through it, while stopping larger or highly charged molecules soma cell body somatic nervous system relays sensory and motor information to and from the CNS somatosensory cortex essential for processing sensory information from across the body, such as touch, temperature, and pain substantia nigra midbrain structure where dopamine is produced; involved in control of movement sulcus (plural: sulci) depressions or grooves in the cerebral cortex sympathetic nervous system involved in stress-related activities and functions synaptic cleft small gap between two neurons where communication occurs synaptic vesicle storage site for neurotransmitters temporal lobe part of cerebral cortex associated with hearing, memory, emotion, and some aspects of language; contains primary auditory cortex terminal button axon terminal containing synaptic vesicles thalamus sensory relay for the brain theory of evolution by natural selection states that organisms that are better suited for their environments will survive and reproduce compared to those that are poorly suited for their environments threshold of excitation level of charge in the membrane that causes the neuron to become active thyroid secretes hormones that regulate growth, metabolism, and appetite ventral tegmental area (VTA) midbrain structure where dopamine is produced: associated with mood, reward, and addiction Wernicke’s area important for speech comprehension Summary 3.1 Human Genetics Genes are sequences of DNA that code for a particular trait. Different versions of a gene are called alleles—sometimes alleles can be classified as dominant or recessive. A dominant allele always results in the dominant phenotype. In order to exhibit a recessive phenotype, an individual must be homozygous for the recessive allele. Genes affect both physical and psychological characteristics. Ultimately, how and when a gene is expressed, and what the outcome will be—in terms of both physical and psychological characteristics—is a function of the interaction between our genes and our environments. 3.2 Cells of the Nervous System Glia and neurons are the two cell types that make up the nervous system. While glia generally play supporting roles, the communication between neurons is fundamental to all of the functions associated with the nervous system. Neuronal communication is made possible by the neuron’s
+
+prefrontal cortex, which is associated with judgment, reasoning, and impulse control. Forebrain Structures The two hemispheres of the cerebral cortex are part of the forebrain (Figure 3.17), which is the largest part of the brain. The forebrain contains the cerebral cortex and a number of other structures that lie beneath the cortex (called subcortical structures): thalamus, hypothalamus, pituitary gland, and the limbic system (a collection of structures). The cerebral cortex, which is the outer surface of the brain, is associated with higher level processes such as consciousness, thought, emotion, reasoning, language, and memory. Each cerebral hemisphere can be subdivided into four lobes, each associated with different functions. FIGURE 3.17 The brain and its parts can be divided into
+            </div>
+        </div>
+        
+        <div class="stats">
+            <div class="stat-item">
+                <div class="stat-label">Sections Used</div>
+                <div class="stat-value">10</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-label">Pages Referenced</div>
+                <div class="stat-value">11</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-label">Keywords Found</div>
+                <div class="stat-value">0</div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            Generated from Psychology 2e Textbook • Question 2 • 2026-02-26
+        </div>
+    </div>
+    
+    <!-- Font Awesome for icons -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
+</body>
+</html>

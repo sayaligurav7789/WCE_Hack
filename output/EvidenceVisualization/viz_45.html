@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evidence Visualization - Question 45</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 30px;
+        }
+        
+        .header h1 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        
+        .header .question {
+            font-size: 18px;
+            opacity: 0.9;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 10px;
+            line-height: 1.5;
+        }
+        
+        .keywords-bar {
+            background: #f0f0f0;
+            padding: 15px 30px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .keywords-title {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+        
+        .keyword-badge {
+            display: inline-block;
+            background: #ffeb3b;
+            color: #333;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            margin: 0 5px 5px 0;
+            font-weight: 500;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .answer-section {
+            padding: 30px;
+            background: #f8f9fa;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .answer-section h3 {
+            color: #333;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .answer-section h3 i {
+            color: #667eea;
+        }
+        
+        .answer-content {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            line-height: 1.8;
+            color: #444;
+            border-left: 4px solid #667eea;
+        }
+        
+        .answer-content mark {
+            background-color: #ffeb3b;
+            padding: 2px 0;
+            font-weight: 500;
+        }
+        
+        .evidence-section {
+            padding: 30px;
+        }
+        
+        .evidence-section h3 {
+            color: #333;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .evidence-section h3 i {
+            color: #667eea;
+        }
+        
+        .evidence-card {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-left: 4px solid #667eea;
+        }
+        
+        .evidence-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .section-name {
+            font-weight: 600;
+            color: #333;
+            background: #e8eaf6;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+        }
+        
+        .page-number {
+            color: #666;
+            background: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .relevance {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+        }
+        
+        .term-badge {
+            display: inline-block;
+            background: #ffeb3b;
+            color: #333;
+            padding: 3px 10px;
+            border-radius: 15px;
+            font-size: 12px;
+            margin: 0 5px 5px 0;
+            font-weight: 500;
+        }
+        
+        .evidence-text {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            color: #555;
+            line-height: 1.6;
+            margin: 15px 0 0 0;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .evidence-text mark {
+            background-color: #ffeb3b;
+            padding: 2px 0;
+            font-weight: 500;
+        }
+        
+        .highlighted-context {
+            padding: 30px;
+            background: #f8f9fa;
+            border-top: 1px solid #e0e0e0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .highlighted-context h3 {
+            color: #333;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .context-box {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            max-height: 400px;
+            overflow-y: auto;
+            border: 1px solid #e0e0e0;
+            line-height: 1.8;
+            font-size: 14px;
+        }
+        
+        .context-box mark {
+            background-color: #ffeb3b;
+            padding: 2px 0;
+            font-weight: 500;
+        }
+        
+        .stats {
+            display: flex;
+            gap: 15px;
+            padding: 20px 30px;
+            background: white;
+            flex-wrap: wrap;
+        }
+        
+        .stat-item {
+            background: #f8f9fa;
+            padding: 10px 20px;
+            border-radius: 10px;
+            flex: 1;
+            min-width: 120px;
+            text-align: center;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .stat-label {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 5px;
+        }
+        
+        .stat-value {
+            font-size: 24px;
+            font-weight: 600;
+            color: #667eea;
+        }
+        
+        .footer {
+            padding: 20px 30px;
+            background: #f0f0f0;
+            text-align: center;
+            color: #666;
+            font-size: 14px;
+            border-top: 1px solid #e0e0e0;
+        }
+        
+        @media (max-width: 768px) {
+            .header {
+                padding: 20px;
+            }
+            
+            .answer-section,
+            .evidence-section,
+            .highlighted-context {
+                padding: 20px;
+            }
+            
+            .evidence-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📚 Evidence Visualization</h1>
+            <div class="question">
+                <strong>Question 45:</strong> 
+            </div>
+        </div>
+        
+        <div class="keywords-bar">
+            <div class="keywords-title">🔑 Extracted Keywords:</div>
+
+        </div>
+        
+        <div class="answer-section">
+            <h3><i class="fas fa-robot"></i> Generated Answer</h3>
+            <div class="answer-content">
+                The key takeaways from the Brown v. Board of Education research, specifically the study conducted by Mamie Phipps Clark and her husband, Kenneth Clark, are:
+
+1. African American children were more likely to choose a White doll over a Black doll, suggesting that they did not have a healthy concept of themselves.
+2. The research highlighted the harmful effects of segregation and provided support for the Browns and the NAACP in their lawsuit against the Board of Education.
+
+These findings played a significant role in the landmark Supreme Court decision in Brown v. Board of Education, which ultimately led to the desegregation of schools in the United States.
+            </div>
+        </div>
+        
+        <div class="evidence-section">
+            <h3><i class="fas fa-book"></i> Evidence by Section</h3>
+
+            <div class="evidence-card">
+                <div class="evidence-header">
+                    <span class="section-name">📖 1.3 Contemporary Psychology
+LEARNING OBJECTIVES
+By the end of this section</span>
+                    <span class="page-number">📄 Page 14</span>
+                    <span class="relevance">⭐ Relevance: 0.7</span>
+                </div>
+                <div>
+
+                </div>
+                <div class="evidence-text">
+                    This section discusses 1.3 contemporary psychology
+learning objectives
+by the end of this section. The content here is relevant to your question about ...
+                </div>
+            </div>
+
+            <div class="evidence-card">
+                <div class="evidence-header">
+                    <span class="section-name">📖 1.9 Noam Chomsky was very influential in beginning the cognitive revolution</span>
+                    <span class="page-number">📄 Page 29</span>
+                    <span class="relevance">⭐ Relevance: 0.75</span>
+                </div>
+                <div>
+
+                </div>
+                <div class="evidence-text">
+                    This section discusses 1.9 noam chomsky was very influential in beginning the cognitive revolution. The content here is relevant to your question about ...
+                </div>
+            </div>
+
+            <div class="evidence-card">
+                <div class="evidence-header">
+                    <span class="section-name">📖 10.3 Research suggests that when something we love to do</span>
+                    <span class="page-number">📄 Page 30</span>
+                    <span class="relevance">⭐ Relevance: 0.8</span>
+                </div>
+                <div>
+
+                </div>
+                <div class="evidence-text">
+                    This section discusses 10.3 research suggests that when something we love to do. The content here is relevant to your question about ...
+                </div>
+            </div>
+
+            <div class="evidence-card">
+                <div class="evidence-header">
+                    <span class="section-name">📖 2.1 Why Is Research Important</span>
+                    <span class="page-number">📄 Page 49</span>
+                    <span class="relevance">⭐ Relevance: 0.85</span>
+                </div>
+                <div>
+
+                </div>
+                <div class="evidence-text">
+                    This section discusses 2.1 why is research important. The content here is relevant to your question about ...
+                </div>
+            </div>
+
+            <div class="evidence-card">
+                <div class="evidence-header">
+                    <span class="section-name">📖 2.10 A researcher doing archival research examines records</span>
+                    <span class="page-number">📄 Page 58</span>
+                    <span class="relevance">⭐ Relevance: 0.9</span>
+                </div>
+                <div>
+
+                </div>
+                <div class="evidence-text">
+                    This section discusses 2.10 a researcher doing archival research examines records. The content here is relevant to your question about ...
+                </div>
+            </div>
+
+        </div>
+        
+        <div class="highlighted-context">
+            <h3><i class="fas fa-highlighter"></i> Highlighted Context</h3>
+            <div class="context-box">
+                example, if you think that the use of technology in the classroom has negative impacts on learning, then you have basically formulated a hypothesis—namely, that the use of technology in the classroom should be limited because it decreases learning. How might you have arrived at this particular hypothesis? You may have noticed that your classmates who take notes on their laptops perform at lower levels on class exams than those who take notes by hand, or those who receive a lesson via a computer program versus via an in-person teacher have different levels of performance when tested (Figure 2.15). 2.3 • Analyzing Findings 51
+
+LINK TO LEARNING Listen to a podcast about the influence of an African American's psychology research on the historic Brown v. Board of Education civil rights case (http://openstax.org/l/crogers2) to learn more. The American Psychological Association has several ethnically based organizations for professional psychologists that facilitate interactions among members. Since psychologists belonging to specific ethnic groups or cultures have the most interest in studying the psychology of their communities, these organizations provide an opportunity for the growth of research on the interplay between culture and psychology. WOMEN IN PSYCHOLOGY Although rarely given credit, women have been contributing to psychology since its inception as a field of study. In 1894, Margaret Floy Washburn was the first woman awarded the doctoral degree in psychology. She wrote The Animal Mind: A Textbook of Comparative Psychology, and it was the standard in the field for over 20 years. In the mid 1890s, Mary Whiton Calkins completed all requirements toward the PhD in psychology, but Harvard University refused to award her that degree because she was a woman. She had been taught and mentored by William James, who tried and failed to convince Harvard to award her the doctoral degree. Her memory research studied primacy and recency (Madigan & O’Hara, 1992), and she also wrote about how structuralism and functionalism both explained self-psychology (Calkins, 1906). Another influential woman, Mary Cover Jones, conducted a study she considered to be a sequel to John B. Watson’s study of Little Albert (you’ll learn about this study in the chapter on Learning). Jones unconditioned fear in Little Peter, who had been afraid of rabbits (Jones, 1924). Ethnic minority women contributing to the field of psychology include Martha Bernal and Inez Beverly Prosser; their studies were related to education. Bernal, the first Latina to earn her doctoral degree in psychology (1962) conducted much of her research with Mexican American children. Prosser was the first African American woman awarded the PhD in 1933 at the University of Cincinnati (Benjamin, Henry, & McMahon, 2005). 1.3 Contemporary Psychology LEARNING OBJECTIVES By the end of this section, you will be able to: • Appreciate the diversity of interests and foci within psychology • Understand basic interests and applications in each of the described areas of psychology • Demonstrate familiarity with some of the major concepts or important figures in each of the described areas of psychology Contemporary psychology is a diverse field that is influenced
+
+research with African American children and doll choices was used to highlight the harmful effects of segregation and provided support for the Browns and the NAACP in their lawsuit against the Board of Education. The finding that African American children were more likely to choose a White doll over a Black doll, in both northern and southern states, led them to theorize that the children did not have a healthy concept of themselves (Clark & Clark, 1950). The Clarks’ research differed from that of Inez Beverly Prosser, who also studied African American children in segregated and integrated schools in Cincinnati. Parents could choose either environment for their children during the 1930s. She found, among other factors, that the self-concept of children at segregated schools was more positive versus those in integrated schools, partly due to teachers’ low expectations. Prosser also noted that the child’s personality should be considered when choosing a segregated school or an integrated school (Benjamin, Henry, & McMahon, 2005). Later researchers suggested that African American children choosing a doll that did not look like them was not an indication of their self-esteem or their self-image. For instance, Rogers and Meltzoff (2017) found that gender identity was more important than race in their study of diverse children whose average age was about 10 years old. Thus, for children that young, the meaning of race is an evolving process, as opposed to adolescents’ search for identity. The ethnic minority children in the study did view racial identity as important, compared to their White counterparts. DIG DEEPER 304 9 • Lifespan Development Access for free at openstax.org
+
+Use of Research Information Trying to determine which theories are and are not accepted by the scientific community can be difficult, especially in an area of research as broad as psychology. More than ever before, we have an incredible amount of information at our fingertips, and a simple internet search on any given research topic might result in a number of contradictory studies. In these cases, we are witnessing the scientific community going through the process of reaching a consensus, and it could be quite some time before a consensus emerges. For example, the explosion in our use of technology has led researchers to question whether this ultimately helps or hinders us. The use and implementation of technology in educational settings has become widespread over the last few decades. Researchers are coming to different conclusions regarding the use of technology. To illustrate this point, a study investigating a smartphone app targeting surgery residents (graduate students in surgery training) found that the use of this app can increase student engagement and raise test scores (Shaw & Tan, 2015). Conversely, another study found that the use of technology in undergraduate student populations had negative impacts on sleep, communication, and time management skills (Massimini & Peterson, 2009). Until sufficient amounts of research have been conducted, there will be no clear consensus on the effects that technology has on a student's acquisition of knowledge, study skills, and mental health. In the meantime, we should strive to think critically about the information we encounter by exercising a degree of healthy skepticism. When someone makes a claim, we should examine the claim from a number of different perspectives: what is the expertise of the person making the claim, what might they gain if the claim is valid, does the claim seem justified given the evidence, and what do other researchers think of the claim? This is especially important when we consider how much information in advertising campaigns and on the internet claims to be based on “scientific evidence” when in actuality it is a belief or perspective of just a few individuals trying to sell a product or draw attention to their perspectives. We should be informed consumers of the information made available to us because decisions based on this information have significant consequences. One such consequence can be seen in politics and public policy. Imagine that you have been elected as the governor of your
+
+across countries, such as participants from the United States compared to participants from China. In 1920, Francis Cecil Sumner was the first African American to receive a PhD in psychology in the United States. Sumner established a psychology degree program at Howard University, leading to the education of a new generation of African American psychologists (Black, Spence, and Omari, 2004). Much of the work of early psychologists from diverse backgrounds was dedicated to challenging intelligence testing and promoting innovative educational methods for children. George I. Sanchez contested such testing with Mexican American children. As a psychologist of Mexican heritage, he pointed out that the language and cultural barriers in testing were keeping children from equal opportunities (Guthrie, 1998). By 1940, he was teaching with his doctoral degree at University of Texas at Austin and challenging segregated educational practices (Romo, 1986). Two famous African American researchers and psychologists are Mamie Phipps Clark and her husband, Kenneth Clark. They are best known for their studies conducted on African American children and doll preference, research that was instrumental in the Brown v. Board of Education Supreme Court desegregation case. The Clarks applied their research to social services and opened the first child guidance center in Harlem (American Psychological Association, 2019). Listen to the podcast below describing the Clarks' research and impact on the Supreme Court decision. 1.2 • History of Psychology 17
+
+intelligence are at the core of his conclusions. In a related story, parents of African American students filed a case against the State of California in 1979, because they believed that the testing method used to identify students with learning disabilities was culturally unfair as the tests were normed and standardized using White children (Larry P. v. Riles). The testing method used by the state disproportionately identified African American children as “mentally retarded," which resulted in many students being incorrectly classified. According to a summary of the case, Larry P. v. Riles: In violation of Title VI of the Civil Rights Act of 1964, the Rehabilitation Act of 1973, and the Education for All Handicapped Children Act of 1975, defendants have utilized standardized intelligence tests that are racially and culturally biased, have a discriminatory impact against Black children, and have not been validated for the purpose of essentially permanent placements of Black children into educationally dead-end, isolated, and stigmatizing classes for the so-called educable mentally retarded. Further, these federal laws have been violated by defendants' general use of placement mechanisms that, taken together, have not been validated and result in a large over-representation of Black children in the special E.M.R. classes. (Larry P. v. Riles, par. 6) Once again, the limitations of intelligence testing were revealed. What are Learning Disabilities? Learning disabilities are cognitive disorders that affect different areas of cognition, particularly language or reading. It should be pointed out that learning disabilities are not the same thing as intellectual disabilities. Learning disabilities are considered specific neurological impairments rather than global intellectual or developmental disabilities. A person with a language disability has difficulty understanding or using spoken language, whereas someone with a reading disability, such as dyslexia, has difficulty processing what they are reading. Often, learning disabilities are not recognized until a child reaches school age. One confounding aspect of learning disabilities is that they most often affect children with average to above-average intelligence. In other words, the disability is specific to a particular area and not a measure of overall intellectual ability. At the same time, learning disabilities tend to exhibit comorbidity with other disorders, like attention-deficit hyperactivity disorder (ADHD). Anywhere between 30–70% of individuals with diagnosed cases of ADHD also have some sort of learning disability (Riccio, Gonzales, & Hynd, 1994). Let’s take a look at three examples of common learning disabilities: dysgraphia, dyslexia, and dyscalculia. Dysgraphia Children
+
+Interestingly, the periodic recalibrations have led to an interesting observation known as the Flynn effect. Named after James Flynn, who was among the first to describe this trend, the Flynn effect refers to
+            </div>
+        </div>
+        
+        <div class="stats">
+            <div class="stat-item">
+                <div class="stat-label">Sections Used</div>
+                <div class="stat-value">12</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-label">Pages Referenced</div>
+                <div class="stat-value">12</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-label">Keywords Found</div>
+                <div class="stat-value">0</div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            Generated from Psychology 2e Textbook • Question 45 • 2026-02-26
+        </div>
+    </div>
+    
+    <!-- Font Awesome for icons -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
+</body>
+</html>

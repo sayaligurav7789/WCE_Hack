@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evidence Visualization - Question 27</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 30px;
+        }
+        
+        .header h1 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        
+        .header .question {
+            font-size: 18px;
+            opacity: 0.9;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 10px;
+            line-height: 1.5;
+        }
+        
+        .keywords-bar {
+            background: #f0f0f0;
+            padding: 15px 30px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .keywords-title {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+        
+        .keyword-badge {
+            display: inline-block;
+            background: #ffeb3b;
+            color: #333;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            margin: 0 5px 5px 0;
+            font-weight: 500;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .answer-section {
+            padding: 30px;
+            background: #f8f9fa;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .answer-section h3 {
+            color: #333;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .answer-section h3 i {
+            color: #667eea;
+        }
+        
+        .answer-content {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            line-height: 1.8;
+            color: #444;
+            border-left: 4px solid #667eea;
+        }
+        
+        .answer-content mark {
+            background-color: #ffeb3b;
+            padding: 2px 0;
+            font-weight: 500;
+        }
+        
+        .evidence-section {
+            padding: 30px;
+        }
+        
+        .evidence-section h3 {
+            color: #333;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .evidence-section h3 i {
+            color: #667eea;
+        }
+        
+        .evidence-card {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-left: 4px solid #667eea;
+        }
+        
+        .evidence-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .section-name {
+            font-weight: 600;
+            color: #333;
+            background: #e8eaf6;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+        }
+        
+        .page-number {
+            color: #666;
+            background: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .relevance {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+        }
+        
+        .term-badge {
+            display: inline-block;
+            background: #ffeb3b;
+            color: #333;
+            padding: 3px 10px;
+            border-radius: 15px;
+            font-size: 12px;
+            margin: 0 5px 5px 0;
+            font-weight: 500;
+        }
+        
+        .evidence-text {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            color: #555;
+            line-height: 1.6;
+            margin: 15px 0 0 0;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .evidence-text mark {
+            background-color: #ffeb3b;
+            padding: 2px 0;
+            font-weight: 500;
+        }
+        
+        .highlighted-context {
+            padding: 30px;
+            background: #f8f9fa;
+            border-top: 1px solid #e0e0e0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .highlighted-context h3 {
+            color: #333;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .context-box {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            max-height: 400px;
+            overflow-y: auto;
+            border: 1px solid #e0e0e0;
+            line-height: 1.8;
+            font-size: 14px;
+        }
+        
+        .context-box mark {
+            background-color: #ffeb3b;
+            padding: 2px 0;
+            font-weight: 500;
+        }
+        
+        .stats {
+            display: flex;
+            gap: 15px;
+            padding: 20px 30px;
+            background: white;
+            flex-wrap: wrap;
+        }
+        
+        .stat-item {
+            background: #f8f9fa;
+            padding: 10px 20px;
+            border-radius: 10px;
+            flex: 1;
+            min-width: 120px;
+            text-align: center;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .stat-label {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 5px;
+        }
+        
+        .stat-value {
+            font-size: 24px;
+            font-weight: 600;
+            color: #667eea;
+        }
+        
+        .footer {
+            padding: 20px 30px;
+            background: #f0f0f0;
+            text-align: center;
+            color: #666;
+            font-size: 14px;
+            border-top: 1px solid #e0e0e0;
+        }
+        
+        @media (max-width: 768px) {
+            .header {
+                padding: 20px;
+            }
+            
+            .answer-section,
+            .evidence-section,
+            .highlighted-context {
+                padding: 20px;
+            }
+            
+            .evidence-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📚 Evidence Visualization</h1>
+            <div class="question">
+                <strong>Question 27:</strong> 
+            </div>
+        </div>
+        
+        <div class="keywords-bar">
+            <div class="keywords-title">🔑 Extracted Keywords:</div>
+
+        </div>
+        
+        <div class="answer-section">
+            <h3><i class="fas fa-robot"></i> Generated Answer</h3>
+            <div class="answer-content">
+                Object permanence is the understanding that objects continue to exist even when they are hidden from view. This concept is developed in infants, and it is achieved at a certain age, which is somewhat controversial (Munakata, McClelland, Johnson, and Siegler, 1997).
+            </div>
+        </div>
+        
+        <div class="evidence-section">
+            <h3><i class="fas fa-book"></i> Evidence by Section</h3>
+
+            <div class="evidence-card">
+                <div class="evidence-header">
+                    <span class="section-name">📖 1.11 When you look at this image</span>
+                    <span class="page-number">📄 Page 33</span>
+                    <span class="relevance">⭐ Relevance: 0.7</span>
+                </div>
+                <div>
+
+                </div>
+                <div class="evidence-text">
+                    This section discusses 1.11 when you look at this image. The content here is relevant to your question about ...
+                </div>
+            </div>
+
+            <div class="evidence-card">
+                <div class="evidence-header">
+                    <span class="section-name">📖 1.167
+Milner</span>
+                    <span class="page-number">📄 Page 57</span>
+                    <span class="relevance">⭐ Relevance: 0.75</span>
+                </div>
+                <div>
+
+                </div>
+                <div class="evidence-text">
+                    This section discusses 1.167
+milner. The content here is relevant to your question about ...
+                </div>
+            </div>
+
+            <div class="evidence-card">
+                <div class="evidence-header">
+                    <span class="section-name">📖 11.10 Bandura proposed the idea of reciprocal determinism: Our behavior</span>
+                    <span class="page-number">📄 Page 165</span>
+                    <span class="relevance">⭐ Relevance: 0.8</span>
+                </div>
+                <div>
+
+                </div>
+                <div class="evidence-text">
+                    This section discusses 11.10 bandura proposed the idea of reciprocal determinism: our behavior. The content here is relevant to your question about ...
+                </div>
+            </div>
+
+            <div class="evidence-card">
+                <div class="evidence-header">
+                    <span class="section-name">📖 11.6 The job of the ego</span>
+                    <span class="page-number">📄 Page 181</span>
+                    <span class="relevance">⭐ Relevance: 0.85</span>
+                </div>
+                <div>
+
+                </div>
+                <div class="evidence-text">
+                    This section discusses 11.6 the job of the ego. The content here is relevant to your question about ...
+                </div>
+            </div>
+
+            <div class="evidence-card">
+                <div class="evidence-header">
+                    <span class="section-name">📖 2.9 Surveys can be administered in a number of ways</span>
+                    <span class="page-number">📄 Page 227</span>
+                    <span class="relevance">⭐ Relevance: 0.9</span>
+                </div>
+                <div>
+
+                </div>
+                <div class="evidence-text">
+                    This section discusses 2.9 surveys can be administered in a number of ways. The content here is relevant to your question about ...
+                </div>
+            </div>
+
+        </div>
+        
+        <div class="highlighted-context">
+            <h3><i class="fas fa-highlighter"></i> Highlighted Context</h3>
+            <div class="context-box">
+                race- biased weapon misidentifications. Journal of Experimental Social Psychology, 41, 36–47. Peck, M. (2012, July 19). How a movie changed one man’s vision forever. http://www.bbc.com/future/story/ 20120719-awoken-from-a-2d-world Peterson, M. A., & Gibson, B. S. (1994). Must figure-ground organization precede object recognition? An assumption in peril. Psychological Science, 5, 253–259. References 649
+
+and perception (Rock & Palmer, 1990). One Gestalt principle is the figure-ground relationship. According to this principle, we tend to segment our visual world into figure and ground. Figure is the object or person that is the focus of the visual field, while the ground is the background. As Figure 5.25 shows, our perception can vary tremendously, depending on what is perceived as figure and what is perceived as ground. Presumably, our ability to interpret sensory information depends on what we label as figure and what we label as ground in any particular case, although this assumption has been called into question (Peterson & Gibson, 1994; Vecera & O’Reilly, 1998). FIGURE 5.25 The concept of figure-ground relationship explains why this image can be perceived either as a vase or as a pair of faces. Another Gestalt principle for organizing sensory stimuli into meaningful perception is proximity. This principle asserts that things that are close to one another tend to be grouped together, as Figure 5.26 illustrates. FIGURE 5.26 The Gestalt principle of proximity suggests that you see (a) one block of dots on the left side and (b) three columns on the right side. How we read something provides another illustration of the proximity concept. For example, we read this sentence like this, notl iket hiso rt hat. We group the letters of a given word together because there are no spaces between the letters, and we perceive words because there are spaces between each word. Here are some more examples: Cany oum akes enseo ft hiss entence? What doth es e wor dsmea n? We might also use the principle of similarity to group things in our visual fields. According to this principle, things that are alike tend to be grouped together (Figure 5.27). For example, when watching a football game, we tend to group individuals based on the colors of their uniforms. When watching an offensive drive, we can get a 5.6 • Gestalt Principles of Perception 169
+
+even if they are hidden from us. If you were to show an adult a toy, and then hide it behind a curtain, the adult knows that the toy still exists. However, very young infants act as if a hidden object no longer exists. The age at which object permanence is achieved is somewhat controversial (Munakata, McClelland, Johnson, and Siegler, 1997). 1.3 • Contemporary Psychology 21
+
+FIGURE 7.2 Sensations and information are received by our brains, filtered through emotions and memories, and processed to become thoughts. In order to organize this staggering amount of information, the mind has developed a "file cabinet" of sorts in the mind. The different files stored in the file cabinet are called concepts. Concepts are categories or groupings of linguistic information, images, ideas, or memories, such as life experiences. Concepts are, in many ways, big ideas that are generated by observing details, and categorizing and combining these details into cognitive structures. You use concepts to see the relationships among the different elements of your experiences and to keep the information in your mind organized and accessible. Concepts are informed by our semantic memory (you will learn more about semantic memory in a later chapter) and are present in every aspect of our lives; however, one of the easiest places to notice concepts is inside a classroom, where they are discussed explicitly. When you study United States history, for example, you learn about more than just individual events that have happened in America’s past. You absorb a large quantity of information by listening to and participating in discussions, examining maps, and reading first-hand accounts of people’s lives. Your brain analyzes these details and develops an overall understanding of American history. In the process, your brain gathers details that inform and refine your understanding of related concepts like democracy, power, and freedom. Concepts can be complex and abstract, like justice, or more concrete, like types of birds. In psychology, for example, Piaget’s stages of development are abstract concepts. Some concepts, like tolerance, are agreed upon by many people, because they have been used in various ways over many years. Other concepts, like the characteristics of your ideal friend or your family’s birthday traditions, are personal and individualized. In this way, concepts touch every aspect of our lives, from our many daily routines to the guiding principles behind the way governments function. Another technique used by your brain to organize information is the identification of prototypes for the concepts you have developed. A prototype is the best example or representation of a concept. For example, what comes to your mind when you think of a dog? Most likely your early experiences with dogs will shape what you imagine. If your first pet was a Golden Retriever, there is a good chance that this would
+
+your judgment representative sample subset of the population that accurately represents the general population role schema set of expectations that define the behaviors of a person occupying a particular role schema (plural = schemata) mental construct consisting of a cluster or collection of related concepts semantics process by which we derive meaning from morphemes and words standard deviation measure of variability that describes the difference between a set of scores and their mean standardization method of testing in which administration, scoring, and interpretation of results are consistent syntax manner by which words are organized into sentences trial and error problem-solving strategy in which multiple solutions are attempted until the correct one is found triarchic theory of intelligence Sternberg’s theory of intelligence; three facets of intelligence: practical, creative, and analytical working backwards heuristic in which you begin to solve a problem by focusing on the end result Summary 7.1 What Is Cognition? In this section, you were introduced to cognitive psychology, which is the study of cognition, or the brain’s ability to think, perceive, plan, analyze, and remember. Concepts and their corresponding prototypes help us quickly organize our thinking by creating categories into which we can sort new information. We also develop schemata, which are clusters of related concepts. Some schemata involve routines of thought and behavior, and these help us function properly in various situations without having to “think twice” about them. Schemata show up in social situations and routines of daily behavior. 7.2 Language Language is a communication system that has both a lexicon and a system of grammar. Language acquisition occurs naturally and effortlessly during the early stages of life, and this acquisition occurs in a predictable sequence for individuals around the world. Language has a strong influence on thought, and the concept of how language may influence cognition remains an area of study and debate in psychology. 7.3 Problem Solving Many different strategies exist for solving problems. Typical strategies include trial and error, applying algorithms, and using heuristics. To solve a large, complicated problem, it often helps to break the problem into smaller steps that can be accomplished individually, leading to an overall solution. Roadblocks to problem solving include a mental set, functional fixedness, and various biases that can cloud decision making skills. 7.4 What Are Intelligence and Creativity? Intelligence is a complex characteristic of cognition. Many theories have been developed to explain what intelligence is and
+
+FIGURE 7.10 In Duncker's classic study, participants were provided the three objects in the top panel and asked to solve the problem. The solution is shown in the bottom portion. LINK TO LEARNING Check out this Apollo 13 scene about NASA engineers overcoming functional fixedness (http://openstax.org/l/ Apollo13) to learn more. Researchers have investigated whether functional fixedness is affected by culture. In one experiment, individuals from the Shuar group in Ecuador were asked to use an object for a purpose other than that for which the object was originally intended. For example, the participants were told a story about a bear and a rabbit that were separated by a river and asked to select among various objects, including a spoon, a cup, erasers, and so on, to help the animals. The spoon was the only object long enough to span the imaginary river, but if the spoon was presented in a way that reflected its normal usage, it took participants longer to choose the spoon to solve the problem. (German & Barrett, 2005). The researchers wanted to know if exposure to highly specialized tools, as occurs with individuals in industrialized nations, affects their ability to transcend functional fixedness. It was determined that functional fixedness is experienced in both industrialized and nonindustrialized cultures (German & Barrett, 2005). In order to make good decisions, we use our knowledge and our reasoning. Often, this knowledge and reasoning is sound and solid. Sometimes, however, we are swayed by biases or by others manipulating a situation. For example, let’s say you and three friends wanted to rent a house and had a combined target budget of $1,600. The realtor shows you only very run-down houses for $1,600 and then shows you a very nice house for $2,000. Might you ask each person to pay more in rent to get the $2,000 home? Why would the realtor show you the run-down houses and the nice house? The realtor may be challenging your anchoring bias. An anchoring bias occurs when you focus on one piece of information when making a decision or solving a problem. In this case, you’re so focused on the amount of money you are willing to spend that you may not recognize what kinds of houses are available at that price point. The confirmation bias is the tendency to focus on information that confirms your existing beliefs. For example, if you think that your
+
+8.1 How Memory Functions LEARNING OBJECTIVES By the end of this section, you will be able to: • Discuss the three basic functions of memory • Describe the three stages of memory storage • Describe and distinguish between procedural and declarative memory and semantic and episodic memory Memory is an information processing system; therefore, we often compare it to a computer. Memory is the set of processes used to encode, store, and retrieve information over different periods of time (Figure 8.2). FIGURE 8.2 Encoding involves the input of information into the memory system. Storage is the retention of the encoded information. Retrieval, or getting the information out of memory and back into awareness, is the third function. LINK TO LEARNING Watch this video about the neuroscience of memory (http://openstax.org/l/unexpectfact) to learn more. Encoding We get information into our brains through a process called encoding, which is the input of information into the memory system. Once we receive sensory information from the environment, our brains label or code it. We organize the information with other similar information and connect new concepts to existing concepts. Encoding information occurs through automatic processing and effortful processing. If someone asks you what you ate for lunch today, more than likely you could recall this information quite easily. This is known as automatic processing, or the encoding of details like time, space, frequency, and the meaning of words. Automatic processing is usually done without any conscious awareness. Recalling the last time you studied for a te
+            </div>
+        </div>
+        
+        <div class="stats">
+            <div class="stat-item">
+                <div class="stat-label">Sections Used</div>
+                <div class="stat-value">11</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-label">Pages Referenced</div>
+                <div class="stat-value">11</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-label">Keywords Found</div>
+                <div class="stat-value">0</div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            Generated from Psychology 2e Textbook • Question 27 • 2026-02-26
+        </div>
+    </div>
+    
+    <!-- Font Awesome for icons -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
+</body>
+</html>

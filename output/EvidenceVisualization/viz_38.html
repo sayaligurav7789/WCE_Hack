@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evidence Visualization - Question 38</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 30px;
+        }
+        
+        .header h1 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        
+        .header .question {
+            font-size: 18px;
+            opacity: 0.9;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 10px;
+            line-height: 1.5;
+        }
+        
+        .keywords-bar {
+            background: #f0f0f0;
+            padding: 15px 30px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .keywords-title {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+        
+        .keyword-badge {
+            display: inline-block;
+            background: #ffeb3b;
+            color: #333;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            margin: 0 5px 5px 0;
+            font-weight: 500;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .answer-section {
+            padding: 30px;
+            background: #f8f9fa;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .answer-section h3 {
+            color: #333;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .answer-section h3 i {
+            color: #667eea;
+        }
+        
+        .answer-content {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            line-height: 1.8;
+            color: #444;
+            border-left: 4px solid #667eea;
+        }
+        
+        .answer-content mark {
+            background-color: #ffeb3b;
+            padding: 2px 0;
+            font-weight: 500;
+        }
+        
+        .evidence-section {
+            padding: 30px;
+        }
+        
+        .evidence-section h3 {
+            color: #333;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .evidence-section h3 i {
+            color: #667eea;
+        }
+        
+        .evidence-card {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-left: 4px solid #667eea;
+        }
+        
+        .evidence-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .section-name {
+            font-weight: 600;
+            color: #333;
+            background: #e8eaf6;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+        }
+        
+        .page-number {
+            color: #666;
+            background: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .relevance {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+        }
+        
+        .term-badge {
+            display: inline-block;
+            background: #ffeb3b;
+            color: #333;
+            padding: 3px 10px;
+            border-radius: 15px;
+            font-size: 12px;
+            margin: 0 5px 5px 0;
+            font-weight: 500;
+        }
+        
+        .evidence-text {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            color: #555;
+            line-height: 1.6;
+            margin: 15px 0 0 0;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .evidence-text mark {
+            background-color: #ffeb3b;
+            padding: 2px 0;
+            font-weight: 500;
+        }
+        
+        .highlighted-context {
+            padding: 30px;
+            background: #f8f9fa;
+            border-top: 1px solid #e0e0e0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .highlighted-context h3 {
+            color: #333;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .context-box {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            max-height: 400px;
+            overflow-y: auto;
+            border: 1px solid #e0e0e0;
+            line-height: 1.8;
+            font-size: 14px;
+        }
+        
+        .context-box mark {
+            background-color: #ffeb3b;
+            padding: 2px 0;
+            font-weight: 500;
+        }
+        
+        .stats {
+            display: flex;
+            gap: 15px;
+            padding: 20px 30px;
+            background: white;
+            flex-wrap: wrap;
+        }
+        
+        .stat-item {
+            background: #f8f9fa;
+            padding: 10px 20px;
+            border-radius: 10px;
+            flex: 1;
+            min-width: 120px;
+            text-align: center;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .stat-label {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 5px;
+        }
+        
+        .stat-value {
+            font-size: 24px;
+            font-weight: 600;
+            color: #667eea;
+        }
+        
+        .footer {
+            padding: 20px 30px;
+            background: #f0f0f0;
+            text-align: center;
+            color: #666;
+            font-size: 14px;
+            border-top: 1px solid #e0e0e0;
+        }
+        
+        @media (max-width: 768px) {
+            .header {
+                padding: 20px;
+            }
+            
+            .answer-section,
+            .evidence-section,
+            .highlighted-context {
+                padding: 20px;
+            }
+            
+            .evidence-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📚 Evidence Visualization</h1>
+            <div class="question">
+                <strong>Question 38:</strong> 
+            </div>
+        </div>
+        
+        <div class="keywords-bar">
+            <div class="keywords-title">🔑 Extracted Keywords:</div>
+
+        </div>
+        
+        <div class="answer-section">
+            <h3><i class="fas fa-robot"></i> Generated Answer</h3>
+            <div class="answer-content">
+                According to Freud, the stages of psychosexual development are:
+
+1. Oral Stage (0-1 year): Pleasure is focused on the mouth, and conflict arises during weaning.
+2. Anal Stage (1-3 years): Pleasure is focused on the anus, and conflict arises during toilet training.
+3. Phallic Stage (3-6 years): Pleasure is focused on the genitals, and conflict arises due to the Oedipus complex.
+4. Latency Stage (6-12 years): No specific erogenous zone is focused on, and children redirect their energy to other activities.
+5. Genital Stage (12+ years): Pleasure is focused on the genitals, and individuals develop mature sexual interests.
+
+These stages are outlined in Table 11.1 in the provided textbook context.
+            </div>
+        </div>
+        
+        <div class="evidence-section">
+            <h3><i class="fas fa-book"></i> Evidence by Section</h3>
+
+            <div class="evidence-card">
+                <div class="evidence-header">
+                    <span class="section-name">📖 11.1
+Oral Stage
+In the oral stage</span>
+                    <span class="page-number">📄 Page 292</span>
+                    <span class="relevance">⭐ Relevance: 0.7</span>
+                </div>
+                <div>
+
+                </div>
+                <div class="evidence-text">
+                    This section discusses 11.1
+oral stage
+in the oral stage. The content here is relevant to your question about ...
+                </div>
+            </div>
+
+            <div class="evidence-card">
+                <div class="evidence-header">
+                    <span class="section-name">📖 11.1 What Is Personality</span>
+                    <span class="page-number">📄 Page 296</span>
+                    <span class="relevance">⭐ Relevance: 0.75</span>
+                </div>
+                <div>
+
+                </div>
+                <div class="evidence-text">
+                    This section discusses 11.1 what is personality. The content here is relevant to your question about ...
+                </div>
+            </div>
+
+            <div class="evidence-card">
+                <div class="evidence-header">
+                    <span class="section-name">📖 11.3 Neo-Freudians: Adler</span>
+                    <span class="page-number">📄 Page 297</span>
+                    <span class="relevance">⭐ Relevance: 0.8</span>
+                </div>
+                <div>
+
+                </div>
+                <div class="evidence-text">
+                    This section discusses 11.3 neo-freudians: adler. The content here is relevant to your question about ...
+                </div>
+            </div>
+
+            <div class="evidence-card">
+                <div class="evidence-header">
+                    <span class="section-name">📖 11.7 Defense mechanisms are unconscious protective behaviors that work to reduce anxiety</span>
+                    <span class="page-number">📄 Page 305</span>
+                    <span class="relevance">⭐ Relevance: 0.85</span>
+                </div>
+                <div>
+
+                </div>
+                <div class="evidence-text">
+                    This section discusses 11.7 defense mechanisms are unconscious protective behaviors that work to reduce anxiety. The content here is relevant to your question about ...
+                </div>
+            </div>
+
+            <div class="evidence-card">
+                <div class="evidence-header">
+                    <span class="section-name">📖 11.8 Alfred Adler proposed the concept of the inferiority complex</span>
+                    <span class="page-number">📄 Page 319</span>
+                    <span class="relevance">⭐ Relevance: 0.9</span>
+                </div>
+                <div>
+
+                </div>
+                <div class="evidence-text">
+                    This section discusses 11.8 alfred adler proposed the concept of the inferiority complex. The content here is relevant to your question about ...
+                </div>
+            </div>
+
+        </div>
+        
+        <div class="highlighted-context">
+            <h3><i class="fas fa-highlighter"></i> Highlighted Context</h3>
+            <div class="context-box">
+                theories regarding how babies and children grow and develop into happy, healthy adults. We explore several of these theories in this section. Psychosexual Theory of Development Sigmund Freud (1856–1939) believed that personality develops during early childhood. For Freud, childhood experiences shape our personalities and behavior as adults. Freud viewed development as discontinuous; he believed that each of us must pass through a series of stages during childhood, and that if we lack proper nurturance and parenting during a stage, we may become stuck, or fixated, in that stage. Freud’s stages are called the stages of psychosexual development. According to Freud, children’s pleasure-seeking urges are focused on a different area of the body, called an erogenous zone, at each of the five stages of development: oral, anal, phallic, latency, and genital. While most of Freud’s ideas have not found support in modern research, we cannot discount the contributions that Freud has made to the field of psychology. Psychologists today dispute Freud's psychosexual stages as a legitimate explanation for how one's personality develops, but what we can take away from Freud’s theory is 284 9 • Lifespan Development Access for free at openstax.org
+
+and cultural influences of Freud’s day in Vienna at the turn of the 20th century. During this era, a climate of sexual repression, combined with limited understanding and education surrounding human sexuality, heavily influenced Freud’s perspective. Given that sex was a taboo topic, Freud assumed that negative emotional states (neuroses) stemmed from suppression of unconscious sexual and aggressive urges. For Freud, his own recollections and interpretations of patients’ experiences and dreams were sufficient proof that psychosexual stages were universal events in early childhood. Freud’s Stages of Psychosexual Development Stage Age (years) Erogenous Zone Major Conflict Adult Fixation Example Oral 0–1 Mouth Weaning off breast or bottle Smoking, overeating Anal 1–3 Anus Toilet training Neatness, messiness Phallic 3–6 Genitals Oedipus/Electra complex Vanity, overambition Latency 6–12 None None None TABLE 11.1 366 11 • Personality Access for free at openstax.org
+
+later proposed a psychosocial theory of development, suggesting that an individual’s personality develops throughout the lifespan—a departure from Freud’s view that personality is fixed in early life. In his theory, Erikson emphasized the social relationships that are important at each stage of personality development, in contrast to Freud’s emphasis on sex. Erikson identified eight stages, each of which represents a conflict or developmental task (Table 11.2). The development of a healthy personality and a sense of competence depend on the successful completion of each task. 11.3 • Neo-Freudians: Adler, Erikson, Jung, and Horney 369
+
+Genital Stage The final stage is the genital stage (from puberty on). In this stage, there is a sexual reawakening as the incestuous urges resurface. The young person redirects these urges to other, more socially acceptable partners (who often resemble the other-sex parent). People in this stage have mature sexual interests, which for Freud meant a strong desire for the opposite sex. Individuals who successfully completed the previous stages, reaching the genital stage with no fixations, are said to be well-balanced, healthy adults. While most of Freud’s ideas have not found support in modern research, and several contemporary researchers rejected his premises, we cannot discount the contributions that Freud has made to the field of psychology. It was Freud who pointed out that a large part of our mental life is influenced by the experiences of early childhood and takes place outside of our conscious awareness; his theories paved the way for others. While Freud's focus on biological drives led him to emphasize the impact of sociocultural factors on personality development, his followers quickly realized that biology alone could not account for the diversity they encountered as the practice of psychoanalysis spread during the time of the Nazi Holocaust. The antisemitism which was prevalent during this period of time may have led mainstream psychoanalysts to focus primarily on the universality of the psychological structures of the mind. 11.3 Neo-Freudians: Adler, Erikson, Jung, and Horney LEARNING OBJECTIVES By the end of this section, you will be able to: • Discuss the concept of the inferiority complex • Discuss the core differences between Erikson’s and Freud’s views on personality • Discuss Jung’s ideas of the collective unconscious and archetypes • Discuss the work of Karen Horney, including her revision of Freud’s “penis envy” Freud attracted many followers who modified his ideas to create new theories about personality. These theorists, referred to as neo-Freudians, generally agreed with Freud that childhood experiences matter, but deemphasized sex, focusing more on the social environment and effects of culture on personality. Four notable neo-Freudians include Alfred Adler, Erik Erikson, Carl Jung (pronounced “Yoong”), and Karen Horney (pronounced “HORN-eye”). Alfred Adler Alfred Adler, a colleague of Freud’s and the first president of the Vienna Psychoanalytical Society (Freud’s inner circle of colleagues), was the first major theorist to break away from Freud (Figure 11.8). He subsequently founded a school of psychology called individual psychology, which focuses on our drive
+
+have very little control over the types and/or frequencies of displayed behavior. In a case study, developmental psychologists collect a great deal of information from one individual in order to better understand physical and psychological changes over the lifespan. This particular approach is an excellent way to better understand individuals, who are exceptional in some way, but it is especially prone to researcher bias in interpretation, and it is difficult to generalize conclusions to the larger population. In one classic example of this research method being applied to a study of lifespan development Sigmund Freud analyzed the development of a child known as “Little Hans” (Freud, 1909/1949). Freud’s findings helped inform his theories of psychosexual development in children, which you will learn about later in this chapter. Little Genie, the CONNECT THE CONCEPTS 280 9 • Lifespan Development Access for free at openstax.org
+
+more likely to be bullied (Pollack & Shuster, 2000). Psychologists and clinicians also study the impact of gender identity and the impacts of puberty on transgender and gender-nonconforming youth. This is a relatively recent area of study, and the impacts should not be over-generalized. However, the research seems to indicate that transgender and gender-nonconforming youth who are supported in their identity do not have significantly higher incidences of depression or anxiety symptoms when compared to control groups, while those who are not supported exhibit more symptoms and risk factors (Olson, Durwood, & McLaughlin, 2016). Expression and exploration of gender identity can take many forms and manifest at different times depending on a wide array of factors. The adolescent brain also remains under development. Up until puberty, brain cells continue to bloom in the frontal region. Adolescents engage in increased risk-taking behaviors and emotional outbursts possibly because the frontal lobes of their brains are still developing (Figure 9.16). Recall that this area is responsible for judgment, impulse control, and planning, and it is still maturing into early adulthood (Casey, Tottenham, 9.3 • Stages of Development 307
+
+Stage Age (years) Erogenous Zone Major Conflict Adult Fixation Example Genital 12+ Genitals None None TABLE 11.1 Oral Stage In the oral stage (birth to 1 year), pleasure is focused on the mouth. Eating and the pleasure derived from sucking (nipples, pacifiers, and thumbs) play a large part in a baby’s first year of life. At around 1 year of age, babies are weaned from the bottle or breast, and this process can create conflict if not handled properly by caregivers. According to Freud, an adult who smokes, drinks, overeats, or bites her nails is fixated in the oral stage of her psychosexual development; she may have been weaned too early or too late, resulting in these fixation tendencies, all of which seek to ease anxiety. Anal Stage After passing through the oral stage, children enter what Freud termed the anal stage (1–3 years). In this stage, children experience pleasure in their bowel and bladder movements, so it makes sense that the conflict in this stage is over toilet training. During this stage of development, children work to master control of themselves. Freud suggested that success at the anal stage depended on how parents handled toilet training. Parents who offer praise and rewards encourage positive results and can help children feel competent. Parents who are harsh in toilet training can cause a child to become so fearful of soiling that they over-control and become fixated at the anal stage, leading to the development of an anal-retentive personality. The anal-retentive personality is stingy and stubborn, has a compulsive need for order and neatness, and might be considered a perfectionist. If parents are too lenient in toilet training, the child may fail to develop sufficient self-control, become fixated at this stage, and develop an anal-expulsive personality. The anal-expulsive personality is messy, careless, disorganized, and prone to emotional outbursts. Phallic Stage Freud’s third stage of psychosexual development is the phallic stage (3–6 years), corresponding to the age when children become aware of their bodies and recognize the differences between boys and girls. The erogenous zone in this stage is the genitals. Conflict arises when the child feels a desire for the opposite-sex parent, and jealousy and hatred toward the same-sex parent. For boys, this is called the Oedipus complex, involving a boy's desire for his mother and his urge to replace his father who is seen as a rival for the mother’s attention.
+
+Freud also proposed three components to our personality: the id, ego, and superego. The job of the ego is to balance the sexual and aggressive drives of the id with the moral ideal of the superego. Freud also said that personality develops through a series of psychosexual stages. In each stage, pleasure focuses on a specific erogenous zone. Failure to resolve a stage can lead one to become fixated in that stage, leading to unhealthy personality traits. Successful resolution of the stages leads to a healthy adult. 11.3 Neo-Freudians: Adler, Erikson, Jung, and Horney The neo-Freudians were psychologists whose work followed from Freud’s. They generally agreed with Freud that childhood experiences matter, but they decreased the emphasis on sex and focused more on the social 392 11 • Summary Access for free at openstax.org
+
+cognitive, and psychosocial milestones. FIGURE 9.15 Peers are a primary influence on our development in adolescence. (credit: "manseok_Pixabay"/ Pixabay) Physical Development As noted above, adolescence begins with puberty. While the sequence of physical changes in puberty is predictable, the onset and pace of puberty vary widely. Several physical changes occur during puberty, such as adrenarche and gonadarche, the maturing of the adrenal glands and sex glands, respectively. Also during this time, primary and secondary sexual characteristics develop and mature. Primary sexual characteristics are organs specifically needed for reproduction, like the uterus and ovaries in females and testes in males. Secondary sexual characteristics are physical signs of sexual maturation that do not directly involve sex organs, such as development of breasts and hips in females, and development of facial hair and a deepened voice in males. Females experience menarche, the beginning of menstrual periods, usually around
+            </div>
+        </div>
+        
+        <div class="stats">
+            <div class="stat-item">
+                <div class="stat-label">Sections Used</div>
+                <div class="stat-value">10</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-label">Pages Referenced</div>
+                <div class="stat-value">11</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-label">Keywords Found</div>
+                <div class="stat-value">0</div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            Generated from Psychology 2e Textbook • Question 38 • 2026-02-26
+        </div>
+    </div>
+    
+    <!-- Font Awesome for icons -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
+</body>
+</html>

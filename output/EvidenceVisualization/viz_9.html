@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evidence Visualization - Question 9</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 30px;
+        }
+        
+        .header h1 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        
+        .header .question {
+            font-size: 18px;
+            opacity: 0.9;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 10px;
+            line-height: 1.5;
+        }
+        
+        .keywords-bar {
+            background: #f0f0f0;
+            padding: 15px 30px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .keywords-title {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+        
+        .keyword-badge {
+            display: inline-block;
+            background: #ffeb3b;
+            color: #333;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            margin: 0 5px 5px 0;
+            font-weight: 500;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .answer-section {
+            padding: 30px;
+            background: #f8f9fa;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .answer-section h3 {
+            color: #333;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .answer-section h3 i {
+            color: #667eea;
+        }
+        
+        .answer-content {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            line-height: 1.8;
+            color: #444;
+            border-left: 4px solid #667eea;
+        }
+        
+        .answer-content mark {
+            background-color: #ffeb3b;
+            padding: 2px 0;
+            font-weight: 500;
+        }
+        
+        .evidence-section {
+            padding: 30px;
+        }
+        
+        .evidence-section h3 {
+            color: #333;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .evidence-section h3 i {
+            color: #667eea;
+        }
+        
+        .evidence-card {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-left: 4px solid #667eea;
+        }
+        
+        .evidence-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .section-name {
+            font-weight: 600;
+            color: #333;
+            background: #e8eaf6;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+        }
+        
+        .page-number {
+            color: #666;
+            background: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .relevance {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+        }
+        
+        .term-badge {
+            display: inline-block;
+            background: #ffeb3b;
+            color: #333;
+            padding: 3px 10px;
+            border-radius: 15px;
+            font-size: 12px;
+            margin: 0 5px 5px 0;
+            font-weight: 500;
+        }
+        
+        .evidence-text {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            color: #555;
+            line-height: 1.6;
+            margin: 15px 0 0 0;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .evidence-text mark {
+            background-color: #ffeb3b;
+            padding: 2px 0;
+            font-weight: 500;
+        }
+        
+        .highlighted-context {
+            padding: 30px;
+            background: #f8f9fa;
+            border-top: 1px solid #e0e0e0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .highlighted-context h3 {
+            color: #333;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .context-box {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            max-height: 400px;
+            overflow-y: auto;
+            border: 1px solid #e0e0e0;
+            line-height: 1.8;
+            font-size: 14px;
+        }
+        
+        .context-box mark {
+            background-color: #ffeb3b;
+            padding: 2px 0;
+            font-weight: 500;
+        }
+        
+        .stats {
+            display: flex;
+            gap: 15px;
+            padding: 20px 30px;
+            background: white;
+            flex-wrap: wrap;
+        }
+        
+        .stat-item {
+            background: #f8f9fa;
+            padding: 10px 20px;
+            border-radius: 10px;
+            flex: 1;
+            min-width: 120px;
+            text-align: center;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .stat-label {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 5px;
+        }
+        
+        .stat-value {
+            font-size: 24px;
+            font-weight: 600;
+            color: #667eea;
+        }
+        
+        .footer {
+            padding: 20px 30px;
+            background: #f0f0f0;
+            text-align: center;
+            color: #666;
+            font-size: 14px;
+            border-top: 1px solid #e0e0e0;
+        }
+        
+        @media (max-width: 768px) {
+            .header {
+                padding: 20px;
+            }
+            
+            .answer-section,
+            .evidence-section,
+            .highlighted-context {
+                padding: 20px;
+            }
+            
+            .evidence-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📚 Evidence Visualization</h1>
+            <div class="question">
+                <strong>Question 9:</strong> 
+            </div>
+        </div>
+        
+        <div class="keywords-bar">
+            <div class="keywords-title">🔑 Extracted Keywords:</div>
+
+        </div>
+        
+        <div class="answer-section">
+            <h3><i class="fas fa-robot"></i> Generated Answer</h3>
+            <div class="answer-content">
+                Social psychology is the subfield of psychology that studies the power of the situation to influence individuals' thoughts, feelings, and behaviors. It examines how people affect one another, and it looks at the power of the situation. Social psychologists are interested in all aspects of personality and social interaction, exploring the influence of interpersonal and group relationships on human behavior.
+            </div>
+        </div>
+        
+        <div class="evidence-section">
+            <h3><i class="fas fa-book"></i> Evidence by Section</h3>
+
+            <div class="evidence-card">
+                <div class="evidence-header">
+                    <span class="section-name">📖 1.1 What Is Psychology</span>
+                    <span class="page-number">📄 Page 20</span>
+                    <span class="relevance">⭐ Relevance: 0.7</span>
+                </div>
+                <div>
+
+                </div>
+                <div class="evidence-text">
+                    This section discusses 1.1 what is psychology. The content here is relevant to your question about ...
+                </div>
+            </div>
+
+            <div class="evidence-card">
+                <div class="evidence-header">
+                    <span class="section-name">📖 1.13 Each of the dimensions of the Five Factor model is shown in this figure</span>
+                    <span class="page-number">📄 Page 28</span>
+                    <span class="relevance">⭐ Relevance: 0.75</span>
+                </div>
+                <div>
+
+                </div>
+                <div class="evidence-text">
+                    This section discusses 1.13 each of the dimensions of the five factor model is shown in this figure. The content here is relevant to your question about ...
+                </div>
+            </div>
+
+            <div class="evidence-card">
+                <div class="evidence-header">
+                    <span class="section-name">📖 1.9 Noam Chomsky was very influential in beginning the cognitive revolution</span>
+                    <span class="page-number">📄 Page 35</span>
+                    <span class="relevance">⭐ Relevance: 0.8</span>
+                </div>
+                <div>
+
+                </div>
+                <div class="evidence-text">
+                    This section discusses 1.9 noam chomsky was very influential in beginning the cognitive revolution. The content here is relevant to your question about ...
+                </div>
+            </div>
+
+            <div class="evidence-card">
+                <div class="evidence-header">
+                    <span class="section-name">📖 11.4 Learning Approaches
+Behavioral theorists view personality as significantly shaped and impacted by the reinforcements and
+consequences outside of the organism</span>
+                    <span class="page-number">📄 Page 381</span>
+                    <span class="relevance">⭐ Relevance: 0.85</span>
+                </div>
+                <div>
+
+                </div>
+                <div class="evidence-text">
+                    This section discusses 11.4 learning approaches
+behavioral theorists view personality as significantly shaped and impacted by the reinforcements and
+consequences outside of the organism. The content here is relevant to your question about ...
+                </div>
+            </div>
+
+            <div class="evidence-card">
+                <div class="evidence-header">
+                    <span class="section-name">📖 11.8 Alfred Adler proposed the concept of the inferiority complex</span>
+                    <span class="page-number">📄 Page 405</span>
+                    <span class="relevance">⭐ Relevance: 0.9</span>
+                </div>
+                <div>
+
+                </div>
+                <div class="evidence-text">
+                    This section discusses 11.8 alfred adler proposed the concept of the inferiority complex. The content here is relevant to your question about ...
+                </div>
+            </div>
+
+        </div>
+        
+        <div class="highlighted-context">
+            <h3><i class="fas fa-highlighter"></i> Highlighted Context</h3>
+            <div class="context-box">
+                Summary 12.1 What Is Social Psychology? Social psychology is the subfield of psychology that studies the power of the situation to influence individuals’ thoughts, feelings, and behaviors. Psychologists categorize the causes of human behavior as those due to internal factors, such as personality, or those due to external factors, such as cultural and other social influences. Behavior is better explained, however, by using both approaches. Lay people tend to over-rely on dispositional explanations for behavior and ignore the power of situational influences, a perspective called the fundamental attribution error. People from individualistic cultures are more likely to display this bias versus people from collectivistic cultures. Our explanations for our own and others behaviors can be biased due to not having enough information about others’ motivations for behaviors and by providing explanations that bolster our self-esteem. 12.2 Self-presentation Human behavior is largely influenced by our social roles, norms, and scripts. In order to know how to act in a given situation, we have shared cultural knowledge of how to behave depending on our role in society. Social norms dictate the behavior that is appropriate or inappropriate for each role. Each social role has scripts that help humans learn the sequence of appropriate behaviors in a given setting. The famous Stanford prison experiment is an example of how the power of the situation can dictate the social roles, norms, and scripts we follow in a given situation, even if this behavior is contrary to our typical behavior. 12.3 Attitudes and Persuasion Attitudes are our evaluations or feelings toward a person, idea, or object and typically are positive or negative. Our attitudes and beliefs are influenced not only by external forces, but also by internal influences that we control. An internal form of attitude change is cognitive dissonance or the tension we experience when our thoughts, feelings, and behaviors are in conflict. In order to reduce dissonance, individuals can change their behavior, attitudes, or cognitions, or add a new cognition. External forces of persuasion include advertising; the features of advertising that influence our behaviors include the source, message, and audience. There are two primary routes to persuasion. The central route to persuasion uses facts and information to persuade potential consumers. The peripheral route uses positive association with cues such as beauty, fame, and positive emotions. 12.4 Conformity, Compliance, and Obedience The power of the situation can lead people to conform, or go along
+
+12.2 Self-presentation LEARNING OBJECTIVES By the end of this section, you will be able to: • Describe social roles and how they influence behavior • Explain what social norms are and how they influence behavior • Define script • Describe the findings and criticisms of Zimbardo’s Stanford prison experiment As you’ve learned, social psychology is the study of how people affect one another’s thoughts, feelings, and behaviors. We have discussed situational perspectives and social psychology’s emphasis on the ways in which a person’s environment, including culture and other social influences, affect behavior. In this section, we examine situational forces that have a strong influence on human behavior including social roles, social norms, and scripts. We discuss how humans use the social environment as a source of information, or cues, on how to behave. Situational influences on our behavior have important consequences, such as whether we will help a stranger in an emergency or how we would behave in an unfamiliar environment. Social Roles One major social determinant of human behavior is our social roles. A social role is a pattern of behavior that is expected of a person in a given setting or group (Hare, 2003). Each one of us has several social roles. You may be, at the same time, a student, a parent, an aspiring teacher, a son or daughter, a spouse, and a lifeguard. How do these social roles influence your behavior? Social roles are defined by culturally shared knowledge. That is, nearly everyone in a given culture knows what behavior is expected of a person in a given role. For example, what is the social role for a student? If you look around a college classroom you will likely see students engaging in studious behavior, taking notes, listening to the professor, reading the textbook, and sitting quietly at their desks (Figure 12.8). Of course you may see students deviating from the expected studious behavior such as texting on their phones or using Facebook on their laptops, but in all cases, the students that you observe are attending class—a part of the social role of students. FIGURE 12.8 Being a student is just one of the many social roles you have. (credit: modification of work by “Rural Institute”/Flickr) Social roles, and our related behavior, can vary across different settings. How do you behave when you are engaging in the role of a child attending a family function?
+
+witnessed the incident, as he was playing video games with his aunt. Why did each of these nights end so tragically for those involved? What dynamics contributed to the outcomes? How can these deaths be prevented? Social psychologists examine how the presence of others impacts how a person behaves and reacts, whether that person is an athlete playing a game, a police officer on the job, or a worshiper attending a religious service. Social psychologists believe that a person's behavior is influenced by who else is present in a given situation and the composition of social groups. 12.1 What Is Social Psychology? LEARNING OBJECTIVES By the end of this section, you will be able to: • Define social psychology • Describe situational versus dispositional influences on behavior • Describe the fundamental attribution error • Explain actor-observer bias • Describe self-serving bias • Explain the just-world hypothesis Social psychology examines how people affect one another, and it looks at the power of the situation. According to the American Psychological Association (n.d.), social psychologists "are interested in all aspects of personality and social interaction, exploring the influence of interpersonal and group relationships on human behavior." Throughout this chapter, we will examine how the presence of other individuals and groups of people impacts a person's behaviors, thoughts, and feelings. Essentially, people will change their behavior to align with the social situation at hand. If we are in a new situation or are unsure how to behave, we will take our cues from other individuals. The field of social psychology studies topics at both the intra- and interpersonal levels. Intrapersonal topics (those that pertain to the individual) include emotions and attitudes, the self, and social cognition (the ways in which we think about ourselves and others). Interpersonal topics (those that pertain to dyads and groups) include helping behavior (Figure 12.2), aggression, prejudice and discrimination, attraction and close relationships, and group processes and intergroup relationships. FIGURE 12.2 Social psychology deals with all kinds of interactions between people, spanning a wide range of how we connect: from moments of confrontation to moments of working together and helping others, as shown here. (credit: Sgt. Derec Pierson, U.S. Army) Social psychologists focus on how people conceptualize and interpret situations and how these interpretations influence their thoughts, feelings, and behaviors (Ross & Nisbett, 1991). Thus, social psychology studies individuals in a social context and how situational variables interact to
+
+including experimentation, rather than a method based only on forms of logical argument or previous authorities. It was not until the late 1800s that psychology became accepted as its own academic discipline. Before this time, the workings of the mind were considered under the auspices of philosophy. Given that any behavior is, at its roots, biological, some areas of psychology take on aspects of a natural science like biology. No biological organism exists in isolation, and our behavior is influenced by our interactions with others. Therefore, psychology is also a social science. WHY STUDY PSYCHOLOGY? Often, students take their first psychology course because they are interested in helping others and want to learn more about themselves and why they act the way they do. Sometimes, students take a psychology course because it either satisfies a general education requirement or is required for a program of study such as nursing or pre-med. Many of these students develop such an interest in the area that they go on to declare psychology as their major. As a result, psychology is one of the most popular majors on college campuses across the United States (Johnson & Lubin, 2011). A number of well-known individuals were psychology majors. Just a few famous names on this list are Facebook’s creator Mark Zuckerberg, television personality and political satirist Jon Stewart, actress Natalie Portman, and filmmaker Wes Craven (Halonen, 2011). About 6 percent of all bachelor degrees granted in the United States are in the discipline of psychology (U.S. Department of Education, 2016). 8 1 • Introduction to Psychology Access for free at openstax.org
+
+interpersonal processes of conformity and obedience, aggression and altruism, and, finally, love and attraction. Situational and Dispositional Influences on Behavior Behavior is a product of both the situation (e.g., cultural influences, social roles, and the presence of bystanders) and of the person (e.g., personality characteristics). Subfields of psychology tend to focus on one influence or behavior over others. Situationism is the view that our behavior and actions are determined by our immediate environment and surroundings. In contrast, dispositionism holds that our behavior is determined by internal factors (Heider, 1958). An internal factor is an attribute of a person and includes personality traits and temperament. Social psychologists have tended to take the situationist perspective, whereas personality psychologists have promoted the dispositionist perspective. Modern approaches to social psychology, however, take both the situation and the individual into account when studying human behavior (Fiske, Gilbert, & Lindzey, 2010). In fact, the field of social-personality psychology has emerged to study the complex interaction of internal and situational factors that affect human behavior (Mischel, 1977; Richard, Bond, & Stokes-Zoota, 2003). Fundamental Attribution Error In the United States, the predominant culture tends to favor a dispositional approach in explaining human behavior. Why do you think this is? We tend to think that people are in control of their own behaviors, and, therefore, any behavior change must be due to something internal, such as their personality, habits, or temperament. According to some social psychologists, people tend to overemphasize internal factors as explanations—or attributions—for the behavior of other people. They tend to assume that the behavior of another person is a trait of that person, and to underestimate the power of the situation on the behavior of others. They tend to fail to recognize when the behavior of another is due to situational variables, and thus to the person’s state. This erroneous assumption is called the fundamental attribution error (Ross, 1977; Riggio & Garcia, 2009). To better understand, imagine this scenario: Jamie returns home from work, and opens the front door to a happy greeting from spouse Morgan who inquires how the day has been. Instead of returning the spouse’s kind greeting, Jamie yells, “Leave me alone!” Why did Jamie yell? How would someone committing the fundamental attribution error explain Jamie’s behavior? The most common response is that Jamie is a mean, angry, or unfriendly person (traits). T
+            </div>
+        </div>
+        
+        <div class="stats">
+            <div class="stat-item">
+                <div class="stat-label">Sections Used</div>
+                <div class="stat-value">9</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-label">Pages Referenced</div>
+                <div class="stat-value">11</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-label">Keywords Found</div>
+                <div class="stat-value">0</div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            Generated from Psychology 2e Textbook • Question 9 • 2026-02-26
+        </div>
+    </div>
+    
+    <!-- Font Awesome for icons -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
+</body>
+</html>

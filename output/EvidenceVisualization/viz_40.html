@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evidence Visualization - Question 40</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 30px;
+        }
+        
+        .header h1 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        
+        .header .question {
+            font-size: 18px;
+            opacity: 0.9;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 10px;
+            line-height: 1.5;
+        }
+        
+        .keywords-bar {
+            background: #f0f0f0;
+            padding: 15px 30px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .keywords-title {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+        
+        .keyword-badge {
+            display: inline-block;
+            background: #ffeb3b;
+            color: #333;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            margin: 0 5px 5px 0;
+            font-weight: 500;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .answer-section {
+            padding: 30px;
+            background: #f8f9fa;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .answer-section h3 {
+            color: #333;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .answer-section h3 i {
+            color: #667eea;
+        }
+        
+        .answer-content {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            line-height: 1.8;
+            color: #444;
+            border-left: 4px solid #667eea;
+        }
+        
+        .answer-content mark {
+            background-color: #ffeb3b;
+            padding: 2px 0;
+            font-weight: 500;
+        }
+        
+        .evidence-section {
+            padding: 30px;
+        }
+        
+        .evidence-section h3 {
+            color: #333;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .evidence-section h3 i {
+            color: #667eea;
+        }
+        
+        .evidence-card {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-left: 4px solid #667eea;
+        }
+        
+        .evidence-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .section-name {
+            font-weight: 600;
+            color: #333;
+            background: #e8eaf6;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+        }
+        
+        .page-number {
+            color: #666;
+            background: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .relevance {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+        }
+        
+        .term-badge {
+            display: inline-block;
+            background: #ffeb3b;
+            color: #333;
+            padding: 3px 10px;
+            border-radius: 15px;
+            font-size: 12px;
+            margin: 0 5px 5px 0;
+            font-weight: 500;
+        }
+        
+        .evidence-text {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            color: #555;
+            line-height: 1.6;
+            margin: 15px 0 0 0;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .evidence-text mark {
+            background-color: #ffeb3b;
+            padding: 2px 0;
+            font-weight: 500;
+        }
+        
+        .highlighted-context {
+            padding: 30px;
+            background: #f8f9fa;
+            border-top: 1px solid #e0e0e0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .highlighted-context h3 {
+            color: #333;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .context-box {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            max-height: 400px;
+            overflow-y: auto;
+            border: 1px solid #e0e0e0;
+            line-height: 1.8;
+            font-size: 14px;
+        }
+        
+        .context-box mark {
+            background-color: #ffeb3b;
+            padding: 2px 0;
+            font-weight: 500;
+        }
+        
+        .stats {
+            display: flex;
+            gap: 15px;
+            padding: 20px 30px;
+            background: white;
+            flex-wrap: wrap;
+        }
+        
+        .stat-item {
+            background: #f8f9fa;
+            padding: 10px 20px;
+            border-radius: 10px;
+            flex: 1;
+            min-width: 120px;
+            text-align: center;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .stat-label {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 5px;
+        }
+        
+        .stat-value {
+            font-size: 24px;
+            font-weight: 600;
+            color: #667eea;
+        }
+        
+        .footer {
+            padding: 20px 30px;
+            background: #f0f0f0;
+            text-align: center;
+            color: #666;
+            font-size: 14px;
+            border-top: 1px solid #e0e0e0;
+        }
+        
+        @media (max-width: 768px) {
+            .header {
+                padding: 20px;
+            }
+            
+            .answer-section,
+            .evidence-section,
+            .highlighted-context {
+                padding: 20px;
+            }
+            
+            .evidence-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📚 Evidence Visualization</h1>
+            <div class="question">
+                <strong>Question 40:</strong> 
+            </div>
+        </div>
+        
+        <div class="keywords-bar">
+            <div class="keywords-title">🔑 Extracted Keywords:</div>
+
+        </div>
+        
+        <div class="answer-section">
+            <h3><i class="fas fa-robot"></i> Generated Answer</h3>
+            <div class="answer-content">
+                According to the provided textbook context, different types of psychological therapies include:
+
+1. Psychoanalysis: Developed by Sigmund Freud, this type of therapy focuses on uncovering repressed impulses and childhood trauma through techniques such as free association and dream analysis.
+
+2. Play therapy: A type of psychoanalytical therapy used with children, where they act out their hopes, fantasies, and traumas using dolls, stuffed animals, and sandbox figurines.
+
+3. Behavior therapy: This type of therapy employs principles of learning from classical and operant conditioning to help clients change undesirable behaviors. Techniques include counterconditioning and token economy.
+
+4. Cognitive therapy: Focuses on how thoughts lead to feelings of distress, and aims to change dysfunctional thoughts to relieve distress.
+
+5. Cognitive-behavioral therapy: Explores how thoughts affect behavior and aims to change cognitive distortions and self-defeating behaviors.
+
+6. Humanistic therapy: Increases self-awareness and acceptance through a focus on conscious thoughts, helping patients articulate thoughts that keep them from achieving their goals.
+
+These are some of the different types of psychological therapies mentioned in the textbook context.
+            </div>
+        </div>
+        
+        <div class="evidence-section">
+            <h3><i class="fas fa-book"></i> Evidence by Section</h3>
+
+            <div class="evidence-card">
+                <div class="evidence-header">
+                    <span class="section-name">📖 1.1344935
+Thompson</span>
+                    <span class="page-number">📄 Page 611</span>
+                    <span class="relevance">⭐ Relevance: 0.7</span>
+                </div>
+                <div>
+
+                </div>
+                <div class="evidence-text">
+                    This section discusses 1.1344935
+thompson. The content here is relevant to your question about ...
+                </div>
+            </div>
+
+            <div class="evidence-card">
+                <div class="evidence-header">
+                    <span class="section-name">📖 16.1
+Psychotherapy Techniques: Psychoanalysis
+Psychoanalysis was developed by Sigmund Freud and was the first form of psychotherapy</span>
+                    <span class="page-number">📄 Page 613</span>
+                    <span class="relevance">⭐ Relevance: 0.75</span>
+                </div>
+                <div>
+
+                </div>
+                <div class="evidence-text">
+                    This section discusses 16.1
+psychotherapy techniques: psychoanalysis
+psychoanalysis was developed by sigmund freud and was the first form of psychotherapy. The content here is relevant to your question about ...
+                </div>
+            </div>
+
+            <div class="evidence-card">
+                <div class="evidence-header">
+                    <span class="section-name">📖 16.1 Many forms of therapy have been developed to treat a wide array of problems</span>
+                    <span class="page-number">📄 Page 617</span>
+                    <span class="relevance">⭐ Relevance: 0.8</span>
+                </div>
+                <div>
+
+                </div>
+                <div class="evidence-text">
+                    This section discusses 16.1 many forms of therapy have been developed to treat a wide array of problems. The content here is relevant to your question about ...
+                </div>
+            </div>
+
+            <div class="evidence-card">
+                <div class="evidence-header">
+                    <span class="section-name">📖 16.1 Mental Health Treatment: Past and Present
+It was once believed that people with psychological disorders</span>
+                    <span class="page-number">📄 Page 619</span>
+                    <span class="relevance">⭐ Relevance: 0.85</span>
+                </div>
+                <div>
+
+                </div>
+                <div class="evidence-text">
+                    This section discusses 16.1 mental health treatment: past and present
+it was once believed that people with psychological disorders. The content here is relevant to your question about ...
+                </div>
+            </div>
+
+            <div class="evidence-card">
+                <div class="evidence-header">
+                    <span class="section-name">📖 16.13 Your emotional reactions are the result of your thoughts about the situation rather than the situation
+itself</span>
+                    <span class="page-number">📄 Page 624</span>
+                    <span class="relevance">⭐ Relevance: 0.9</span>
+                </div>
+                <div>
+
+                </div>
+                <div class="evidence-text">
+                    This section discusses 16.13 your emotional reactions are the result of your thoughts about the situation rather than the situation
+itself. The content here is relevant to your question about ...
+                </div>
+            </div>
+
+        </div>
+        
+        <div class="highlighted-context">
+            <h3><i class="fas fa-highlighter"></i> Highlighted Context</h3>
+            <div class="context-box">
+                (Wampold, 2007). Regardless of which type of psychotherapy an individual chooses, one critical factor that determines the success of treatment is the person’s relationship with the psychologist or therapist. Biomedical Therapies Individuals can be prescribed biologically based treatments or psychotropic medications that are used to treat mental disorders. While these are often used in combination with psychotherapy, they also are taken by individuals not in therapy. This is known as biomedical therapy. Medications used to treat psychological disorders are called psychotropic medications and are prescribed by medical doctors, including psychiatrists. In Louisiana and New Mexico, psychologists are able to prescribe some types of these medications (American Psychological Association, 2014). Different types and classes of medications are prescribed for different disorders. An individual with depression might be given an antidepressant, an individual with bipolar disorder might be given a mood stabilizer, and an individual with schizophrenia might be given an antipsychotic. These medications treat the symptoms of a psychological disorder by altering the levels or effects of neurotransmitters. For example, each type of antidepressant affects a different neurotransmitter, such as SSRI (selective serotonin reuptake inhibitor) antidepressants that increase the level of the neurotransmitter serotonin, and SNRI (serotonin- norepinephrine reuptake inhibitor) antidepressants that increase the levels of both serotonin and norepinephrine. They can help people feel better so that they can function on a daily basis, but they do not cure the disorder. Some people may only need to take a psychotropic medication for a short period of time. Others with severe disorders like bipolar disorder or schizophrenia may need to take psychotropic medication for a long time. Psychotropic medications are a popular treatment option for many types of disorders, and research suggests that they are most effective when combined with psychotherapy. This is especially true for the most common mental disorders, such as depressive and anxiety disorders (Cuijpers et al, 2014). When considering adding medication as a treatment option, individuals should know that some psychotropic medications have very concerning side effects. Table 16.2 shows the commonly prescribed types of medications, how they are used, and some of the potential side effects that may occur. Some Commonly Prescribed Psychotropic Medications Type of Medication Used to Treat Brand Names of Commonly Prescribed Medications How They Work Side Effects Antipsychotics (developed in the 1950s) Schizophrenia and other types of severe thought disorders Haldol, Mellaril, Prolixin, Thorazine Treat positive psychotic symptoms such as auditory and
+
+hospitalized. A person suffering symptoms could speak with a primary care physician, who most likely would refer him to someone who specializes in therapy. The person can receive outpatient mental health services from a variety of sources, including psychologists, psychiatrists, marriage and family therapists, school counselors, clinical social workers, and religious personnel. These therapy sessions would be covered through insurance, government funds, or private (self) pay. 16.2 Types of Treatment Psychoanalysis was developed by Sigmund Freud. Freud’s theory is that a person’s psychological problems are the result of repressed impulses or childhood trauma. The goal of the therapist is to help a person uncover buried feelings by using techniques such as free association and dream analysis. Play therapy is a psychodynamic therapy technique often used with children. The idea is that children play out their hopes, fantasies, and traumas, using dolls, stuffed animals, and sandbox figurines. In behavior therapy, a therapist employs principles of learning from classical and operant conditioning to help clients change undesirable behaviors. Counterconditioning is a commonly used therapeutic technique in 628 16 • Summary Access for free at openstax.org
+
+FIGURE 16.1 Many forms of therapy have been developed to treat a wide array of problems. These marines who served in Iraq and Afghanistan, together with community mental health volunteers, are part of the Ocean Therapy program at Camp Pendleton, a program in which learning to surf is combined with group discussions. The program helps vets recover, especially vets who suffer from post-traumatic stress disorder (PTSD). INTRODUCTION CHAPTER OUTLINE 16.1 Mental Health Treatment: Past and Present 16.2 Types of Treatment 16.3 Treatment Modalities 16.4 Substance-Related and Addictive Disorders: A Special Case 16.5 The Sociocultural Model and Therapy Utilization What comes to mind when you think about therapy for mental health issues? You might picture someone lying on a couch talking about his childhood while the therapist sits and takes notes, à la Sigmund Freud. But can you envision a therapy session in which someone is wearing virtual reality headgear to conquer a fear of snakes? In this chapter, you will see that approaches to therapy include both psychological and biological interventions, all with the goal of alleviating distress. Because psychological problems can originate from various sources—biology, genetics, childhood experiences, conditioning, and sociocultural influences—psychologists have developed many different therapeutic techniques and approaches. The Ocean Therapy program shown in Figure 16.1 uses multiple approaches to support the mental health of veterans in the group. There are many misconceptions and assumptions about therapy and treatment. In the same way that mental 16 Therapy and Treatment
+
+Various Psychotherapy Techniques Type Description Example Psychodynamic psychotherapy Talk therapy based on belief that the unconscious and childhood conflicts impact behavior Patient talks about their past Play therapy Psychoanalytical therapy wherein interaction with toys is used instead of talk; used in child therapy Patient (child) acts out family scenes with dolls Behavior therapy Principles of learning applied to change undesirable behaviors Patient learns to overcome fear of elevators through several stages of relaxation techniques Cognitive therapy Awareness of cognitive process helps patients eliminate thought patterns that lead to distress Patient learns not to overgeneralize failure based on single failure Cognitive- behavioral therapy Work to change cognitive distortions and self- defeating behaviors Patient learns to identify self-defeating behaviors to overcome an eating disorder Humanistic therapy Increase self-awareness and acceptance through focus on conscious thoughts Patient learns to articulate thoughts that keep them from achieving their goals TABLE 16.1 Psychotherapy Techniques: Psychoanalysis Psychoanalysis was developed by Sigmund Freud and was the first form of psychotherapy. It was the dominant therapeutic technique in the early 20th century, but it has since waned significantly in popularity. Freud believed most of our psychological problems are the result of repressed impulses and trauma experienced in childhood, and he believed psychoanalysis would help uncover long-buried feelings. In a psychoanalyst’s office, you might see a patient lying on a couch speaking of dreams or childhood memories, and the therapist using various Freudian methods such as free association and dream analysis (Figure 16.9). In free association, the patient relaxes and then says whatever comes to mind at the moment. However, Freud felt that the ego would at times try to block, or repress, unacceptable urges or painful conflicts during free association. Consequently, a patient would demonstrate resistance to recalling these thoughts or situations. In dream analysis, a therapist interprets the underlying meaning of dreams. Psychoanalysis is a therapy approach that typically takes years. Over the course of time, the patient reveals a great deal about himself to the therapist. Freud suggested that during this patient-therapist relationship, the patient comes to develop strong feelings for the therapist—maybe positive feelings, maybe negative feelings. Freud called this transference: the patient transfers all the positive or negative emotions associated with the patient’s other relationships to the psychoanalyst. For example, Crystal is seeing a psychoanalyst. During the years of therapy, she comes to see her therapist as a father figure. She transfers her feelings
+
+of those with symptoms receive no care at all (U.S. Department of Health and Human Services, 2005; Wagenfeld, Murray, Mohatt, & DeBruiynb, 1994). At the end of 2013, the U.S. Department of Agriculture announced an investment of $50 million to help improve access and treatment for mental health problems as part of the Obama administration’s effort to strengthen rural communities. 16.2 Types of Treatment LEARNING OBJECTIVES By the end of this section, you will be able to: • Distinguish between psychotherapy and biomedical therapy • Recognize various orientations to psychotherapy • Discuss psychotropic medications and recognize which medications are used to treat specific psychological disorders 16.2 • Types of Treatment 605
+
+another? For anyone considering therapy, these are important questions. According to the American Psychological Association, three factors work together to produce successful treatment. The first is the use of evidence-based treatment that is deemed appropriate for your particular issue. The second important factor is the clinical expertise of the psychologist or therapist. The third factor is your own characteristics, values, preferences, and culture. Many people begin psychotherapy feeling like their problem will never be resolved; however, psychotherapy helps people see that they can do things to make their situation better. Psychotherapy can help reduce a person’s anxiety, depression, and maladaptive behaviors. Through psychotherapy, individuals can learn to engage in healthy behaviors designed to help them better express emotions, improve relationships, think more positively, and perform more effectively at work or school. Many studies have explored the effectiveness of psychotherapy. For example, one large-scale study that examined 16 meta-analyses of CBT reported that it was equally effective or more effective than other therapies in treating PTSD, generalized anxiety disorder, depression, and social phobia (Butlera, Chapmanb, Formanc, & Becka, 2006). Another study found that CBT was as effective at treating depression (43% success rate) as prescription medication (50% success rate) compared to the placebo rate of 25% (DeRubeis et al., 2005). Another meta-analysis found that psychodynamic therapy was also as effective at treating these types of psychological issues as CBT (Shedler, 2010). However, no studies have found one psychotherapeutic approach more effective than another (Abbass, Kisely, & Kroenke, 2006; Chorpita et al., 2011), nor have they shown any relationship between a client’s treatment outcome and the level of the clinician’s training or experience 614 16 • Therapy and Treatment Access for free at openstax.org
+
+which a client learns a new response to a stimulus that has previously elicited an undesirable behavior via classical conditioning. Principles of operant conditioning can be applied to help people deal with a wide range of psychological problems. Token economy is an example of a popular operant conditioning technique. Cognitive therapy is a technique that focuses on how thoughts lead to feelings of distress. The idea behind cognitive therapy is that how you think determines how you feel and act. Cognitive therapists help clients change dysfunctional thoughts in order to relieve distress. Cognitive-behavioral therapy explores how our thoughts affect our behavior. Cognitive-behavioral therapy aims to change cognitive distortions and self- defeating behaviors. Huma
+            </div>
+        </div>
+        
+        <div class="stats">
+            <div class="stat-item">
+                <div class="stat-label">Sections Used</div>
+                <div class="stat-value">8</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-label">Pages Referenced</div>
+                <div class="stat-value">11</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-label">Keywords Found</div>
+                <div class="stat-value">0</div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            Generated from Psychology 2e Textbook • Question 40 • 2026-02-26
+        </div>
+    </div>
+    
+    <!-- Font Awesome for icons -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evidence Visualization - Question 29</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 30px;
+        }
+        
+        .header h1 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        
+        .header .question {
+            font-size: 18px;
+            opacity: 0.9;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 10px;
+            line-height: 1.5;
+        }
+        
+        .keywords-bar {
+            background: #f0f0f0;
+            padding: 15px 30px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .keywords-title {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+        
+        .keyword-badge {
+            display: inline-block;
+            background: #ffeb3b;
+            color: #333;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            margin: 0 5px 5px 0;
+            font-weight: 500;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .answer-section {
+            padding: 30px;
+            background: #f8f9fa;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .answer-section h3 {
+            color: #333;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .answer-section h3 i {
+            color: #667eea;
+        }
+        
+        .answer-content {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            line-height: 1.8;
+            color: #444;
+            border-left: 4px solid #667eea;
+        }
+        
+        .answer-content mark {
+            background-color: #ffeb3b;
+            padding: 2px 0;
+            font-weight: 500;
+        }
+        
+        .evidence-section {
+            padding: 30px;
+        }
+        
+        .evidence-section h3 {
+            color: #333;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .evidence-section h3 i {
+            color: #667eea;
+        }
+        
+        .evidence-card {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-left: 4px solid #667eea;
+        }
+        
+        .evidence-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .section-name {
+            font-weight: 600;
+            color: #333;
+            background: #e8eaf6;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+        }
+        
+        .page-number {
+            color: #666;
+            background: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .relevance {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+        }
+        
+        .term-badge {
+            display: inline-block;
+            background: #ffeb3b;
+            color: #333;
+            padding: 3px 10px;
+            border-radius: 15px;
+            font-size: 12px;
+            margin: 0 5px 5px 0;
+            font-weight: 500;
+        }
+        
+        .evidence-text {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            color: #555;
+            line-height: 1.6;
+            margin: 15px 0 0 0;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .evidence-text mark {
+            background-color: #ffeb3b;
+            padding: 2px 0;
+            font-weight: 500;
+        }
+        
+        .highlighted-context {
+            padding: 30px;
+            background: #f8f9fa;
+            border-top: 1px solid #e0e0e0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .highlighted-context h3 {
+            color: #333;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .context-box {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            max-height: 400px;
+            overflow-y: auto;
+            border: 1px solid #e0e0e0;
+            line-height: 1.8;
+            font-size: 14px;
+        }
+        
+        .context-box mark {
+            background-color: #ffeb3b;
+            padding: 2px 0;
+            font-weight: 500;
+        }
+        
+        .stats {
+            display: flex;
+            gap: 15px;
+            padding: 20px 30px;
+            background: white;
+            flex-wrap: wrap;
+        }
+        
+        .stat-item {
+            background: #f8f9fa;
+            padding: 10px 20px;
+            border-radius: 10px;
+            flex: 1;
+            min-width: 120px;
+            text-align: center;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .stat-label {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 5px;
+        }
+        
+        .stat-value {
+            font-size: 24px;
+            font-weight: 600;
+            color: #667eea;
+        }
+        
+        .footer {
+            padding: 20px 30px;
+            background: #f0f0f0;
+            text-align: center;
+            color: #666;
+            font-size: 14px;
+            border-top: 1px solid #e0e0e0;
+        }
+        
+        @media (max-width: 768px) {
+            .header {
+                padding: 20px;
+            }
+            
+            .answer-section,
+            .evidence-section,
+            .highlighted-context {
+                padding: 20px;
+            }
+            
+            .evidence-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📚 Evidence Visualization</h1>
+            <div class="question">
+                <strong>Question 29:</strong> 
+            </div>
+        </div>
+        
+        <div class="keywords-bar">
+            <div class="keywords-title">🔑 Extracted Keywords:</div>
+
+        </div>
+        
+        <div class="answer-section">
+            <h3><i class="fas fa-robot"></i> Generated Answer</h3>
+            <div class="answer-content">
+                The Big Five personality trait model, also known as the Five Factor Model, is a widely accepted theory in personality psychology that describes individual personality in terms of five broad dimensions or traits. These five factors are:
+
+1. Openness to experience: characterized by imagination, feelings, actions, and ideas. People who score high on this factor tend to be curious and have a wide range of interests.
+2. Conscientiousness: characterized by competence, self-discipline, thoughtfulness, and achievement-striving (goal-directed behavior). People who score high on this factor are hardworking and dependable.
+3. Extroversion: characterized by sociability, assertiveness, excitement-seeking, and emotional expression. People who score high on this factor are usually described as outgoing and warm.
+4. Agreeableness: characterized by the tendency to be pleasant, cooperative, trustworthy, and good-natured. People who score low on agreeableness tend to be described as rude and uncooperative.
+5. Neuroticism: characterized by the tendency to experience negative emotions. People high on neuroticism tend to experience emotional instability and are characterized as angry, impulsive, and hostile.
+
+Each of these factors represents a range between two extremes, and individuals tend to lie somewhere midway along the continuum of each factor, rather than at polar ends.
+            </div>
+        </div>
+        
+        <div class="evidence-section">
+            <h3><i class="fas fa-book"></i> Evidence by Section</h3>
+
+            <div class="evidence-card">
+                <div class="evidence-header">
+                    <span class="section-name">📖 1.12 Jean Piaget is famous for his theories regarding changes in cognitive ability that occur as we move
+from infancy to adulthood</span>
+                    <span class="page-number">📄 Page 34</span>
+                    <span class="relevance">⭐ Relevance: 0.7</span>
+                </div>
+                <div>
+
+                </div>
+                <div class="evidence-text">
+                    This section discusses 1.12 jean piaget is famous for his theories regarding changes in cognitive ability that occur as we move
+from infancy to adulthood. The content here is relevant to your question about ...
+                </div>
+            </div>
+
+            <div class="evidence-card">
+                <div class="evidence-header">
+                    <span class="section-name">📖 1.13 Each of the dimensions of the Five Factor model is shown in this figure</span>
+                    <span class="page-number">📄 Page 35</span>
+                    <span class="relevance">⭐ Relevance: 0.75</span>
+                </div>
+                <div>
+
+                </div>
+                <div class="evidence-text">
+                    This section discusses 1.13 each of the dimensions of the five factor model is shown in this figure. The content here is relevant to your question about ...
+                </div>
+            </div>
+
+            <div class="evidence-card">
+                <div class="evidence-header">
+                    <span class="section-name">📖 11.13 The Eysencks described two factors to account for variations in our personalities: extroversion</span>
+                    <span class="page-number">📄 Page 374</span>
+                    <span class="relevance">⭐ Relevance: 0.8</span>
+                </div>
+                <div>
+
+                </div>
+                <div class="evidence-text">
+                    This section discusses 11.13 the eysencks described two factors to account for variations in our personalities: extroversion. The content here is relevant to your question about ...
+                </div>
+            </div>
+
+            <div class="evidence-card">
+                <div class="evidence-header">
+                    <span class="section-name">📖 11.14 In the Five Factor Model</span>
+                    <span class="page-number">📄 Page 390</span>
+                    <span class="relevance">⭐ Relevance: 0.85</span>
+                </div>
+                <div>
+
+                </div>
+                <div class="evidence-text">
+                    This section discusses 11.14 in the five factor model. The content here is relevant to your question about ...
+                </div>
+            </div>
+
+            <div class="evidence-card">
+                <div class="evidence-header">
+                    <span class="section-name">📖 11.4 Developed from Galen</span>
+                    <span class="page-number">📄 Page 391</span>
+                    <span class="relevance">⭐ Relevance: 0.9</span>
+                </div>
+                <div>
+
+                </div>
+                <div class="evidence-text">
+                    This section discusses 11.4 developed from galen. The content here is relevant to your question about ...
+                </div>
+            </div>
+
+        </div>
+        
+        <div class="highlighted-context">
+            <h3><i class="fas fa-highlighter"></i> Highlighted Context</h3>
+            <div class="context-box">
+                The HEXACO Traits Trait Example Aspects of Trait (H) Honesty-humility Sincerity, modesty, faithfulness (E) Emotionality Sentimentality, anxiety, sensitivity (X) Extraversion Sociability, talkativeness, boldness (A) Agreeableness Patience, tolerance, gentleness (C) Conscientiousness Organization, thoroughness, precision (O) Openness Creativity, inquisitiveness, innovativeness TABLE 11.6 LINK TO LEARNING Take the Big Five Personality test (http://openstax.org/l/big5) to find out about your personality and where you fall on the Big Five factors. 11.8 Cultural Understandings of Personality LEARNING OBJECTIVES By the end of this section you should be able to: • Discuss personality differences of people from collectivist and individualist cultures • Discuss the three approaches to studying personality in a cultural context As you have learned in this chapter, personality is shaped by both genetic and environmental factors. The culture in which you live is one of the most important environmental factors that shapes your personality (Triandis & Suh, 2002). The term culture refers to all of the beliefs, customs, art, and traditions of a particular society. Culture is transmitted to people through language as well as through the modeling of culturally acceptable and nonacceptable behaviors that are either rewarded or punished (Triandis & Suh, 2002). With these ideas in mind, personality psychologists have become interested in the role of culture in understanding personality. They ask whether personality traits are the same across cultures or if there are variations. It appears that there are both universal and culture-specific aspects that account for variation in people’s personalities. Why might it be important to consider cultural influences on personality? Western ideas about personality may not be applicable to other cultures (Benet-Martinez & Oishi, 2008). In fact, there is evidence that the strength of personality traits varies across cultures. Let’s take a look at some of the Big Five factors (conscientiousness, neuroticism, openness, and extroversion) across cultures. As you will learn when you study social psychology, Asian cultures are more collectivist, and people in these cultures tend to be less extroverted. People in Central and South American cultures tend to score higher on openness to experience, whereas Europeans score higher on neuroticism (Benet-Martinez & Karakitapoglu-Aygun, 2003). According to a study by Rentfrow and colleagues, there also seem to be regional personality differences within the United States (Figure 11.15). Researchers analyzed responses from over 1.5 million individuals in the United States and found that there are three distinct regional personality clusters: Cluster 1, which is in the Upper Midwest and
+
+FIGURE 11.13 The Eysencks described two factors to account for variations in our personalities: extroversion/ introversion and emotional stability/instability. Later, the Eysencks added a third dimension: psychoticism versus superego control (Eysenck, Eysenck & Barrett, 1985). In this dimension, people who are high on psychoticism tend to be independent thinkers, cold, nonconformists, impulsive, antisocial, and hostile, whereas people who are high on superego control tend to have high impulse control—they are more altruistic, empathetic, cooperative, and conventional (Eysenck, Eysenck & Barrett, 1985). While Cattell’s 16 factors may be too broad, the Eysenck’s two-factor system has been criticized for being too narrow. Another personality theory, called the Five Factor Model, effectively hits a middle ground, with its five factors referred to as the Big Five personality factors. It is the most popular theory in personality psychology today and the most accurate approximation of the basic personality dimensions (Funder, 2001). The five factors are openness to experience, conscientiousness, extroversion, agreeableness, and neuroticism (Figure 11.14). A helpful way to remember the factors is by using the mnemonic OCEAN. In the Five Factor Model, each person has each factor, but they occur along a spectrum. Openness to experience is characterized by imagination, feelings, actions, and ideas. People who score high on this factor tend to be curious and have a wide range of interests. Conscientiousness is characterized by competence, self- discipline, thoughtfulness, and achievement-striving (goal-directed behavior). People who score high on this factor are hardworking and dependable. Numerous studies have found a positive correlation between conscientiousness and academic success (Akomolafe, 2013; Chamorro-Premuzic & Furnham, 2008; Conrad & Patry, 2012; Noftle & Robins, 2007; Wagerman & Funder, 2007). Extroversion is characterized by sociability, assertiveness, excitement-seeking, and emotional expression. People who score high on this factor are usually described as outgoing and warm. Not surprisingly, people who score high on both extroversion and openness are more likely to participate in adventure and risky sports due to their curious and excitement-seeking nature (Tok, 2011). The fourth factor is agreeableness, which is the tendency to be pleasant, cooperative, trustworthy, and good-natured. People who score low on agreeableness tend to be described as rude and uncooperative, yet one recent study reported that men who scored low on this factor actually earned more money than men who were considered more agreeable (Judge, Livingston, & Hurst, 2012). The last of the Big Five factors is 382 11 • Personality Access for free
+
+include dimensions of conscientiousness, agreeableness, neuroticism, openness, and extraversion (Figure 1.13). Each of these traits has been demonstrated to be relatively stable over the lifespan (e.g., Rantanen, Metsäpelto, Feldt, Pulkinnen, and Kokko, 2007; Soldz & Vaillant, 1999; McCrae & Costa, 2008) and is influenced by genetics (e.g., Jang, Livesly, and Vernon, 1996). 22 1 • Introduction to Psychology Access for free at openstax.org
+
+neuroticism, which is the tendency to experience negative emotions. People high on neuroticism tend to experience emotional instability and are characterized as angry, impulsive, and hostile. Watson and Clark (1984) found that people reporting high levels of neuroticism also tend to report feeling anxious and unhappy. In contrast, people who score low in neuroticism tend to be calm and even-tempered. FIGURE 11.14 In the Five Factor Model, each person has five factors, each scored on a continuum from high to low. In the center column, notice that the first letter of each factor spells the mnemonic OCEAN. The Big Five personality factors each represent a range between two extremes. In reality, most of us tend to lie somewhere midway along the continuum of each factor, rather than at polar ends. It’s important to note that the Big Five factors are relatively stable over our lifespan, with some tendency for the factors to increase or decrease slightly. Researchers have found that conscientiousness increases through young adulthood into middle age, as we become better able to manage our personal relationships and careers (Donnellan & Lucas, 2008). Agreeableness also increases with age, peaking between 50 to 70 years (Terracciano, McCrae, Brant, & Costa, 2005). Neuroticism and extroversion tend to decline slightly with age (Donnellan & Lucas; Terracciano et al.). Additionally, The Big Five factors have been shown to exist across ethnicities, cultures, and ages, and may have substantial biological and genetic components (Jang, Livesley, & Vernon, 1996; Jang et al., 2006; McCrae & Costa, 1997; Schmitt et al., 2007). Another model of personality traits is the HEXACO model. HEXACO is an acronym for six broad traits: honesty- humility, emotionality, extraversion, agreeableness, conscientiousness, and openness to experience (Anglim & O’Connor, 2018). Table 11.6 provides a brief overview of each trait. 11.7 • Trait Theorists 383
+
+of the same traits; we differ only in the degree to which each trait is expressed. Cattell (1957) identified 16 factors or dimensions of personality: warmth, reasoning, emotional stability, dominance, liveliness, rule-consciousness, social boldness, sensitivity, vigilance, abstractedness, privateness, apprehension, openness to change, self-reliance, perfectionism, and tension (Table 11.5). He developed a personality assessment based on these 16 factors, called the 16PF. Instead of a trait being present or absent, each dimension is scored over a continuum, from high to low. For example, your level of warmth describes how warm, caring, and nice to others you are. If you score low on this index, you tend to be more distant and cold. A high score on this index signifies you are supportive and comforting. Personality Factors Measured by the 16PF Questionnaire Factor Low Score High Score Warmth Reserved, detached Outgoing, supportive Intellect Concrete thinker Analytical Emotional stability Moody, irritable Stable, calm Aggressiveness Docile, submissive Controlling, dominant TABLE 11.5 11.7 • Trait Theorists 379
+
+FIGURE 1.13 Each of the dimensions of the Five Factor model is shown in this figure. The provided description would describe someone who scored highly on that given dimension. Someone with a lower score on a given dimension could be described in opposite terms. Social Psychology Social psychology focuses on how we interact with and relate to others. Social psychologists conduct research on a wide variety of topics that include differences in how we explain our own behavior versus how we explain the behaviors of others, prejudice, and attraction, and how we resolve interpersonal conflicts. Social psychologists have also sought to determine how being among other people changes our own behavior and patterns of thinking. There are many interesting examples of social psychological research, and you will read about many of these in a later chapter of this textbook. Until then, you will be introduced to one of the most controversial psychological studies ever conducted. Stanley Milgram was an American social psychologist who is most famous for research that he conducted on obedience. After the holocaust, in 1961, a Nazi war criminal, Adolf Eichmann, who was accused of committing mass atrocities, was put on trial. Many people wondered how German soldiers were capable of torturing prisoners in concentration camps, and they were unsatisfied with the excuses given by soldiers that they were simply following orders. At the time, most psychologists agreed that few people would be willing to inflict such extraordinary pain and suffering, simply because they were obeying orders. Milgram decided to conduct research to determine whether or not this was true (Figure 1.14). As you will read later in the text, Milgram found that nearly two-thirds of his participants were willing to deliver what they believed to be lethal shocks to another person, simply because they were instructed to do so by an authority figure (in this case, a man dressed in a lab coat). This was in spite of the fact that participants 1.3 • Contemporary Psychology 23
+
+Research suggests that there are two dimensions of our temperament that are important parts of our adult personality—reactivity and self-regulation (Rothbart, Ahadi, & Evans, 2000). Reactivity refers to how we respond to new or challenging environmental stimuli; self-regulation refers to our ability to control that response (Rothbart & Derryberry, 1981; Rothbart, Sheese, Rueda, & Posner, 2011). For example, one person may immediately respond to new stimuli with a high level of anxiety, while another barely notices it. 11.7 Trait Theorists LEARNING OBJECTIVES By the end of this section, you will be able to: • Discuss early trait theories of Cattell and Eysenck • Discuss the Big Five factors and describe someone who is high and low on each of the five factors Trait theorists believe personality can be understood via the approach that all people have certain tr
+            </div>
+        </div>
+        
+        <div class="stats">
+            <div class="stat-item">
+                <div class="stat-label">Sections Used</div>
+                <div class="stat-value">11</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-label">Pages Referenced</div>
+                <div class="stat-value">11</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-label">Keywords Found</div>
+                <div class="stat-value">0</div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            Generated from Psychology 2e Textbook • Question 29 • 2026-02-26
+        </div>
+    </div>
+    
+    <!-- Font Awesome for icons -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evidence Visualization - Question 31</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 30px;
+        }
+        
+        .header h1 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        
+        .header .question {
+            font-size: 18px;
+            opacity: 0.9;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 10px;
+            line-height: 1.5;
+        }
+        
+        .keywords-bar {
+            background: #f0f0f0;
+            padding: 15px 30px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .keywords-title {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+        
+        .keyword-badge {
+            display: inline-block;
+            background: #ffeb3b;
+            color: #333;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            margin: 0 5px 5px 0;
+            font-weight: 500;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .answer-section {
+            padding: 30px;
+            background: #f8f9fa;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .answer-section h3 {
+            color: #333;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .answer-section h3 i {
+            color: #667eea;
+        }
+        
+        .answer-content {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            line-height: 1.8;
+            color: #444;
+            border-left: 4px solid #667eea;
+        }
+        
+        .answer-content mark {
+            background-color: #ffeb3b;
+            padding: 2px 0;
+            font-weight: 500;
+        }
+        
+        .evidence-section {
+            padding: 30px;
+        }
+        
+        .evidence-section h3 {
+            color: #333;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .evidence-section h3 i {
+            color: #667eea;
+        }
+        
+        .evidence-card {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-left: 4px solid #667eea;
+        }
+        
+        .evidence-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .section-name {
+            font-weight: 600;
+            color: #333;
+            background: #e8eaf6;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+        }
+        
+        .page-number {
+            color: #666;
+            background: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .relevance {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+        }
+        
+        .term-badge {
+            display: inline-block;
+            background: #ffeb3b;
+            color: #333;
+            padding: 3px 10px;
+            border-radius: 15px;
+            font-size: 12px;
+            margin: 0 5px 5px 0;
+            font-weight: 500;
+        }
+        
+        .evidence-text {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            color: #555;
+            line-height: 1.6;
+            margin: 15px 0 0 0;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .evidence-text mark {
+            background-color: #ffeb3b;
+            padding: 2px 0;
+            font-weight: 500;
+        }
+        
+        .highlighted-context {
+            padding: 30px;
+            background: #f8f9fa;
+            border-top: 1px solid #e0e0e0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .highlighted-context h3 {
+            color: #333;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .context-box {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            max-height: 400px;
+            overflow-y: auto;
+            border: 1px solid #e0e0e0;
+            line-height: 1.8;
+            font-size: 14px;
+        }
+        
+        .context-box mark {
+            background-color: #ffeb3b;
+            padding: 2px 0;
+            font-weight: 500;
+        }
+        
+        .stats {
+            display: flex;
+            gap: 15px;
+            padding: 20px 30px;
+            background: white;
+            flex-wrap: wrap;
+        }
+        
+        .stat-item {
+            background: #f8f9fa;
+            padding: 10px 20px;
+            border-radius: 10px;
+            flex: 1;
+            min-width: 120px;
+            text-align: center;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .stat-label {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 5px;
+        }
+        
+        .stat-value {
+            font-size: 24px;
+            font-weight: 600;
+            color: #667eea;
+        }
+        
+        .footer {
+            padding: 20px 30px;
+            background: #f0f0f0;
+            text-align: center;
+            color: #666;
+            font-size: 14px;
+            border-top: 1px solid #e0e0e0;
+        }
+        
+        @media (max-width: 768px) {
+            .header {
+                padding: 20px;
+            }
+            
+            .answer-section,
+            .evidence-section,
+            .highlighted-context {
+                padding: 20px;
+            }
+            
+            .evidence-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📚 Evidence Visualization</h1>
+            <div class="question">
+                <strong>Question 31:</strong> 
+            </div>
+        </div>
+        
+        <div class="keywords-bar">
+            <div class="keywords-title">🔑 Extracted Keywords:</div>
+
+        </div>
+        
+        <div class="answer-section">
+            <h3><i class="fas fa-robot"></i> Generated Answer</h3>
+            <div class="answer-content">
+                The DSM-5 is the 5th and most recent edition of the Diagnostic and Statistical Manual of Mental Disorders, a classification system used by most U.S. professionals to diagnose and classify psychological disorders. It was published in 2013 and includes a total of 237 specific diagnosable disorders, each described in detail, including its symptoms, prevalence, risk factors, and comorbidity.
+            </div>
+        </div>
+        
+        <div class="evidence-section">
+            <h3><i class="fas fa-book"></i> Evidence by Section</h3>
+
+            <div class="evidence-card">
+                <div class="evidence-header">
+                    <span class="section-name">📖 15.1 What Are Psychological Disorders</span>
+                    <span class="page-number">📄 Page 554</span>
+                    <span class="relevance">⭐ Relevance: 0.7</span>
+                </div>
+                <div>
+
+                </div>
+                <div class="evidence-text">
+                    This section discusses 15.1 what are psychological disorders. The content here is relevant to your question about ...
+                </div>
+            </div>
+
+            <div class="evidence-card">
+                <div class="evidence-header">
+                    <span class="section-name">📖 15.10 Disorders in Childhood
+LEARNING OBJECTIVES
+By the end of this section</span>
+                    <span class="page-number">📄 Page 555</span>
+                    <span class="relevance">⭐ Relevance: 0.75</span>
+                </div>
+                <div>
+
+                </div>
+                <div class="evidence-text">
+                    This section discusses 15.10 disorders in childhood
+learning objectives
+by the end of this section. The content here is relevant to your question about ...
+                </div>
+            </div>
+
+            <div class="evidence-card">
+                <div class="evidence-header">
+                    <span class="section-name">📖 15.11 Personality Disorders
+LEARNING OBJECTIVES
+By the end of this section</span>
+                    <span class="page-number">📄 Page 556</span>
+                    <span class="relevance">⭐ Relevance: 0.8</span>
+                </div>
+                <div>
+
+                </div>
+                <div class="evidence-text">
+                    This section discusses 15.11 personality disorders
+learning objectives
+by the end of this section. The content here is relevant to your question about ...
+                </div>
+            </div>
+
+            <div class="evidence-card">
+                <div class="evidence-header">
+                    <span class="section-name">📖 15.15 Mood disorders are characterized by massive disruptions in mood</span>
+                    <span class="page-number">📄 Page 557</span>
+                    <span class="relevance">⭐ Relevance: 0.85</span>
+                </div>
+                <div>
+
+                </div>
+                <div class="evidence-text">
+                    This section discusses 15.15 mood disorders are characterized by massive disruptions in mood. The content here is relevant to your question about ...
+                </div>
+            </div>
+
+            <div class="evidence-card">
+                <div class="evidence-header">
+                    <span class="section-name">📖 15.2
+Slightly over</span>
+                    <span class="page-number">📄 Page 573</span>
+                    <span class="relevance">⭐ Relevance: 0.9</span>
+                </div>
+                <div>
+
+                </div>
+                <div class="evidence-text">
+                    This section discusses 15.2
+slightly over. The content here is relevant to your question about ...
+                </div>
+            </div>
+
+        </div>
+        
+        <div class="highlighted-context">
+            <h3><i class="fas fa-highlighter"></i> Highlighted Context</h3>
+            <div class="context-box">
+                The diagnosis and classification of psychological disorders is essential in studying and treating psychopathology. The classification system used by most U.S. professionals is the DSM-5. The first edition of the DSM was published in 1952, and has undergone numerous revisions. The 5th and most recent edition, the DSM-5, was published in 2013. The diagnostic manual includes a total of 237 specific diagnosable disorders, each described in detail, including its symptoms, prevalence, risk factors, and comorbidity. Over time, the number of diagnosable conditions listed in the DSM has grown steadily, prompting criticism from some. Nevertheless, the diagnostic criteria in the DSM are more explicit than that of any other system, which makes the DSM system highly desirable for both clinical diagnosis and research. 15 • Summary 591
+
+total pages) (Mayes & Horowitz, 2005). Although DSM-5 is longer than DSM-IV, the volume includes only 237 disorders, a decrease from the 297 disorders that were listed in DSM-IV. The latest edition, DSM-5, includes revisions in the organization and naming of categories and in the diagnostic criteria for various disorders (Regier, Kuhl, & Kupfer, 2012), while emphasizing careful consideration of the importance of gender and cultural difference in the expression of various symptoms (Fisher, 2010). Some believe that establishing new diagnoses might overpathologize the human condition by turning common human problems into mental illnesses (The Associated Press, 2013). Indeed, the finding that nearly half of all Americans will meet the criteria for a DSM disorder at some point in their life (Kessler et al., 2005) likely fuels much of this skepticism. The DSM-5 is also criticized on the grounds that its diagnostic criteria have been loosened, thereby threatening to “turn our current diagnostic inflation into diagnostic hyperinflation” (Frances, 2012, para. 22). For example, DSM-IV specified that the symptoms of major depressive disorder must not be attributable to normal bereavement (loss of a loved one). The DSM-5, however, has removed this bereavement exclusion, essentially meaning that grief and sadness after a loved one’s death can constitute major depressive disorder. The International Classification of Diseases A second classification system, the International Classification of Diseases (ICD), is also widely recognized. Published by the World Health Organization (WHO), the ICD was developed in Europe shortly after World War II and, like the DSM, has been revised several times. The categories of psychological disorders in both the DSM and ICD are similar, as are the criteria for specific disorders; however, some differences exist. Although the ICD is used for clinical purposes, this tool is also used to examine the general health of populations and to monitor the prevalence of diseases and other health problems internationally (WHO, 2013). The ICD is in its 10th 544 15 • Psychological Disorders Access for free at openstax.org
+
+DSM-5 Personality Disorder Description Cluster Schizoid lacks interest and desire to form relationships with others; aloof and shows emotional coldness and detachment; indifferent to approval or criticism of others; lacks close friends or confidants; not due to schizophrenia or other psychotic disorders, not an autism spectrum disorder A Schizotypal exhibits eccentricities in thought, perception, emotion, speech, and behavior; shows suspiciousness or paranoia; has unusual perceptual experiences; speech is often idiosyncratic; displays inappropriate emotions; lacks friends or confidants; not due to schizophrenia or other psychotic disorder, or to autism spectrum disorder A Antisocial continuously violates the rights of others; history of antisocial tendencies prior to age 15; often lies, fights, and has problems with the law; impulsive and fails to think ahead; can be deceitful and manipulative in order to gain profit or pleasure; irresponsible and often fails to hold down a job or pay financial debts; lacks feelings for others and remorse over misdeeds B Histrionic excessively overdramatic, emotional, and theatrical; feels uncomfortable when not the center of others’ attention; behavior is often inappropriately seductive or provocative; speech is highly emotional but often vague and diffuse; emotions are shallow and often shift rapidly; may alienate friends with demands for constant attention B Narcissistic overinflated and unjustified sense of self-importance and preoccupied with fantasies of success; believes they are entitled to special treatment from others; shows arrogant attitudes and behaviors; takes advantage of others; lacks empathy B Borderline unstable in self-image, mood, and behavior; cannot tolerate being alone and experiences chronic feelings of emptiness; unstable and intense relationships with others; behavior is impulsive, unpredictable, and sometimes self-damaging; shows inappropriate and intense anger; makes suicidal gestures B Avoidant socially inhibited and oversensitive to negative evaluation; avoids occupations that involve interpersonal contact because of fears of criticism or rejection; avoids relationships with others unless guaranteed to be accepted unconditionally; feels inadequate and views self as socially inept and unappealing; unwilling to take risks or engage in new activities if they may prove embarrassing C Dependent allows others to take over and run their life; is submissive, clingy, and fears separation; cannot make decisions without advice and reassurance from others; lacks self- confidence; cannot do things on their own; feels uncomfortable or helpless when alone C Obsessive- Compulsive pervasive need for perfectionism that interferes with the ability to complete tasks; preoccupied with details, rules, order, and schedules; excessively devoted to work at the expense
+
+2012). In the years since, the DSM has undergone numerous revisions and editions. The most recent edition, published in 2013, is the DSM-5 (APA, 2013). The DSM-5 includes many categories of disorders (e.g., anxiety disorders, depressive disorders, and dissociative disorders). Each disorder is described in detail, including an overview of the disorder (diagnostic features), specific symptoms required for diagnosis (diagnostic criteria), prevalence information (what percent of the population is thought to be afflicted with the disorder), and risk factors associated with the disorder. Figure 15.4 shows lifetime prevalence rates—the percentage of people in a population who develop a disorder in their lifetime—of various psychological disorders among U.S. adults. These data were based on a national sample of 9,282 U.S. residents (National Comorbidity Survey, 2007). 542 15 • Psychological Disorders Access for free at openstax.org
+
+FIGURE 15.4 The graph shows the breakdown of psychological disorders, comparing the percentage prevalence among adult males and adult females in the United States. Because the data is from 2007, the categories shown here are from the DSM-IV, which has been supplanted by the DSM-5. Most categories remain the same; however, alcohol abuse now falls under a broader Alcohol Use Disorder category. The DSM-5 also provides information about comorbidity; the co-occurrence of two disorders. For example, the DSM-5 mentions that 41% of people with obsessive-compulsive disorder (OCD) also meet the diagnostic criteria for major depressive disorder (Figure 15.5). Problematic substance use is highly comorbid with other mental illnesses; 6 out of 10 people who have a substance use disorder also suffer from another form of mental illness (National Institute on Drug Abuse [NIDA], 2007). FIGURE 15.5 Obsessive-compulsive disorder and major depressive disorder frequently occur in the same person. Comorbidity As you’ve learned in the text, comorbidity refers to situations in which an individual suffers from more than one disorder, and often the symptoms of each can interact in negative ways. Co-occurrence and comorbidity of psychological disorders are quite common, and some of the most pervasive comorbidities involve substance use disorders that co-occur with psychological disorders. Indeed, some estimates suggest that around a quarter of CONNECT THE CONCEPTS 15.2 • Diagnosing and Classifying Psychological Disorders 543
+
+highly emotional, and erratic. Cluster C disorders include avoidant personality disorder, dependent personality disorder, and obsessive-compulsive personality disorder (which is not the same thing as obsessive-compulsive disorder). People with these disorders often appear to be nervous and fearful. Table 15.2 provides a description of each of the DSM-5 personality disorders: DSM-5 Personality Disorders DSM-5 Personality Disorder Description Cluster Paranoid harbors a pervasive and unjustifiable suspiciousness and mistrust of others; reluctant to confide in or become close to others; reads hidden demeaning or threatening meaning into benign remarks or events; takes offense easily and bears grudges; not due to schizophrenia or other psychotic disorders A TABLE 15.2 582 15 • Psychological Disorders Access for free at openstax.org
+
+edition (ICD-10); however, efforts are now underway to develop a new edition (ICD-11) that, in conjunction with the changes in DSM-5, will help harmonize the two classification systems as much as possible (APA, 2013). A study that compared the use of the two classification systems found that worldwide the ICD is more frequently used for clinical diagnosis, whereas the DSM is more valued for research (Mezzich, 2002). Most research findings concerning the etiology and treatment of psychological disorders are based on criteria set forth in the DSM (Oltmanns & Castonguay, 2013). The DSM also includes more explicit disorder criteria, along with an extensive and helpful explanatory text (Regier et al., 2012). The DSM is the classification system of choice among U.S. mental health professionals, and this chapter is based on the DSM paradigm. The Compassionate View of Psychological Disorders As these disorders are outlined, please bear two things in mind. First, remember that psychological disorders represent extremes of inner experience and behavior. If, while reading about these disorders, you feel that these descriptions begin to personally characterize you, do not worry—this moment of enlightenment probably means nothing more than you have had a range of experiences and emotions. Each of us experiences episodes of sadness, anxiety, and preoccupation with certain thoughts—times when we do not quite feel ourselves. These episodes should not be considered problematic unless the accompanying thoughts and behaviors become extreme and have a disruptive effect on one’s life. Second, understand that people with psychological disorders are far more than just embodiments of their disorders. We do not use terms such as schizophrenics, depressives, or phobics because they are labels that objectify people who have these conditions, thus promoting biased and disparaging assumptions about them. It is important to remember that a psychological disorder is not what a person is; it is something that a person has—through no fault of their own. As is the case with cancer or diabetes, those with psychological disorders suffer debilitating, often painful conditions that are not of their own choosing. These individuals deserve to be viewed and treated with compassion, understanding, and dignity. 15.3 Perspectives on Psychological Disorders LEARNING OBJECTIVES By the end of this section, you will be able to: • Discuss supernatural perspectives on the origin of psychological disorders, in their historical context • Describe modern biological and psychological perspectives on the origin of psychological disorders • Identify which disorders
+
+widowed (Hasin et al., 2011). Comorbid disorders include anxiety disorders and substance abuse disorders (Kessler & Wang, 2009). Subtypes of Depression The DSM-5 lists several diffe
+            </div>
+        </div>
+        
+        <div class="stats">
+            <div class="stat-item">
+                <div class="stat-label">Sections Used</div>
+                <div class="stat-value">9</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-label">Pages Referenced</div>
+                <div class="stat-value">12</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-label">Keywords Found</div>
+                <div class="stat-value">0</div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            Generated from Psychology 2e Textbook • Question 31 • 2026-02-26
+        </div>
+    </div>
+    
+    <!-- Font Awesome for icons -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
+</body>
+</html>

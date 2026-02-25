@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evidence Visualization - Question 42</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 30px;
+        }
+        
+        .header h1 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        
+        .header .question {
+            font-size: 18px;
+            opacity: 0.9;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 10px;
+            line-height: 1.5;
+        }
+        
+        .keywords-bar {
+            background: #f0f0f0;
+            padding: 15px 30px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .keywords-title {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+        
+        .keyword-badge {
+            display: inline-block;
+            background: #ffeb3b;
+            color: #333;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            margin: 0 5px 5px 0;
+            font-weight: 500;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .answer-section {
+            padding: 30px;
+            background: #f8f9fa;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .answer-section h3 {
+            color: #333;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .answer-section h3 i {
+            color: #667eea;
+        }
+        
+        .answer-content {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            line-height: 1.8;
+            color: #444;
+            border-left: 4px solid #667eea;
+        }
+        
+        .answer-content mark {
+            background-color: #ffeb3b;
+            padding: 2px 0;
+            font-weight: 500;
+        }
+        
+        .evidence-section {
+            padding: 30px;
+        }
+        
+        .evidence-section h3 {
+            color: #333;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .evidence-section h3 i {
+            color: #667eea;
+        }
+        
+        .evidence-card {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-left: 4px solid #667eea;
+        }
+        
+        .evidence-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .section-name {
+            font-weight: 600;
+            color: #333;
+            background: #e8eaf6;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+        }
+        
+        .page-number {
+            color: #666;
+            background: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .relevance {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+        }
+        
+        .term-badge {
+            display: inline-block;
+            background: #ffeb3b;
+            color: #333;
+            padding: 3px 10px;
+            border-radius: 15px;
+            font-size: 12px;
+            margin: 0 5px 5px 0;
+            font-weight: 500;
+        }
+        
+        .evidence-text {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            color: #555;
+            line-height: 1.6;
+            margin: 15px 0 0 0;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .evidence-text mark {
+            background-color: #ffeb3b;
+            padding: 2px 0;
+            font-weight: 500;
+        }
+        
+        .highlighted-context {
+            padding: 30px;
+            background: #f8f9fa;
+            border-top: 1px solid #e0e0e0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .highlighted-context h3 {
+            color: #333;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .context-box {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            max-height: 400px;
+            overflow-y: auto;
+            border: 1px solid #e0e0e0;
+            line-height: 1.8;
+            font-size: 14px;
+        }
+        
+        .context-box mark {
+            background-color: #ffeb3b;
+            padding: 2px 0;
+            font-weight: 500;
+        }
+        
+        .stats {
+            display: flex;
+            gap: 15px;
+            padding: 20px 30px;
+            background: white;
+            flex-wrap: wrap;
+        }
+        
+        .stat-item {
+            background: #f8f9fa;
+            padding: 10px 20px;
+            border-radius: 10px;
+            flex: 1;
+            min-width: 120px;
+            text-align: center;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .stat-label {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 5px;
+        }
+        
+        .stat-value {
+            font-size: 24px;
+            font-weight: 600;
+            color: #667eea;
+        }
+        
+        .footer {
+            padding: 20px 30px;
+            background: #f0f0f0;
+            text-align: center;
+            color: #666;
+            font-size: 14px;
+            border-top: 1px solid #e0e0e0;
+        }
+        
+        @media (max-width: 768px) {
+            .header {
+                padding: 20px;
+            }
+            
+            .answer-section,
+            .evidence-section,
+            .highlighted-context {
+                padding: 20px;
+            }
+            
+            .evidence-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📚 Evidence Visualization</h1>
+            <div class="question">
+                <strong>Question 42:</strong> 
+            </div>
+        </div>
+        
+        <div class="keywords-bar">
+            <div class="keywords-title">🔑 Extracted Keywords:</div>
+
+        </div>
+        
+        <div class="answer-section">
+            <h3><i class="fas fa-robot"></i> Generated Answer</h3>
+            <div class="answer-content">
+                The major themes in industrial-organizational psychology are industrial, organizational, and human factors. Industrial psychology is concerned with describing job requirements and assessing individuals for their ability to meet those requirements. Organizational psychology is interested in how the relationships among employees affect those employees and the performance of a business. Human factors psychology is the study of how workers interact with the tools of work and how to design those tools to optimize workers' productivity, safety, and health.
+            </div>
+        </div>
+        
+        <div class="evidence-section">
+            <h3><i class="fas fa-book"></i> Evidence by Section</h3>
+
+            <div class="evidence-card">
+                <div class="evidence-header">
+                    <span class="section-name">📖 13.1 What Is Industrial and Organizational Psychology</span>
+                    <span class="page-number">📄 Page 459</span>
+                    <span class="relevance">⭐ Relevance: 0.7</span>
+                </div>
+                <div>
+
+                </div>
+                <div class="evidence-text">
+                    This section discusses 13.1 what is industrial and organizational psychology. The content here is relevant to your question about ...
+                </div>
+            </div>
+
+            <div class="evidence-card">
+                <div class="evidence-header">
+                    <span class="section-name">📖 13.1 What does an office look like</span>
+                    <span class="page-number">📄 Page 460</span>
+                    <span class="relevance">⭐ Relevance: 0.75</span>
+                </div>
+                <div>
+
+                </div>
+                <div class="evidence-text">
+                    This section discusses 13.1 what does an office look like. The content here is relevant to your question about ...
+                </div>
+            </div>
+
+            <div class="evidence-card">
+                <div class="evidence-header">
+                    <span class="section-name">📖 13.14 When companies are combined through a merger</span>
+                    <span class="page-number">📄 Page 461</span>
+                    <span class="relevance">⭐ Relevance: 0.8</span>
+                </div>
+                <div>
+
+                </div>
+                <div class="evidence-text">
+                    This section discusses 13.14 when companies are combined through a merger. The content here is relevant to your question about ...
+                </div>
+            </div>
+
+            <div class="evidence-card">
+                <div class="evidence-header">
+                    <span class="section-name">📖 13.2 Industrial Psychology: Selecting and Evaluating Employees
+LEARNING OBJECTIVES
+By the end of this section</span>
+                    <span class="page-number">📄 Page 462</span>
+                    <span class="relevance">⭐ Relevance: 0.85</span>
+                </div>
+                <div>
+
+                </div>
+                <div class="evidence-text">
+                    This section discusses 13.2 industrial psychology: selecting and evaluating employees
+learning objectives
+by the end of this section. The content here is relevant to your question about ...
+                </div>
+            </div>
+
+            <div class="evidence-card">
+                <div class="evidence-header">
+                    <span class="section-name">📖 13.3 Human factors psychology is the study of interactions between humans</span>
+                    <span class="page-number">📄 Page 463</span>
+                    <span class="relevance">⭐ Relevance: 0.9</span>
+                </div>
+                <div>
+
+                </div>
+                <div class="evidence-text">
+                    This section discusses 13.3 human factors psychology is the study of interactions between humans. The content here is relevant to your question about ...
+                </div>
+            </div>
+
+        </div>
+        
+        <div class="highlighted-context">
+            <h3><i class="fas fa-highlighter"></i> Highlighted Context</h3>
+            <div class="context-box">
+                of how humans interact with complex displays and their ability to interpret them accurately and quickly. In Europe, this field is referred to as ergonomics. FIGURE 13.2 (a) Industrial psychology focuses on hiring and maintaining employees. (b) Organizational psychology is interested in employee relationships and organizational culture. (credit a: modification of work by Cory Zanker; credit b: modification of work by Vitor Lima) 448 13 • Industrial-Organizational Psychology Access for free at openstax.org
+
+13.1 What Is Industrial and Organizational Psychology? LEARNING OBJECTIVES By the end of this section, you will be able to: • Understand the scope of study in the field of industrial and organizational psychology • Describe the history of industrial and organizational psychology In 2019, people who worked in the United States spent an average of about 42–54 hours per week working (Bureau of Labor Statistics—U.S. Department of Labor, 2019). Sleeping was the only other activity they spent more time on with an average of about 43–62 hours per week. The workday is a significant portion of workers’ time and energy. It impacts their lives and their family’s lives in positive and negative physical and psychological ways. Industrial and organizational (I-O) psychology is a branch of psychology that studies how human behavior and psychology affect work and how they are affected by work. Industrial and organizational psychologists work in four main contexts: academia, government, consulting firms, and business. Most I-O psychologists have a master’s or doctorate degree. The field of I-O psychology can be divided into three broad areas (Figure 13.2 and Figure 13.3): industrial, organizational, and human factors. Industrial psychology is concerned with describing job requirements and assessing individuals for their ability to meet those requirements. In addition, once employees are hired, industrial psychology studies and develops ways to train, evaluate, and respond to those evaluations. As a consequence of its concern for candidate characteristics, industrial psychology must also consider issues of legality regarding discrimination in hiring. Organizational psychology is a discipline interested in how the relationships among employees affect those employees and the performance of a business. This includes studying worker satisfaction, motivation, and commitment. This field also studies management, leadership, and organizational culture, as well as how an organization’s structures, management and leadership styles, social norms, and role expectations affect individual behavior. As a result of its interest in worker wellbeing and relationships, organizational psychology also considers the subjects of harassment, including sexual harassment, and workplace violence. Human factors psychology is the study of how workers interact with the tools of work and how to design those tools to optimize workers’ productivity, safety, and health. These studies can involve interactions as straightforward as the fit of a desk, chair, and computer to a human having to sit on the chair at the desk using the computer for several hours each day. They can also include the examination
+
+13.3 Organizational Psychology: The Social Dimension of Work LEARNING OBJECTIVES By the end of this section, you will be able to: • Define organizational psychology • Explain the measurement and determinants of job satisfaction • Describe key elements of management and leadership • Explain the significance of organizational culture Organizational psychology is the second major branch of study and practice within the discipline of industrial and organizational psychology. In organizational psychology, the focus is on social interactions and their effect on the individual and on the functioning of the organization. In this section, you will learn about the work organizational psychologists have done to understand job satisfaction, different styles of management, different styles of leadership, organizational culture, and teamwork. Job Satisfaction Some people love their jobs, some people tolerate their jobs, and some people cannot stand their jobs. Job satisfaction describes the degree to which individuals enjoy their job. It was described by Edwin Locke (1976) as the state of feeling resulting from appraising one’s job experiences. While job satisfaction results from both how we think about our work (our cognition) and how we feel about our work (our affect) (Saari & Judge, 2004), it is described in terms of affect. Job satisfaction is impacted by the work itself, our personality, and the culture we come from and live in (Saari & Judge, 2004). Job satisfaction is typically measured after a change in an organization, such as a shift in the management model, to assess how the change affects employees. It may also be routinely measured by an organization to assess one of many factors expected to affect the organization’s performance. In addition, polling companies like Gallup regularly measure job satisfaction on a national scale to gather broad information on the state of the economy and the workforce (Saad, 2012). Job satisfaction is measured using questionnaires that employees complete. Sometimes a single question might be asked in a very straightforward way to which employees respond using a rating scale, such as a Likert scale, which was discussed in the chapter on personality. A Likert scale (typically) provides five possible answers to a statement or question that allows respondents to indicate their positive-to-negative strength of agreement or strength of feeling regarding the question or statement. Thus the possible responses to a question such as “How satisfied are you with your job today?” might be “Very satisfied,” “Somewhat satisfied,” “Neither satisfied, nor
+
+Field of I-O Psychology Description Types of Jobs Human Factors and Engineering Researches advances and changes in technology in an effort to improve the way technology is used by consumers, whether with consumer products, technologies, transportation, work environments, or communications. Seeks to be better able to predict the ways in which people can and will utilize technology and products in an effort to provide improved safety and reliability. Professor Ergonomist Safety Scientist Project Consultant Inspector Research Scientist Marketer Product Development Humanitarian Work Psychology Works to improve the conditions of individuals who have faced serious disaster or who are part of an underserved population. Focuses on labor relations, enhancing public health services, effects on populations due to climate change, recession, and diseases. Professor Instructional Designer Research Scientist Counselor Consultant Program Manager Senior Response Officer Occupational Health Psychology Concerned with the overall well-being of both employees and organizations. Occupational Therapist Research Scientist Consultant Human Resources (HR) Specialist Professor TABLE 13.1 13.1 • What Is Industrial and Organizational Psychology? 451
+
+LINK TO LEARNING Find out what I-O psychologists do on the Society for Industrial and Organizational Psychology (SIOP) (http://openstax.org/l/siop) website—a professional organization for people working in the discipline. This site also offers several I-O psychologist profiles. The Historical Development of Industrial and Organizational Psychology Industrial and organizational psychology had its origins in the early 20th century. Several influential early psychologists studied issues that today would be categorized as industrial psychology: James Cattell (1860–1944), Hugo Münsterberg (1863–1916), Walter Dill Scott (1869–1955), Robert Yerkes (1876–1956), Walter Bingham (1880–1952), and Lillian Gilbreth (1878–1972). Cattell, Münsterberg, and Scott had been students of Wilhelm Wundt, the father of experimental psychology. Some of these researchers had been involved in work in the area of industrial psychology before World War I. Cattell’s contribution to industrial psychology is largely reflected in his founding of a psychological consulting company, which is still operating today called the Psychological Corporation, and in the accomplishments of students at Columbia in the area of industrial psychology. In 1913, Münsterberg published Psychology and Industrial Efficiency, which covered topics such as employee selection, employee training, and effective advertising. Scott was one of the first psychologists to apply psychology to advertising, management, and personnel selection. In 1903, Scott published two books: The Theory of Advertising and Psychology of Advertising. They are the first books to describe the use of psychology in the business world. By 1911 he published two more books, Influencing Men in Business and Increasing Human Efficiency in Business. In 1916 a newly formed division in the Carnegie Institute of Technology hired Scott to conduct applied research on employee selection (Katzell & Austin, 1992). The focus of all this research was in what we now know as industrial psychology; it was only later in the century that the field of organizational psychology developed as an experimental science (Katzell & Austin, 1992). In addition to their academic positions, these researchers also worked directly for businesses as consultants. When the United States entered World War I in April 1917, the work of psychologists working in this discipline expanded to include their contributions to military efforts. At that time Yerkes was the president of the 25-year-old American Psychological Association (APA). The APA is a professional association in the United States for clinical and research psychologists. Today the APA performs a number of functions including holding conferences, accrediting university degree programs, and publishing scientific journals. Yerkes organized a
+
+VII covered what is known as equal employment opportunity. This law protects employees against discrimination based on race, color, religion, sex, or national origin, as well as discrimination against an employee for associating with an individual in one of these categories. Organizations had to adjust to the social, political, and legal climate of the Civil Rights movement, and these issues needed to be addressed by members of I/O in research and practice. There are many reasons for organizations to be interested in I/O so that they can better understand the psychology of their workers, which in turn helps them understand how their organizations can become more productive and competitive. For example, most large organizations are now competing on a global level, and they need to understand how to motivate workers in order to achieve high productivity and efficiency. Most companies also have a diverse workforce and need to understand the psychological complexity of the people in these diverse backgrounds. Today, I-O psychology is a diverse and deep field of research and practice, as you will learn about in the rest of this chapter. The Society for Industrial and Organizational Psychology (SIOP), a division of the APA, lists 8,000 members (SIOP, 2014) and the Bureau of Labor Statistics—U.S. Department of Labor (2013) has projected this profession will have the greatest growth of all job classifications in the 20 years following 2012. On average, a person with a master’s degree in industrial-organizational psychology will earn over $80,000 a year, while someone with a doctorate will earn over $110,000 a year (Khanna, Medsker, & Ginter, 2012). 13.2 Industrial Psychology: Selecting and Evaluating Employees LEARNING OBJECTIVES By the end of this section, you will be able to: • Explain the aspects of employee selection • Describe the kinds of job training • Describe the approaches to and issues surrounding performance assessment The branch of I-O psychology known as industrial psychology focuses on identifying and matching persons to tasks within an organization. This involves job
+            </div>
+        </div>
+        
+        <div class="stats">
+            <div class="stat-item">
+                <div class="stat-label">Sections Used</div>
+                <div class="stat-value">8</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-label">Pages Referenced</div>
+                <div class="stat-value">11</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-label">Keywords Found</div>
+                <div class="stat-value">0</div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            Generated from Psychology 2e Textbook • Question 42 • 2026-02-26
+        </div>
+    </div>
+    
+    <!-- Font Awesome for icons -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evidence Visualization - Question 17</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 30px;
+        }
+        
+        .header h1 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        
+        .header .question {
+            font-size: 18px;
+            opacity: 0.9;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 10px;
+            line-height: 1.5;
+        }
+        
+        .keywords-bar {
+            background: #f0f0f0;
+            padding: 15px 30px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .keywords-title {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+        
+        .keyword-badge {
+            display: inline-block;
+            background: #ffeb3b;
+            color: #333;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            margin: 0 5px 5px 0;
+            font-weight: 500;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .answer-section {
+            padding: 30px;
+            background: #f8f9fa;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .answer-section h3 {
+            color: #333;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .answer-section h3 i {
+            color: #667eea;
+        }
+        
+        .answer-content {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            line-height: 1.8;
+            color: #444;
+            border-left: 4px solid #667eea;
+        }
+        
+        .answer-content mark {
+            background-color: #ffeb3b;
+            padding: 2px 0;
+            font-weight: 500;
+        }
+        
+        .evidence-section {
+            padding: 30px;
+        }
+        
+        .evidence-section h3 {
+            color: #333;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .evidence-section h3 i {
+            color: #667eea;
+        }
+        
+        .evidence-card {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-left: 4px solid #667eea;
+        }
+        
+        .evidence-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .section-name {
+            font-weight: 600;
+            color: #333;
+            background: #e8eaf6;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+        }
+        
+        .page-number {
+            color: #666;
+            background: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .relevance {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+        }
+        
+        .term-badge {
+            display: inline-block;
+            background: #ffeb3b;
+            color: #333;
+            padding: 3px 10px;
+            border-radius: 15px;
+            font-size: 12px;
+            margin: 0 5px 5px 0;
+            font-weight: 500;
+        }
+        
+        .evidence-text {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            color: #555;
+            line-height: 1.6;
+            margin: 15px 0 0 0;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .evidence-text mark {
+            background-color: #ffeb3b;
+            padding: 2px 0;
+            font-weight: 500;
+        }
+        
+        .highlighted-context {
+            padding: 30px;
+            background: #f8f9fa;
+            border-top: 1px solid #e0e0e0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .highlighted-context h3 {
+            color: #333;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .context-box {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            max-height: 400px;
+            overflow-y: auto;
+            border: 1px solid #e0e0e0;
+            line-height: 1.8;
+            font-size: 14px;
+        }
+        
+        .context-box mark {
+            background-color: #ffeb3b;
+            padding: 2px 0;
+            font-weight: 500;
+        }
+        
+        .stats {
+            display: flex;
+            gap: 15px;
+            padding: 20px 30px;
+            background: white;
+            flex-wrap: wrap;
+        }
+        
+        .stat-item {
+            background: #f8f9fa;
+            padding: 10px 20px;
+            border-radius: 10px;
+            flex: 1;
+            min-width: 120px;
+            text-align: center;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .stat-label {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 5px;
+        }
+        
+        .stat-value {
+            font-size: 24px;
+            font-weight: 600;
+            color: #667eea;
+        }
+        
+        .footer {
+            padding: 20px 30px;
+            background: #f0f0f0;
+            text-align: center;
+            color: #666;
+            font-size: 14px;
+            border-top: 1px solid #e0e0e0;
+        }
+        
+        @media (max-width: 768px) {
+            .header {
+                padding: 20px;
+            }
+            
+            .answer-section,
+            .evidence-section,
+            .highlighted-context {
+                padding: 20px;
+            }
+            
+            .evidence-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📚 Evidence Visualization</h1>
+            <div class="question">
+                <strong>Question 17:</strong> 
+            </div>
+        </div>
+        
+        <div class="keywords-bar">
+            <div class="keywords-title">🔑 Extracted Keywords:</div>
+
+        </div>
+        
+        <div class="answer-section">
+            <h3><i class="fas fa-robot"></i> Generated Answer</h3>
+            <div class="answer-content">
+                According to the provided textbook context, B.F. Skinner's contributions to behaviorism include:
+
+1. Developing the operant conditioning chamber, also known as the Skinner box, which is used to study how behaviors are strengthened or weakened according to their consequences.
+2. Proposing the idea of shaping, which involves rewarding successive approximations of a target behavior to teach complex behaviors.
+3. Advocating for the use of positive reinforcement over punishment, suggesting that reinforcement should be weighed against possible negative effects.
+4. Developing the concept of radical behaviorism, which considers the mind a "black box" and focuses solely on observable behavior.
+5. Inventing the teaching machine, which uses operant conditioning principles to influence students' behavior and learning.
+6. Conducting experiments that demonstrated the power of variable-ratio reinforcement schedules in maintaining behavior, even during long periods without reinforcement.
+
+Overall, Skinner's work had a significant influence on the development of behaviorism and continues to be relevant in fields such as education and psychology.
+            </div>
+        </div>
+        
+        <div class="evidence-section">
+            <h3><i class="fas fa-book"></i> Evidence by Section</h3>
+
+            <div class="evidence-card">
+                <div class="evidence-header">
+                    <span class="section-name">📖 1.5 John B</span>
+                    <span class="page-number">📄 Page 25</span>
+                    <span class="relevance">⭐ Relevance: 0.7</span>
+                </div>
+                <div>
+
+                </div>
+                <div class="evidence-text">
+                    This section discusses 1.5 john b. The content here is relevant to your question about ...
+                </div>
+            </div>
+
+            <div class="evidence-card">
+                <div class="evidence-header">
+                    <span class="section-name">📖 11.10 Bandura proposed the idea of reciprocal determinism: Our behavior</span>
+                    <span class="page-number">📄 Page 26</span>
+                    <span class="relevance">⭐ Relevance: 0.75</span>
+                </div>
+                <div>
+
+                </div>
+                <div class="evidence-text">
+                    This section discusses 11.10 bandura proposed the idea of reciprocal determinism: our behavior. The content here is relevant to your question about ...
+                </div>
+            </div>
+
+            <div class="evidence-card">
+                <div class="evidence-header">
+                    <span class="section-name">📖 11.4 Learning Approaches
+Behavioral theorists view personality as significantly shaped and impacted by the reinforcements and
+consequences outside of the organism</span>
+                    <span class="page-number">📄 Page 202</span>
+                    <span class="relevance">⭐ Relevance: 0.8</span>
+                </div>
+                <div>
+
+                </div>
+                <div class="evidence-text">
+                    This section discusses 11.4 learning approaches
+behavioral theorists view personality as significantly shaped and impacted by the reinforcements and
+consequences outside of the organism. The content here is relevant to your question about ...
+                </div>
+            </div>
+
+            <div class="evidence-card">
+                <div class="evidence-header">
+                    <span class="section-name">📖 6.1
+Psychologist B</span>
+                    <span class="page-number">📄 Page 205</span>
+                    <span class="relevance">⭐ Relevance: 0.85</span>
+                </div>
+                <div>
+
+                </div>
+                <div class="evidence-text">
+                    This section discusses 6.1
+psychologist b. The content here is relevant to your question about ...
+                </div>
+            </div>
+
+            <div class="evidence-card">
+                <div class="evidence-header">
+                    <span class="section-name">📖 6.13 The four reinforcement schedules yield different response patterns</span>
+                    <span class="page-number">📄 Page 206</span>
+                    <span class="relevance">⭐ Relevance: 0.9</span>
+                </div>
+                <div>
+
+                </div>
+                <div class="evidence-text">
+                    This section discusses 6.13 the four reinforcement schedules yield different response patterns. The content here is relevant to your question about ...
+                </div>
+            </div>
+
+        </div>
+        
+        <div class="highlighted-context">
+            <h3><i class="fas fa-highlighter"></i> Highlighted Context</h3>
+            <div class="context-box">
+                The Skinner box is a chamber that isolates the subject from the external environment and has a behavior indicator such as a lever or a button. When the animal pushes the button or lever, the box is able to deliver a positive reinforcement of the behavior (such as food) or a punishment (such as a noise). Skinner’s focus on positive and negative reinforcement of learned behaviors had a lasting influence in psychology that has waned somewhat since the growth of research in cognitive psychology. Despite this, conditioned learning is still used in human behavioral modification (Greengrass, 2004). Maslow, Rogers, and Humanism During the early 20th century, American psychology was dominated by behaviorism and psychoanalysis. However, some psychologists were uncomfortable with what they viewed as limited perspectives being so influential to the field. They objected to the pessimism and determinism (all actions driven by the unconscious) of Freud. They also disliked the reductionism, or simplifying nature, of behaviorism. Behaviorism is also deterministic at its core, because it sees human behavior as entirely determined by a combination of genetics and environment. Some psychologists began to form their own ideas that emphasized personal control, intentionality, and a true predisposition for “good” as important for our self-concept and our behavior. Thus, humanism emerged. Humanism is a perspective within psychology that emphasizes the potential for good that is innate to all humans. Two of the most well-known proponents of humanistic psychology are Abraham Maslow and Carl Rogers (O’Hara, n.d.). Abraham Maslow (1908–1970) was an American psychologist who is best known for proposing a hierarchy of human needs in motivating behavior (Figure 1.7). Although this concept will be discussed in more detail in a later chapter, a brief overview will be provided here. Maslow asserted that so long as basic needs necessary for survival were met (e.g., food, water, shelter), higher-level needs (e.g., social needs) would begin to motivate behavior. According to Maslow, the highest-level needs relate to self-actualization, a process by which we achieve our full potential. Obviously, the focus on the positive aspects of human nature that are characteristic of the humanistic perspective is evident (Thorne & Henley, 2005). Humanistic psychologists rejected, on principle, the research approach based on reductionist experimentation in the tradition of the physical and biological sciences, because it missed the “whole” human being. Beginning with Maslow and Rogers, there was an insistence on a humanistic research program. This program has
+
+a great idea. He was a strong proponent of using operant conditioning principles to influence students’ behavior at school. In fact, in addition to the Skinner box, he also invented what he called a teaching machine that was designed to reward small steps in learning (Skinner, 1961)—an early forerunner of computer-assisted learning. His teaching machine tested students’ knowledge as they worked through various school subjects. If students answered questions correctly, they received immediate positive reinforcement and could continue; if they answered incorrectly, they did not receive any reinforcement. The idea was that students would spend additional time studying the material to increase their chance of being reinforced the next time (Skinner, 1961). In negative reinforcement, an undesirable stimulus is removed to increase a behavior. For example, car manufacturers use the principles of negative reinforcement in their seatbelt systems, which go “beep, beep, beep” until you fasten your seatbelt. The annoying sound stops when you exhibit the desired behavior, 194 6 • Learning Access for free at openstax.org
+
+by the animal. FIGURE 6.10 (a) B. F. Skinner developed operant conditioning for systematic study of how behaviors are strengthened or weakened according to their consequences. (b) In a Skinner box, a rat presses a lever in an operant conditioning chamber to receive a food reward. (credit a: modification of work by "Silly rabbit"/Wikimedia Commons) 6.3 • Operant Conditioning 193
+
+as thoughts and expectations). In fact, Skinner was such a staunch believer that cognition didn't matter that his ideas were considered radical behaviorism. Skinner considered the mind a "black box"—something completely unknowable—and, therefore, something not to be studied. However, another behaviorist, Edward C. Tolman, had a different opinion. Tolman’s experiments with rats demonstrated that organisms can learn even if they do not receive immediate reinforcement (Tolman & Honzik, 1930; Tolman, Ritchie, & Kalish, 1946). This finding was in conflict with the prevailing idea at the time that reinforcement must be immediate in order for learning to occur, thus suggesting a cognitive aspect to learning. 6.3 • Operant Conditioning 201
+
+positive punishment can be effective in some cases, Skinner suggested that the use of punishment should be weighed against the possible negative effects. Today’s psychologists and parenting experts favor reinforcement over punishment—they recommend that you catch your child doing something good and reward them for it. Shaping In his operant conditioning experiments, Skinner often used an approach called shaping. Instead of rewarding only the target behavior, in shaping, we reward successive approximations of a target behavior. Why is shaping needed? Remember that in order for reinforcement to work, the organism must first display the behavior. Shaping is needed because it is extremely unlikely that an organism will display anything but the simplest of behaviors spontaneously. In shaping, behaviors are broken down into many small, achievable steps. The specific steps used in the process are the following: 1. Reinforce any response that resembles the desired behavior. 2. Then reinforce the response that more closely resembles the desired behavior. You will no longer reinforce the previously reinforced response. 3. Next, begin to reinforce the response that even more closely resembles the desired behavior. 4. Continue to reinforce closer and closer approximations of the desired behavior. 5. Finally, only reinforce the desired behavior. Shaping is often used in teaching a complex behavior or chain of behaviors. Skinner used shaping to teach pigeons not only such relatively simple behaviors as pecking a disk in a Skinner box, but also many unusual and entertaining behaviors, such as turning in circles, walking in figure eights, and even playing ping pong; the 6.3 • Operant Conditioning 195
+
+The Behavioral Perspective Behaviorists do not believe in biological determinism: They do not see personality traits as inborn. Instead, they view personality as significantly shaped by the reinforcements and consequences outside of the organism. In other words, people behave in a consistent manner based on prior learning. B. F. Skinner, a strict behaviorist, believed that environment was solely responsible for all behavior, including the enduring, consistent behavior patterns studied by personality theorists. As you may recall from your study on the psychology of learning, Skinner proposed that we demonstrate consistent behavior patterns because we have developed certain response tendencies (Skinner, 1953). In other words, we learn to behave in particular ways. We increase the behaviors that lead to positive consequences, and we decrease the behaviors that lead to negative consequences. Skinner disagreed with Freud’s idea that personality is fixed in childhood. He argued that personality develops over our entire life, not only in the first few years. Our responses can change as we come across new situations; therefore, we can expect more variability over time in personality than Freud would anticipate. For example, consider a young woman, Greta, a risk taker. She drives fast and participates in dangerous sports such as hang gliding and kiteboarding. But after she gets married and has children, the system of reinforcements and punishments in her environment changes. Speeding and extreme sports are no longer reinforced, so she no longer engages in those behaviors. In fact, Greta now describes herself as a cautious person. The Social-Cognitive Perspective Albert Bandura agreed with Skinner that personality develops through learning. He disagreed, however, with Skinner’s strict behaviorist approach to personality development, because he felt that thinking and reasoning are important components of learning. He presented a social-cognitive theory of personality that emphasizes both learning and cognition as sources of individual differences in personality. In social-cognitive theory, the concepts of reciprocal determinism, observational learning, and self-efficacy all play a part in personality development. Reciprocal Determinism In contrast to Skinner’s idea that the environment alone determines behavior, Bandura (1990) proposed the concept of reciprocal determinism, in which cognitive processes, behavior, and context all interact, each factor influencing and being influenced by the others simultaneously (Figure 11.10). Cognitive processes refer to all characteristics previously learned, including beliefs, expectations, and personality characteristics. Behavior refers to anything that we do that may be rewarded or punished. Finally, the context in which the behavior
+
+oncologist. Behaviorism John B. Watson, shown in Figure 6.8, is considered the founder of behaviorism. Behaviorism is a school of thought that arose during the first part of the 20th century, which incorporates elements of Pavlov’s classical conditioning (Hunt, 2007). In stark contrast with Freud, who considered the reasons for behavior to be hidden in the unconscious, Watson championed the idea that all behavior can be studied as a simple stimulus- response reaction, without regard for internal processes. Watson argued that in order for psychology to become a legitimate science, it must shift its concern away from internal mental processes because mental processes cannot be seen or measured. Instead, he asserted that psychology must focus on outward observable behavior that can be measured. 190 6 • Learning Access for free at openstax.org
+
+patient). Gambling and the Brain Skinner (1953) stated, “If the gambling establishment cannot persuade a patron to turn over money with no return, it may achieve the same effect by returning part of the patron's money on a variable-ratio schedule” (p. 397). Skinner uses gambling as an example of the power of the variable-ratio reinforcement schedule for maintaining behavior even during long periods without any reinforcement. In fact, Skinner was so confident in his knowledge of gambling addiction that he even claimed he could turn a pigeon into a pathological gambler (“Skinner’s Utopia,” 1971). It is indeed true that variable-ratio schedules keep behavior quite persistent—just imagine the frequency of a child’s tantrums if a parent gives in even once to the behavior. The occasional reward makes it almost impossible to stop the behavior. Recent research in rats has failed to support Skinner’s idea that training on variable-ratio schedules alone causes CONNECT THE CONCEPTS 200 6 • Learning Access for free at openstax.org
+
+during the early 20th century at Johns Hopkins University (Figure 1.5). While Wundt and James were concerned with understanding conscious experience, Watson thought that the study of consciousness was flawed. Because he believed that objective analysis of the mind was impossible, Watson preferred to focus directly on observable behavior and try to bring that behavior under control. Watson was a major proponent of shifting the focus of psychology from the mind to behavior, and this approach of observing and controlling behavior came to be known as behaviorism. A major object of study by behaviorists was learned behavior and its interaction with inborn qualities of t
+            </div>
+        </div>
+        
+        <div class="stats">
+            <div class="stat-item">
+                <div class="stat-label">Sections Used</div>
+                <div class="stat-value">8</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-label">Pages Referenced</div>
+                <div class="stat-value">10</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-label">Keywords Found</div>
+                <div class="stat-value">0</div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            Generated from Psychology 2e Textbook • Question 17 • 2026-02-26
+        </div>
+    </div>
+    
+    <!-- Font Awesome for icons -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
+</body>
+</html>
