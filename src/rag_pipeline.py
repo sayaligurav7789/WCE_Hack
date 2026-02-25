@@ -138,14 +138,14 @@ def generate_answer(prompt):
 # FULL PIPELINE
 # ==================================================
 def answer_question(question):
+    # Handle casual greetings - return early with empty references
+    casual_inputs = ["hi", "hello", "hey", "thanks", "thank you", "good morning", "good evening", "hi!", "hello!", "hey!"]
+    
+    if question.strip().lower().rstrip('!') in [g.rstrip('!') for g in casual_inputs]:
+        # Return with empty references so no book sections are shown
+        return "Hello! 👋 I'm your Psychology 2e assistant. Ask me any question from the textbook and I'll help you find the answer!", "", [], []
 
-    # Handle casual greetings
-    casual_inputs = ["hi", "hello", "hey", "thanks", "thank you", "good morning", "good evening"]
-
-    if question.strip().lower() in casual_inputs:
-        return "Hello! 👋 Ask me any question from the Psychology textbook.", "", [], []
-
-    # Logic 
+    # Retrieve
     retrieved = retrieve(question)
 
     if not retrieved:
@@ -158,5 +158,13 @@ def answer_question(question):
 
     prompt = build_prompt(question, context)
     answer = generate_answer(prompt)
+
+    # STRICT FALLBACK CHECK
+    if answer.strip().lower().startswith("not found"):
+        return "Not found in the provided textbook.", "", [], []
+
+    # Optional extra safety:
+    if len(answer.strip()) < 20:
+        return "Not found in the provided textbook.", "", [], []
 
     return answer, context, sections, pages
