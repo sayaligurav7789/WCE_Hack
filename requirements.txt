@@ -6,6 +6,9 @@ numpy
 tqdm
 requests
 matplotlib
+fastapi
+uvicorn
+jinja2
 
 # requirements.txt
 pymupdf==1.23.8
