@@ -73,6 +73,45 @@
                 box-shadow: 0 2px 4px rgba(0,0,0,0.1);
             }
             
+            .confidence-meter {
+                background: #f0f0f0;
+                padding: 15px 30px;
+                border-bottom: 1px solid #e0e0e0;
+                display: flex;
+                align-items: center;
+                gap: 20px;
+                flex-wrap: wrap;
+            }
+            
+            .confidence-bar {
+                flex: 1;
+                height: 20px;
+                background: #e0e0e0;
+                border-radius: 10px;
+                overflow: hidden;
+            }
+            
+            .confidence-fill {
+                height: 100%;
+                border-radius: 10px;
+                transition: width 0.3s ease;
+            }
+            
+            .confidence-fill.high { background: linear-gradient(90deg, #4caf50, #8bc34a); }
+            .confidence-fill.medium { background: linear-gradient(90deg, #ff9800, #ffc107); }
+            .confidence-fill.low { background: linear-gradient(90deg, #f44336, #ff7043); }
+            
+            .confidence-text {
+                font-size: 18px;
+                font-weight: 600;
+                min-width: 100px;
+                text-align: center;
+            }
+            
+            .confidence-text.high { color: #4caf50; }
+            .confidence-text.medium { color: #ff9800; }
+            .confidence-text.low { color: #f44336; }
+            
             .answer-section {
                 padding: 30px;
                 background: #f8f9fa;
@@ -99,8 +138,6 @@
                 color: #444;
                 border-left: 4px solid #667eea;
             }
-            
-            /* NO mark styling for answer - it stays plain */
             
             .evidence-section {
                 padding: 30px;
@@ -153,17 +190,6 @@
                 border: 1px solid #e0e0e0;
             }
             
-            .term-badge {
-                display: inline-block;
-                background: #ffeb3b;
-                color: #333;
-                padding: 3px 10px;
-                border-radius: 15px;
-                font-size: 12px;
-                margin: 0 5px 5px 0;
-                font-weight: 500;
-            }
-            
             .evidence-text {
                 background: white;
                 padding: 15px;
@@ -213,19 +239,17 @@
             }
             
             .stats {
-                display: flex;
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
                 gap: 15px;
                 padding: 20px 30px;
                 background: white;
-                flex-wrap: wrap;
             }
             
             .stat-item {
                 background: #f8f9fa;
-                padding: 10px 20px;
+                padding: 15px;
                 border-radius: 10px;
-                flex: 1;
-                min-width: 120px;
                 text-align: center;
                 border: 1px solid #e0e0e0;
             }
@@ -242,6 +266,12 @@
                 color: #667eea;
             }
             
+            .stat-factor {
+                font-size: 11px;
+                color: #999;
+                margin-top: 5px;
+            }
+            
             .footer {
                 padding: 20px 30px;
                 background: #f0f0f0;
@@ -252,6 +282,10 @@
             }
             
             @media (max-width: 768px) {
+                .stats {
+                    grid-template-columns: repeat(2, 1fr);
+                }
+                
                 .header {
                     padding: 20px;
                 }
@@ -279,14 +313,22 @@
             </div>
             
             <div class="keywords-bar">
-                <div class="keywords-title">🔑 Extracted Keywords:</div>
+                <div class="keywords-title"><i class="fas fa-key"></i> Extracted Keywords:</div>
     <span class="keyword-badge">role</span><span class="keyword-badge">critical</span><span class="keyword-badge">thinking</span><span class="keyword-badge">psychology</span>
+            </div>
+            
+            <div class="confidence-meter">
+                <i class="fas fa-bullseye"></i><span style="font-weight: 600;">Confidence:</span>
+                <div class="confidence-bar">
+                    <div class="confidence-fill high" style="width: 100.0%;"></div>
+                </div>
+                <div class="confidence-text high">HIGH (100%)</div>
             </div>
             
             <div class="answer-section">
                 <h3><i class="fas fa-robot"></i> Generated Answer</h3>
                 <div class="answer-content">
-                    According to the provided textbook context, critical thinking plays a crucial role in psychology as it involves the active application of a set of skills to information for understanding and evaluation. Critical thinking skills include maintaining an attitude of skepticism, recognizing internal biases, using logical thinking, asking appropriate questions, and making observations. These skills are essential in psychology as they help students to critically evaluate the various sources of information they encounter, increase their scientific literacy, and prepare them to think scientifically. Additionally, critical thinking skills are valuable in a world full of competing "facts," many of which are designed to be misleading.  <!-- NO HIGHLIGHTING HERE -->
+                    According to the provided textbook context, critical thinking plays a crucial role in psychology as it involves the active application of a set of skills to information for understanding and evaluation. Critical thinking skills include maintaining an attitude of skepticism, recognizing internal biases, using logical thinking, asking appropriate questions, and making observations. These skills are essential in psychology as they help students to critically evaluate the various sources of information they encounter, increase their scientific literacy, and prepare them to think scientifically. Additionally, critical thinking skills are valuable in a world full of competing "facts," many of which are designed to be misleading.
                 </div>
             </div>
             
@@ -299,7 +341,7 @@
                     <span class="page-number">📄 Page 20</span>
                 </div>
                 <div class="evidence-text">
-                    An education in <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> is valuable for a number of reasons. <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> students hone <mark style="background-color: #ffeb3b; font-weight: bold;">critical</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">thinking</mark> skills and are trained in the use of the scientific method. <mark style="background-color: #ffeb3b; font-weight: bold;">critical</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">thinking</mark> is the active application of a set of skills to information for the understanding and evaluation of that informatio  <!-- HIGHLIGHTING HERE ONLY -->
+                    An education in <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> is valuable for a number of reasons. <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> students hone <mark style="background-color: #ffeb3b; font-weight: bold;">critical</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">thinking</mark> skills and are trained in the use of the scientific method. <mark style="background-color: #ffeb3b; font-weight: bold;">critical</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">thinking</mark> is the active application of a set of skills to information for the understanding and evaluation of that informatio
                 </div>
             </div>
     
@@ -309,7 +351,7 @@
                     <span class="page-number">📄 Page 21</span>
                 </div>
                 <div class="evidence-text">
-                    An education in <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> is valuable for a number of reasons. <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> students hone <mark style="background-color: #ffeb3b; font-weight: bold;">critical</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">thinking</mark> skills and are trained in the use of the scientific method. <mark style="background-color: #ffeb3b; font-weight: bold;">critical</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">thinking</mark> is the active application of a set of skills to information for the understanding and evaluation of that informatio  <!-- HIGHLIGHTING HERE ONLY -->
+                    An education in <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> is valuable for a number of reasons. <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> students hone <mark style="background-color: #ffeb3b; font-weight: bold;">critical</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">thinking</mark> skills and are trained in the use of the scientific method. <mark style="background-color: #ffeb3b; font-weight: bold;">critical</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">thinking</mark> is the active application of a set of skills to information for the understanding and evaluation of that informatio
                 </div>
             </div>
     
@@ -321,7 +363,7 @@ By the end of this section</span>
                     <span class="page-number">📄 Page 28</span>
                 </div>
                 <div class="evidence-text">
-                    An education in <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> is valuable for a number of reasons. <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> students hone <mark style="background-color: #ffeb3b; font-weight: bold;">critical</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">thinking</mark> skills and are trained in the use of the scientific method. <mark style="background-color: #ffeb3b; font-weight: bold;">critical</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">thinking</mark> is the active application of a set of skills to information for the understanding and evaluation of that informatio  <!-- HIGHLIGHTING HERE ONLY -->
+                    An education in <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> is valuable for a number of reasons. <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> students hone <mark style="background-color: #ffeb3b; font-weight: bold;">critical</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">thinking</mark> skills and are trained in the use of the scientific method. <mark style="background-color: #ffeb3b; font-weight: bold;">critical</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">thinking</mark> is the active application of a set of skills to information for the understanding and evaluation of that informatio
                 </div>
             </div>
     
@@ -331,7 +373,7 @@ By the end of this section</span>
                     <span class="page-number">📄 Page 33</span>
                 </div>
                 <div class="evidence-text">
-                    An education in <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> is valuable for a number of reasons. <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> students hone <mark style="background-color: #ffeb3b; font-weight: bold;">critical</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">thinking</mark> skills and are trained in the use of the scientific method. <mark style="background-color: #ffeb3b; font-weight: bold;">critical</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">thinking</mark> is the active application of a set of skills to information for the understanding and evaluation of that informatio  <!-- HIGHLIGHTING HERE ONLY -->
+                    An education in <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> is valuable for a number of reasons. <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> students hone <mark style="background-color: #ffeb3b; font-weight: bold;">critical</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">thinking</mark> skills and are trained in the use of the scientific method. <mark style="background-color: #ffeb3b; font-weight: bold;">critical</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">thinking</mark> is the active application of a set of skills to information for the understanding and evaluation of that informatio
                 </div>
             </div>
     
@@ -342,7 +384,7 @@ Gershoff</span>
                     <span class="page-number">📄 Page 225</span>
                 </div>
                 <div class="evidence-text">
-                    An education in <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> is valuable for a number of reasons. <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> students hone <mark style="background-color: #ffeb3b; font-weight: bold;">critical</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">thinking</mark> skills and are trained in the use of the scientific method. <mark style="background-color: #ffeb3b; font-weight: bold;">critical</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">thinking</mark> is the active application of a set of skills to information for the understanding and evaluation of that informatio  <!-- HIGHLIGHTING HERE ONLY -->
+                    An education in <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> is valuable for a number of reasons. <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> students hone <mark style="background-color: #ffeb3b; font-weight: bold;">critical</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">thinking</mark> skills and are trained in the use of the scientific method. <mark style="background-color: #ffeb3b; font-weight: bold;">critical</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">thinking</mark> is the active application of a set of skills to information for the understanding and evaluation of that informatio
                 </div>
             </div>
     
@@ -361,7 +403,7 @@ translating it into nervous impulses that are transmitted to the brain. The brai
 
 your judgment representative sample subset of the population that accurately represents the general population <mark style="background-color: #ffeb3b; font-weight: bold;">role</mark> schema set of expectations that define the behaviors of a person occupying a particular <mark style="background-color: #ffeb3b; font-weight: bold;">role</mark> schema (plural = schemata) mental construct consisting of a cluster or collection of related concepts semantics process by which we derive meaning from morphemes and words standard deviation measure of variability that describes the difference between a set of scores and their mean standardization method of testing in which administration, scoring, and interpretation of results are consistent syntax manner by which words are organized into sentences trial and error problem-solving strategy in which multiple solutions are attempted until the correct one is found triarchic theory of intelligence Sternberg’s theory of intelligence; three facets of intelligence: practical, creative, and analytical working backwards heuristic in which you begin to solve a problem by focusing on the end result Summary 7.1 What Is Cognition? In this section, you were introduced to cognitive <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark>, which is the study of cognition, or the brain’s ability to think, perceive, plan, analyze, and remember. Concepts and their corresponding prototypes help us quickly organize our <mark style="background-color: #ffeb3b; font-weight: bold;">thinking</mark> by creating categories into which we can sort new information. We also develop schemata, which are clusters of related concepts. Some schemata involve routines of thought and behavior, and these help us function properly in various situations without having to “think twice” about them. Schemata show up in social situations and routines of daily behavior. 7.2 Language Language is a communication system that has both a lexicon and a system of grammar. Language acquisition occurs naturally and effortlessly during the early stages of life, and this acquisition occurs in a predictable sequence for individuals around the world. Language has a strong influence on thought, and the concept of how language may influence cognition remains an area of study and debate in <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark>. 7.3 Problem Solving Many different strategies exist for solving problems. Typical strategies include trial and error, applying algorithms, and using heuristics. To solve a large, complicated problem, it often helps to break the problem into smaller steps that can be accomplished individually, leading to an overall solution. Roadblocks to problem solving include a mental set, functional fixedness, and various biases that can cloud decision making skills. 7.4 What Are Intelligence and Creativity? Intelligence is a complex characteristic of cognition. Many theories have been developed to explain what intelligence is and
 
-Guilford, J. P. (1967). The nature of human intelligence. McGraw Hill. Heaton, S. (2004). Making the switch: Unlocking the mystery of the WISC-IV. Case Conference. University of Florida. Jensen, J. (2011). Phoneme acquisition: Infants and second language learners. The Language Teacher, 35(6), 24–28. Johnson, J. S., & Newport, E. L. (1989). <mark style="background-color: #ffeb3b; font-weight: bold;">critical</mark> period effects in second language learning: The influence of maturational state on the acquisition of English as a second language. Cognitive <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark>, 21, 60–99. Kahneman, D. (2011). <mark style="background-color: #ffeb3b; font-weight: bold;">thinking</mark>, fast and slow. Farrar, Straus, and Giroux. Kishyama, M. M., Boyce, W. T., Jimenez, A. M., Perry, L. M., & Knight, R. T. (2009). Socioeconomic disparities affect prefrontal function in children. Journal of Cognitive Neuroscience, 21(6), 1106–1115. Ko, L. (2016). Unwanted sterilization and eugenics programs in the United States. Independent Lens. http://www.pbs.org/independentlens/blog/unwanted-sterilization-and-eugenics-programs-in-the-united- states/ Larry P v. Riles, C-71-2270 RFP. (1979). Lenneberg, E. (1967). Biological foundations of language. Wiley. Liptak, A. (2008, January 19). Lawyer reveals secret, toppling death sentence. New York Times. http://www.nytimes.com/2008/01/19/us/19death.html?_r=0 Locke, E. A. (2005, April 14). Why emotional intelligence is an invalid concept. Journal of Organizational Behavior, 26, 425–431. Mayer, J. D., Salovey, P., & Caruso, D. (2004). Emotional intelligence: Theory, findings, and implications, Psychologic  <!-- HIGHLIGHTING HERE ONLY -->
+Guilford, J. P. (1967). The nature of human intelligence. McGraw Hill. Heaton, S. (2004). Making the switch: Unlocking the mystery of the WISC-IV. Case Conference. University of Florida. Jensen, J. (2011). Phoneme acquisition: Infants and second language learners. The Language Teacher, 35(6), 24–28. Johnson, J. S., & Newport, E. L. (1989). <mark style="background-color: #ffeb3b; font-weight: bold;">critical</mark> period effects in second language learning: The influence of maturational state on the acquisition of English as a second language. Cognitive <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark>, 21, 60–99. Kahneman, D. (2011). <mark style="background-color: #ffeb3b; font-weight: bold;">thinking</mark>, fast and slow. Farrar, Straus, and Giroux. Kishyama, M. M., Boyce, W. T., Jimenez, A. M., Perry, L. M., & Knight, R. T. (2009). Socioeconomic disparities affect prefrontal function in children. Journal of Cognitive Neuroscience, 21(6), 1106–1115. Ko, L. (2016). Unwanted sterilization and eugenics programs in the United States. Independent Lens. http://www.pbs.org/independentlens/blog/unwanted-sterilization-and-eugenics-programs-in-the-united- states/ Larry P v. Riles, C-71-2270 RFP. (1979). Lenneberg, E. (1967). Biological foundations of language. Wiley. Liptak, A. (2008, January 19). Lawyer reveals secret, toppling death sentence. New York Times. http://www.nytimes.com/2008/01/19/us/19death.html?_r=0 Locke, E. A. (2005, April 14). Why emotional intelligence is an invalid concept. Journal of Organizational Behavior, 26, 425–431. Mayer, J. D., Salovey, P., & Caruso, D. (2004). Emotional intelligence: Theory, findings, and implications, Psychologic
                 </div>
             </div>
             
@@ -369,14 +411,22 @@ Guilford, J. P. (1967). The nature of human intelligence. McGraw Hill. Heaton, S
                 <div class="stat-item">
                     <div class="stat-label">Sections Used</div>
                     <div class="stat-value">9</div>
+                    <div class="stat-factor">Factor: 1.00</div>
                 </div>
                 <div class="stat-item">
                     <div class="stat-label">Pages Referenced</div>
                     <div class="stat-value">11</div>
+                    <div class="stat-factor">Factor: 1.00</div>
                 </div>
                 <div class="stat-item">
-                    <div class="stat-label">Keywords Found</div>
-                    <div class="stat-value">4</div>
+                    <div class="stat-label">Answer Length</div>
+                    <div class="stat-value">732</div>
+                    <div class="stat-factor">Factor: 1.00</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Overall</div>
+                    <div class="stat-value">100%</div>
+                    <div class="stat-factor">HIGH</div>
                 </div>
             </div>
             

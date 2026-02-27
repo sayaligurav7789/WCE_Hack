@@ -73,6 +73,45 @@
                 box-shadow: 0 2px 4px rgba(0,0,0,0.1);
             }
             
+            .confidence-meter {
+                background: #f0f0f0;
+                padding: 15px 30px;
+                border-bottom: 1px solid #e0e0e0;
+                display: flex;
+                align-items: center;
+                gap: 20px;
+                flex-wrap: wrap;
+            }
+            
+            .confidence-bar {
+                flex: 1;
+                height: 20px;
+                background: #e0e0e0;
+                border-radius: 10px;
+                overflow: hidden;
+            }
+            
+            .confidence-fill {
+                height: 100%;
+                border-radius: 10px;
+                transition: width 0.3s ease;
+            }
+            
+            .confidence-fill.high { background: linear-gradient(90deg, #4caf50, #8bc34a); }
+            .confidence-fill.medium { background: linear-gradient(90deg, #ff9800, #ffc107); }
+            .confidence-fill.low { background: linear-gradient(90deg, #f44336, #ff7043); }
+            
+            .confidence-text {
+                font-size: 18px;
+                font-weight: 600;
+                min-width: 100px;
+                text-align: center;
+            }
+            
+            .confidence-text.high { color: #4caf50; }
+            .confidence-text.medium { color: #ff9800; }
+            .confidence-text.low { color: #f44336; }
+            
             .answer-section {
                 padding: 30px;
                 background: #f8f9fa;
@@ -99,8 +138,6 @@
                 color: #444;
                 border-left: 4px solid #667eea;
             }
-            
-            /* NO mark styling for answer - it stays plain */
             
             .evidence-section {
                 padding: 30px;
@@ -153,17 +190,6 @@
                 border: 1px solid #e0e0e0;
             }
             
-            .term-badge {
-                display: inline-block;
-                background: #ffeb3b;
-                color: #333;
-                padding: 3px 10px;
-                border-radius: 15px;
-                font-size: 12px;
-                margin: 0 5px 5px 0;
-                font-weight: 500;
-            }
-            
             .evidence-text {
                 background: white;
                 padding: 15px;
@@ -213,19 +239,17 @@
             }
             
             .stats {
-                display: flex;
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
                 gap: 15px;
                 padding: 20px 30px;
                 background: white;
-                flex-wrap: wrap;
             }
             
             .stat-item {
                 background: #f8f9fa;
-                padding: 10px 20px;
+                padding: 15px;
                 border-radius: 10px;
-                flex: 1;
-                min-width: 120px;
                 text-align: center;
                 border: 1px solid #e0e0e0;
             }
@@ -242,6 +266,12 @@
                 color: #667eea;
             }
             
+            .stat-factor {
+                font-size: 11px;
+                color: #999;
+                margin-top: 5px;
+            }
+            
             .footer {
                 padding: 20px 30px;
                 background: #f0f0f0;
@@ -252,6 +282,10 @@
             }
             
             @media (max-width: 768px) {
+                .stats {
+                    grid-template-columns: repeat(2, 1fr);
+                }
+                
                 .header {
                     padding: 20px;
                 }
@@ -279,14 +313,22 @@
             </div>
             
             <div class="keywords-bar">
-                <div class="keywords-title">🔑 Extracted Keywords:</div>
+                <div class="keywords-title"><i class="fas fa-key"></i> Extracted Keywords:</div>
     <span class="keyword-badge">major</span><span class="keyword-badge">themes</span><span class="keyword-badge">industrial</span><span class="keyword-badge">organizational</span><span class="keyword-badge">psychology</span>
+            </div>
+            
+            <div class="confidence-meter">
+                <i class="fas fa-bullseye"></i><span style="font-weight: 600;">Confidence:</span>
+                <div class="confidence-bar">
+                    <div class="confidence-fill high" style="width: 100.0%;"></div>
+                </div>
+                <div class="confidence-text high">HIGH (100%)</div>
             </div>
             
             <div class="answer-section">
                 <h3><i class="fas fa-robot"></i> Generated Answer</h3>
                 <div class="answer-content">
-                    The major themes in industrial-organizational psychology are industrial, organizational, and human factors. Industrial psychology is concerned with describing job requirements and assessing individuals for their ability to meet those requirements. Organizational psychology is interested in how the relationships among employees affect those employees and the performance of a business. Human factors psychology is the study of how workers interact with the tools of work and how to design those tools to optimize workers' productivity, safety, and health.  <!-- NO HIGHLIGHTING HERE -->
+                    The major themes in industrial-organizational psychology are industrial, organizational, and human factors. Industrial psychology is concerned with describing job requirements and assessing individuals for their ability to meet those requirements. Organizational psychology is interested in how the relationships among employees affect those employees and the performance of a business. Human factors psychology is the study of how workers interact with the tools of work and how to design those tools to optimize workers' productivity, safety, and health.
                 </div>
             </div>
             
@@ -299,7 +341,7 @@
                     <span class="page-number">📄 Page 459</span>
                 </div>
                 <div class="evidence-text">
-                    of how humans interact with complex displays and their ability to interpret them accurately and quickly. In Europe, this field is referred to as ergonomics. FIGURE 13.2 (a) <mark style="background-color: #ffeb3b; font-weight: bold;">industrial</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> focuses on hiring and maintaining employees. (b) <mark style="background-color: #ffeb3b; font-weight: bold;">organizational</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> is interested in employee rela  <!-- HIGHLIGHTING HERE ONLY -->
+                    of how humans interact with complex displays and their ability to interpret them accurately and quickly. In Europe, this field is referred to as ergonomics. FIGURE 13.2 (a) <mark style="background-color: #ffeb3b; font-weight: bold;">industrial</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> focuses on hiring and maintaining employees. (b) <mark style="background-color: #ffeb3b; font-weight: bold;">organizational</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> is interested in employee rela
                 </div>
             </div>
     
@@ -309,7 +351,7 @@
                     <span class="page-number">📄 Page 460</span>
                 </div>
                 <div class="evidence-text">
-                    of how humans interact with complex displays and their ability to interpret them accurately and quickly. In Europe, this field is referred to as ergonomics. FIGURE 13.2 (a) <mark style="background-color: #ffeb3b; font-weight: bold;">industrial</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> focuses on hiring and maintaining employees. (b) <mark style="background-color: #ffeb3b; font-weight: bold;">organizational</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> is interested in employee rela  <!-- HIGHLIGHTING HERE ONLY -->
+                    of how humans interact with complex displays and their ability to interpret them accurately and quickly. In Europe, this field is referred to as ergonomics. FIGURE 13.2 (a) <mark style="background-color: #ffeb3b; font-weight: bold;">industrial</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> focuses on hiring and maintaining employees. (b) <mark style="background-color: #ffeb3b; font-weight: bold;">organizational</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> is interested in employee rela
                 </div>
             </div>
     
@@ -319,7 +361,7 @@
                     <span class="page-number">📄 Page 461</span>
                 </div>
                 <div class="evidence-text">
-                    of how humans interact with complex displays and their ability to interpret them accurately and quickly. In Europe, this field is referred to as ergonomics. FIGURE 13.2 (a) <mark style="background-color: #ffeb3b; font-weight: bold;">industrial</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> focuses on hiring and maintaining employees. (b) <mark style="background-color: #ffeb3b; font-weight: bold;">organizational</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> is interested in employee rela  <!-- HIGHLIGHTING HERE ONLY -->
+                    of how humans interact with complex displays and their ability to interpret them accurately and quickly. In Europe, this field is referred to as ergonomics. FIGURE 13.2 (a) <mark style="background-color: #ffeb3b; font-weight: bold;">industrial</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> focuses on hiring and maintaining employees. (b) <mark style="background-color: #ffeb3b; font-weight: bold;">organizational</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> is interested in employee rela
                 </div>
             </div>
     
@@ -331,7 +373,7 @@ By the end of this section</span>
                     <span class="page-number">📄 Page 462</span>
                 </div>
                 <div class="evidence-text">
-                    of how humans interact with complex displays and their ability to interpret them accurately and quickly. In Europe, this field is referred to as ergonomics. FIGURE 13.2 (a) <mark style="background-color: #ffeb3b; font-weight: bold;">industrial</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> focuses on hiring and maintaining employees. (b) <mark style="background-color: #ffeb3b; font-weight: bold;">organizational</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> is interested in employee rela  <!-- HIGHLIGHTING HERE ONLY -->
+                    of how humans interact with complex displays and their ability to interpret them accurately and quickly. In Europe, this field is referred to as ergonomics. FIGURE 13.2 (a) <mark style="background-color: #ffeb3b; font-weight: bold;">industrial</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> focuses on hiring and maintaining employees. (b) <mark style="background-color: #ffeb3b; font-weight: bold;">organizational</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> is interested in employee rela
                 </div>
             </div>
     
@@ -341,7 +383,7 @@ By the end of this section</span>
                     <span class="page-number">📄 Page 463</span>
                 </div>
                 <div class="evidence-text">
-                    of how humans interact with complex displays and their ability to interpret them accurately and quickly. In Europe, this field is referred to as ergonomics. FIGURE 13.2 (a) <mark style="background-color: #ffeb3b; font-weight: bold;">industrial</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> focuses on hiring and maintaining employees. (b) <mark style="background-color: #ffeb3b; font-weight: bold;">organizational</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> is interested in employee rela  <!-- HIGHLIGHTING HERE ONLY -->
+                    of how humans interact with complex displays and their ability to interpret them accurately and quickly. In Europe, this field is referred to as ergonomics. FIGURE 13.2 (a) <mark style="background-color: #ffeb3b; font-weight: bold;">industrial</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> focuses on hiring and maintaining employees. (b) <mark style="background-color: #ffeb3b; font-weight: bold;">organizational</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> is interested in employee rela
                 </div>
             </div>
     
@@ -360,7 +402,7 @@ Field of I-O <mark style="background-color: #ffeb3b; font-weight: bold;">psychol
 
 LINK TO LEARNING Find out what I-O psychologists do on the Society for <mark style="background-color: #ffeb3b; font-weight: bold;">industrial</mark> and <mark style="background-color: #ffeb3b; font-weight: bold;">organizational</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> (SIOP) (http://openstax.org/l/siop) website—a professional organization for people working in the discipline. This site also offers several I-O psychologist profiles. The Historical Development of <mark style="background-color: #ffeb3b; font-weight: bold;">industrial</mark> and <mark style="background-color: #ffeb3b; font-weight: bold;">organizational</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">industrial</mark> and <mark style="background-color: #ffeb3b; font-weight: bold;">organizational</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> had its origins in the early 20th century. Several influential early psychologists studied issues that today would be categorized as <mark style="background-color: #ffeb3b; font-weight: bold;">industrial</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark>: James Cattell (1860–1944), Hugo Münsterberg (1863–1916), Walter Dill Scott (1869–1955), Robert Yerkes (1876–1956), Walter Bingham (1880–1952), and Lillian Gilbreth (1878–1972). Cattell, Münsterberg, and Scott had been students of Wilhelm Wundt, the father of experimental <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark>. Some of these researchers had been involved in work in the area of <mark style="background-color: #ffeb3b; font-weight: bold;">industrial</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> before World War I. Cattell’s contribution to <mark style="background-color: #ffeb3b; font-weight: bold;">industrial</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> is largely reflected in his founding of a psychological consulting company, which is still operating today called the Psychological Corporation, and in the accomplishments of students at Columbia in the area of <mark style="background-color: #ffeb3b; font-weight: bold;">industrial</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark>. In 1913, Münsterberg published <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> and <mark style="background-color: #ffeb3b; font-weight: bold;">industrial</mark> Efficiency, which covered topics such as employee selection, employee training, and effective advertising. Scott was one of the first psychologists to apply <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> to advertising, management, and personnel selection. In 1903, Scott published two books: The Theory of Advertising and <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> of Advertising. They are the first books to describe the use of <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> in the business world. By 1911 he published two more books, Influencing Men in Business and Increasing Human Efficiency in Business. In 1916 a newly formed division in the Carnegie Institute of Technology hired Scott to conduct applied research on employee selection (Katzell & Austin, 1992). The focus of all this research was in what we now know as <mark style="background-color: #ffeb3b; font-weight: bold;">industrial</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark>; it was only later in the century that the field of <mark style="background-color: #ffeb3b; font-weight: bold;">organizational</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> developed as an experimental science (Katzell & Austin, 1992). In addition to their academic positions, these researchers also worked directly for businesses as consultants. When the United States entered World War I in April 1917, the work of psychologists working in this discipline expanded to include their contributions to military efforts. At that time Yerkes was the president of the 25-year-old American Psychological Association (APA). The APA is a professional association in the United States for clinical and research psychologists. Today the APA performs a number of functions including holding conferences, accrediting university degree programs, and publishing scientific journals. Yerkes organized a
 
-VII covered what is known as equal employment opportunity. This law protects employees against discrimination based on race, color, religion, sex, or national origin, as well as discrimination against an employee for associating with an individual in one of these categories. Organizations had to adjust to the social, political, and legal climate of the Civil Rights movement, and these issues needed to be addressed by members of I/O in research and practice. There are many reasons for organizations to be interested in I/O so that they can better understand the <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> of their workers, which in turn helps them understand how their organizations can become more productive and competitive. For example, most large organizations are now competing on a global level, and they need to understand how to motivate workers in order to achieve high productivity and efficiency. Most companies also have a diverse workforce and need to understand the psychological complexity of the people in these diverse backgrounds. Today, I-O <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> is a diverse and deep field of research and practice, as you will learn about in the rest of this chapter. The Society for <mark style="background-color: #ffeb3b; font-weight: bold;">industrial</mark> and <mark style="background-color: #ffeb3b; font-weight: bold;">organizational</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> (SIOP), a division of the APA, lists 8,000 members (SIOP, 2014) and the Bureau of Labor Statistics—U.S. Department of Labor (2013) has projected this profession will have the greatest growth of all job classifications in the 20 years following 2012. On average, a person with a master’s degree in <mark style="background-color: #ffeb3b; font-weight: bold;">industrial</mark>-<mark style="background-color: #ffeb3b; font-weight: bold;">organizational</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> will earn over $80,000 a year, while someone with a doctorate will earn over $110,000 a year (Khanna, Medsker, & Ginter, 2012). 13.2 <mark style="background-color: #ffeb3b; font-weight: bold;">industrial</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark>: Selecting and Evaluating Employees LEARNING OBJECTIVES By the end of this section, you will be able to: • Explain the aspects of employee selection • Describe the kinds of job training • Describe the approaches to and issues surrounding performance assessment The branch of I-O <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> known as <mark style="background-color: #ffeb3b; font-weight: bold;">industrial</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> focuses on identifying and matching persons to tasks within an organization. This involves job  <!-- HIGHLIGHTING HERE ONLY -->
+VII covered what is known as equal employment opportunity. This law protects employees against discrimination based on race, color, religion, sex, or national origin, as well as discrimination against an employee for associating with an individual in one of these categories. Organizations had to adjust to the social, political, and legal climate of the Civil Rights movement, and these issues needed to be addressed by members of I/O in research and practice. There are many reasons for organizations to be interested in I/O so that they can better understand the <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> of their workers, which in turn helps them understand how their organizations can become more productive and competitive. For example, most large organizations are now competing on a global level, and they need to understand how to motivate workers in order to achieve high productivity and efficiency. Most companies also have a diverse workforce and need to understand the psychological complexity of the people in these diverse backgrounds. Today, I-O <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> is a diverse and deep field of research and practice, as you will learn about in the rest of this chapter. The Society for <mark style="background-color: #ffeb3b; font-weight: bold;">industrial</mark> and <mark style="background-color: #ffeb3b; font-weight: bold;">organizational</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> (SIOP), a division of the APA, lists 8,000 members (SIOP, 2014) and the Bureau of Labor Statistics—U.S. Department of Labor (2013) has projected this profession will have the greatest growth of all job classifications in the 20 years following 2012. On average, a person with a master’s degree in <mark style="background-color: #ffeb3b; font-weight: bold;">industrial</mark>-<mark style="background-color: #ffeb3b; font-weight: bold;">organizational</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> will earn over $80,000 a year, while someone with a doctorate will earn over $110,000 a year (Khanna, Medsker, & Ginter, 2012). 13.2 <mark style="background-color: #ffeb3b; font-weight: bold;">industrial</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark>: Selecting and Evaluating Employees LEARNING OBJECTIVES By the end of this section, you will be able to: • Explain the aspects of employee selection • Describe the kinds of job training • Describe the approaches to and issues surrounding performance assessment The branch of I-O <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> known as <mark style="background-color: #ffeb3b; font-weight: bold;">industrial</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> focuses on identifying and matching persons to tasks within an organization. This involves job
                 </div>
             </div>
             
@@ -368,14 +410,22 @@ VII covered what is known as equal employment opportunity. This law protects emp
                 <div class="stat-item">
                     <div class="stat-label">Sections Used</div>
                     <div class="stat-value">8</div>
+                    <div class="stat-factor">Factor: 1.00</div>
                 </div>
                 <div class="stat-item">
                     <div class="stat-label">Pages Referenced</div>
                     <div class="stat-value">11</div>
+                    <div class="stat-factor">Factor: 1.00</div>
                 </div>
                 <div class="stat-item">
-                    <div class="stat-label">Keywords Found</div>
-                    <div class="stat-value">5</div>
+                    <div class="stat-label">Answer Length</div>
+                    <div class="stat-value">556</div>
+                    <div class="stat-factor">Factor: 1.00</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Overall</div>
+                    <div class="stat-value">100%</div>
+                    <div class="stat-factor">HIGH</div>
                 </div>
             </div>
             

@@ -73,6 +73,45 @@
                 box-shadow: 0 2px 4px rgba(0,0,0,0.1);
             }
             
+            .confidence-meter {
+                background: #f0f0f0;
+                padding: 15px 30px;
+                border-bottom: 1px solid #e0e0e0;
+                display: flex;
+                align-items: center;
+                gap: 20px;
+                flex-wrap: wrap;
+            }
+            
+            .confidence-bar {
+                flex: 1;
+                height: 20px;
+                background: #e0e0e0;
+                border-radius: 10px;
+                overflow: hidden;
+            }
+            
+            .confidence-fill {
+                height: 100%;
+                border-radius: 10px;
+                transition: width 0.3s ease;
+            }
+            
+            .confidence-fill.high { background: linear-gradient(90deg, #4caf50, #8bc34a); }
+            .confidence-fill.medium { background: linear-gradient(90deg, #ff9800, #ffc107); }
+            .confidence-fill.low { background: linear-gradient(90deg, #f44336, #ff7043); }
+            
+            .confidence-text {
+                font-size: 18px;
+                font-weight: 600;
+                min-width: 100px;
+                text-align: center;
+            }
+            
+            .confidence-text.high { color: #4caf50; }
+            .confidence-text.medium { color: #ff9800; }
+            .confidence-text.low { color: #f44336; }
+            
             .answer-section {
                 padding: 30px;
                 background: #f8f9fa;
@@ -99,8 +138,6 @@
                 color: #444;
                 border-left: 4px solid #667eea;
             }
-            
-            /* NO mark styling for answer - it stays plain */
             
             .evidence-section {
                 padding: 30px;
@@ -153,17 +190,6 @@
                 border: 1px solid #e0e0e0;
             }
             
-            .term-badge {
-                display: inline-block;
-                background: #ffeb3b;
-                color: #333;
-                padding: 3px 10px;
-                border-radius: 15px;
-                font-size: 12px;
-                margin: 0 5px 5px 0;
-                font-weight: 500;
-            }
-            
             .evidence-text {
                 background: white;
                 padding: 15px;
@@ -213,19 +239,17 @@
             }
             
             .stats {
-                display: flex;
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
                 gap: 15px;
                 padding: 20px 30px;
                 background: white;
-                flex-wrap: wrap;
             }
             
             .stat-item {
                 background: #f8f9fa;
-                padding: 10px 20px;
+                padding: 15px;
                 border-radius: 10px;
-                flex: 1;
-                min-width: 120px;
                 text-align: center;
                 border: 1px solid #e0e0e0;
             }
@@ -242,6 +266,12 @@
                 color: #667eea;
             }
             
+            .stat-factor {
+                font-size: 11px;
+                color: #999;
+                margin-top: 5px;
+            }
+            
             .footer {
                 padding: 20px 30px;
                 background: #f0f0f0;
@@ -252,6 +282,10 @@
             }
             
             @media (max-width: 768px) {
+                .stats {
+                    grid-template-columns: repeat(2, 1fr);
+                }
+                
                 .header {
                     padding: 20px;
                 }
@@ -279,14 +313,22 @@
             </div>
             
             <div class="keywords-bar">
-                <div class="keywords-title">🔑 Extracted Keywords:</div>
+                <div class="keywords-title"><i class="fas fa-key"></i> Extracted Keywords:</div>
     <span class="keyword-badge">applications</span><span class="keyword-badge">psychology</span><span class="keyword-badge">education</span>
+            </div>
+            
+            <div class="confidence-meter">
+                <i class="fas fa-bullseye"></i><span style="font-weight: 600;">Confidence:</span>
+                <div class="confidence-bar">
+                    <div class="confidence-fill high" style="width: 100.0%;"></div>
+                </div>
+                <div class="confidence-text high">HIGH (100%)</div>
             </div>
             
             <div class="answer-section">
                 <h3><i class="fas fa-robot"></i> Generated Answer</h3>
                 <div class="answer-content">
-                    According to the provided textbook context, applications of psychology in education include research on education in segregated versus integrated schools, which was conducted by Inez Beverly Prosser, an African American woman who was the first to earn a PhD in psychology. Her work was influential in the landmark Brown v. Board of Education Supreme Court ruling that segregation of public schools was unconstitutional. Additionally, Martha Bernal, a Latina psychologist, conducted research with Mexican American children, which also relates to education.  <!-- NO HIGHLIGHTING HERE -->
+                    According to the provided textbook context, applications of psychology in education include research on education in segregated versus integrated schools, which was conducted by Inez Beverly Prosser, an African American woman who was the first to earn a PhD in psychology. Her work was influential in the landmark Brown v. Board of Education Supreme Court ruling that segregation of public schools was unconstitutional. Additionally, Martha Bernal, a Latina psychologist, conducted research with Mexican American children, which also relates to education.
                 </div>
             </div>
             
@@ -301,7 +343,7 @@ The APA provides career information</span>
                     <span class="page-number">📄 Page 20</span>
                 </div>
                 <div class="evidence-text">
-                    including experimentation, rather than a method based only on forms of logical argument or previous authorities. It was not until the late 1800s that <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> became accepted as its own academic discipline. Before this time, the workings of the mind were considered under the auspices of philosophy  <!-- HIGHLIGHTING HERE ONLY -->
+                    including experimentation, rather than a method based only on forms of logical argument or previous authorities. It was not until the late 1800s that <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> became accepted as its own academic discipline. Before this time, the workings of the mind were considered under the auspices of philosophy
                 </div>
             </div>
     
@@ -311,7 +353,7 @@ The APA provides career information</span>
                     <span class="page-number">📄 Page 21</span>
                 </div>
                 <div class="evidence-text">
-                    including experimentation, rather than a method based only on forms of logical argument or previous authorities. It was not until the late 1800s that <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> became accepted as its own academic discipline. Before this time, the workings of the mind were considered under the auspices of philosophy  <!-- HIGHLIGHTING HERE ONLY -->
+                    including experimentation, rather than a method based only on forms of logical argument or previous authorities. It was not until the late 1800s that <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> became accepted as its own academic discipline. Before this time, the workings of the mind were considered under the auspices of philosophy
                 </div>
             </div>
     
@@ -323,7 +365,7 @@ By the end of this section</span>
                     <span class="page-number">📄 Page 28</span>
                 </div>
                 <div class="evidence-text">
-                    including experimentation, rather than a method based only on forms of logical argument or previous authorities. It was not until the late 1800s that <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> became accepted as its own academic discipline. Before this time, the workings of the mind were considered under the auspices of philosophy  <!-- HIGHLIGHTING HERE ONLY -->
+                    including experimentation, rather than a method based only on forms of logical argument or previous authorities. It was not until the late 1800s that <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> became accepted as its own academic discipline. Before this time, the workings of the mind were considered under the auspices of philosophy
                 </div>
             </div>
     
@@ -335,7 +377,7 @@ By the end of this section</span>
                     <span class="page-number">📄 Page 30</span>
                 </div>
                 <div class="evidence-text">
-                    including experimentation, rather than a method based only on forms of logical argument or previous authorities. It was not until the late 1800s that <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> became accepted as its own academic discipline. Before this time, the workings of the mind were considered under the auspices of philosophy  <!-- HIGHLIGHTING HERE ONLY -->
+                    including experimentation, rather than a method based only on forms of logical argument or previous authorities. It was not until the late 1800s that <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> became accepted as its own academic discipline. Before this time, the workings of the mind were considered under the auspices of philosophy
                 </div>
             </div>
     
@@ -346,7 +388,7 @@ Psychology is a diverse discipline that is made up of several major subdivisions
                     <span class="page-number">📄 Page 41</span>
                 </div>
                 <div class="evidence-text">
-                    including experimentation, rather than a method based only on forms of logical argument or previous authorities. It was not until the late 1800s that <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> became accepted as its own academic discipline. Before this time, the workings of the mind were considered under the auspices of philosophy  <!-- HIGHLIGHTING HERE ONLY -->
+                    including experimentation, rather than a method based only on forms of logical argument or previous authorities. It was not until the late 1800s that <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> became accepted as its own academic discipline. Before this time, the workings of the mind were considered under the auspices of philosophy
                 </div>
             </div>
     
@@ -369,7 +411,7 @@ LINK TO LEARNING Listen to a podcast about the influence of an African American'
 
 applied behavior analysis (ABA), social communication groups, social skills groups, occupational therapy, and even medication options. If Maria asked you for advice or guidance, what would you do? You would likely want to review the research and learn about the efficacy of each treatment so you could best advise your sister. In the end, research is what makes the difference between facts and opinions. Facts are observable realities, and opinions are personal judgments, conclusions, or attitudes that may or may not be accurate. In the scientific community, facts can be established only using evidence collected through empirical research. NOTABLE RESEARCHERS Psychological research has a long history involving important figures from diverse backgrounds. While the introductory chapter discussed several researchers who made significant contributions to the discipline, there are many more individuals who deserve attention in considering how <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> has advanced as a science through their work (Figure 2.3). For instance, Margaret Floy Washburn (1871–1939) was the first woman to earn a PhD in <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark>. Her research focused on animal behavior and cognition (Margaret Floy Washburn, PhD, n.d.). Mary Whiton Calkins (1863–1930) was a preeminent first-generation American psychologist who opposed the behaviorist movement, conducted significant research into memory, and established one of the earliest experimental <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> labs in the United States (Mary Whiton Calkins, n.d.). Francis Sumner (1895–1954) was the first African American to receive a PhD in <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> in 1920. His dissertation focused on issues related to psychoanalysis. Sumner also had research interests in racial bias and <mark style="background-color: #ffeb3b; font-weight: bold;">education</mark>al justice. Sumner was one of the founders of Howard University’s department of <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark>, and because of his accomplishments, he is sometimes referred to as the “Father of Black <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark>.” Thirteen years later, Inez Beverly Prosser (1895–1934) became the first African American woman to receive a PhD in <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark>. Prosser’s research highlighted issues related to <mark style="background-color: #ffeb3b; font-weight: bold;">education</mark> in segregated versus integrated schools, and ultimately, her work was very influential in the hallmark Brown v. Board of <mark style="background-color: #ffeb3b; font-weight: bold;">education</mark> Supreme Court ruling that segregation of public schools was unconstitutional (Ethnicity and Health in America Series: Featured Psychologists, n.d.). FIGURE 2.3 (a) Margaret Floy Washburn was the first woman to earn a doctorate degree in <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark>. (b) The outcome of Brown v. Board of <mark style="background-color: #ffeb3b; font-weight: bold;">education</mark> was influenced by the research of psychologist Inez Beverly Prosser, who was the first African American woman to earn a PhD in <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark>. Although the establishment of <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark>’s scientific roots occurred first
 
-An <mark style="background-color: #ffeb3b; font-weight: bold;">education</mark> in <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> is valuable for a number of reasons. <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> students hone critical thinking skills and are trained in the use of the scientific method. Critical thinking is the active application of a set of skills to information for the understanding and evaluation o  <!-- HIGHLIGHTING HERE ONLY -->
+An <mark style="background-color: #ffeb3b; font-weight: bold;">education</mark> in <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> is valuable for a number of reasons. <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> students hone critical thinking skills and are trained in the use of the scientific method. Critical thinking is the active application of a set of skills to information for the understanding and evaluation o
                 </div>
             </div>
             
@@ -377,14 +419,22 @@ An <mark style="background-color: #ffeb3b; font-weight: bold;">education</mark> 
                 <div class="stat-item">
                     <div class="stat-label">Sections Used</div>
                     <div class="stat-value">11</div>
+                    <div class="stat-factor">Factor: 1.00</div>
                 </div>
                 <div class="stat-item">
                     <div class="stat-label">Pages Referenced</div>
                     <div class="stat-value">11</div>
+                    <div class="stat-factor">Factor: 1.00</div>
                 </div>
                 <div class="stat-item">
-                    <div class="stat-label">Keywords Found</div>
-                    <div class="stat-value">3</div>
+                    <div class="stat-label">Answer Length</div>
+                    <div class="stat-value">555</div>
+                    <div class="stat-factor">Factor: 1.00</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Overall</div>
+                    <div class="stat-value">100%</div>
+                    <div class="stat-factor">HIGH</div>
                 </div>
             </div>
             

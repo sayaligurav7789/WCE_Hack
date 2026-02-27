@@ -73,6 +73,45 @@
                 box-shadow: 0 2px 4px rgba(0,0,0,0.1);
             }
             
+            .confidence-meter {
+                background: #f0f0f0;
+                padding: 15px 30px;
+                border-bottom: 1px solid #e0e0e0;
+                display: flex;
+                align-items: center;
+                gap: 20px;
+                flex-wrap: wrap;
+            }
+            
+            .confidence-bar {
+                flex: 1;
+                height: 20px;
+                background: #e0e0e0;
+                border-radius: 10px;
+                overflow: hidden;
+            }
+            
+            .confidence-fill {
+                height: 100%;
+                border-radius: 10px;
+                transition: width 0.3s ease;
+            }
+            
+            .confidence-fill.high { background: linear-gradient(90deg, #4caf50, #8bc34a); }
+            .confidence-fill.medium { background: linear-gradient(90deg, #ff9800, #ffc107); }
+            .confidence-fill.low { background: linear-gradient(90deg, #f44336, #ff7043); }
+            
+            .confidence-text {
+                font-size: 18px;
+                font-weight: 600;
+                min-width: 100px;
+                text-align: center;
+            }
+            
+            .confidence-text.high { color: #4caf50; }
+            .confidence-text.medium { color: #ff9800; }
+            .confidence-text.low { color: #f44336; }
+            
             .answer-section {
                 padding: 30px;
                 background: #f8f9fa;
@@ -99,8 +138,6 @@
                 color: #444;
                 border-left: 4px solid #667eea;
             }
-            
-            /* NO mark styling for answer - it stays plain */
             
             .evidence-section {
                 padding: 30px;
@@ -153,17 +190,6 @@
                 border: 1px solid #e0e0e0;
             }
             
-            .term-badge {
-                display: inline-block;
-                background: #ffeb3b;
-                color: #333;
-                padding: 3px 10px;
-                border-radius: 15px;
-                font-size: 12px;
-                margin: 0 5px 5px 0;
-                font-weight: 500;
-            }
-            
             .evidence-text {
                 background: white;
                 padding: 15px;
@@ -213,19 +239,17 @@
             }
             
             .stats {
-                display: flex;
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
                 gap: 15px;
                 padding: 20px 30px;
                 background: white;
-                flex-wrap: wrap;
             }
             
             .stat-item {
                 background: #f8f9fa;
-                padding: 10px 20px;
+                padding: 15px;
                 border-radius: 10px;
-                flex: 1;
-                min-width: 120px;
                 text-align: center;
                 border: 1px solid #e0e0e0;
             }
@@ -242,6 +266,12 @@
                 color: #667eea;
             }
             
+            .stat-factor {
+                font-size: 11px;
+                color: #999;
+                margin-top: 5px;
+            }
+            
             .footer {
                 padding: 20px 30px;
                 background: #f0f0f0;
@@ -252,6 +282,10 @@
             }
             
             @media (max-width: 768px) {
+                .stats {
+                    grid-template-columns: repeat(2, 1fr);
+                }
+                
                 .header {
                     padding: 20px;
                 }
@@ -279,8 +313,16 @@
             </div>
             
             <div class="keywords-bar">
-                <div class="keywords-title">🔑 Extracted Keywords:</div>
+                <div class="keywords-title"><i class="fas fa-key"></i> Extracted Keywords:</div>
     <span class="keyword-badge">basic</span><span class="keyword-badge">parts</span><span class="keyword-badge">neuron</span>
+            </div>
+            
+            <div class="confidence-meter">
+                <i class="fas fa-bullseye"></i><span style="font-weight: 600;">Confidence:</span>
+                <div class="confidence-bar">
+                    <div class="confidence-fill high" style="width: 100.0%;"></div>
+                </div>
+                <div class="confidence-text high">HIGH (100%)</div>
             </div>
             
             <div class="answer-section">
@@ -293,7 +335,7 @@
 3. Axon: a major extension from the soma that transmits signals electrically
 4. Terminal buttons: contain synaptic vesicles that house neurotransmitters, the chemical messengers of the nervous system
 
-These parts work together to allow the neuron to receive, process, and transmit information.  <!-- NO HIGHLIGHTING HERE -->
+These parts work together to allow the neuron to receive, process, and transmit information.
                 </div>
             </div>
             
@@ -307,7 +349,7 @@ human brain functions</span>
                     <span class="page-number">📄 Page 83</span>
                 </div>
                 <div class="evidence-text">
-                    the other hand, serve as interconnected information processors that are essential for all of the tasks of the nervous system. This section briefly describes the structure and function of <mark style="background-color: #ffeb3b; font-weight: bold;">neuron</mark>s. <mark style="background-color: #ffeb3b; font-weight: bold;">neuron</mark> Structure <mark style="background-color: #ffeb3b; font-weight: bold;">neuron</mark>s are the central building blocks of the nervous system, 100 billion strong at bi  <!-- HIGHLIGHTING HERE ONLY -->
+                    the other hand, serve as interconnected information processors that are essential for all of the tasks of the nervous system. This section briefly describes the structure and function of <mark style="background-color: #ffeb3b; font-weight: bold;">neuron</mark>s. <mark style="background-color: #ffeb3b; font-weight: bold;">neuron</mark> Structure <mark style="background-color: #ffeb3b; font-weight: bold;">neuron</mark>s are the central building blocks of the nervous system, 100 billion strong at bi
                 </div>
             </div>
     
@@ -318,7 +360,7 @@ Genes are sequences of DNA that code for a particular trait</span>
                     <span class="page-number">📄 Page 90</span>
                 </div>
                 <div class="evidence-text">
-                    the other hand, serve as interconnected information processors that are essential for all of the tasks of the nervous system. This section briefly describes the structure and function of <mark style="background-color: #ffeb3b; font-weight: bold;">neuron</mark>s. <mark style="background-color: #ffeb3b; font-weight: bold;">neuron</mark> Structure <mark style="background-color: #ffeb3b; font-weight: bold;">neuron</mark>s are the central building blocks of the nervous system, 100 billion strong at bi  <!-- HIGHLIGHTING HERE ONLY -->
+                    the other hand, serve as interconnected information processors that are essential for all of the tasks of the nervous system. This section briefly describes the structure and function of <mark style="background-color: #ffeb3b; font-weight: bold;">neuron</mark>s. <mark style="background-color: #ffeb3b; font-weight: bold;">neuron</mark> Structure <mark style="background-color: #ffeb3b; font-weight: bold;">neuron</mark>s are the central building blocks of the nervous system, 100 billion strong at bi
                 </div>
             </div>
     
@@ -329,7 +371,7 @@ which it was released</span>
                     <span class="page-number">📄 Page 91</span>
                 </div>
                 <div class="evidence-text">
-                    the other hand, serve as interconnected information processors that are essential for all of the tasks of the nervous system. This section briefly describes the structure and function of <mark style="background-color: #ffeb3b; font-weight: bold;">neuron</mark>s. <mark style="background-color: #ffeb3b; font-weight: bold;">neuron</mark> Structure <mark style="background-color: #ffeb3b; font-weight: bold;">neuron</mark>s are the central building blocks of the nervous system, 100 billion strong at bi  <!-- HIGHLIGHTING HERE ONLY -->
+                    the other hand, serve as interconnected information processors that are essential for all of the tasks of the nervous system. This section briefly describes the structure and function of <mark style="background-color: #ffeb3b; font-weight: bold;">neuron</mark>s. <mark style="background-color: #ffeb3b; font-weight: bold;">neuron</mark> Structure <mark style="background-color: #ffeb3b; font-weight: bold;">neuron</mark>s are the central building blocks of the nervous system, 100 billion strong at bi
                 </div>
             </div>
     
@@ -340,7 +382,7 @@ effects on various systems</span>
                     <span class="page-number">📄 Page 92</span>
                 </div>
                 <div class="evidence-text">
-                    the other hand, serve as interconnected information processors that are essential for all of the tasks of the nervous system. This section briefly describes the structure and function of <mark style="background-color: #ffeb3b; font-weight: bold;">neuron</mark>s. <mark style="background-color: #ffeb3b; font-weight: bold;">neuron</mark> Structure <mark style="background-color: #ffeb3b; font-weight: bold;">neuron</mark>s are the central building blocks of the nervous system, 100 billion strong at bi  <!-- HIGHLIGHTING HERE ONLY -->
+                    the other hand, serve as interconnected information processors that are essential for all of the tasks of the nervous system. This section briefly describes the structure and function of <mark style="background-color: #ffeb3b; font-weight: bold;">neuron</mark>s. <mark style="background-color: #ffeb3b; font-weight: bold;">neuron</mark> Structure <mark style="background-color: #ffeb3b; font-weight: bold;">neuron</mark>s are the central building blocks of the nervous system, 100 billion strong at bi
                 </div>
             </div>
     
@@ -350,7 +392,7 @@ effects on various systems</span>
                     <span class="page-number">📄 Page 94</span>
                 </div>
                 <div class="evidence-text">
-                    the other hand, serve as interconnected information processors that are essential for all of the tasks of the nervous system. This section briefly describes the structure and function of <mark style="background-color: #ffeb3b; font-weight: bold;">neuron</mark>s. <mark style="background-color: #ffeb3b; font-weight: bold;">neuron</mark> Structure <mark style="background-color: #ffeb3b; font-weight: bold;">neuron</mark>s are the central building blocks of the nervous system, 100 billion strong at bi  <!-- HIGHLIGHTING HERE ONLY -->
+                    the other hand, serve as interconnected information processors that are essential for all of the tasks of the nervous system. This section briefly describes the structure and function of <mark style="background-color: #ffeb3b; font-weight: bold;">neuron</mark>s. <mark style="background-color: #ffeb3b; font-weight: bold;">neuron</mark> Structure <mark style="background-color: #ffeb3b; font-weight: bold;">neuron</mark>s are the central building blocks of the nervous system, 100 billion strong at bi
                 </div>
             </div>
     
@@ -371,7 +413,7 @@ the brain interact with one another to provide the foundation for our thoughts a
 
 resting potential the state of readiness of a <mark style="background-color: #ffeb3b; font-weight: bold;">neuron</mark> membrane’s potential between signals reticular formation midbrain structure important in regulating the sleep/wake cycle, arousal, alertness, and motor activity reuptake neurotransmitter is pumped back into the <mark style="background-color: #ffeb3b; font-weight: bold;">neuron</mark> that released it semipermeable membrane cell membrane that allows smaller molecules or molecules without an electrical charge to pass through it, while stopping larger or highly charged molecules soma cell body somatic nervous system relays sensory and motor information to and from the CNS somatosensory cortex essential for processing sensory information from across the body, such as touch, temperature, and pain substantia nigra midbrain structure where dopamine is produced; involved in control of movement sulcus (plural: sulci) depressions or grooves in the cerebral cortex sympathetic nervous system involved in stress-related activities and functions synaptic cleft small gap between two <mark style="background-color: #ffeb3b; font-weight: bold;">neuron</mark>s where communication occurs synaptic vesicle storage site for neurotransmitters temporal lobe part of cerebral cortex associated with hearing, memory, emotion, and some aspects of language; contains primary auditory cortex terminal button axon terminal containing synaptic vesicles thalamus sensory relay for the brain theory of evolution by natural selection states that organisms that are better suited for their environments will survive and reproduce compared to those that are poorly suited for their environments threshold of excitation level of charge in the membrane that causes the <mark style="background-color: #ffeb3b; font-weight: bold;">neuron</mark> to become active thyroid secretes hormones that regulate growth, metabolism, and appetite ventral tegmental area (VTA) midbrain structure where dopamine is produced: associated with mood, reward, and addiction Wernicke’s area important for speech comprehension Summary 3.1 Human Genetics Genes are sequences of DNA that code for a particular trait. Different versions of a gene are called alleles—sometimes alleles can be classified as dominant or recessive. A dominant allele always results in the dominant phenotype. In order to exhibit a recessive phenotype, an individual must be homozygous for the recessive allele. Genes affect both physical and psychological characteristics. Ultimately, how and when a gene is expressed, and what the outcome will be—in terms of both physical and psychological characteristics—is a function of the interaction between our genes and our environments. 3.2 Cells of the Nervous System Glia and <mark style="background-color: #ffeb3b; font-weight: bold;">neuron</mark>s are the two cell types that make up the nervous system. While glia generally play supporting roles, the communication between <mark style="background-color: #ffeb3b; font-weight: bold;">neuron</mark>s is fundamental to all of the functions associated with the nervous system. <mark style="background-color: #ffeb3b; font-weight: bold;">neuron</mark>al communication is made possible by the <mark style="background-color: #ffeb3b; font-weight: bold;">neuron</mark>’s
 
-prefrontal cortex, which is associated with judgment, reasoning, and impulse control. Forebrain Structures The two hemispheres of the cerebral cortex are part of the forebrain (Figure 3.17), which is the largest part of the brain. The forebrain contains the cerebral cortex and a number of other structures that lie beneath the cortex (called subcortical structures): thalamus, hypothalamus, pituitary gland, and the limbic system (a collection of structures). The cerebral cortex, which is the outer surface of the brain, is associated with higher level processes such as consciousness, thought, emotion, reasoning, language, and memory. Each cerebral hemisphere can be subdivided into four lobes, each associated with different functions. FIGURE 3.17 The brain and its <mark style="background-color: #ffeb3b; font-weight: bold;">parts</mark> can be divided into  <!-- HIGHLIGHTING HERE ONLY -->
+prefrontal cortex, which is associated with judgment, reasoning, and impulse control. Forebrain Structures The two hemispheres of the cerebral cortex are part of the forebrain (Figure 3.17), which is the largest part of the brain. The forebrain contains the cerebral cortex and a number of other structures that lie beneath the cortex (called subcortical structures): thalamus, hypothalamus, pituitary gland, and the limbic system (a collection of structures). The cerebral cortex, which is the outer surface of the brain, is associated with higher level processes such as consciousness, thought, emotion, reasoning, language, and memory. Each cerebral hemisphere can be subdivided into four lobes, each associated with different functions. FIGURE 3.17 The brain and its <mark style="background-color: #ffeb3b; font-weight: bold;">parts</mark> can be divided into
                 </div>
             </div>
             
@@ -379,14 +421,22 @@ prefrontal cortex, which is associated with judgment, reasoning, and impulse con
                 <div class="stat-item">
                     <div class="stat-label">Sections Used</div>
                     <div class="stat-value">10</div>
+                    <div class="stat-factor">Factor: 1.00</div>
                 </div>
                 <div class="stat-item">
                     <div class="stat-label">Pages Referenced</div>
                     <div class="stat-value">11</div>
+                    <div class="stat-factor">Factor: 1.00</div>
                 </div>
                 <div class="stat-item">
-                    <div class="stat-label">Keywords Found</div>
-                    <div class="stat-value">3</div>
+                    <div class="stat-label">Answer Length</div>
+                    <div class="stat-value">525</div>
+                    <div class="stat-factor">Factor: 1.00</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Overall</div>
+                    <div class="stat-value">100%</div>
+                    <div class="stat-factor">HIGH</div>
                 </div>
             </div>
             

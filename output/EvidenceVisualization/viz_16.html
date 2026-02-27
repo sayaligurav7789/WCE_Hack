@@ -73,6 +73,45 @@
                 box-shadow: 0 2px 4px rgba(0,0,0,0.1);
             }
             
+            .confidence-meter {
+                background: #f0f0f0;
+                padding: 15px 30px;
+                border-bottom: 1px solid #e0e0e0;
+                display: flex;
+                align-items: center;
+                gap: 20px;
+                flex-wrap: wrap;
+            }
+            
+            .confidence-bar {
+                flex: 1;
+                height: 20px;
+                background: #e0e0e0;
+                border-radius: 10px;
+                overflow: hidden;
+            }
+            
+            .confidence-fill {
+                height: 100%;
+                border-radius: 10px;
+                transition: width 0.3s ease;
+            }
+            
+            .confidence-fill.high { background: linear-gradient(90deg, #4caf50, #8bc34a); }
+            .confidence-fill.medium { background: linear-gradient(90deg, #ff9800, #ffc107); }
+            .confidence-fill.low { background: linear-gradient(90deg, #f44336, #ff7043); }
+            
+            .confidence-text {
+                font-size: 18px;
+                font-weight: 600;
+                min-width: 100px;
+                text-align: center;
+            }
+            
+            .confidence-text.high { color: #4caf50; }
+            .confidence-text.medium { color: #ff9800; }
+            .confidence-text.low { color: #f44336; }
+            
             .answer-section {
                 padding: 30px;
                 background: #f8f9fa;
@@ -99,8 +138,6 @@
                 color: #444;
                 border-left: 4px solid #667eea;
             }
-            
-            /* NO mark styling for answer - it stays plain */
             
             .evidence-section {
                 padding: 30px;
@@ -153,17 +190,6 @@
                 border: 1px solid #e0e0e0;
             }
             
-            .term-badge {
-                display: inline-block;
-                background: #ffeb3b;
-                color: #333;
-                padding: 3px 10px;
-                border-radius: 15px;
-                font-size: 12px;
-                margin: 0 5px 5px 0;
-                font-weight: 500;
-            }
-            
             .evidence-text {
                 background: white;
                 padding: 15px;
@@ -213,19 +239,17 @@
             }
             
             .stats {
-                display: flex;
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
                 gap: 15px;
                 padding: 20px 30px;
                 background: white;
-                flex-wrap: wrap;
             }
             
             .stat-item {
                 background: #f8f9fa;
-                padding: 10px 20px;
+                padding: 15px;
                 border-radius: 10px;
-                flex: 1;
-                min-width: 120px;
                 text-align: center;
                 border: 1px solid #e0e0e0;
             }
@@ -242,6 +266,12 @@
                 color: #667eea;
             }
             
+            .stat-factor {
+                font-size: 11px;
+                color: #999;
+                margin-top: 5px;
+            }
+            
             .footer {
                 padding: 20px 30px;
                 background: #f0f0f0;
@@ -252,6 +282,10 @@
             }
             
             @media (max-width: 768px) {
+                .stats {
+                    grid-template-columns: repeat(2, 1fr);
+                }
+                
                 .header {
                     padding: 20px;
                 }
@@ -279,14 +313,22 @@
             </div>
             
             <div class="keywords-bar">
-                <div class="keywords-title">🔑 Extracted Keywords:</div>
+                <div class="keywords-title"><i class="fas fa-key"></i> Extracted Keywords:</div>
     <span class="keyword-badge">classical</span><span class="keyword-badge">conditioning</span>
+            </div>
+            
+            <div class="confidence-meter">
+                <i class="fas fa-bullseye"></i><span style="font-weight: 600;">Confidence:</span>
+                <div class="confidence-bar">
+                    <div class="confidence-fill high" style="width: 100.0%;"></div>
+                </div>
+                <div class="confidence-text high">HIGH (100%)</div>
             </div>
             
             <div class="answer-section">
                 <h3><i class="fas fa-robot"></i> Generated Answer</h3>
                 <div class="answer-content">
-                    Classical conditioning is a process by which we learn to associate stimuli and, consequently, to anticipate events. It involves the pairing of a neutral stimulus with an unconditioned stimulus to elicit an unconditioned response, and eventually, the neutral stimulus becomes a conditioned stimulus capable of eliciting a conditioned response by itself.  <!-- NO HIGHLIGHTING HERE -->
+                    Classical conditioning is a process by which we learn to associate stimuli and, consequently, to anticipate events. It involves the pairing of a neutral stimulus with an unconditioned stimulus to elicit an unconditioned response, and eventually, the neutral stimulus becomes a conditioned stimulus capable of eliciting a conditioned response by itself.
                 </div>
             </div>
             
@@ -299,7 +341,7 @@
                     <span class="page-number">📄 Page 194</span>
                 </div>
                 <div class="evidence-text">
-                    and his famous dogs. Pavlov (1849–1936), a Russian scientist, performed extensive research on dogs and is best known for his experiments in <mark style="background-color: #ffeb3b; font-weight: bold;">classical</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">conditioning</mark> (Figure 6.3). As we discussed briefly in the previous section, <mark style="background-color: #ffeb3b; font-weight: bold;">classical</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">conditioning</mark> is a process by which we learn to associate stimuli  <!-- HIGHLIGHTING HERE ONLY -->
+                    and his famous dogs. Pavlov (1849–1936), a Russian scientist, performed extensive research on dogs and is best known for his experiments in <mark style="background-color: #ffeb3b; font-weight: bold;">classical</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">conditioning</mark> (Figure 6.3). As we discussed briefly in the previous section, <mark style="background-color: #ffeb3b; font-weight: bold;">classical</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">conditioning</mark> is a process by which we learn to associate stimuli
                 </div>
             </div>
     
@@ -309,7 +351,7 @@
                     <span class="page-number">📄 Page 195</span>
                 </div>
                 <div class="evidence-text">
-                    and his famous dogs. Pavlov (1849–1936), a Russian scientist, performed extensive research on dogs and is best known for his experiments in <mark style="background-color: #ffeb3b; font-weight: bold;">classical</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">conditioning</mark> (Figure 6.3). As we discussed briefly in the previous section, <mark style="background-color: #ffeb3b; font-weight: bold;">classical</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">conditioning</mark> is a process by which we learn to associate stimuli  <!-- HIGHLIGHTING HERE ONLY -->
+                    and his famous dogs. Pavlov (1849–1936), a Russian scientist, performed extensive research on dogs and is best known for his experiments in <mark style="background-color: #ffeb3b; font-weight: bold;">classical</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">conditioning</mark> (Figure 6.3). As we discussed briefly in the previous section, <mark style="background-color: #ffeb3b; font-weight: bold;">classical</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">conditioning</mark> is a process by which we learn to associate stimuli
                 </div>
             </div>
     
@@ -319,7 +361,7 @@
                     <span class="page-number">📄 Page 197</span>
                 </div>
                 <div class="evidence-text">
-                    and his famous dogs. Pavlov (1849–1936), a Russian scientist, performed extensive research on dogs and is best known for his experiments in <mark style="background-color: #ffeb3b; font-weight: bold;">classical</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">conditioning</mark> (Figure 6.3). As we discussed briefly in the previous section, <mark style="background-color: #ffeb3b; font-weight: bold;">classical</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">conditioning</mark> is a process by which we learn to associate stimuli  <!-- HIGHLIGHTING HERE ONLY -->
+                    and his famous dogs. Pavlov (1849–1936), a Russian scientist, performed extensive research on dogs and is best known for his experiments in <mark style="background-color: #ffeb3b; font-weight: bold;">classical</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">conditioning</mark> (Figure 6.3). As we discussed briefly in the previous section, <mark style="background-color: #ffeb3b; font-weight: bold;">classical</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">conditioning</mark> is a process by which we learn to associate stimuli
                 </div>
             </div>
     
@@ -330,7 +372,7 @@ Psychologist B</span>
                     <span class="page-number">📄 Page 200</span>
                 </div>
                 <div class="evidence-text">
-                    and his famous dogs. Pavlov (1849–1936), a Russian scientist, performed extensive research on dogs and is best known for his experiments in <mark style="background-color: #ffeb3b; font-weight: bold;">classical</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">conditioning</mark> (Figure 6.3). As we discussed briefly in the previous section, <mark style="background-color: #ffeb3b; font-weight: bold;">classical</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">conditioning</mark> is a process by which we learn to associate stimuli  <!-- HIGHLIGHTING HERE ONLY -->
+                    and his famous dogs. Pavlov (1849–1936), a Russian scientist, performed extensive research on dogs and is best known for his experiments in <mark style="background-color: #ffeb3b; font-weight: bold;">classical</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">conditioning</mark> (Figure 6.3). As we discussed briefly in the previous section, <mark style="background-color: #ffeb3b; font-weight: bold;">classical</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">conditioning</mark> is a process by which we learn to associate stimuli
                 </div>
             </div>
     
@@ -340,7 +382,7 @@ Psychologist B</span>
                     <span class="page-number">📄 Page 202</span>
                 </div>
                 <div class="evidence-text">
-                    and his famous dogs. Pavlov (1849–1936), a Russian scientist, performed extensive research on dogs and is best known for his experiments in <mark style="background-color: #ffeb3b; font-weight: bold;">classical</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">conditioning</mark> (Figure 6.3). As we discussed briefly in the previous section, <mark style="background-color: #ffeb3b; font-weight: bold;">classical</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">conditioning</mark> is a process by which we learn to associate stimuli  <!-- HIGHLIGHTING HERE ONLY -->
+                    and his famous dogs. Pavlov (1849–1936), a Russian scientist, performed extensive research on dogs and is best known for his experiments in <mark style="background-color: #ffeb3b; font-weight: bold;">classical</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">conditioning</mark> (Figure 6.3). As we discussed briefly in the previous section, <mark style="background-color: #ffeb3b; font-weight: bold;">classical</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">conditioning</mark> is a process by which we learn to associate stimuli
                 </div>
             </div>
     
@@ -361,7 +403,7 @@ automatically make between events. Our minds have a natural tendency to connect 
 
 by the animal. FIGURE 6.10 (a) B. F. Skinner developed operant <mark style="background-color: #ffeb3b; font-weight: bold;">conditioning</mark> for systematic study of how behaviors are strengthened or weakened according to their consequences. (b) In a Skinner box, a rat presses a lever in an operant <mark style="background-color: #ffeb3b; font-weight: bold;">conditioning</mark> chamber to receive a food reward. (credit a: modification of work by "Silly rabbit"/Wikimedia Commons) 6.3 • Operant <mark style="background-color: #ffeb3b; font-weight: bold;">conditioning</mark> 193
 
-FIGURE 15.13 Different regions of the brain may be associated with different psychological disorders. The findings discussed above were based on imaging studies, and they highlight the potential importance of brain dysfunction in OCD. However, one important limitation of these findings is the inability to explain differences in obsessions and compulsions. Another limitation is that the correlational relationship between neurological abnormalities and OCD symptoms cannot imply causation (Abramowitz & Siqueland, 2013). <mark style="background-color: #ffeb3b; font-weight: bold;">conditioning</mark> and OCD The symptoms of OCD have been theorized to be learned responses, acquired and sustained as the result of a combination of two forms of learning: <mark style="background-color: #ffeb3b; font-weight: bold;">classical</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">conditioning</mark> and operant <mark style="background-color: #ffeb3b; font-weight: bold;">conditioning</mark> (Mowrer, 1960; Steinmetz, Tracy, & Green, 2001). Specifically, the acquisition of OCD may occur first as the result of <mark style="background-color: #ffeb3b; font-weight: bold;">classical</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">conditioning</mark>, whereby a neutral stimulus becomes associated with an unconditioned stimulus that provokes anxiety or distress. When an individual has acquired this association, subsequent encounters with the neutral stimulus trigger anxiety, including obsessive thoughts; the anxiety and obsessive thoughts (which are now a conditioned response) may persist until they identify some strategy to relieve it. Relief may take the form of a ritualistic behavior or mental activity that, when enacted repeatedly, reduces the anxiety. Such efforts to relieve anxiety constitute an example of negative reinforcement (a form of operant <mark style="background-color: #ffeb3b; font-weight: bold;">conditioning</mark>). Recall from the chapter on learning that negative reinforcement involves the strengthening of behavior through its ability to remove something unpleasant or aversive. He  <!-- HIGHLIGHTING HERE ONLY -->
+FIGURE 15.13 Different regions of the brain may be associated with different psychological disorders. The findings discussed above were based on imaging studies, and they highlight the potential importance of brain dysfunction in OCD. However, one important limitation of these findings is the inability to explain differences in obsessions and compulsions. Another limitation is that the correlational relationship between neurological abnormalities and OCD symptoms cannot imply causation (Abramowitz & Siqueland, 2013). <mark style="background-color: #ffeb3b; font-weight: bold;">conditioning</mark> and OCD The symptoms of OCD have been theorized to be learned responses, acquired and sustained as the result of a combination of two forms of learning: <mark style="background-color: #ffeb3b; font-weight: bold;">classical</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">conditioning</mark> and operant <mark style="background-color: #ffeb3b; font-weight: bold;">conditioning</mark> (Mowrer, 1960; Steinmetz, Tracy, & Green, 2001). Specifically, the acquisition of OCD may occur first as the result of <mark style="background-color: #ffeb3b; font-weight: bold;">classical</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">conditioning</mark>, whereby a neutral stimulus becomes associated with an unconditioned stimulus that provokes anxiety or distress. When an individual has acquired this association, subsequent encounters with the neutral stimulus trigger anxiety, including obsessive thoughts; the anxiety and obsessive thoughts (which are now a conditioned response) may persist until they identify some strategy to relieve it. Relief may take the form of a ritualistic behavior or mental activity that, when enacted repeatedly, reduces the anxiety. Such efforts to relieve anxiety constitute an example of negative reinforcement (a form of operant <mark style="background-color: #ffeb3b; font-weight: bold;">conditioning</mark>). Recall from the chapter on learning that negative reinforcement involves the strengthening of behavior through its ability to remove something unpleasant or aversive. He
                 </div>
             </div>
             
@@ -369,14 +411,22 @@ FIGURE 15.13 Different regions of the brain may be associated with different psy
                 <div class="stat-item">
                     <div class="stat-label">Sections Used</div>
                     <div class="stat-value">9</div>
+                    <div class="stat-factor">Factor: 1.00</div>
                 </div>
                 <div class="stat-item">
                     <div class="stat-label">Pages Referenced</div>
                     <div class="stat-value">9</div>
+                    <div class="stat-factor">Factor: 0.90</div>
                 </div>
                 <div class="stat-item">
-                    <div class="stat-label">Keywords Found</div>
-                    <div class="stat-value">2</div>
+                    <div class="stat-label">Answer Length</div>
+                    <div class="stat-value">352</div>
+                    <div class="stat-factor">Factor: 0.70</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Overall</div>
+                    <div class="stat-value">100%</div>
+                    <div class="stat-factor">HIGH</div>
                 </div>
             </div>
             

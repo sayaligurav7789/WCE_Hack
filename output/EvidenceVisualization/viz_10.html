@@ -73,6 +73,45 @@
                 box-shadow: 0 2px 4px rgba(0,0,0,0.1);
             }
             
+            .confidence-meter {
+                background: #f0f0f0;
+                padding: 15px 30px;
+                border-bottom: 1px solid #e0e0e0;
+                display: flex;
+                align-items: center;
+                gap: 20px;
+                flex-wrap: wrap;
+            }
+            
+            .confidence-bar {
+                flex: 1;
+                height: 20px;
+                background: #e0e0e0;
+                border-radius: 10px;
+                overflow: hidden;
+            }
+            
+            .confidence-fill {
+                height: 100%;
+                border-radius: 10px;
+                transition: width 0.3s ease;
+            }
+            
+            .confidence-fill.high { background: linear-gradient(90deg, #4caf50, #8bc34a); }
+            .confidence-fill.medium { background: linear-gradient(90deg, #ff9800, #ffc107); }
+            .confidence-fill.low { background: linear-gradient(90deg, #f44336, #ff7043); }
+            
+            .confidence-text {
+                font-size: 18px;
+                font-weight: 600;
+                min-width: 100px;
+                text-align: center;
+            }
+            
+            .confidence-text.high { color: #4caf50; }
+            .confidence-text.medium { color: #ff9800; }
+            .confidence-text.low { color: #f44336; }
+            
             .answer-section {
                 padding: 30px;
                 background: #f8f9fa;
@@ -99,8 +138,6 @@
                 color: #444;
                 border-left: 4px solid #667eea;
             }
-            
-            /* NO mark styling for answer - it stays plain */
             
             .evidence-section {
                 padding: 30px;
@@ -153,17 +190,6 @@
                 border: 1px solid #e0e0e0;
             }
             
-            .term-badge {
-                display: inline-block;
-                background: #ffeb3b;
-                color: #333;
-                padding: 3px 10px;
-                border-radius: 15px;
-                font-size: 12px;
-                margin: 0 5px 5px 0;
-                font-weight: 500;
-            }
-            
             .evidence-text {
                 background: white;
                 padding: 15px;
@@ -213,19 +239,17 @@
             }
             
             .stats {
-                display: flex;
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
                 gap: 15px;
                 padding: 20px 30px;
                 background: white;
-                flex-wrap: wrap;
             }
             
             .stat-item {
                 background: #f8f9fa;
-                padding: 10px 20px;
+                padding: 15px;
                 border-radius: 10px;
-                flex: 1;
-                min-width: 120px;
                 text-align: center;
                 border: 1px solid #e0e0e0;
             }
@@ -242,6 +266,12 @@
                 color: #667eea;
             }
             
+            .stat-factor {
+                font-size: 11px;
+                color: #999;
+                margin-top: 5px;
+            }
+            
             .footer {
                 padding: 20px 30px;
                 background: #f0f0f0;
@@ -252,6 +282,10 @@
             }
             
             @media (max-width: 768px) {
+                .stats {
+                    grid-template-columns: repeat(2, 1fr);
+                }
+                
                 .header {
                     padding: 20px;
                 }
@@ -279,14 +313,22 @@
             </div>
             
             <div class="keywords-bar">
-                <div class="keywords-title">🔑 Extracted Keywords:</div>
+                <div class="keywords-title"><i class="fas fa-key"></i> Extracted Keywords:</div>
     <span class="keyword-badge">sociocultural</span><span class="keyword-badge">model</span><span class="keyword-badge">therapy</span>
+            </div>
+            
+            <div class="confidence-meter">
+                <i class="fas fa-bullseye"></i><span style="font-weight: 600;">Confidence:</span>
+                <div class="confidence-bar">
+                    <div class="confidence-fill high" style="width: 100.0%;"></div>
+                </div>
+                <div class="confidence-text high">HIGH (100%)</div>
             </div>
             
             <div class="answer-section">
                 <h3><i class="fas fa-robot"></i> Generated Answer</h3>
                 <div class="answer-content">
-                    According to the provided textbook context, the sociocultural model in therapy is a perspective that looks at an individual, their behaviors, and their symptoms in the context of their culture and background. Clinicians using this approach integrate cultural and religious beliefs into the therapeutic process. This model strives to recognize client identities to include individual, group, and universal dimensions, advocate the use of universal and culture-specific strategies and roles in the healing process, and balances the importance of individualism and collectivism in the assessment, diagnosis, and treatment of clients and client systems.  <!-- NO HIGHLIGHTING HERE -->
+                    According to the provided textbook context, the sociocultural model in therapy is a perspective that looks at an individual, their behaviors, and their symptoms in the context of their culture and background. Clinicians using this approach integrate cultural and religious beliefs into the therapeutic process. This model strives to recognize client identities to include individual, group, and universal dimensions, advocate the use of universal and culture-specific strategies and roles in the healing process, and balances the importance of individualism and collectivism in the assessment, diagnosis, and treatment of clients and client systems.
                 </div>
             </div>
             
@@ -300,7 +342,7 @@ Thompson</span>
                     <span class="page-number">📄 Page 611</span>
                 </div>
                 <div class="evidence-text">
-                    develop strategies to effectively address the needs of various populations for which Eurocentric therapies have limited application (Sue, 2004). For example, a counselor whose treatment focuses on individual decision making may be ineffective at helping a Chinese client with a collectivist approach   <!-- HIGHLIGHTING HERE ONLY -->
+                    develop strategies to effectively address the needs of various populations for which Eurocentric therapies have limited application (Sue, 2004). For example, a counselor whose treatment focuses on individual decision making may be ineffective at helping a Chinese client with a collectivist approach 
                 </div>
             </div>
     
@@ -310,7 +352,7 @@ Thompson</span>
                     <span class="page-number">📄 Page 624</span>
                 </div>
                 <div class="evidence-text">
-                    develop strategies to effectively address the needs of various populations for which Eurocentric therapies have limited application (Sue, 2004). For example, a counselor whose treatment focuses on individual decision making may be ineffective at helping a Chinese client with a collectivist approach   <!-- HIGHLIGHTING HERE ONLY -->
+                    develop strategies to effectively address the needs of various populations for which Eurocentric therapies have limited application (Sue, 2004). For example, a counselor whose treatment focuses on individual decision making may be ineffective at helping a Chinese client with a collectivist approach 
                 </div>
             </div>
     
@@ -321,7 +363,7 @@ It was once believed that people with psychological disorders</span>
                     <span class="page-number">📄 Page 626</span>
                 </div>
                 <div class="evidence-text">
-                    develop strategies to effectively address the needs of various populations for which Eurocentric therapies have limited application (Sue, 2004). For example, a counselor whose treatment focuses on individual decision making may be ineffective at helping a Chinese client with a collectivist approach   <!-- HIGHLIGHTING HERE ONLY -->
+                    develop strategies to effectively address the needs of various populations for which Eurocentric therapies have limited application (Sue, 2004). For example, a counselor whose treatment focuses on individual decision making may be ineffective at helping a Chinese client with a collectivist approach 
                 </div>
             </div>
     
@@ -332,7 +374,7 @@ itself</span>
                     <span class="page-number">📄 Page 630</span>
                 </div>
                 <div class="evidence-text">
-                    develop strategies to effectively address the needs of various populations for which Eurocentric therapies have limited application (Sue, 2004). For example, a counselor whose treatment focuses on individual decision making may be ineffective at helping a Chinese client with a collectivist approach   <!-- HIGHLIGHTING HERE ONLY -->
+                    develop strategies to effectively address the needs of various populations for which Eurocentric therapies have limited application (Sue, 2004). For example, a counselor whose treatment focuses on individual decision making may be ineffective at helping a Chinese client with a collectivist approach 
                 </div>
             </div>
     
@@ -342,7 +384,7 @@ itself</span>
                     <span class="page-number">📄 Page 633</span>
                 </div>
                 <div class="evidence-text">
-                    develop strategies to effectively address the needs of various populations for which Eurocentric therapies have limited application (Sue, 2004). For example, a counselor whose treatment focuses on individual decision making may be ineffective at helping a Chinese client with a collectivist approach   <!-- HIGHLIGHTING HERE ONLY -->
+                    develop strategies to effectively address the needs of various populations for which Eurocentric therapies have limited application (Sue, 2004). For example, a counselor whose treatment focuses on individual decision making may be ineffective at helping a Chinese client with a collectivist approach 
                 </div>
             </div>
     
@@ -365,7 +407,7 @@ rational emotive <mark style="background-color: #ffeb3b; font-weight: bold;">the
 
 examines and discusses the boundaries and structure of the family: who makes the rules, who sleeps in the bed with whom, how decisions are made, and what are the boundaries within the family. In some families, the parents do not work together to make rules, or one parent may undermine the other, leading the children to act out. The therapist helps them resolve these issues and learn to communicate more effectively. LINK TO LEARNING Watch this video of a structural family session (http://openstax.org/l/Sfamily) to learn more. In strategic family <mark style="background-color: #ffeb3b; font-weight: bold;">therapy</mark>, the goal is to address specific problems within the family that can be dealt with in a relatively short amount of time. Typically, the therapist would guide what happens in the <mark style="background-color: #ffeb3b; font-weight: bold;">therapy</mark> session and design a detailed approach to resolving each member’s problem (Madanes, 1991). 16.4 Substance-Related and Addictive Disorders: A Special Case LEARNING OBJECTIVES By the end of this section, you will be able to: • Recognize the goal of substance-related and addictive disorders treatment • Discuss what makes for effective treatment • Describe how comorbid disorders are treated Addiction is often viewed as a chronic disease (Figure 16.18). The choice to use a substance is initially voluntary; however, because chronic substance use can permanently alter the neural structure in the prefrontal cortex, an area of the brain associated with decision-making and judgment, a person becomes driven to use drugs and/or alcohol (Muñoz-Cuevas, Athilingam, Piscopo, & Wilbrecht, 2013). This helps explain why relapse rates tend to be high. About 40%–60% of individuals relapse, which means they return to abusing drugs and/or alcohol after a period of improvement (National Institute on Drug Abuse [NIDA], 2008). FIGURE 16.18 The National Survey on Drug Use and Health shows trends in prevalence of various drugs for ages 12–17, 18–25, and 26 or older. The goal of substance-related treatment is to help a person with an addiction stop compulsive drug-seeking behaviors (NIDA, 2012). This means a person with addiction will need long-term treatment, similar to a person battling a chronic physical disease such as hypertension or diabetes. Treatment usually includes behavioral <mark style="background-color: #ffeb3b; font-weight: bold;">therapy</mark> and/or medication, depending on the individual (NIDA, 2012). Specialized therapies have also been 16.4 • Substance-Related and Addictive Disorders: A Special Case 621
 
-FIGURE 16.14 <mark style="background-color: #ffeb3b; font-weight: bold;">therapy</mark> may occur (a) one-on-one between a therapist and client, or (b) in a group setting. (credit a: modification of work by Connor Ashleigh, AusAID/Department of Foreign Affairs and Trade) Individual <mark style="background-color: #ffeb3b; font-weight: bold;">therapy</mark> In individual <mark style="background-color: #ffeb3b; font-weight: bold;">therapy</mark>, also known as individual psycho<mark style="background-color: #ffeb3b; font-weight: bold;">therapy</mark> or individual counseling, the client and clinician meet one-on-one (usually from 45 minutes to 1 hour). These meetings typically occur weekly or every other week, and sessions are conducted in a confidential and caring environment (Figure 16.15). The clinician will work with clients to help them explore their feelings, work through life challenges, identify aspects of themselves and their lives that they wish   <!-- HIGHLIGHTING HERE ONLY -->
+FIGURE 16.14 <mark style="background-color: #ffeb3b; font-weight: bold;">therapy</mark> may occur (a) one-on-one between a therapist and client, or (b) in a group setting. (credit a: modification of work by Connor Ashleigh, AusAID/Department of Foreign Affairs and Trade) Individual <mark style="background-color: #ffeb3b; font-weight: bold;">therapy</mark> In individual <mark style="background-color: #ffeb3b; font-weight: bold;">therapy</mark>, also known as individual psycho<mark style="background-color: #ffeb3b; font-weight: bold;">therapy</mark> or individual counseling, the client and clinician meet one-on-one (usually from 45 minutes to 1 hour). These meetings typically occur weekly or every other week, and sessions are conducted in a confidential and caring environment (Figure 16.15). The clinician will work with clients to help them explore their feelings, work through life challenges, identify aspects of themselves and their lives that they wish 
                 </div>
             </div>
             
@@ -373,14 +415,22 @@ FIGURE 16.14 <mark style="background-color: #ffeb3b; font-weight: bold;">therapy
                 <div class="stat-item">
                     <div class="stat-label">Sections Used</div>
                     <div class="stat-value">8</div>
+                    <div class="stat-factor">Factor: 1.00</div>
                 </div>
                 <div class="stat-item">
                     <div class="stat-label">Pages Referenced</div>
                     <div class="stat-value">10</div>
+                    <div class="stat-factor">Factor: 1.00</div>
                 </div>
                 <div class="stat-item">
-                    <div class="stat-label">Keywords Found</div>
-                    <div class="stat-value">3</div>
+                    <div class="stat-label">Answer Length</div>
+                    <div class="stat-value">649</div>
+                    <div class="stat-factor">Factor: 1.00</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Overall</div>
+                    <div class="stat-value">100%</div>
+                    <div class="stat-factor">HIGH</div>
                 </div>
             </div>
             

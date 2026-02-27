@@ -73,6 +73,45 @@
                 box-shadow: 0 2px 4px rgba(0,0,0,0.1);
             }
             
+            .confidence-meter {
+                background: #f0f0f0;
+                padding: 15px 30px;
+                border-bottom: 1px solid #e0e0e0;
+                display: flex;
+                align-items: center;
+                gap: 20px;
+                flex-wrap: wrap;
+            }
+            
+            .confidence-bar {
+                flex: 1;
+                height: 20px;
+                background: #e0e0e0;
+                border-radius: 10px;
+                overflow: hidden;
+            }
+            
+            .confidence-fill {
+                height: 100%;
+                border-radius: 10px;
+                transition: width 0.3s ease;
+            }
+            
+            .confidence-fill.high { background: linear-gradient(90deg, #4caf50, #8bc34a); }
+            .confidence-fill.medium { background: linear-gradient(90deg, #ff9800, #ffc107); }
+            .confidence-fill.low { background: linear-gradient(90deg, #f44336, #ff7043); }
+            
+            .confidence-text {
+                font-size: 18px;
+                font-weight: 600;
+                min-width: 100px;
+                text-align: center;
+            }
+            
+            .confidence-text.high { color: #4caf50; }
+            .confidence-text.medium { color: #ff9800; }
+            .confidence-text.low { color: #f44336; }
+            
             .answer-section {
                 padding: 30px;
                 background: #f8f9fa;
@@ -99,8 +138,6 @@
                 color: #444;
                 border-left: 4px solid #667eea;
             }
-            
-            /* NO mark styling for answer - it stays plain */
             
             .evidence-section {
                 padding: 30px;
@@ -153,17 +190,6 @@
                 border: 1px solid #e0e0e0;
             }
             
-            .term-badge {
-                display: inline-block;
-                background: #ffeb3b;
-                color: #333;
-                padding: 3px 10px;
-                border-radius: 15px;
-                font-size: 12px;
-                margin: 0 5px 5px 0;
-                font-weight: 500;
-            }
-            
             .evidence-text {
                 background: white;
                 padding: 15px;
@@ -213,19 +239,17 @@
             }
             
             .stats {
-                display: flex;
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
                 gap: 15px;
                 padding: 20px 30px;
                 background: white;
-                flex-wrap: wrap;
             }
             
             .stat-item {
                 background: #f8f9fa;
-                padding: 10px 20px;
+                padding: 15px;
                 border-radius: 10px;
-                flex: 1;
-                min-width: 120px;
                 text-align: center;
                 border: 1px solid #e0e0e0;
             }
@@ -242,6 +266,12 @@
                 color: #667eea;
             }
             
+            .stat-factor {
+                font-size: 11px;
+                color: #999;
+                margin-top: 5px;
+            }
+            
             .footer {
                 padding: 20px 30px;
                 background: #f0f0f0;
@@ -252,6 +282,10 @@
             }
             
             @media (max-width: 768px) {
+                .stats {
+                    grid-template-columns: repeat(2, 1fr);
+                }
+                
                 .header {
                     padding: 20px;
                 }
@@ -279,14 +313,22 @@
             </div>
             
             <div class="keywords-bar">
-                <div class="keywords-title">🔑 Extracted Keywords:</div>
+                <div class="keywords-title"><i class="fas fa-key"></i> Extracted Keywords:</div>
     <span class="keyword-badge">social</span><span class="keyword-badge">psychology</span>
+            </div>
+            
+            <div class="confidence-meter">
+                <i class="fas fa-bullseye"></i><span style="font-weight: 600;">Confidence:</span>
+                <div class="confidence-bar">
+                    <div class="confidence-fill high" style="width: 100.0%;"></div>
+                </div>
+                <div class="confidence-text high">HIGH (100%)</div>
             </div>
             
             <div class="answer-section">
                 <h3><i class="fas fa-robot"></i> Generated Answer</h3>
                 <div class="answer-content">
-                    Social psychology is the subfield of psychology that studies the power of the situation to influence individuals' thoughts, feelings, and behaviors. It examines how people affect one another, and it looks at the power of the situation. Social psychologists are interested in all aspects of personality and social interaction, exploring the influence of interpersonal and group relationships on human behavior.  <!-- NO HIGHLIGHTING HERE -->
+                    Social psychology is the subfield of psychology that studies the power of the situation to influence individuals' thoughts, feelings, and behaviors. It examines how people affect one another, and it looks at the power of the situation. Social psychologists are interested in all aspects of personality and social interaction, exploring the influence of interpersonal and group relationships on human behavior.
                 </div>
             </div>
             
@@ -299,7 +341,7 @@
                     <span class="page-number">📄 Page 20</span>
                 </div>
                 <div class="evidence-text">
-                    Summary 12.1 What Is <mark style="background-color: #ffeb3b; font-weight: bold;">social</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark>? <mark style="background-color: #ffeb3b; font-weight: bold;">social</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> is the subfield of <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> that studies the power of the situation to influence individuals’ thoughts, feelings, and behaviors. Psychologists categorize the causes of human behavior as those due to internal factors, such as personality, or  <!-- HIGHLIGHTING HERE ONLY -->
+                    Summary 12.1 What Is <mark style="background-color: #ffeb3b; font-weight: bold;">social</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark>? <mark style="background-color: #ffeb3b; font-weight: bold;">social</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> is the subfield of <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> that studies the power of the situation to influence individuals’ thoughts, feelings, and behaviors. Psychologists categorize the causes of human behavior as those due to internal factors, such as personality, or
                 </div>
             </div>
     
@@ -309,7 +351,7 @@
                     <span class="page-number">📄 Page 28</span>
                 </div>
                 <div class="evidence-text">
-                    Summary 12.1 What Is <mark style="background-color: #ffeb3b; font-weight: bold;">social</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark>? <mark style="background-color: #ffeb3b; font-weight: bold;">social</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> is the subfield of <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> that studies the power of the situation to influence individuals’ thoughts, feelings, and behaviors. Psychologists categorize the causes of human behavior as those due to internal factors, such as personality, or  <!-- HIGHLIGHTING HERE ONLY -->
+                    Summary 12.1 What Is <mark style="background-color: #ffeb3b; font-weight: bold;">social</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark>? <mark style="background-color: #ffeb3b; font-weight: bold;">social</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> is the subfield of <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> that studies the power of the situation to influence individuals’ thoughts, feelings, and behaviors. Psychologists categorize the causes of human behavior as those due to internal factors, such as personality, or
                 </div>
             </div>
     
@@ -319,7 +361,7 @@
                     <span class="page-number">📄 Page 35</span>
                 </div>
                 <div class="evidence-text">
-                    Summary 12.1 What Is <mark style="background-color: #ffeb3b; font-weight: bold;">social</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark>? <mark style="background-color: #ffeb3b; font-weight: bold;">social</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> is the subfield of <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> that studies the power of the situation to influence individuals’ thoughts, feelings, and behaviors. Psychologists categorize the causes of human behavior as those due to internal factors, such as personality, or  <!-- HIGHLIGHTING HERE ONLY -->
+                    Summary 12.1 What Is <mark style="background-color: #ffeb3b; font-weight: bold;">social</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark>? <mark style="background-color: #ffeb3b; font-weight: bold;">social</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> is the subfield of <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> that studies the power of the situation to influence individuals’ thoughts, feelings, and behaviors. Psychologists categorize the causes of human behavior as those due to internal factors, such as personality, or
                 </div>
             </div>
     
@@ -331,7 +373,7 @@ consequences outside of the organism</span>
                     <span class="page-number">📄 Page 381</span>
                 </div>
                 <div class="evidence-text">
-                    Summary 12.1 What Is <mark style="background-color: #ffeb3b; font-weight: bold;">social</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark>? <mark style="background-color: #ffeb3b; font-weight: bold;">social</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> is the subfield of <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> that studies the power of the situation to influence individuals’ thoughts, feelings, and behaviors. Psychologists categorize the causes of human behavior as those due to internal factors, such as personality, or  <!-- HIGHLIGHTING HERE ONLY -->
+                    Summary 12.1 What Is <mark style="background-color: #ffeb3b; font-weight: bold;">social</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark>? <mark style="background-color: #ffeb3b; font-weight: bold;">social</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> is the subfield of <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> that studies the power of the situation to influence individuals’ thoughts, feelings, and behaviors. Psychologists categorize the causes of human behavior as those due to internal factors, such as personality, or
                 </div>
             </div>
     
@@ -341,7 +383,7 @@ consequences outside of the organism</span>
                     <span class="page-number">📄 Page 405</span>
                 </div>
                 <div class="evidence-text">
-                    Summary 12.1 What Is <mark style="background-color: #ffeb3b; font-weight: bold;">social</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark>? <mark style="background-color: #ffeb3b; font-weight: bold;">social</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> is the subfield of <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> that studies the power of the situation to influence individuals’ thoughts, feelings, and behaviors. Psychologists categorize the causes of human behavior as those due to internal factors, such as personality, or  <!-- HIGHLIGHTING HERE ONLY -->
+                    Summary 12.1 What Is <mark style="background-color: #ffeb3b; font-weight: bold;">social</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark>? <mark style="background-color: #ffeb3b; font-weight: bold;">social</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> is the subfield of <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> that studies the power of the situation to influence individuals’ thoughts, feelings, and behaviors. Psychologists categorize the causes of human behavior as those due to internal factors, such as personality, or
                 </div>
             </div>
     
@@ -358,7 +400,7 @@ witnessed the incident, as he was playing video games with his aunt. Why did eac
 
 including experimentation, rather than a method based only on forms of logical argument or previous authorities. It was not until the late 1800s that <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> became accepted as its own academic discipline. Before this time, the workings of the mind were considered under the auspices of philosophy. Given that any behavior is, at its roots, biological, some areas of <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> take on aspects of a natural science like biology. No biological organism exists in isolation, and our behavior is influenced by our interactions with others. Therefore, <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> is also a <mark style="background-color: #ffeb3b; font-weight: bold;">social</mark> science. WHY STUDY <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark>? Often, students take their first <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> course because they are interested in helping others and want to learn more about themselves and why they act the way they do. Sometimes, students take a <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> course because it either satisfies a general education requirement or is required for a program of study such as nursing or pre-med. Many of these students develop such an interest in the area that they go on to declare <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> as their major. As a result, <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> is one of the most popular majors on college campuses across the United States (Johnson & Lubin, 2011). A number of well-known individuals were <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> majors. Just a few famous names on this list are Facebook’s creator Mark Zuckerberg, television personality and political satirist Jon Stewart, actress Natalie Portman, and filmmaker Wes Craven (Halonen, 2011). About 6 percent of all bachelor degrees granted in the United States are in the discipline of <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> (U.S. Department of Education, 2016). 8 1 • Introduction to <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> Access for free at openstax.org
 
-interpersonal processes of conformity and obedience, aggression and altruism, and, finally, love and attraction. Situational and Dispositional Influences on Behavior Behavior is a product of both the situation (e.g., cultural influences, <mark style="background-color: #ffeb3b; font-weight: bold;">social</mark> roles, and the presence of bystanders) and of the person (e.g., personality characteristics). Subfields of <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> tend to focus on one influence or behavior over others. Situationism is the view that our behavior and actions are determined by our immediate environment and surroundings. In contrast, dispositionism holds that our behavior is determined by internal factors (Heider, 1958). An internal factor is an attribute of a person and includes personality traits and temperament. <mark style="background-color: #ffeb3b; font-weight: bold;">social</mark> psychologists have tended to take the situationist perspective, whereas personality psychologists have promoted the dispositionist perspective. Modern approaches to <mark style="background-color: #ffeb3b; font-weight: bold;">social</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark>, however, take both the situation and the individual into account when studying human behavior (Fiske, Gilbert, & Lindzey, 2010). In fact, the field of <mark style="background-color: #ffeb3b; font-weight: bold;">social</mark>-personality <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> has emerged to study the complex interaction of internal and situational factors that affect human behavior (Mischel, 1977; Richard, Bond, & Stokes-Zoota, 2003). Fundamental Attribution Error In the United States, the predominant culture tends to favor a dispositional approach in explaining human behavior. Why do you think this is? We tend to think that people are in control of their own behaviors, and, therefore, any behavior change must be due to something internal, such as their personality, habits, or temperament. According to some <mark style="background-color: #ffeb3b; font-weight: bold;">social</mark> psychologists, people tend to overemphasize internal factors as explanations—or attributions—for the behavior of other people. They tend to assume that the behavior of another person is a trait of that person, and to underestimate the power of the situation on the behavior of others. They tend to fail to recognize when the behavior of another is due to situational variables, and thus to the person’s state. This erroneous assumption is called the fundamental attribution error (Ross, 1977; Riggio & Garcia, 2009). To better understand, imagine this scenario: Jamie returns home from work, and opens the front door to a happy greeting from spouse Morgan who inquires how the day has been. Instead of returning the spouse’s kind greeting, Jamie yells, “Leave me alone!” Why did Jamie yell? How would someone committing the fundamental attribution error explain Jamie’s behavior? The most common response is that Jamie is a mean, angry, or unfriendly person (traits). T  <!-- HIGHLIGHTING HERE ONLY -->
+interpersonal processes of conformity and obedience, aggression and altruism, and, finally, love and attraction. Situational and Dispositional Influences on Behavior Behavior is a product of both the situation (e.g., cultural influences, <mark style="background-color: #ffeb3b; font-weight: bold;">social</mark> roles, and the presence of bystanders) and of the person (e.g., personality characteristics). Subfields of <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> tend to focus on one influence or behavior over others. Situationism is the view that our behavior and actions are determined by our immediate environment and surroundings. In contrast, dispositionism holds that our behavior is determined by internal factors (Heider, 1958). An internal factor is an attribute of a person and includes personality traits and temperament. <mark style="background-color: #ffeb3b; font-weight: bold;">social</mark> psychologists have tended to take the situationist perspective, whereas personality psychologists have promoted the dispositionist perspective. Modern approaches to <mark style="background-color: #ffeb3b; font-weight: bold;">social</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark>, however, take both the situation and the individual into account when studying human behavior (Fiske, Gilbert, & Lindzey, 2010). In fact, the field of <mark style="background-color: #ffeb3b; font-weight: bold;">social</mark>-personality <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> has emerged to study the complex interaction of internal and situational factors that affect human behavior (Mischel, 1977; Richard, Bond, & Stokes-Zoota, 2003). Fundamental Attribution Error In the United States, the predominant culture tends to favor a dispositional approach in explaining human behavior. Why do you think this is? We tend to think that people are in control of their own behaviors, and, therefore, any behavior change must be due to something internal, such as their personality, habits, or temperament. According to some <mark style="background-color: #ffeb3b; font-weight: bold;">social</mark> psychologists, people tend to overemphasize internal factors as explanations—or attributions—for the behavior of other people. They tend to assume that the behavior of another person is a trait of that person, and to underestimate the power of the situation on the behavior of others. They tend to fail to recognize when the behavior of another is due to situational variables, and thus to the person’s state. This erroneous assumption is called the fundamental attribution error (Ross, 1977; Riggio & Garcia, 2009). To better understand, imagine this scenario: Jamie returns home from work, and opens the front door to a happy greeting from spouse Morgan who inquires how the day has been. Instead of returning the spouse’s kind greeting, Jamie yells, “Leave me alone!” Why did Jamie yell? How would someone committing the fundamental attribution error explain Jamie’s behavior? The most common response is that Jamie is a mean, angry, or unfriendly person (traits). T
                 </div>
             </div>
             
@@ -366,14 +408,22 @@ interpersonal processes of conformity and obedience, aggression and altruism, an
                 <div class="stat-item">
                     <div class="stat-label">Sections Used</div>
                     <div class="stat-value">9</div>
+                    <div class="stat-factor">Factor: 1.00</div>
                 </div>
                 <div class="stat-item">
                     <div class="stat-label">Pages Referenced</div>
                     <div class="stat-value">11</div>
+                    <div class="stat-factor">Factor: 1.00</div>
                 </div>
                 <div class="stat-item">
-                    <div class="stat-label">Keywords Found</div>
-                    <div class="stat-value">2</div>
+                    <div class="stat-label">Answer Length</div>
+                    <div class="stat-value">409</div>
+                    <div class="stat-factor">Factor: 0.82</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Overall</div>
+                    <div class="stat-value">100%</div>
+                    <div class="stat-factor">HIGH</div>
                 </div>
             </div>
             

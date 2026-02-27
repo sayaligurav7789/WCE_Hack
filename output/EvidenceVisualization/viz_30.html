@@ -73,6 +73,45 @@
                 box-shadow: 0 2px 4px rgba(0,0,0,0.1);
             }
             
+            .confidence-meter {
+                background: #f0f0f0;
+                padding: 15px 30px;
+                border-bottom: 1px solid #e0e0e0;
+                display: flex;
+                align-items: center;
+                gap: 20px;
+                flex-wrap: wrap;
+            }
+            
+            .confidence-bar {
+                flex: 1;
+                height: 20px;
+                background: #e0e0e0;
+                border-radius: 10px;
+                overflow: hidden;
+            }
+            
+            .confidence-fill {
+                height: 100%;
+                border-radius: 10px;
+                transition: width 0.3s ease;
+            }
+            
+            .confidence-fill.high { background: linear-gradient(90deg, #4caf50, #8bc34a); }
+            .confidence-fill.medium { background: linear-gradient(90deg, #ff9800, #ffc107); }
+            .confidence-fill.low { background: linear-gradient(90deg, #f44336, #ff7043); }
+            
+            .confidence-text {
+                font-size: 18px;
+                font-weight: 600;
+                min-width: 100px;
+                text-align: center;
+            }
+            
+            .confidence-text.high { color: #4caf50; }
+            .confidence-text.medium { color: #ff9800; }
+            .confidence-text.low { color: #f44336; }
+            
             .answer-section {
                 padding: 30px;
                 background: #f8f9fa;
@@ -99,8 +138,6 @@
                 color: #444;
                 border-left: 4px solid #667eea;
             }
-            
-            /* NO mark styling for answer - it stays plain */
             
             .evidence-section {
                 padding: 30px;
@@ -153,17 +190,6 @@
                 border: 1px solid #e0e0e0;
             }
             
-            .term-badge {
-                display: inline-block;
-                background: #ffeb3b;
-                color: #333;
-                padding: 3px 10px;
-                border-radius: 15px;
-                font-size: 12px;
-                margin: 0 5px 5px 0;
-                font-weight: 500;
-            }
-            
             .evidence-text {
                 background: white;
                 padding: 15px;
@@ -213,19 +239,17 @@
             }
             
             .stats {
-                display: flex;
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
                 gap: 15px;
                 padding: 20px 30px;
                 background: white;
-                flex-wrap: wrap;
             }
             
             .stat-item {
                 background: #f8f9fa;
-                padding: 10px 20px;
+                padding: 15px;
                 border-radius: 10px;
-                flex: 1;
-                min-width: 120px;
                 text-align: center;
                 border: 1px solid #e0e0e0;
             }
@@ -242,6 +266,12 @@
                 color: #667eea;
             }
             
+            .stat-factor {
+                font-size: 11px;
+                color: #999;
+                margin-top: 5px;
+            }
+            
             .footer {
                 padding: 20px 30px;
                 background: #f0f0f0;
@@ -252,6 +282,10 @@
             }
             
             @media (max-width: 768px) {
+                .stats {
+                    grid-template-columns: repeat(2, 1fr);
+                }
+                
                 .header {
                     padding: 20px;
                 }
@@ -279,14 +313,22 @@
             </div>
             
             <div class="keywords-bar">
-                <div class="keywords-title">🔑 Extracted Keywords:</div>
+                <div class="keywords-title"><i class="fas fa-key"></i> Extracted Keywords:</div>
     <span class="keyword-badge">psychological</span><span class="keyword-badge">disorders</span>
+            </div>
+            
+            <div class="confidence-meter">
+                <i class="fas fa-bullseye"></i><span style="font-weight: 600;">Confidence:</span>
+                <div class="confidence-bar">
+                    <div class="confidence-fill high" style="width: 100.0%;"></div>
+                </div>
+                <div class="confidence-text high">HIGH (100%)</div>
             </div>
             
             <div class="answer-section">
                 <h3><i class="fas fa-robot"></i> Generated Answer</h3>
                 <div class="answer-content">
-                    According to the American Psychiatric Association, a psychological disorder, or mental disorder, is "a syndrome characterized by clinically significant disturbance in an individual's cognition, emotion regulation, or behavior that reflects a dysfunction in the psychological, biological, or developmental processes underlying mental functioning. Mental disorders are usually associated with significant distress in social, occupational, or other important activities."  <!-- NO HIGHLIGHTING HERE -->
+                    According to the American Psychiatric Association, a psychological disorder, or mental disorder, is "a syndrome characterized by clinically significant disturbance in an individual's cognition, emotion regulation, or behavior that reflects a dysfunction in the psychological, biological, or developmental processes underlying mental functioning. Mental disorders are usually associated with significant distress in social, occupational, or other important activities."
                 </div>
             </div>
             
@@ -301,7 +343,7 @@ By the end of this section</span>
                     <span class="page-number">📄 Page 514</span>
                 </div>
                 <div class="evidence-text">
-                    15.1 What Are <mark style="background-color: #ffeb3b; font-weight: bold;">psychological</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">disorders</mark>? LEARNING OBJECTIVES By the end of this section, you will be able to: • Understand the problems inherent in defining the concept of <mark style="background-color: #ffeb3b; font-weight: bold;">psychological</mark> disorder • Describe what is meant by harmful dysfunction • Identify the formal criteria that thoughts, feelings, and  <!-- HIGHLIGHTING HERE ONLY -->
+                    15.1 What Are <mark style="background-color: #ffeb3b; font-weight: bold;">psychological</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">disorders</mark>? LEARNING OBJECTIVES By the end of this section, you will be able to: • Understand the problems inherent in defining the concept of <mark style="background-color: #ffeb3b; font-weight: bold;">psychological</mark> disorder • Describe what is meant by harmful dysfunction • Identify the formal criteria that thoughts, feelings, and
                 </div>
             </div>
     
@@ -311,7 +353,7 @@ By the end of this section</span>
                     <span class="page-number">📄 Page 550</span>
                 </div>
                 <div class="evidence-text">
-                    15.1 What Are <mark style="background-color: #ffeb3b; font-weight: bold;">psychological</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">disorders</mark>? LEARNING OBJECTIVES By the end of this section, you will be able to: • Understand the problems inherent in defining the concept of <mark style="background-color: #ffeb3b; font-weight: bold;">psychological</mark> disorder • Describe what is meant by harmful dysfunction • Identify the formal criteria that thoughts, feelings, and  <!-- HIGHLIGHTING HERE ONLY -->
+                    15.1 What Are <mark style="background-color: #ffeb3b; font-weight: bold;">psychological</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">disorders</mark>? LEARNING OBJECTIVES By the end of this section, you will be able to: • Understand the problems inherent in defining the concept of <mark style="background-color: #ffeb3b; font-weight: bold;">psychological</mark> disorder • Describe what is meant by harmful dysfunction • Identify the formal criteria that thoughts, feelings, and
                 </div>
             </div>
     
@@ -323,7 +365,7 @@ By the end of this section</span>
                     <span class="page-number">📄 Page 553</span>
                 </div>
                 <div class="evidence-text">
-                    15.1 What Are <mark style="background-color: #ffeb3b; font-weight: bold;">psychological</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">disorders</mark>? LEARNING OBJECTIVES By the end of this section, you will be able to: • Understand the problems inherent in defining the concept of <mark style="background-color: #ffeb3b; font-weight: bold;">psychological</mark> disorder • Describe what is meant by harmful dysfunction • Identify the formal criteria that thoughts, feelings, and  <!-- HIGHLIGHTING HERE ONLY -->
+                    15.1 What Are <mark style="background-color: #ffeb3b; font-weight: bold;">psychological</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">disorders</mark>? LEARNING OBJECTIVES By the end of this section, you will be able to: • Understand the problems inherent in defining the concept of <mark style="background-color: #ffeb3b; font-weight: bold;">psychological</mark> disorder • Describe what is meant by harmful dysfunction • Identify the formal criteria that thoughts, feelings, and
                 </div>
             </div>
     
@@ -333,7 +375,7 @@ By the end of this section</span>
                     <span class="page-number">📄 Page 554</span>
                 </div>
                 <div class="evidence-text">
-                    15.1 What Are <mark style="background-color: #ffeb3b; font-weight: bold;">psychological</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">disorders</mark>? LEARNING OBJECTIVES By the end of this section, you will be able to: • Understand the problems inherent in defining the concept of <mark style="background-color: #ffeb3b; font-weight: bold;">psychological</mark> disorder • Describe what is meant by harmful dysfunction • Identify the formal criteria that thoughts, feelings, and  <!-- HIGHLIGHTING HERE ONLY -->
+                    15.1 What Are <mark style="background-color: #ffeb3b; font-weight: bold;">psychological</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">disorders</mark>? LEARNING OBJECTIVES By the end of this section, you will be able to: • Understand the problems inherent in defining the concept of <mark style="background-color: #ffeb3b; font-weight: bold;">psychological</mark> disorder • Describe what is meant by harmful dysfunction • Identify the formal criteria that thoughts, feelings, and
                 </div>
             </div>
     
@@ -345,7 +387,7 @@ By the end of this section</span>
                     <span class="page-number">📄 Page 557</span>
                 </div>
                 <div class="evidence-text">
-                    15.1 What Are <mark style="background-color: #ffeb3b; font-weight: bold;">psychological</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">disorders</mark>? LEARNING OBJECTIVES By the end of this section, you will be able to: • Understand the problems inherent in defining the concept of <mark style="background-color: #ffeb3b; font-weight: bold;">psychological</mark> disorder • Describe what is meant by harmful dysfunction • Identify the formal criteria that thoughts, feelings, and  <!-- HIGHLIGHTING HERE ONLY -->
+                    15.1 What Are <mark style="background-color: #ffeb3b; font-weight: bold;">psychological</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">disorders</mark>? LEARNING OBJECTIVES By the end of this section, you will be able to: • Understand the problems inherent in defining the concept of <mark style="background-color: #ffeb3b; font-weight: bold;">psychological</mark> disorder • Describe what is meant by harmful dysfunction • Identify the formal criteria that thoughts, feelings, and
                 </div>
             </div>
     
@@ -362,7 +404,7 @@ difficulty has a <mark style="background-color: #ffeb3b; font-weight: bold;">psy
 
 edition (ICD-10); however, efforts are now underway to develop a new edition (ICD-11) that, in conjunction with the changes in DSM-5, will help harmonize the two classification systems as much as possible (APA, 2013). A study that compared the use of the two classification systems found that worldwide the ICD is more frequently used for clinical diagnosis, whereas the DSM is more valued for research (Mezzich, 2002). Most research findings concerning the etiology and treatment of <mark style="background-color: #ffeb3b; font-weight: bold;">psychological</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">disorders</mark> are based on criteria set forth in the DSM (Oltmanns & Castonguay, 2013). The DSM also includes more explicit disorder criteria, along with an extensive and helpful explanatory text (Regier et al., 2012). The DSM is the classification system of choice among U.S. mental health professionals, and this chapter is based on the DSM paradigm. The Compassionate View of <mark style="background-color: #ffeb3b; font-weight: bold;">psychological</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">disorders</mark> As these <mark style="background-color: #ffeb3b; font-weight: bold;">disorders</mark> are outlined, please bear two things in mind. First, remember that <mark style="background-color: #ffeb3b; font-weight: bold;">psychological</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">disorders</mark> represent extremes of inner experience and behavior. If, while reading about these <mark style="background-color: #ffeb3b; font-weight: bold;">disorders</mark>, you feel that these descriptions begin to personally characterize you, do not worry—this moment of enlightenment probably means nothing more than you have had a range of experiences and emotions. Each of us experiences episodes of sadness, anxiety, and preoccupation with certain thoughts—times when we do not quite feel ourselves. These episodes should not be considered problematic unless the accompanying thoughts and behaviors become extreme and have a disruptive effect on one’s life. Second, understand that people with <mark style="background-color: #ffeb3b; font-weight: bold;">psychological</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">disorders</mark> are far more than just embodiments of their <mark style="background-color: #ffeb3b; font-weight: bold;">disorders</mark>. We do not use terms such as schizophrenics, depressives, or phobics because they are labels that objectify people who have these conditions, thus promoting biased and disparaging assumptions about them. It is important to remember that a <mark style="background-color: #ffeb3b; font-weight: bold;">psychological</mark> disorder is not what a person is; it is something that a person has—through no fault of their own. As is the case with cancer or diabetes, those with <mark style="background-color: #ffeb3b; font-weight: bold;">psychological</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">disorders</mark> suffer debilitating, often painful conditions that are not of their own choosing. These individuals deserve to be viewed and treated with compassion, understanding, and dignity. 15.3 Perspectives on <mark style="background-color: #ffeb3b; font-weight: bold;">psychological</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">disorders</mark> LEARNING OBJECTIVES By the end of this section, you will be able to: • Discuss supernatural perspectives on the origin of <mark style="background-color: #ffeb3b; font-weight: bold;">psychological</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">disorders</mark>, in their historical context • Describe modern biological and <mark style="background-color: #ffeb3b; font-weight: bold;">psychological</mark> perspectives on the origin of <mark style="background-color: #ffeb3b; font-weight: bold;">psychological</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">disorders</mark> • Identify which <mark style="background-color: #ffeb3b; font-weight: bold;">disorders</mark>
 
-Some believe that there is no essential criterion or set of criteria that can definitively distinguish all cases of disorder from nondisorder (Lilienfeld & Marino, 1999). In truth, no single approach to defining a <mark style="background-color: #ffeb3b; font-weight: bold;">psychological</mark> disorder is adequate by itself, nor is there universal agreement on where the boundary is between disordered and not disordered. From time to time we all experience anxiety, unwanted thoughts, and moments of sadness; our behavior at other times may not make much sense to ourselves or to others. These inner experiences and behaviors can vary in their intensity, but are only considered disordered when they are highly disturbing to us and/or others, suggest a dysfunction in normal mental functioning, and are associated with significant distress or disability in social or occupational activities. 15.2 Diagnosing and Classifying <mark style="background-color: #ffeb3b; font-weight: bold;">psychological</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">disorders</mark> LEARNING OBJECTIVES By the end of this section, you will be able to: • Explain why classification systems are necessary in the study of psychopathology • Describe the basic features of the Diagnostic and Statistical Manual of Mental <mark style="background-color: #ffeb3b; font-weight: bold;">disorders</mark>, Fifth Edition (DSM-5) • Discuss changes in the DSM over time, including criticisms of the current edition • Identify which <mark style="background-color: #ffeb3b; font-weight: bold;">disorders</mark> are generally the most common A first step in the study of <mark style="background-color: #ffeb3b; font-weight: bold;">psychological</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">disorders</mark> is carefully and systematically discerning significant signs and symptoms. How do mental health professionals ascertain whether or not a person’s inner states and behaviors truly represent a <mark style="background-color: #ffeb3b; font-weight: bold;">psychological</mark> disorder? Arriving at a proper diagnosis—that is, appropriately identifying and labeling a set of defined symptoms—is absolutely crucial. This process enables professionals to use a common language with others in the field and aids in communication about the disor  <!-- HIGHLIGHTING HERE ONLY -->
+Some believe that there is no essential criterion or set of criteria that can definitively distinguish all cases of disorder from nondisorder (Lilienfeld & Marino, 1999). In truth, no single approach to defining a <mark style="background-color: #ffeb3b; font-weight: bold;">psychological</mark> disorder is adequate by itself, nor is there universal agreement on where the boundary is between disordered and not disordered. From time to time we all experience anxiety, unwanted thoughts, and moments of sadness; our behavior at other times may not make much sense to ourselves or to others. These inner experiences and behaviors can vary in their intensity, but are only considered disordered when they are highly disturbing to us and/or others, suggest a dysfunction in normal mental functioning, and are associated with significant distress or disability in social or occupational activities. 15.2 Diagnosing and Classifying <mark style="background-color: #ffeb3b; font-weight: bold;">psychological</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">disorders</mark> LEARNING OBJECTIVES By the end of this section, you will be able to: • Explain why classification systems are necessary in the study of psychopathology • Describe the basic features of the Diagnostic and Statistical Manual of Mental <mark style="background-color: #ffeb3b; font-weight: bold;">disorders</mark>, Fifth Edition (DSM-5) • Discuss changes in the DSM over time, including criticisms of the current edition • Identify which <mark style="background-color: #ffeb3b; font-weight: bold;">disorders</mark> are generally the most common A first step in the study of <mark style="background-color: #ffeb3b; font-weight: bold;">psychological</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">disorders</mark> is carefully and systematically discerning significant signs and symptoms. How do mental health professionals ascertain whether or not a person’s inner states and behaviors truly represent a <mark style="background-color: #ffeb3b; font-weight: bold;">psychological</mark> disorder? Arriving at a proper diagnosis—that is, appropriately identifying and labeling a set of defined symptoms—is absolutely crucial. This process enables professionals to use a common language with others in the field and aids in communication about the disor
                 </div>
             </div>
             
@@ -370,14 +412,22 @@ Some believe that there is no essential criterion or set of criteria that can de
                 <div class="stat-item">
                     <div class="stat-label">Sections Used</div>
                     <div class="stat-value">10</div>
+                    <div class="stat-factor">Factor: 1.00</div>
                 </div>
                 <div class="stat-item">
                     <div class="stat-label">Pages Referenced</div>
                     <div class="stat-value">10</div>
+                    <div class="stat-factor">Factor: 1.00</div>
                 </div>
                 <div class="stat-item">
-                    <div class="stat-label">Keywords Found</div>
-                    <div class="stat-value">2</div>
+                    <div class="stat-label">Answer Length</div>
+                    <div class="stat-value">468</div>
+                    <div class="stat-factor">Factor: 0.94</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Overall</div>
+                    <div class="stat-value">100%</div>
+                    <div class="stat-factor">HIGH</div>
                 </div>
             </div>
             

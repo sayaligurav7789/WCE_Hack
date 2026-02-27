@@ -73,6 +73,45 @@
                 box-shadow: 0 2px 4px rgba(0,0,0,0.1);
             }
             
+            .confidence-meter {
+                background: #f0f0f0;
+                padding: 15px 30px;
+                border-bottom: 1px solid #e0e0e0;
+                display: flex;
+                align-items: center;
+                gap: 20px;
+                flex-wrap: wrap;
+            }
+            
+            .confidence-bar {
+                flex: 1;
+                height: 20px;
+                background: #e0e0e0;
+                border-radius: 10px;
+                overflow: hidden;
+            }
+            
+            .confidence-fill {
+                height: 100%;
+                border-radius: 10px;
+                transition: width 0.3s ease;
+            }
+            
+            .confidence-fill.high { background: linear-gradient(90deg, #4caf50, #8bc34a); }
+            .confidence-fill.medium { background: linear-gradient(90deg, #ff9800, #ffc107); }
+            .confidence-fill.low { background: linear-gradient(90deg, #f44336, #ff7043); }
+            
+            .confidence-text {
+                font-size: 18px;
+                font-weight: 600;
+                min-width: 100px;
+                text-align: center;
+            }
+            
+            .confidence-text.high { color: #4caf50; }
+            .confidence-text.medium { color: #ff9800; }
+            .confidence-text.low { color: #f44336; }
+            
             .answer-section {
                 padding: 30px;
                 background: #f8f9fa;
@@ -99,8 +138,6 @@
                 color: #444;
                 border-left: 4px solid #667eea;
             }
-            
-            /* NO mark styling for answer - it stays plain */
             
             .evidence-section {
                 padding: 30px;
@@ -153,17 +190,6 @@
                 border: 1px solid #e0e0e0;
             }
             
-            .term-badge {
-                display: inline-block;
-                background: #ffeb3b;
-                color: #333;
-                padding: 3px 10px;
-                border-radius: 15px;
-                font-size: 12px;
-                margin: 0 5px 5px 0;
-                font-weight: 500;
-            }
-            
             .evidence-text {
                 background: white;
                 padding: 15px;
@@ -213,19 +239,17 @@
             }
             
             .stats {
-                display: flex;
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
                 gap: 15px;
                 padding: 20px 30px;
                 background: white;
-                flex-wrap: wrap;
             }
             
             .stat-item {
                 background: #f8f9fa;
-                padding: 10px 20px;
+                padding: 15px;
                 border-radius: 10px;
-                flex: 1;
-                min-width: 120px;
                 text-align: center;
                 border: 1px solid #e0e0e0;
             }
@@ -242,6 +266,12 @@
                 color: #667eea;
             }
             
+            .stat-factor {
+                font-size: 11px;
+                color: #999;
+                margin-top: 5px;
+            }
+            
             .footer {
                 padding: 20px 30px;
                 background: #f0f0f0;
@@ -252,6 +282,10 @@
             }
             
             @media (max-width: 768px) {
+                .stats {
+                    grid-template-columns: repeat(2, 1fr);
+                }
+                
                 .header {
                     padding: 20px;
                 }
@@ -279,8 +313,16 @@
             </div>
             
             <div class="keywords-bar">
-                <div class="keywords-title">🔑 Extracted Keywords:</div>
+                <div class="keywords-title"><i class="fas fa-key"></i> Extracted Keywords:</div>
     <span class="keyword-badge">jean</span><span class="keyword-badge">piaget</span><span class="keyword-badge">theories</span><span class="keyword-badge">cognitive</span><span class="keyword-badge">development</span>
+            </div>
+            
+            <div class="confidence-meter">
+                <i class="fas fa-bullseye"></i><span style="font-weight: 600;">Confidence:</span>
+                <div class="confidence-bar">
+                    <div class="confidence-fill high" style="width: 100.0%;"></div>
+                </div>
+                <div class="confidence-text high">HIGH (100%)</div>
             </div>
             
             <div class="answer-section">
@@ -297,7 +339,7 @@ Piaget proposed a theory of cognitive development that unfolds in four stages:
 3. Concrete operational stage (7-11 years): Children understand concrete events and analogies logically and perform arithmetical operations.
 4. Formal operational stage (12 years and up): Children utilize abstract reasoning and abstract logic.
 
-Additionally, some developmental psychologists disagree with Piaget, suggesting a fifth stage of cognitive development, known as the postformal stage, where decisions are made based on situations and circumstances, and logic is integrated with emotion as adults develop principles that depend on contexts.  <!-- NO HIGHLIGHTING HERE -->
+Additionally, some developmental psychologists disagree with Piaget, suggesting a fifth stage of cognitive development, known as the postformal stage, where decisions are made based on situations and circumstances, and logic is integrated with emotion as adults develop principles that depend on contexts.
                 </div>
             </div>
             
@@ -311,7 +353,7 @@ from infancy to adulthood</span>
                     <span class="page-number">📄 Page 28</span>
                 </div>
                 <div class="evidence-text">
-                    Stage Age (years) <mark style="background-color: #ffeb3b; font-weight: bold;">development</mark>al Task Description 5 12–18 Identity vs. confusion Experiment with and develop identity and roles 6 19–29 Intimacy vs. isolation Establish intimacy and relationships with others 7 30–64 Generativity vs. stagnation Contribute to society and be part of a family 8 65– Integ  <!-- HIGHLIGHTING HERE ONLY -->
+                    Stage Age (years) <mark style="background-color: #ffeb3b; font-weight: bold;">development</mark>al Task Description 5 12–18 Identity vs. confusion Experiment with and develop identity and roles 6 19–29 Intimacy vs. isolation Establish intimacy and relationships with others 7 30–64 Generativity vs. stagnation Contribute to society and be part of a family 8 65– Integ
                 </div>
             </div>
     
@@ -321,7 +363,7 @@ from infancy to adulthood</span>
                     <span class="page-number">📄 Page 34</span>
                 </div>
                 <div class="evidence-text">
-                    Stage Age (years) <mark style="background-color: #ffeb3b; font-weight: bold;">development</mark>al Task Description 5 12–18 Identity vs. confusion Experiment with and develop identity and roles 6 19–29 Intimacy vs. isolation Establish intimacy and relationships with others 7 30–64 Generativity vs. stagnation Contribute to society and be part of a family 8 65– Integ  <!-- HIGHLIGHTING HERE ONLY -->
+                    Stage Age (years) <mark style="background-color: #ffeb3b; font-weight: bold;">development</mark>al Task Description 5 12–18 Identity vs. confusion Experiment with and develop identity and roles 6 19–29 Intimacy vs. isolation Establish intimacy and relationships with others 7 30–64 Generativity vs. stagnation Contribute to society and be part of a family 8 65– Integ
                 </div>
             </div>
     
@@ -332,7 +374,7 @@ Gershoff</span>
                     <span class="page-number">📄 Page 292</span>
                 </div>
                 <div class="evidence-text">
-                    Stage Age (years) <mark style="background-color: #ffeb3b; font-weight: bold;">development</mark>al Task Description 5 12–18 Identity vs. confusion Experiment with and develop identity and roles 6 19–29 Intimacy vs. isolation Establish intimacy and relationships with others 7 30–64 Generativity vs. stagnation Contribute to society and be part of a family 8 65– Integ  <!-- HIGHLIGHTING HERE ONLY -->
+                    Stage Age (years) <mark style="background-color: #ffeb3b; font-weight: bold;">development</mark>al Task Description 5 12–18 Identity vs. confusion Experiment with and develop identity and roles 6 19–29 Intimacy vs. isolation Establish intimacy and relationships with others 7 30–64 Generativity vs. stagnation Contribute to society and be part of a family 8 65– Integ
                 </div>
             </div>
     
@@ -344,7 +386,7 @@ Jean Piaget</span>
                     <span class="page-number">📄 Page 299</span>
                 </div>
                 <div class="evidence-text">
-                    Stage Age (years) <mark style="background-color: #ffeb3b; font-weight: bold;">development</mark>al Task Description 5 12–18 Identity vs. confusion Experiment with and develop identity and roles 6 19–29 Intimacy vs. isolation Establish intimacy and relationships with others 7 30–64 Generativity vs. stagnation Contribute to society and be part of a family 8 65– Integ  <!-- HIGHLIGHTING HERE ONLY -->
+                    Stage Age (years) <mark style="background-color: #ffeb3b; font-weight: bold;">development</mark>al Task Description 5 12–18 Identity vs. confusion Experiment with and develop identity and roles 6 19–29 Intimacy vs. isolation Establish intimacy and relationships with others 7 30–64 Generativity vs. stagnation Contribute to society and be part of a family 8 65– Integ
                 </div>
             </div>
     
@@ -354,7 +396,7 @@ Jean Piaget</span>
                     <span class="page-number">📄 Page 300</span>
                 </div>
                 <div class="evidence-text">
-                    Stage Age (years) <mark style="background-color: #ffeb3b; font-weight: bold;">development</mark>al Task Description 5 12–18 Identity vs. confusion Experiment with and develop identity and roles 6 19–29 Intimacy vs. isolation Establish intimacy and relationships with others 7 30–64 Generativity vs. stagnation Contribute to society and be part of a family 8 65– Integ  <!-- HIGHLIGHTING HERE ONLY -->
+                    Stage Age (years) <mark style="background-color: #ffeb3b; font-weight: bold;">development</mark>al Task Description 5 12–18 Identity vs. confusion Experiment with and develop identity and roles 6 19–29 Intimacy vs. isolation Establish intimacy and relationships with others 7 30–64 Generativity vs. stagnation Contribute to society and be part of a family 8 65– Integ
                 </div>
             </div>
     
@@ -371,7 +413,7 @@ his schema for dogs. One day, Abdul sees a sheep for the first time and says, �
 
 Age (years) Physical Personal/Social Language <mark style="background-color: #ffeb3b; font-weight: bold;">cognitive</mark> 3 Climbs and runs; pedals tricycle Takes turns; expresses many emotions; dresses self Names familiar things; uses pronouns Plays make believe; works toys with parts (levers, handles) 4 Catches balls; uses scissors Prefers social play to solo play; knows likes and interests Knows songs and rhymes by memory Names colors and numbers; begins writing letters 5 Hops and swings; uses fork and spoon Distinguishes real from pretend; likes to please friends Speaks clearly; uses full sentences Counts to 10 or higher; prints some letters and copies basic shapes TABLE 9.4 <mark style="background-color: #ffeb3b; font-weight: bold;">cognitive</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">development</mark> In addition to rapid physical growth, young children also exhibit significant <mark style="background-color: #ffeb3b; font-weight: bold;">development</mark> of their <mark style="background-color: #ffeb3b; font-weight: bold;">cognitive</mark> abilities. <mark style="background-color: #ffeb3b; font-weight: bold;">piaget</mark> thought that children’s ability to understand objects—such as learning that a rattle makes a noise when shaken—was a <mark style="background-color: #ffeb3b; font-weight: bold;">cognitive</mark> skill that develops slowly as a child matures and interacts with the environment. Today, <mark style="background-color: #ffeb3b; font-weight: bold;">development</mark>al psychologists think <mark style="background-color: #ffeb3b; font-weight: bold;">piaget</mark> was incorrect. Researchers have found that even very young children understand objects and how they work long before they have experience with those objects (Baillargeon, 1987; Baillargeon, Li, Gertner, & Wu, 2011). For example, children as young as 3 months old demonstrated knowledge of the properties of objects that they had only viewed and did not have prior experience with them. In one study, 3-month-old infants were shown a truck rolling down a track and behind a screen. The box, which appeared solid but was actually hollow, was placed next to the track. The truck rolled past the box as would be expected. Then the box was placed on the track to block the path of the truck. When the truck was rolled down the track this time, it continued unimpeded. The infants spent significantly more time looking at this impossible event (Figure 9.11). Baillargeon (1987) concluded that they knew solid objects cannot pass through each other. Baillargeon’s findings suggest that very young children have an understanding of objects and how they work, which <mark style="background-color: #ffeb3b; font-weight: bold;">piaget</mark> (1954) would have said is beyond their <mark style="background-color: #ffeb3b; font-weight: bold;">cognitive</mark> abilities due to their limited experiences in the world. FIGURE 9.11 In Baillargeon’s study, infants observed a truck (a) roll down an unobstructed track, (b) roll down an unobstructed track with an obstruction (box) beside it, and (c) roll down and pass through what appeared to be an obstruction. Just as there are physical milestones that we expect children to reach, there are also <mark style="background-color: #ffeb3b; font-weight: bold;">cognitive</mark>
 
-SOCIOCULTURAL THEORY OF <mark style="background-color: #ffeb3b; font-weight: bold;">development</mark> Lev Vygotsky was a Russian psychologist who proposed a sociocultural theory of <mark style="background-color: #ffeb3b; font-weight: bold;">development</mark>. He suggested that human <mark style="background-color: #ffeb3b; font-weight: bold;">development</mark> is rooted in one’s culture. A child’s social world, for example, forms the basis for the formation of language and thought. The language one speaks and the ways a person thinks about things is dependent on one’s cultural background. Vygotsky also considered historical influences as key to one’s <mark style="background-color: #ffeb3b; font-weight: bold;">development</mark>. He was interested in the process of <mark style="background-color: #ffeb3b; font-weight: bold;">development</mark> and the individual’s interactions with their environment (John-Steiner & Mahn, 1996). Moral Theory Of <mark style="background-color: #ffeb3b; font-weight: bold;">development</mark> A major task beginning in childhood and continuing into adolescence is discerning right from wrong. Psychologist Lawrence Kohlberg (1927–1987) extended upon the foundation that <mark style="background-color: #ffeb3b; font-weight: bold;">piaget</mark> built regarding <mark style="background-color: #ffeb3b; font-weight: bold;">cognitive</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">development</mark>. Kohlberg believed that moral <mark style="background-color: #ffeb3b; font-weight: bold;">development</mark>, like <mark style="background-color: #ffeb3b; font-weight: bold;">cognitive</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">development</mark>, follows a series of stages. To develop this theory, Kohlberg posed moral dilemmas to people of all ages, and then he analyzed their answers to find evidence of their particular stage of moral <mark style="background-color: #ffeb3b; font-weight: bold;">development</mark>. Before reading about the stages, take a minute to consider how you would answer one of Kohlberg's best-known moral dilemmas, commonly known as the Heinz dilemma: In Europe, a woman was near death from a special kind of cancer. There was one drug that the doctors thought might save her. It was a form of radium that a druggist in the same town had recently discovered. The drug was expensive to make, but the druggist was charging ten times what the drug cost him to make. He paid $200 for the radium and charged $2,000 for a small dose of the drug. The sick woman's husband, Heinz, went to everyone he knew to borrow the money, but he could only get together about $1,000, which is half of what it cost. He told the druggist that his wife was dying and asked him to sell it cheaper or let him pay later. But the druggist said: “No, I discovered the drug and I'm going to make money from it.” So Heinz got desperate a  <!-- HIGHLIGHTING HERE ONLY -->
+SOCIOCULTURAL THEORY OF <mark style="background-color: #ffeb3b; font-weight: bold;">development</mark> Lev Vygotsky was a Russian psychologist who proposed a sociocultural theory of <mark style="background-color: #ffeb3b; font-weight: bold;">development</mark>. He suggested that human <mark style="background-color: #ffeb3b; font-weight: bold;">development</mark> is rooted in one’s culture. A child’s social world, for example, forms the basis for the formation of language and thought. The language one speaks and the ways a person thinks about things is dependent on one’s cultural background. Vygotsky also considered historical influences as key to one’s <mark style="background-color: #ffeb3b; font-weight: bold;">development</mark>. He was interested in the process of <mark style="background-color: #ffeb3b; font-weight: bold;">development</mark> and the individual’s interactions with their environment (John-Steiner & Mahn, 1996). Moral Theory Of <mark style="background-color: #ffeb3b; font-weight: bold;">development</mark> A major task beginning in childhood and continuing into adolescence is discerning right from wrong. Psychologist Lawrence Kohlberg (1927–1987) extended upon the foundation that <mark style="background-color: #ffeb3b; font-weight: bold;">piaget</mark> built regarding <mark style="background-color: #ffeb3b; font-weight: bold;">cognitive</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">development</mark>. Kohlberg believed that moral <mark style="background-color: #ffeb3b; font-weight: bold;">development</mark>, like <mark style="background-color: #ffeb3b; font-weight: bold;">cognitive</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">development</mark>, follows a series of stages. To develop this theory, Kohlberg posed moral dilemmas to people of all ages, and then he analyzed their answers to find evidence of their particular stage of moral <mark style="background-color: #ffeb3b; font-weight: bold;">development</mark>. Before reading about the stages, take a minute to consider how you would answer one of Kohlberg's best-known moral dilemmas, commonly known as the Heinz dilemma: In Europe, a woman was near death from a special kind of cancer. There was one drug that the doctors thought might save her. It was a form of radium that a druggist in the same town had recently discovered. The drug was expensive to make, but the druggist was charging ten times what the drug cost him to make. He paid $200 for the radium and charged $2,000 for a small dose of the drug. The sick woman's husband, Heinz, went to everyone he knew to borrow the money, but he could only get together about $1,000, which is half of what it cost. He told the druggist that his wife was dying and asked him to sell it cheaper or let him pay later. But the druggist said: “No, I discovered the drug and I'm going to make money from it.” So Heinz got desperate a
                 </div>
             </div>
             
@@ -379,14 +421,22 @@ SOCIOCULTURAL THEORY OF <mark style="background-color: #ffeb3b; font-weight: bol
                 <div class="stat-item">
                     <div class="stat-label">Sections Used</div>
                     <div class="stat-value">9</div>
+                    <div class="stat-factor">Factor: 1.00</div>
                 </div>
                 <div class="stat-item">
                     <div class="stat-label">Pages Referenced</div>
                     <div class="stat-value">12</div>
+                    <div class="stat-factor">Factor: 1.00</div>
                 </div>
                 <div class="stat-item">
-                    <div class="stat-label">Keywords Found</div>
-                    <div class="stat-value">5</div>
+                    <div class="stat-label">Answer Length</div>
+                    <div class="stat-value">1541</div>
+                    <div class="stat-factor">Factor: 1.00</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Overall</div>
+                    <div class="stat-value">100%</div>
+                    <div class="stat-factor">HIGH</div>
                 </div>
             </div>
             

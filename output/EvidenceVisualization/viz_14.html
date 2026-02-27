@@ -73,6 +73,45 @@
                 box-shadow: 0 2px 4px rgba(0,0,0,0.1);
             }
             
+            .confidence-meter {
+                background: #f0f0f0;
+                padding: 15px 30px;
+                border-bottom: 1px solid #e0e0e0;
+                display: flex;
+                align-items: center;
+                gap: 20px;
+                flex-wrap: wrap;
+            }
+            
+            .confidence-bar {
+                flex: 1;
+                height: 20px;
+                background: #e0e0e0;
+                border-radius: 10px;
+                overflow: hidden;
+            }
+            
+            .confidence-fill {
+                height: 100%;
+                border-radius: 10px;
+                transition: width 0.3s ease;
+            }
+            
+            .confidence-fill.high { background: linear-gradient(90deg, #4caf50, #8bc34a); }
+            .confidence-fill.medium { background: linear-gradient(90deg, #ff9800, #ffc107); }
+            .confidence-fill.low { background: linear-gradient(90deg, #f44336, #ff7043); }
+            
+            .confidence-text {
+                font-size: 18px;
+                font-weight: 600;
+                min-width: 100px;
+                text-align: center;
+            }
+            
+            .confidence-text.high { color: #4caf50; }
+            .confidence-text.medium { color: #ff9800; }
+            .confidence-text.low { color: #f44336; }
+            
             .answer-section {
                 padding: 30px;
                 background: #f8f9fa;
@@ -99,8 +138,6 @@
                 color: #444;
                 border-left: 4px solid #667eea;
             }
-            
-            /* NO mark styling for answer - it stays plain */
             
             .evidence-section {
                 padding: 30px;
@@ -153,17 +190,6 @@
                 border: 1px solid #e0e0e0;
             }
             
-            .term-badge {
-                display: inline-block;
-                background: #ffeb3b;
-                color: #333;
-                padding: 3px 10px;
-                border-radius: 15px;
-                font-size: 12px;
-                margin: 0 5px 5px 0;
-                font-weight: 500;
-            }
-            
             .evidence-text {
                 background: white;
                 padding: 15px;
@@ -213,19 +239,17 @@
             }
             
             .stats {
-                display: flex;
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
                 gap: 15px;
                 padding: 20px 30px;
                 background: white;
-                flex-wrap: wrap;
             }
             
             .stat-item {
                 background: #f8f9fa;
-                padding: 10px 20px;
+                padding: 15px;
                 border-radius: 10px;
-                flex: 1;
-                min-width: 120px;
                 text-align: center;
                 border: 1px solid #e0e0e0;
             }
@@ -242,6 +266,12 @@
                 color: #667eea;
             }
             
+            .stat-factor {
+                font-size: 11px;
+                color: #999;
+                margin-top: 5px;
+            }
+            
             .footer {
                 padding: 20px 30px;
                 background: #f0f0f0;
@@ -252,6 +282,10 @@
             }
             
             @media (max-width: 768px) {
+                .stats {
+                    grid-template-columns: repeat(2, 1fr);
+                }
+                
                 .header {
                     padding: 20px;
                 }
@@ -279,8 +313,16 @@
             </div>
             
             <div class="keywords-bar">
-                <div class="keywords-title">🔑 Extracted Keywords:</div>
+                <div class="keywords-title"><i class="fas fa-key"></i> Extracted Keywords:</div>
     <span class="keyword-badge">freud</span><span class="keyword-badge">contributions</span><span class="keyword-badge">psychology</span>
+            </div>
+            
+            <div class="confidence-meter">
+                <i class="fas fa-bullseye"></i><span style="font-weight: 600;">Confidence:</span>
+                <div class="confidence-bar">
+                    <div class="confidence-fill high" style="width: 100.0%;"></div>
+                </div>
+                <div class="confidence-text high">HIGH (100%)</div>
             </div>
             
             <div class="answer-section">
@@ -296,7 +338,7 @@
 6. Recognizing the impact of mental representations of ourselves and others in guiding our interactions.
 7. Developing the concept of personality development over time.
 
-Additionally, Freud's work paved the way for others, and his ideas have had a significant influence on the development of psychology, particularly in the areas of personality, psychotherapy, and lifespan development.  <!-- NO HIGHLIGHTING HERE -->
+Additionally, Freud's work paved the way for others, and his ideas have had a significant influence on the development of psychology, particularly in the areas of personality, psychotherapy, and lifespan development.
                 </div>
             </div>
             
@@ -310,7 +352,7 @@ Psychology is a diverse discipline that is made up of several major subdivisions
                     <span class="page-number">📄 Page 23</span>
                 </div>
                 <div class="evidence-text">
-                    <mark style="background-color: #ffeb3b; font-weight: bold;">freud</mark> also proposed three components to our personality: the id, ego, and superego. The job of the ego is to balance the sexual and aggressive drives of the id with the moral ideal of the superego. <mark style="background-color: #ffeb3b; font-weight: bold;">freud</mark> also said that personality develops through a series of psychosexual stages. In each stage, plea  <!-- HIGHLIGHTING HERE ONLY -->
+                    <mark style="background-color: #ffeb3b; font-weight: bold;">freud</mark> also proposed three components to our personality: the id, ego, and superego. The job of the ego is to balance the sexual and aggressive drives of the id with the moral ideal of the superego. <mark style="background-color: #ffeb3b; font-weight: bold;">freud</mark> also said that personality develops through a series of psychosexual stages. In each stage, plea
                 </div>
             </div>
     
@@ -320,7 +362,7 @@ Psychology is a diverse discipline that is made up of several major subdivisions
                     <span class="page-number">📄 Page 24</span>
                 </div>
                 <div class="evidence-text">
-                    <mark style="background-color: #ffeb3b; font-weight: bold;">freud</mark> also proposed three components to our personality: the id, ego, and superego. The job of the ego is to balance the sexual and aggressive drives of the id with the moral ideal of the superego. <mark style="background-color: #ffeb3b; font-weight: bold;">freud</mark> also said that personality develops through a series of psychosexual stages. In each stage, plea  <!-- HIGHLIGHTING HERE ONLY -->
+                    <mark style="background-color: #ffeb3b; font-weight: bold;">freud</mark> also proposed three components to our personality: the id, ego, and superego. The job of the ego is to balance the sexual and aggressive drives of the id with the moral ideal of the superego. <mark style="background-color: #ffeb3b; font-weight: bold;">freud</mark> also said that personality develops through a series of psychosexual stages. In each stage, plea
                 </div>
             </div>
     
@@ -330,7 +372,7 @@ Psychology is a diverse discipline that is made up of several major subdivisions
                     <span class="page-number">📄 Page 43</span>
                 </div>
                 <div class="evidence-text">
-                    <mark style="background-color: #ffeb3b; font-weight: bold;">freud</mark> also proposed three components to our personality: the id, ego, and superego. The job of the ego is to balance the sexual and aggressive drives of the id with the moral ideal of the superego. <mark style="background-color: #ffeb3b; font-weight: bold;">freud</mark> also said that personality develops through a series of psychosexual stages. In each stage, plea  <!-- HIGHLIGHTING HERE ONLY -->
+                    <mark style="background-color: #ffeb3b; font-weight: bold;">freud</mark> also proposed three components to our personality: the id, ego, and superego. The job of the ego is to balance the sexual and aggressive drives of the id with the moral ideal of the superego. <mark style="background-color: #ffeb3b; font-weight: bold;">freud</mark> also said that personality develops through a series of psychosexual stages. In each stage, plea
                 </div>
             </div>
     
@@ -340,7 +382,7 @@ Psychology is a diverse discipline that is made up of several major subdivisions
                     <span class="page-number">📄 Page 53</span>
                 </div>
                 <div class="evidence-text">
-                    <mark style="background-color: #ffeb3b; font-weight: bold;">freud</mark> also proposed three components to our personality: the id, ego, and superego. The job of the ego is to balance the sexual and aggressive drives of the id with the moral ideal of the superego. <mark style="background-color: #ffeb3b; font-weight: bold;">freud</mark> also said that personality develops through a series of psychosexual stages. In each stage, plea  <!-- HIGHLIGHTING HERE ONLY -->
+                    <mark style="background-color: #ffeb3b; font-weight: bold;">freud</mark> also proposed three components to our personality: the id, ego, and superego. The job of the ego is to balance the sexual and aggressive drives of the id with the moral ideal of the superego. <mark style="background-color: #ffeb3b; font-weight: bold;">freud</mark> also said that personality develops through a series of psychosexual stages. In each stage, plea
                 </div>
             </div>
     
@@ -350,7 +392,7 @@ Psychology is a diverse discipline that is made up of several major subdivisions
                     <span class="page-number">📄 Page 296</span>
                 </div>
                 <div class="evidence-text">
-                    <mark style="background-color: #ffeb3b; font-weight: bold;">freud</mark> also proposed three components to our personality: the id, ego, and superego. The job of the ego is to balance the sexual and aggressive drives of the id with the moral ideal of the superego. <mark style="background-color: #ffeb3b; font-weight: bold;">freud</mark> also said that personality develops through a series of psychosexual stages. In each stage, plea  <!-- HIGHLIGHTING HERE ONLY -->
+                    <mark style="background-color: #ffeb3b; font-weight: bold;">freud</mark> also proposed three components to our personality: the id, ego, and superego. The job of the ego is to balance the sexual and aggressive drives of the id with the moral ideal of the superego. <mark style="background-color: #ffeb3b; font-weight: bold;">freud</mark> also said that personality develops through a series of psychosexual stages. In each stage, plea
                 </div>
             </div>
     
@@ -369,7 +411,7 @@ Genital Stage The final stage is the genital stage (from puberty on). In this st
 
 FIGURE 1.3 William James, shown here in a self-portrait, was the first American psychologist. <mark style="background-color: #ffeb3b; font-weight: bold;">freud</mark> and Psychoanalytic Theory Perhaps one of the most influential and well-known figures in <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark>’s history was Sigmund <mark style="background-color: #ffeb3b; font-weight: bold;">freud</mark> (Figure 1.4). <mark style="background-color: #ffeb3b; font-weight: bold;">freud</mark> (1856–1939) was an Austrian neurologist who was fascinated by patients suffering from “hysteria” and neurosis. Hysteria was an ancient diagnosis for disorders, primarily of women with a wide variety of symptoms, including physical symptoms and emotional disturbances, none of which had an apparent physical cause. <mark style="background-color: #ffeb3b; font-weight: bold;">freud</mark> theorized that many of his patients’ problems arose from the unconscious mind. In <mark style="background-color: #ffeb3b; font-weight: bold;">freud</mark>’s view, the unconscious mind was a repository of feelings and urges of which we have no awareness. Gaining access to the unconscious, then, was crucial to the successful resolution of the patient’s problems. According to <mark style="background-color: #ffeb3b; font-weight: bold;">freud</mark>, the unconscious mind could be accessed through dream analysis, by examinations of the first words that came to people’s minds, and through seemingly innocent slips of the tongue. Psychoanalytic theory focuses on the role of a person’s unconscious, as well as early childhood experiences, and this particular perspective dominated clinical <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> for several decades (Thorne & Henley, 2005). FIGURE 1.4 (a) Sigmund <mark style="background-color: #ffeb3b; font-weight: bold;">freud</mark> was a highly influential figure in the history of <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark>. (b) One of his many books, A General Introduction to Psychoanalysis, shared his ideas about psychoanalytical therapy; it was published in 1922. <mark style="background-color: #ffeb3b; font-weight: bold;">freud</mark>’s ideas were influential, and you will learn more about them when you study lifespan development, personality, and therapy. For instance, many therapists believe strongly in the unconscious and the impact of 1.2 • History of <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> 11
 
-feeling of fear. A hypothesis that could be derived from this theory might be that a person who is unaware of the physiological arousal that the sight of the snake elicits will not feel fear. A scientific hypothesis is also falsifiable, or capable of being shown to be incorrect. Recall from the introductory chapter that Sigmund <mark style="background-color: #ffeb3b; font-weight: bold;">freud</mark> had lots of interesting ideas to explain various human behaviors (Figure 2.6). However, a major criticism of <mark style="background-color: #ffeb3b; font-weight: bold;">freud</mark>’s theories is that many of his ideas are not falsifiable; for example, it is impossible to imagine empirical observations that would disprove the existence of the id, the ego, and the superego—the three elements of personality described in <mark style="background-color: #ffeb3b; font-weight: bold;">freud</mark>’s theories. Despite this, <mark style="background-color: #ffeb3b; font-weight: bold;">freud</mark>’s theories are widely taught in introductory <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> texts because of their historical significance for personality <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> and psychotherapy, and these remain the root of all modern forms of therapy. FIGURE 2.6 Many of the specifics of (a) <mark style="background-color: #ffeb3b; font-weight: bold;">freud</mark>'s theories, such as (b) his division of the mind into id, ego, and superego, have fallen out of favor in recent decades because they are not falsifiable. In broader strokes, his views set the stage for much of psychological thinking today, such as the unconscious nature of the majority of psychological processes. In contrast, the James-Lange theory does generate falsifiable hypotheses, such as t  <!-- HIGHLIGHTING HERE ONLY -->
+feeling of fear. A hypothesis that could be derived from this theory might be that a person who is unaware of the physiological arousal that the sight of the snake elicits will not feel fear. A scientific hypothesis is also falsifiable, or capable of being shown to be incorrect. Recall from the introductory chapter that Sigmund <mark style="background-color: #ffeb3b; font-weight: bold;">freud</mark> had lots of interesting ideas to explain various human behaviors (Figure 2.6). However, a major criticism of <mark style="background-color: #ffeb3b; font-weight: bold;">freud</mark>’s theories is that many of his ideas are not falsifiable; for example, it is impossible to imagine empirical observations that would disprove the existence of the id, the ego, and the superego—the three elements of personality described in <mark style="background-color: #ffeb3b; font-weight: bold;">freud</mark>’s theories. Despite this, <mark style="background-color: #ffeb3b; font-weight: bold;">freud</mark>’s theories are widely taught in introductory <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> texts because of their historical significance for personality <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> and psychotherapy, and these remain the root of all modern forms of therapy. FIGURE 2.6 Many of the specifics of (a) <mark style="background-color: #ffeb3b; font-weight: bold;">freud</mark>'s theories, such as (b) his division of the mind into id, ego, and superego, have fallen out of favor in recent decades because they are not falsifiable. In broader strokes, his views set the stage for much of psychological thinking today, such as the unconscious nature of the majority of psychological processes. In contrast, the James-Lange theory does generate falsifiable hypotheses, such as t
                 </div>
             </div>
             
@@ -377,14 +419,22 @@ feeling of fear. A hypothesis that could be derived from this theory might be th
                 <div class="stat-item">
                     <div class="stat-label">Sections Used</div>
                     <div class="stat-value">10</div>
+                    <div class="stat-factor">Factor: 1.00</div>
                 </div>
                 <div class="stat-item">
                     <div class="stat-label">Pages Referenced</div>
                     <div class="stat-value">11</div>
+                    <div class="stat-factor">Factor: 1.00</div>
                 </div>
                 <div class="stat-item">
-                    <div class="stat-label">Keywords Found</div>
-                    <div class="stat-value">3</div>
+                    <div class="stat-label">Answer Length</div>
+                    <div class="stat-value">989</div>
+                    <div class="stat-factor">Factor: 1.00</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Overall</div>
+                    <div class="stat-value">100%</div>
+                    <div class="stat-factor">HIGH</div>
                 </div>
             </div>
             

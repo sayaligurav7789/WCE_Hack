@@ -73,6 +73,45 @@
                 box-shadow: 0 2px 4px rgba(0,0,0,0.1);
             }
             
+            .confidence-meter {
+                background: #f0f0f0;
+                padding: 15px 30px;
+                border-bottom: 1px solid #e0e0e0;
+                display: flex;
+                align-items: center;
+                gap: 20px;
+                flex-wrap: wrap;
+            }
+            
+            .confidence-bar {
+                flex: 1;
+                height: 20px;
+                background: #e0e0e0;
+                border-radius: 10px;
+                overflow: hidden;
+            }
+            
+            .confidence-fill {
+                height: 100%;
+                border-radius: 10px;
+                transition: width 0.3s ease;
+            }
+            
+            .confidence-fill.high { background: linear-gradient(90deg, #4caf50, #8bc34a); }
+            .confidence-fill.medium { background: linear-gradient(90deg, #ff9800, #ffc107); }
+            .confidence-fill.low { background: linear-gradient(90deg, #f44336, #ff7043); }
+            
+            .confidence-text {
+                font-size: 18px;
+                font-weight: 600;
+                min-width: 100px;
+                text-align: center;
+            }
+            
+            .confidence-text.high { color: #4caf50; }
+            .confidence-text.medium { color: #ff9800; }
+            .confidence-text.low { color: #f44336; }
+            
             .answer-section {
                 padding: 30px;
                 background: #f8f9fa;
@@ -99,8 +138,6 @@
                 color: #444;
                 border-left: 4px solid #667eea;
             }
-            
-            /* NO mark styling for answer - it stays plain */
             
             .evidence-section {
                 padding: 30px;
@@ -153,17 +190,6 @@
                 border: 1px solid #e0e0e0;
             }
             
-            .term-badge {
-                display: inline-block;
-                background: #ffeb3b;
-                color: #333;
-                padding: 3px 10px;
-                border-radius: 15px;
-                font-size: 12px;
-                margin: 0 5px 5px 0;
-                font-weight: 500;
-            }
-            
             .evidence-text {
                 background: white;
                 padding: 15px;
@@ -213,19 +239,17 @@
             }
             
             .stats {
-                display: flex;
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
                 gap: 15px;
                 padding: 20px 30px;
                 background: white;
-                flex-wrap: wrap;
             }
             
             .stat-item {
                 background: #f8f9fa;
-                padding: 10px 20px;
+                padding: 15px;
                 border-radius: 10px;
-                flex: 1;
-                min-width: 120px;
                 text-align: center;
                 border: 1px solid #e0e0e0;
             }
@@ -242,6 +266,12 @@
                 color: #667eea;
             }
             
+            .stat-factor {
+                font-size: 11px;
+                color: #999;
+                margin-top: 5px;
+            }
+            
             .footer {
                 padding: 20px 30px;
                 background: #f0f0f0;
@@ -252,6 +282,10 @@
             }
             
             @media (max-width: 768px) {
+                .stats {
+                    grid-template-columns: repeat(2, 1fr);
+                }
+                
                 .header {
                     padding: 20px;
                 }
@@ -279,8 +313,16 @@
             </div>
             
             <div class="keywords-bar">
-                <div class="keywords-title">🔑 Extracted Keywords:</div>
+                <div class="keywords-title"><i class="fas fa-key"></i> Extracted Keywords:</div>
     <span class="keyword-badge">different</span><span class="keyword-badge">types</span><span class="keyword-badge">psychological</span><span class="keyword-badge">therapies</span>
+            </div>
+            
+            <div class="confidence-meter">
+                <i class="fas fa-bullseye"></i><span style="font-weight: 600;">Confidence:</span>
+                <div class="confidence-bar">
+                    <div class="confidence-fill high" style="width: 100.0%;"></div>
+                </div>
+                <div class="confidence-text high">HIGH (100%)</div>
             </div>
             
             <div class="answer-section">
@@ -300,7 +342,7 @@
 
 6. Humanistic therapy: Increases self-awareness and acceptance through a focus on conscious thoughts, helping patients articulate thoughts that keep them from achieving their goals.
 
-These are some of the different types of psychological therapies mentioned in the textbook context.  <!-- NO HIGHLIGHTING HERE -->
+These are some of the different types of psychological therapies mentioned in the textbook context.
                 </div>
             </div>
             
@@ -314,7 +356,7 @@ Thompson</span>
                     <span class="page-number">📄 Page 611</span>
                 </div>
                 <div class="evidence-text">
-                    (Wampold, 2007). Regardless of which type of psychotherapy an individual chooses, one critical factor that determines the success of treatment is the person’s relationship with the psychologist or therapist. Biomedical <mark style="background-color: #ffeb3b; font-weight: bold;">therapies</mark> Individuals can be prescribed biologically based treatments or psychotr  <!-- HIGHLIGHTING HERE ONLY -->
+                    (Wampold, 2007). Regardless of which type of psychotherapy an individual chooses, one critical factor that determines the success of treatment is the person’s relationship with the psychologist or therapist. Biomedical <mark style="background-color: #ffeb3b; font-weight: bold;">therapies</mark> Individuals can be prescribed biologically based treatments or psychotr
                 </div>
             </div>
     
@@ -326,7 +368,7 @@ Psychoanalysis was developed by Sigmund Freud and was the first form of psychoth
                     <span class="page-number">📄 Page 613</span>
                 </div>
                 <div class="evidence-text">
-                    (Wampold, 2007). Regardless of which type of psychotherapy an individual chooses, one critical factor that determines the success of treatment is the person’s relationship with the psychologist or therapist. Biomedical <mark style="background-color: #ffeb3b; font-weight: bold;">therapies</mark> Individuals can be prescribed biologically based treatments or psychotr  <!-- HIGHLIGHTING HERE ONLY -->
+                    (Wampold, 2007). Regardless of which type of psychotherapy an individual chooses, one critical factor that determines the success of treatment is the person’s relationship with the psychologist or therapist. Biomedical <mark style="background-color: #ffeb3b; font-weight: bold;">therapies</mark> Individuals can be prescribed biologically based treatments or psychotr
                 </div>
             </div>
     
@@ -336,7 +378,7 @@ Psychoanalysis was developed by Sigmund Freud and was the first form of psychoth
                     <span class="page-number">📄 Page 617</span>
                 </div>
                 <div class="evidence-text">
-                    (Wampold, 2007). Regardless of which type of psychotherapy an individual chooses, one critical factor that determines the success of treatment is the person’s relationship with the psychologist or therapist. Biomedical <mark style="background-color: #ffeb3b; font-weight: bold;">therapies</mark> Individuals can be prescribed biologically based treatments or psychotr  <!-- HIGHLIGHTING HERE ONLY -->
+                    (Wampold, 2007). Regardless of which type of psychotherapy an individual chooses, one critical factor that determines the success of treatment is the person’s relationship with the psychologist or therapist. Biomedical <mark style="background-color: #ffeb3b; font-weight: bold;">therapies</mark> Individuals can be prescribed biologically based treatments or psychotr
                 </div>
             </div>
     
@@ -347,7 +389,7 @@ It was once believed that people with psychological disorders</span>
                     <span class="page-number">📄 Page 619</span>
                 </div>
                 <div class="evidence-text">
-                    (Wampold, 2007). Regardless of which type of psychotherapy an individual chooses, one critical factor that determines the success of treatment is the person’s relationship with the psychologist or therapist. Biomedical <mark style="background-color: #ffeb3b; font-weight: bold;">therapies</mark> Individuals can be prescribed biologically based treatments or psychotr  <!-- HIGHLIGHTING HERE ONLY -->
+                    (Wampold, 2007). Regardless of which type of psychotherapy an individual chooses, one critical factor that determines the success of treatment is the person’s relationship with the psychologist or therapist. Biomedical <mark style="background-color: #ffeb3b; font-weight: bold;">therapies</mark> Individuals can be prescribed biologically based treatments or psychotr
                 </div>
             </div>
     
@@ -358,7 +400,7 @@ itself</span>
                     <span class="page-number">📄 Page 624</span>
                 </div>
                 <div class="evidence-text">
-                    (Wampold, 2007). Regardless of which type of psychotherapy an individual chooses, one critical factor that determines the success of treatment is the person’s relationship with the psychologist or therapist. Biomedical <mark style="background-color: #ffeb3b; font-weight: bold;">therapies</mark> Individuals can be prescribed biologically based treatments or psychotr  <!-- HIGHLIGHTING HERE ONLY -->
+                    (Wampold, 2007). Regardless of which type of psychotherapy an individual chooses, one critical factor that determines the success of treatment is the person’s relationship with the psychologist or therapist. Biomedical <mark style="background-color: #ffeb3b; font-weight: bold;">therapies</mark> Individuals can be prescribed biologically based treatments or psychotr
                 </div>
             </div>
     
@@ -379,7 +421,7 @@ of those with symptoms receive no care at all (U.S. Department of Health and Hum
 
 another? For anyone considering therapy, these are important questions. According to the American <mark style="background-color: #ffeb3b; font-weight: bold;">psychological</mark> Association, three factors work together to produce successful treatment. The first is the use of evidence-based treatment that is deemed appropriate for your particular issue. The second important factor is the clinical expertise of the psychologist or therapist. The third factor is your own characteristics, values, preferences, and culture. Many people begin psychotherapy feeling like their problem will never be resolved; however, psychotherapy helps people see that they can do things to make their situation better. Psychotherapy can help reduce a person’s anxiety, depression, and maladaptive behaviors. Through psychotherapy, individuals can learn to engage in healthy behaviors designed to help them better express emotions, improve relationships, think more positively, and perform more effectively at work or school. Many studies have explored the effectiveness of psychotherapy. For example, one large-scale study that examined 16 meta-analyses of CBT reported that it was equally effective or more effective than other <mark style="background-color: #ffeb3b; font-weight: bold;">therapies</mark> in treating PTSD, generalized anxiety disorder, depression, and social phobia (Butlera, Chapmanb, Formanc, & Becka, 2006). Another study found that CBT was as effective at treating depression (43% success rate) as prescription medication (50% success rate) compared to the placebo rate of 25% (DeRubeis et al., 2005). Another meta-analysis found that psychodynamic therapy was also as effective at treating these <mark style="background-color: #ffeb3b; font-weight: bold;">types</mark> of <mark style="background-color: #ffeb3b; font-weight: bold;">psychological</mark> issues as CBT (Shedler, 2010). However, no studies have found one psychotherapeutic approach more effective than another (Abbass, Kisely, & Kroenke, 2006; Chorpita et al., 2011), nor have they shown any relationship between a client’s treatment outcome and the level of the clinician’s training or experience 614 16 • Therapy and Treatment Access for free at openstax.org
 
-which a client learns a new response to a stimulus that has previously elicited an undesirable behavior via classical conditioning. Principles of operant conditioning can be applied to help people deal with a wide range of <mark style="background-color: #ffeb3b; font-weight: bold;">psychological</mark> problems. Token economy is an example of a popular operant conditioning technique. Cognitive therapy is a technique that focuses on how thoughts lead to feelings of distress. The idea behind cognitive therapy is that how you think determines how you feel and act. Cognitive therapists help clients change dysfunctional thoughts in order to relieve distress. Cognitive-behavioral therapy explores how our thoughts affect our behavior. Cognitive-behavioral therapy aims to change cognitive distortions and self- defeating behaviors. Huma  <!-- HIGHLIGHTING HERE ONLY -->
+which a client learns a new response to a stimulus that has previously elicited an undesirable behavior via classical conditioning. Principles of operant conditioning can be applied to help people deal with a wide range of <mark style="background-color: #ffeb3b; font-weight: bold;">psychological</mark> problems. Token economy is an example of a popular operant conditioning technique. Cognitive therapy is a technique that focuses on how thoughts lead to feelings of distress. The idea behind cognitive therapy is that how you think determines how you feel and act. Cognitive therapists help clients change dysfunctional thoughts in order to relieve distress. Cognitive-behavioral therapy explores how our thoughts affect our behavior. Cognitive-behavioral therapy aims to change cognitive distortions and self- defeating behaviors. Huma
                 </div>
             </div>
             
@@ -387,14 +429,22 @@ which a client learns a new response to a stimulus that has previously elicited 
                 <div class="stat-item">
                     <div class="stat-label">Sections Used</div>
                     <div class="stat-value">8</div>
+                    <div class="stat-factor">Factor: 1.00</div>
                 </div>
                 <div class="stat-item">
                     <div class="stat-label">Pages Referenced</div>
                     <div class="stat-value">11</div>
+                    <div class="stat-factor">Factor: 1.00</div>
                 </div>
                 <div class="stat-item">
-                    <div class="stat-label">Keywords Found</div>
-                    <div class="stat-value">4</div>
+                    <div class="stat-label">Answer Length</div>
+                    <div class="stat-value">1256</div>
+                    <div class="stat-factor">Factor: 1.00</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Overall</div>
+                    <div class="stat-value">100%</div>
+                    <div class="stat-factor">HIGH</div>
                 </div>
             </div>
             

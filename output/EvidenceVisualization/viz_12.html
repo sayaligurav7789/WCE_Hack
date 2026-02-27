@@ -73,6 +73,45 @@
                 box-shadow: 0 2px 4px rgba(0,0,0,0.1);
             }
             
+            .confidence-meter {
+                background: #f0f0f0;
+                padding: 15px 30px;
+                border-bottom: 1px solid #e0e0e0;
+                display: flex;
+                align-items: center;
+                gap: 20px;
+                flex-wrap: wrap;
+            }
+            
+            .confidence-bar {
+                flex: 1;
+                height: 20px;
+                background: #e0e0e0;
+                border-radius: 10px;
+                overflow: hidden;
+            }
+            
+            .confidence-fill {
+                height: 100%;
+                border-radius: 10px;
+                transition: width 0.3s ease;
+            }
+            
+            .confidence-fill.high { background: linear-gradient(90deg, #4caf50, #8bc34a); }
+            .confidence-fill.medium { background: linear-gradient(90deg, #ff9800, #ffc107); }
+            .confidence-fill.low { background: linear-gradient(90deg, #f44336, #ff7043); }
+            
+            .confidence-text {
+                font-size: 18px;
+                font-weight: 600;
+                min-width: 100px;
+                text-align: center;
+            }
+            
+            .confidence-text.high { color: #4caf50; }
+            .confidence-text.medium { color: #ff9800; }
+            .confidence-text.low { color: #f44336; }
+            
             .answer-section {
                 padding: 30px;
                 background: #f8f9fa;
@@ -99,8 +138,6 @@
                 color: #444;
                 border-left: 4px solid #667eea;
             }
-            
-            /* NO mark styling for answer - it stays plain */
             
             .evidence-section {
                 padding: 30px;
@@ -153,17 +190,6 @@
                 border: 1px solid #e0e0e0;
             }
             
-            .term-badge {
-                display: inline-block;
-                background: #ffeb3b;
-                color: #333;
-                padding: 3px 10px;
-                border-radius: 15px;
-                font-size: 12px;
-                margin: 0 5px 5px 0;
-                font-weight: 500;
-            }
-            
             .evidence-text {
                 background: white;
                 padding: 15px;
@@ -213,19 +239,17 @@
             }
             
             .stats {
-                display: flex;
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
                 gap: 15px;
                 padding: 20px 30px;
                 background: white;
-                flex-wrap: wrap;
             }
             
             .stat-item {
                 background: #f8f9fa;
-                padding: 10px 20px;
+                padding: 15px;
                 border-radius: 10px;
-                flex: 1;
-                min-width: 120px;
                 text-align: center;
                 border: 1px solid #e0e0e0;
             }
@@ -242,6 +266,12 @@
                 color: #667eea;
             }
             
+            .stat-factor {
+                font-size: 11px;
+                color: #999;
+                margin-top: 5px;
+            }
+            
             .footer {
                 padding: 20px 30px;
                 background: #f0f0f0;
@@ -252,6 +282,10 @@
             }
             
             @media (max-width: 768px) {
+                .stats {
+                    grid-template-columns: repeat(2, 1fr);
+                }
+                
                 .header {
                     padding: 20px;
                 }
@@ -279,8 +313,16 @@
             </div>
             
             <div class="keywords-bar">
-                <div class="keywords-title">🔑 Extracted Keywords:</div>
+                <div class="keywords-title"><i class="fas fa-key"></i> Extracted Keywords:</div>
     <span class="keyword-badge">were</span><span class="keyword-badge">wilhelm</span><span class="keyword-badge">wundt</span><span class="keyword-badge">william</span><span class="keyword-badge">james</span>
+            </div>
+            
+            <div class="confidence-meter">
+                <i class="fas fa-bullseye"></i><span style="font-weight: 600;">Confidence:</span>
+                <div class="confidence-bar">
+                    <div class="confidence-fill high" style="width: 100.0%;"></div>
+                </div>
+                <div class="confidence-text high">HIGH (100%)</div>
             </div>
             
             <div class="answer-section">
@@ -288,7 +330,7 @@
                 <div class="answer-content">
                     Wilhelm Wundt was a German scientist who is considered the first person to be referred to as a psychologist. He viewed psychology as a scientific study of conscious experience and believed that the goal of psychology was to identify components of consciousness and how those components combined to result in our conscious experience. He used introspection, a process by which someone examines their own conscious experience as objectively as possible, and considered his version experimental introspection.
 
-William James, on the other hand, was an American psychologist who was a proponent of functionalism. This perspective focused on how mental activities served as adaptive responses to an organism's environment. Like Wundt, James also relied on introspection, but his research approach also incorporated more objective measures as well. James is often referred to as the father of psychology in the United States and made significant contributions to early research into motivation, proposing that behavior was driven by a number of instincts that aid survival.  <!-- NO HIGHLIGHTING HERE -->
+William James, on the other hand, was an American psychologist who was a proponent of functionalism. This perspective focused on how mental activities served as adaptive responses to an organism's environment. Like Wundt, James also relied on introspection, but his research approach also incorporated more objective measures as well. James is often referred to as the father of psychology in the United States and made significant contributions to early research into motivation, proposing that behavior was driven by a number of instincts that aid survival.
                 </div>
             </div>
             
@@ -303,7 +345,7 @@ By the end of this section</span>
                     <span class="page-number">📄 Page 21</span>
                 </div>
                 <div class="evidence-text">
-                    <mark style="background-color: #ffeb3b; font-weight: bold;">james</mark> through today. <mark style="background-color: #ffeb3b; font-weight: bold;">wundt</mark> and Structuralism <mark style="background-color: #ffeb3b; font-weight: bold;">wilhelm</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">wundt</mark> (1832–1920) was a German scientist who was the first person to be referred to as a psychologist. His famous book entitled Principles of Physiological Psychology was published in 1873. <mark style="background-color: #ffeb3b; font-weight: bold;">wundt</mark> viewed psychology as a scientific study of consciou  <!-- HIGHLIGHTING HERE ONLY -->
+                    <mark style="background-color: #ffeb3b; font-weight: bold;">james</mark> through today. <mark style="background-color: #ffeb3b; font-weight: bold;">wundt</mark> and Structuralism <mark style="background-color: #ffeb3b; font-weight: bold;">wilhelm</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">wundt</mark> (1832–1920) was a German scientist who was the first person to be referred to as a psychologist. His famous book entitled Principles of Physiological Psychology was published in 1873. <mark style="background-color: #ffeb3b; font-weight: bold;">wundt</mark> viewed psychology as a scientific study of consciou
                 </div>
             </div>
     
@@ -314,7 +356,7 @@ Psychology is a diverse discipline that is made up of several major subdivisions
                     <span class="page-number">📄 Page 23</span>
                 </div>
                 <div class="evidence-text">
-                    <mark style="background-color: #ffeb3b; font-weight: bold;">james</mark> through today. <mark style="background-color: #ffeb3b; font-weight: bold;">wundt</mark> and Structuralism <mark style="background-color: #ffeb3b; font-weight: bold;">wilhelm</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">wundt</mark> (1832–1920) was a German scientist who was the first person to be referred to as a psychologist. His famous book entitled Principles of Physiological Psychology was published in 1873. <mark style="background-color: #ffeb3b; font-weight: bold;">wundt</mark> viewed psychology as a scientific study of consciou  <!-- HIGHLIGHTING HERE ONLY -->
+                    <mark style="background-color: #ffeb3b; font-weight: bold;">james</mark> through today. <mark style="background-color: #ffeb3b; font-weight: bold;">wundt</mark> and Structuralism <mark style="background-color: #ffeb3b; font-weight: bold;">wilhelm</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">wundt</mark> (1832–1920) was a German scientist who was the first person to be referred to as a psychologist. His famous book entitled Principles of Physiological Psychology was published in 1873. <mark style="background-color: #ffeb3b; font-weight: bold;">wundt</mark> viewed psychology as a scientific study of consciou
                 </div>
             </div>
     
@@ -324,7 +366,7 @@ Psychology is a diverse discipline that is made up of several major subdivisions
                     <span class="page-number">📄 Page 29</span>
                 </div>
                 <div class="evidence-text">
-                    <mark style="background-color: #ffeb3b; font-weight: bold;">james</mark> through today. <mark style="background-color: #ffeb3b; font-weight: bold;">wundt</mark> and Structuralism <mark style="background-color: #ffeb3b; font-weight: bold;">wilhelm</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">wundt</mark> (1832–1920) was a German scientist who was the first person to be referred to as a psychologist. His famous book entitled Principles of Physiological Psychology was published in 1873. <mark style="background-color: #ffeb3b; font-weight: bold;">wundt</mark> viewed psychology as a scientific study of consciou  <!-- HIGHLIGHTING HERE ONLY -->
+                    <mark style="background-color: #ffeb3b; font-weight: bold;">james</mark> through today. <mark style="background-color: #ffeb3b; font-weight: bold;">wundt</mark> and Structuralism <mark style="background-color: #ffeb3b; font-weight: bold;">wilhelm</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">wundt</mark> (1832–1920) was a German scientist who was the first person to be referred to as a psychologist. His famous book entitled Principles of Physiological Psychology was published in 1873. <mark style="background-color: #ffeb3b; font-weight: bold;">wundt</mark> viewed psychology as a scientific study of consciou
                 </div>
             </div>
     
@@ -334,7 +376,7 @@ Psychology is a diverse discipline that is made up of several major subdivisions
                     <span class="page-number">📄 Page 43</span>
                 </div>
                 <div class="evidence-text">
-                    <mark style="background-color: #ffeb3b; font-weight: bold;">james</mark> through today. <mark style="background-color: #ffeb3b; font-weight: bold;">wundt</mark> and Structuralism <mark style="background-color: #ffeb3b; font-weight: bold;">wilhelm</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">wundt</mark> (1832–1920) was a German scientist who was the first person to be referred to as a psychologist. His famous book entitled Principles of Physiological Psychology was published in 1873. <mark style="background-color: #ffeb3b; font-weight: bold;">wundt</mark> viewed psychology as a scientific study of consciou  <!-- HIGHLIGHTING HERE ONLY -->
+                    <mark style="background-color: #ffeb3b; font-weight: bold;">james</mark> through today. <mark style="background-color: #ffeb3b; font-weight: bold;">wundt</mark> and Structuralism <mark style="background-color: #ffeb3b; font-weight: bold;">wilhelm</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">wundt</mark> (1832–1920) was a German scientist who was the first person to be referred to as a psychologist. His famous book entitled Principles of Physiological Psychology was published in 1873. <mark style="background-color: #ffeb3b; font-weight: bold;">wundt</mark> viewed psychology as a scientific study of consciou
                 </div>
             </div>
     
@@ -344,7 +386,7 @@ Psychology is a diverse discipline that is made up of several major subdivisions
                     <span class="page-number">📄 Page 105</span>
                 </div>
                 <div class="evidence-text">
-                    <mark style="background-color: #ffeb3b; font-weight: bold;">james</mark> through today. <mark style="background-color: #ffeb3b; font-weight: bold;">wundt</mark> and Structuralism <mark style="background-color: #ffeb3b; font-weight: bold;">wilhelm</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">wundt</mark> (1832–1920) was a German scientist who was the first person to be referred to as a psychologist. His famous book entitled Principles of Physiological Psychology was published in 1873. <mark style="background-color: #ffeb3b; font-weight: bold;">wundt</mark> viewed psychology as a scientific study of consciou  <!-- HIGHLIGHTING HERE ONLY -->
+                    <mark style="background-color: #ffeb3b; font-weight: bold;">james</mark> through today. <mark style="background-color: #ffeb3b; font-weight: bold;">wundt</mark> and Structuralism <mark style="background-color: #ffeb3b; font-weight: bold;">wilhelm</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">wundt</mark> (1832–1920) was a German scientist who was the first person to be referred to as a psychologist. His famous book entitled Principles of Physiological Psychology was published in 1873. <mark style="background-color: #ffeb3b; font-weight: bold;">wundt</mark> viewed psychology as a scientific study of consciou
                 </div>
             </div>
     
@@ -363,7 +405,7 @@ specific pattern of behavior that is not learned. There was, however, considerab
 
 semester: Family Law and Criminal Law. The Family Law professor has a rather intimidating classroom: He likes to put students on the spot with tough questions, which often leaves students feeling belittled or embarrassed. Grades are based exclusively on quizzes and exams, and the instructor posts results of each test on the classroom door. In contrast, the Criminal Law professor facilitates classroom discussions and respectful debates in small groups. The majority of the course grade is not exam-based, but centers on a student-designed research project on a crime issue of the student’s choice. Research suggests that Hakim will be less intrinsically motivated in his Family Law course, where students are intimidated in the classroom setting, and there is an emphasis on teacher-driven evaluations. Hakim is likely to experience a higher level of intrinsic motivation in his Criminal Law course, where the class setting encourages inclusive collaboration and a respect for ideas, and where students have more influence over their learning activities. Theories About Motivation <mark style="background-color: #ffeb3b; font-weight: bold;">william</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">james</mark> (1842–1910) was an important contributor to early research into motivation, and he is often referred to as the father of psychology in the United States. <mark style="background-color: #ffeb3b; font-weight: bold;">james</mark> theorized that behavior was driven by a number of instincts, which aid survival (Figure 10.4). From a biological perspective, an instinct is a species- 10.1 • Motivation 323
 
-In the 1930s, researchers began to study employees’ feelings about their jobs. Kurt Lewin also conducted research on the effects of various leadership styles, team structure, and team dynamics (Katzell & Austin, 1992). Lewin is considered the founder of social psychology and much of his work and that of his students produced results that had important influences in organizational psychology. Lewin and his students’ research included an important early study that used children to study the effect of leadership style on aggression, group dynamics, and satisfaction (Lewin, Lippitt, & White, 1939). Lewin was also responsible for coining the term group dynamics, and he was involved in studies of group interactions, cooperation, competition, and communication that bear on organizational psychology. Parallel to these studies in industrial and organizational psychology, the field of human factors psychology was also developing. Frederick Taylor was an engineer who saw that if one could redesign the workplace there would be an increase in both output for the company and wages for the workers. In 1911 he put forward his theory in a book titled, The Principles of Scientific Management (Figure 13.6). His book exami  <!-- HIGHLIGHTING HERE ONLY -->
+In the 1930s, researchers began to study employees’ feelings about their jobs. Kurt Lewin also conducted research on the effects of various leadership styles, team structure, and team dynamics (Katzell & Austin, 1992). Lewin is considered the founder of social psychology and much of his work and that of his students produced results that had important influences in organizational psychology. Lewin and his students’ research included an important early study that used children to study the effect of leadership style on aggression, group dynamics, and satisfaction (Lewin, Lippitt, & White, 1939). Lewin was also responsible for coining the term group dynamics, and he was involved in studies of group interactions, cooperation, competition, and communication that bear on organizational psychology. Parallel to these studies in industrial and organizational psychology, the field of human factors psychology was also developing. Frederick Taylor was an engineer who saw that if one could redesign the workplace there would be an increase in both output for the company and wages for the workers. In 1911 he put forward his theory in a book titled, The Principles of Scientific Management (Figure 13.6). His book exami
                 </div>
             </div>
             
@@ -371,14 +413,22 @@ In the 1930s, researchers began to study employees’ feelings about their jobs.
                 <div class="stat-item">
                     <div class="stat-label">Sections Used</div>
                     <div class="stat-value">12</div>
+                    <div class="stat-factor">Factor: 1.00</div>
                 </div>
                 <div class="stat-item">
                     <div class="stat-label">Pages Referenced</div>
                     <div class="stat-value">12</div>
+                    <div class="stat-factor">Factor: 1.00</div>
                 </div>
                 <div class="stat-item">
-                    <div class="stat-label">Keywords Found</div>
-                    <div class="stat-value">5</div>
+                    <div class="stat-label">Answer Length</div>
+                    <div class="stat-value">1067</div>
+                    <div class="stat-factor">Factor: 1.00</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Overall</div>
+                    <div class="stat-value">100%</div>
+                    <div class="stat-factor">HIGH</div>
                 </div>
             </div>
             

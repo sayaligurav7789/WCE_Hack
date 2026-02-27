@@ -73,6 +73,45 @@
                 box-shadow: 0 2px 4px rgba(0,0,0,0.1);
             }
             
+            .confidence-meter {
+                background: #f0f0f0;
+                padding: 15px 30px;
+                border-bottom: 1px solid #e0e0e0;
+                display: flex;
+                align-items: center;
+                gap: 20px;
+                flex-wrap: wrap;
+            }
+            
+            .confidence-bar {
+                flex: 1;
+                height: 20px;
+                background: #e0e0e0;
+                border-radius: 10px;
+                overflow: hidden;
+            }
+            
+            .confidence-fill {
+                height: 100%;
+                border-radius: 10px;
+                transition: width 0.3s ease;
+            }
+            
+            .confidence-fill.high { background: linear-gradient(90deg, #4caf50, #8bc34a); }
+            .confidence-fill.medium { background: linear-gradient(90deg, #ff9800, #ffc107); }
+            .confidence-fill.low { background: linear-gradient(90deg, #f44336, #ff7043); }
+            
+            .confidence-text {
+                font-size: 18px;
+                font-weight: 600;
+                min-width: 100px;
+                text-align: center;
+            }
+            
+            .confidence-text.high { color: #4caf50; }
+            .confidence-text.medium { color: #ff9800; }
+            .confidence-text.low { color: #f44336; }
+            
             .answer-section {
                 padding: 30px;
                 background: #f8f9fa;
@@ -99,8 +138,6 @@
                 color: #444;
                 border-left: 4px solid #667eea;
             }
-            
-            /* NO mark styling for answer - it stays plain */
             
             .evidence-section {
                 padding: 30px;
@@ -153,17 +190,6 @@
                 border: 1px solid #e0e0e0;
             }
             
-            .term-badge {
-                display: inline-block;
-                background: #ffeb3b;
-                color: #333;
-                padding: 3px 10px;
-                border-radius: 15px;
-                font-size: 12px;
-                margin: 0 5px 5px 0;
-                font-weight: 500;
-            }
-            
             .evidence-text {
                 background: white;
                 padding: 15px;
@@ -213,19 +239,17 @@
             }
             
             .stats {
-                display: flex;
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
                 gap: 15px;
                 padding: 20px 30px;
                 background: white;
-                flex-wrap: wrap;
             }
             
             .stat-item {
                 background: #f8f9fa;
-                padding: 10px 20px;
+                padding: 15px;
                 border-radius: 10px;
-                flex: 1;
-                min-width: 120px;
                 text-align: center;
                 border: 1px solid #e0e0e0;
             }
@@ -242,6 +266,12 @@
                 color: #667eea;
             }
             
+            .stat-factor {
+                font-size: 11px;
+                color: #999;
+                margin-top: 5px;
+            }
+            
             .footer {
                 padding: 20px 30px;
                 background: #f0f0f0;
@@ -252,6 +282,10 @@
             }
             
             @media (max-width: 768px) {
+                .stats {
+                    grid-template-columns: repeat(2, 1fr);
+                }
+                
                 .header {
                     padding: 20px;
                 }
@@ -279,14 +313,22 @@
             </div>
             
             <div class="keywords-bar">
-                <div class="keywords-title">🔑 Extracted Keywords:</div>
+                <div class="keywords-title"><i class="fas fa-key"></i> Extracted Keywords:</div>
     <span class="keyword-badge">cognitive</span><span class="keyword-badge">psychology</span>
+            </div>
+            
+            <div class="confidence-meter">
+                <i class="fas fa-bullseye"></i><span style="font-weight: 600;">Confidence:</span>
+                <div class="confidence-bar">
+                    <div class="confidence-fill high" style="width: 100.0%;"></div>
+                </div>
+                <div class="confidence-text high">HIGH (100%)</div>
             </div>
             
             <div class="answer-section">
                 <h3><i class="fas fa-robot"></i> Generated Answer</h3>
                 <div class="answer-content">
-                    Cognitive psychology is the area of psychology that focuses on studying cognitions, or thoughts, and their relationship to our experiences and our actions. It is a broad field that involves collaborations among people from a diverse range of disciplinary backgrounds, and its research interests span a spectrum of topics, including attention, problem solving, language, and memory.  <!-- NO HIGHLIGHTING HERE -->
+                    Cognitive psychology is the area of psychology that focuses on studying cognitions, or thoughts, and their relationship to our experiences and our actions. It is a broad field that involves collaborations among people from a diverse range of disciplinary backgrounds, and its research interests span a spectrum of topics, including attention, problem solving, language, and memory.
                 </div>
             </div>
             
@@ -299,7 +341,7 @@
                     <span class="page-number">📄 Page 20</span>
                 </div>
                 <div class="evidence-text">
-                    all factors of interest to someone working in the domain of sensation and perception. FIGURE 1.11 When you look at this image, you may see a duck or a rabbit. The sensory information remains the same, but your perception can vary dramatically. As described in a later chapter that focuses on the resu  <!-- HIGHLIGHTING HERE ONLY -->
+                    all factors of interest to someone working in the domain of sensation and perception. FIGURE 1.11 When you look at this image, you may see a duck or a rabbit. The sensory information remains the same, but your perception can vary dramatically. As described in a later chapter that focuses on the resu
                 </div>
             </div>
     
@@ -309,7 +351,7 @@
                     <span class="page-number">📄 Page 28</span>
                 </div>
                 <div class="evidence-text">
-                    all factors of interest to someone working in the domain of sensation and perception. FIGURE 1.11 When you look at this image, you may see a duck or a rabbit. The sensory information remains the same, but your perception can vary dramatically. As described in a later chapter that focuses on the resu  <!-- HIGHLIGHTING HERE ONLY -->
+                    all factors of interest to someone working in the domain of sensation and perception. FIGURE 1.11 When you look at this image, you may see a duck or a rabbit. The sensory information remains the same, but your perception can vary dramatically. As described in a later chapter that focuses on the resu
                 </div>
             </div>
     
@@ -320,7 +362,7 @@ Psychology is a diverse discipline that is made up of several major subdivisions
                     <span class="page-number">📄 Page 33</span>
                 </div>
                 <div class="evidence-text">
-                    all factors of interest to someone working in the domain of sensation and perception. FIGURE 1.11 When you look at this image, you may see a duck or a rabbit. The sensory information remains the same, but your perception can vary dramatically. As described in a later chapter that focuses on the resu  <!-- HIGHLIGHTING HERE ONLY -->
+                    all factors of interest to someone working in the domain of sensation and perception. FIGURE 1.11 When you look at this image, you may see a duck or a rabbit. The sensory information remains the same, but your perception can vary dramatically. As described in a later chapter that focuses on the resu
                 </div>
             </div>
     
@@ -330,7 +372,7 @@ Psychology is a diverse discipline that is made up of several major subdivisions
                     <span class="page-number">📄 Page 43</span>
                 </div>
                 <div class="evidence-text">
-                    all factors of interest to someone working in the domain of sensation and perception. FIGURE 1.11 When you look at this image, you may see a duck or a rabbit. The sensory information remains the same, but your perception can vary dramatically. As described in a later chapter that focuses on the resu  <!-- HIGHLIGHTING HERE ONLY -->
+                    all factors of interest to someone working in the domain of sensation and perception. FIGURE 1.11 When you look at this image, you may see a duck or a rabbit. The sensory information remains the same, but your perception can vary dramatically. As described in a later chapter that focuses on the resu
                 </div>
             </div>
     
@@ -340,7 +382,7 @@ Psychology is a diverse discipline that is made up of several major subdivisions
                     <span class="page-number">📄 Page 225</span>
                 </div>
                 <div class="evidence-text">
-                    all factors of interest to someone working in the domain of sensation and perception. FIGURE 1.11 When you look at this image, you may see a duck or a rabbit. The sensory information remains the same, but your perception can vary dramatically. As described in a later chapter that focuses on the resu  <!-- HIGHLIGHTING HERE ONLY -->
+                    all factors of interest to someone working in the domain of sensation and perception. FIGURE 1.11 When you look at this image, you may see a duck or a rabbit. The sensory information remains the same, but your perception can vary dramatically. As described in a later chapter that focuses on the resu
                 </div>
             </div>
     
@@ -357,7 +399,7 @@ your judgment representative sample subset of the population that accurately rep
 
 applied to help people with a wide range of psychological problems. One popular operant conditioning intervention is called the token economy. This involves a controlled setting where individuals are reinforced for desirable behaviors with tokens, such as a poker chip, that can be exchanged for items or privileges. Token economies are often used in psychiatric hospitals to increase patient cooperation and activity levels. Patients are rewarded with tokens when they engage in positive behaviors (e.g., making their beds, brushing their teeth, coming to the cafeteria on time, and socializing with other patients). They can later exchange the tokens for extra TV time, private rooms, visits to the canteen, and so on (Dickerson, Tenhula, & Green-Paden, 2005). Psychotherapy: <mark style="background-color: #ffeb3b; font-weight: bold;">cognitive</mark> Therapy <mark style="background-color: #ffeb3b; font-weight: bold;">cognitive</mark> therapy is a form of psychotherapy that focuses on how a person’s thoughts lead to feelings of distress. The idea behind <mark style="background-color: #ffeb3b; font-weight: bold;">cognitive</mark> therapy is that how you think determines how you feel and act. <mark style="background-color: #ffeb3b; font-weight: bold;">cognitive</mark> therapists help their clients change dysfunctional thoughts in order to relieve distress. They help a client see how they misinterpret a situation (<mark style="background-color: #ffeb3b; font-weight: bold;">cognitive</mark> distortion). For example, a client may overgeneralize. Because a person failed one test in <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> 101, they feel stupid and worthless. These thoughts then cause their mood to worsen. Therapists also help clients recognize when they blow things out of proportion. Because Ray failed his <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> 101 test, he has concluded that he’s going to fail the entire course and probably flunk out of college altogether. These errors in thinking have contributed to Ray’s feelings of distress. His therapist will help him challenge these irrational beliefs, focus on their illogical basis, and correct them with more logical and rational thoughts and beliefs. <mark style="background-color: #ffeb3b; font-weight: bold;">cognitive</mark> therapy was developed by psychiatrist Aaron Beck in the 1960s. His initial focus was on depression and how a client’s self-defeating attitude served to maintain a depression despite positive factors in her life (Beck, Rush, Shaw, & Emery, 1979) (Figure 16.13). Through questioning, a <mark style="background-color: #ffeb3b; font-weight: bold;">cognitive</mark> therapist can help a client recognize dysfunctional ideas, challenge catastrophizing thoughts about themselves and their situations, and find a more positive way to view things (Beck, 2011). FIGURE 16.13 Your emotional reactions are the result of your thoughts about the situation rather than the situation itself. For instance, if you consistently interpret events and emotions around the themes of loss and defeat, then you are likely to be depressed. Through therapy, you can learn
 
-LINK TO LEARNING View a brief video of Carl Rogers describing his therapeutic approach (http://openstax.org/l/crogers1) to learn more. The <mark style="background-color: #ffeb3b; font-weight: bold;">cognitive</mark> Revolution Behaviorism’s emphasis on objectivity and focus on external behavior had pulled psychologists’ attention away from the mind for a prolonged period of time. The early work of the humanistic psychologists redirected attention to the individual human as a whole, and as a conscious and self-aware being. By the 1950s, new disciplinary perspectives in linguistics, neuroscience, and computer science were emerging, and these areas revived interest in the mind as a focus of scientific inquiry. This particular perspective has come to be known as the <mark style="background-color: #ffeb3b; font-weight: bold;">cognitive</mark> revolution (Miller, 2003). By 1967, Ulric Neisser published the first textbook entitled <mark style="background-color: #ffeb3b; font-weight: bold;">cognitive</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark>, which served as a core text in <mark style="background-color: #ffeb3b; font-weight: bold;">cognitive</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> courses around the country (Thorne & Henley, 2005). Although no one person is entirely responsible for starting the <mark style="background-color: #ffeb3b; font-weight: bold;">cognitive</mark> revolution, Noam Chomsky was very influential in the early days of this movement (Figure 1.9). Chomsky (1928–), an American linguist, was dissatisfied with the influence that behaviorism had had on <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark>. He believed that <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark>’s focus on behavior was short-sighted and that the field had to re-incorporate mental functioning into its purview if it were to offer any meaningful contributions to understanding behavior (Miller, 2003). FIGURE 1.9 Noam Chomsky was very influential in beginning the <mark style="background-color: #ffeb3b; font-weight: bold;">cognitive</mark> revolution.   <!-- HIGHLIGHTING HERE ONLY -->
+LINK TO LEARNING View a brief video of Carl Rogers describing his therapeutic approach (http://openstax.org/l/crogers1) to learn more. The <mark style="background-color: #ffeb3b; font-weight: bold;">cognitive</mark> Revolution Behaviorism’s emphasis on objectivity and focus on external behavior had pulled psychologists’ attention away from the mind for a prolonged period of time. The early work of the humanistic psychologists redirected attention to the individual human as a whole, and as a conscious and self-aware being. By the 1950s, new disciplinary perspectives in linguistics, neuroscience, and computer science were emerging, and these areas revived interest in the mind as a focus of scientific inquiry. This particular perspective has come to be known as the <mark style="background-color: #ffeb3b; font-weight: bold;">cognitive</mark> revolution (Miller, 2003). By 1967, Ulric Neisser published the first textbook entitled <mark style="background-color: #ffeb3b; font-weight: bold;">cognitive</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark>, which served as a core text in <mark style="background-color: #ffeb3b; font-weight: bold;">cognitive</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> courses around the country (Thorne & Henley, 2005). Although no one person is entirely responsible for starting the <mark style="background-color: #ffeb3b; font-weight: bold;">cognitive</mark> revolution, Noam Chomsky was very influential in the early days of this movement (Figure 1.9). Chomsky (1928–), an American linguist, was dissatisfied with the influence that behaviorism had had on <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark>. He believed that <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark>’s focus on behavior was short-sighted and that the field had to re-incorporate mental functioning into its purview if it were to offer any meaningful contributions to understanding behavior (Miller, 2003). FIGURE 1.9 Noam Chomsky was very influential in beginning the <mark style="background-color: #ffeb3b; font-weight: bold;">cognitive</mark> revolution. 
                 </div>
             </div>
             
@@ -365,14 +407,22 @@ LINK TO LEARNING View a brief video of Carl Rogers describing his therapeutic ap
                 <div class="stat-item">
                     <div class="stat-label">Sections Used</div>
                     <div class="stat-value">10</div>
+                    <div class="stat-factor">Factor: 1.00</div>
                 </div>
                 <div class="stat-item">
                     <div class="stat-label">Pages Referenced</div>
                     <div class="stat-value">10</div>
+                    <div class="stat-factor">Factor: 1.00</div>
                 </div>
                 <div class="stat-item">
-                    <div class="stat-label">Keywords Found</div>
-                    <div class="stat-value">2</div>
+                    <div class="stat-label">Answer Length</div>
+                    <div class="stat-value">381</div>
+                    <div class="stat-factor">Factor: 0.76</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Overall</div>
+                    <div class="stat-value">100%</div>
+                    <div class="stat-factor">HIGH</div>
                 </div>
             </div>
             

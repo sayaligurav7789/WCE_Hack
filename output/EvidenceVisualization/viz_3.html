@@ -73,6 +73,45 @@
                 box-shadow: 0 2px 4px rgba(0,0,0,0.1);
             }
             
+            .confidence-meter {
+                background: #f0f0f0;
+                padding: 15px 30px;
+                border-bottom: 1px solid #e0e0e0;
+                display: flex;
+                align-items: center;
+                gap: 20px;
+                flex-wrap: wrap;
+            }
+            
+            .confidence-bar {
+                flex: 1;
+                height: 20px;
+                background: #e0e0e0;
+                border-radius: 10px;
+                overflow: hidden;
+            }
+            
+            .confidence-fill {
+                height: 100%;
+                border-radius: 10px;
+                transition: width 0.3s ease;
+            }
+            
+            .confidence-fill.high { background: linear-gradient(90deg, #4caf50, #8bc34a); }
+            .confidence-fill.medium { background: linear-gradient(90deg, #ff9800, #ffc107); }
+            .confidence-fill.low { background: linear-gradient(90deg, #f44336, #ff7043); }
+            
+            .confidence-text {
+                font-size: 18px;
+                font-weight: 600;
+                min-width: 100px;
+                text-align: center;
+            }
+            
+            .confidence-text.high { color: #4caf50; }
+            .confidence-text.medium { color: #ff9800; }
+            .confidence-text.low { color: #f44336; }
+            
             .answer-section {
                 padding: 30px;
                 background: #f8f9fa;
@@ -99,8 +138,6 @@
                 color: #444;
                 border-left: 4px solid #667eea;
             }
-            
-            /* NO mark styling for answer - it stays plain */
             
             .evidence-section {
                 padding: 30px;
@@ -153,17 +190,6 @@
                 border: 1px solid #e0e0e0;
             }
             
-            .term-badge {
-                display: inline-block;
-                background: #ffeb3b;
-                color: #333;
-                padding: 3px 10px;
-                border-radius: 15px;
-                font-size: 12px;
-                margin: 0 5px 5px 0;
-                font-weight: 500;
-            }
-            
             .evidence-text {
                 background: white;
                 padding: 15px;
@@ -213,19 +239,17 @@
             }
             
             .stats {
-                display: flex;
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
                 gap: 15px;
                 padding: 20px 30px;
                 background: white;
-                flex-wrap: wrap;
             }
             
             .stat-item {
                 background: #f8f9fa;
-                padding: 10px 20px;
+                padding: 15px;
                 border-radius: 10px;
-                flex: 1;
-                min-width: 120px;
                 text-align: center;
                 border: 1px solid #e0e0e0;
             }
@@ -242,6 +266,12 @@
                 color: #667eea;
             }
             
+            .stat-factor {
+                font-size: 11px;
+                color: #999;
+                margin-top: 5px;
+            }
+            
             .footer {
                 padding: 20px 30px;
                 background: #f0f0f0;
@@ -252,6 +282,10 @@
             }
             
             @media (max-width: 768px) {
+                .stats {
+                    grid-template-columns: repeat(2, 1fr);
+                }
+                
                 .header {
                     padding: 20px;
                 }
@@ -279,8 +313,16 @@
             </div>
             
             <div class="keywords-bar">
-                <div class="keywords-title">🔑 Extracted Keywords:</div>
+                <div class="keywords-title"><i class="fas fa-key"></i> Extracted Keywords:</div>
     <span class="keyword-badge">stages</span><span class="keyword-badge">sleep</span>
+            </div>
+            
+            <div class="confidence-meter">
+                <i class="fas fa-bullseye"></i><span style="font-weight: 600;">Confidence:</span>
+                <div class="confidence-bar">
+                    <div class="confidence-fill high" style="width: 100.0%;"></div>
+                </div>
+                <div class="confidence-text high">HIGH (100%)</div>
             </div>
             
             <div class="answer-section">
@@ -293,7 +335,7 @@
 3. Stage 3 sleep (NREM): also known as deep sleep or slow-wave sleep, characterized by low frequency (less than 3 Hz), high amplitude delta waves.
 4. REM sleep: characterized by rapid eye movements, paralysis of voluntary muscles, and dreaming, with brain waves similar to those during wakefulness.
 
-Note that the textbook does not mention a Stage 4 sleep, but rather combines Stage 3 and 4 into a single stage, which is characterized by slow-wave sleep and delta waves.  <!-- NO HIGHLIGHTING HERE -->
+Note that the textbook does not mention a Stage 4 sleep, but rather combines Stage 3 and 4 into a single stage, which is characterized by slow-wave sleep and delta waves.
                 </div>
             </div>
             
@@ -307,7 +349,7 @@ Santelices</span>
                     <span class="page-number">📄 Page 121</span>
                 </div>
                 <div class="evidence-text">
-                    stage 3 than during earlier <mark style="background-color: #ffeb3b; font-weight: bold;">stages</mark>. Interestingly, individuals who have increased levels of alpha brain wave activity (more often associated with wakefulness and transition into stage 1 <mark style="background-color: #ffeb3b; font-weight: bold;">sleep</mark>) during stage 3 often report that they do not feel refreshed upon waking, regardless of how long they slept   <!-- HIGHLIGHTING HERE ONLY -->
+                    stage 3 than during earlier <mark style="background-color: #ffeb3b; font-weight: bold;">stages</mark>. Interestingly, individuals who have increased levels of alpha brain wave activity (more often associated with wakefulness and transition into stage 1 <mark style="background-color: #ffeb3b; font-weight: bold;">sleep</mark>) during stage 3 often report that they do not feel refreshed upon waking, regardless of how long they slept 
                 </div>
             </div>
     
@@ -317,7 +359,7 @@ Santelices</span>
                     <span class="page-number">📄 Page 122</span>
                 </div>
                 <div class="evidence-text">
-                    stage 3 than during earlier <mark style="background-color: #ffeb3b; font-weight: bold;">stages</mark>. Interestingly, individuals who have increased levels of alpha brain wave activity (more often associated with wakefulness and transition into stage 1 <mark style="background-color: #ffeb3b; font-weight: bold;">sleep</mark>) during stage 3 often report that they do not feel refreshed upon waking, regardless of how long they slept   <!-- HIGHLIGHTING HERE ONLY -->
+                    stage 3 than during earlier <mark style="background-color: #ffeb3b; font-weight: bold;">stages</mark>. Interestingly, individuals who have increased levels of alpha brain wave activity (more often associated with wakefulness and transition into stage 1 <mark style="background-color: #ffeb3b; font-weight: bold;">sleep</mark>) during stage 3 often report that they do not feel refreshed upon waking, regardless of how long they slept 
                 </div>
             </div>
     
@@ -327,7 +369,7 @@ Santelices</span>
                     <span class="page-number">📄 Page 126</span>
                 </div>
                 <div class="evidence-text">
-                    stage 3 than during earlier <mark style="background-color: #ffeb3b; font-weight: bold;">stages</mark>. Interestingly, individuals who have increased levels of alpha brain wave activity (more often associated with wakefulness and transition into stage 1 <mark style="background-color: #ffeb3b; font-weight: bold;">sleep</mark>) during stage 3 often report that they do not feel refreshed upon waking, regardless of how long they slept   <!-- HIGHLIGHTING HERE ONLY -->
+                    stage 3 than during earlier <mark style="background-color: #ffeb3b; font-weight: bold;">stages</mark>. Interestingly, individuals who have increased levels of alpha brain wave activity (more often associated with wakefulness and transition into stage 1 <mark style="background-color: #ffeb3b; font-weight: bold;">sleep</mark>) during stage 3 often report that they do not feel refreshed upon waking, regardless of how long they slept 
                 </div>
             </div>
     
@@ -337,7 +379,7 @@ Santelices</span>
                     <span class="page-number">📄 Page 127</span>
                 </div>
                 <div class="evidence-text">
-                    stage 3 than during earlier <mark style="background-color: #ffeb3b; font-weight: bold;">stages</mark>. Interestingly, individuals who have increased levels of alpha brain wave activity (more often associated with wakefulness and transition into stage 1 <mark style="background-color: #ffeb3b; font-weight: bold;">sleep</mark>) during stage 3 often report that they do not feel refreshed upon waking, regardless of how long they slept   <!-- HIGHLIGHTING HERE ONLY -->
+                    stage 3 than during earlier <mark style="background-color: #ffeb3b; font-weight: bold;">stages</mark>. Interestingly, individuals who have increased levels of alpha brain wave activity (more often associated with wakefulness and transition into stage 1 <mark style="background-color: #ffeb3b; font-weight: bold;">sleep</mark>) during stage 3 often report that they do not feel refreshed upon waking, regardless of how long they slept 
                 </div>
             </div>
     
@@ -349,7 +391,7 @@ By the end of this section</span>
                     <span class="page-number">📄 Page 129</span>
                 </div>
                 <div class="evidence-text">
-                    stage 3 than during earlier <mark style="background-color: #ffeb3b; font-weight: bold;">stages</mark>. Interestingly, individuals who have increased levels of alpha brain wave activity (more often associated with wakefulness and transition into stage 1 <mark style="background-color: #ffeb3b; font-weight: bold;">sleep</mark>) during stage 3 often report that they do not feel refreshed upon waking, regardless of how long they slept   <!-- HIGHLIGHTING HERE ONLY -->
+                    stage 3 than during earlier <mark style="background-color: #ffeb3b; font-weight: bold;">stages</mark>. Interestingly, individuals who have increased levels of alpha brain wave activity (more often associated with wakefulness and transition into stage 1 <mark style="background-color: #ffeb3b; font-weight: bold;">sleep</mark>) during stage 3 often report that they do not feel refreshed upon waking, regardless of how long they slept 
                 </div>
             </div>
     
@@ -368,7 +410,7 @@ Summary 4.1 What Is Consciousness? States of consciousness vary over the course 
 
 decrease in both overall muscle tension and core body temperature. In terms of brain wave activity, stage 1 <mark style="background-color: #ffeb3b; font-weight: bold;">sleep</mark> is associated with both alpha and theta waves. The early portion of stage 1 <mark style="background-color: #ffeb3b; font-weight: bold;">sleep</mark> produces alpha waves. These patterns of electrical activity (waves) resemble that of someone who is very relaxed, yet awake, but they have less variability (are more synchronized) and are relatively lower in frequency (8–12 Hz) and higher in amplitude than beta waves (Figure 4.8). As an individual continues through stage 1 <mark style="background-color: #ffeb3b; font-weight: bold;">sleep</mark>, there is an increase in theta wave activity. Theta waves are even lower frequency (4–7 Hz), and higher in amplitude, than the alpha wave patterns. It is relatively easy to wake someone from stage 1 <mark style="background-color: #ffeb3b; font-weight: bold;">sleep</mark>; in fact, people often report that they have not been a<mark style="background-color: #ffeb3b; font-weight: bold;">sleep</mark> if they are awoken during stage 1 <mark style="background-color: #ffeb3b; font-weight: bold;">sleep</mark>. FIGURE 4.8 Brainwave activity changes dramatically across the different <mark style="background-color: #ffeb3b; font-weight: bold;">stages</mark> of <mark style="background-color: #ffeb3b; font-weight: bold;">sleep</mark>. As we move into stage 2 <mark style="background-color: #ffeb3b; font-weight: bold;">sleep</mark>, the body goes into a state of deep relaxation. Theta waves still dominate the activity of the brain, but they are interrupted by brief bursts of activity known as <mark style="background-color: #ffeb3b; font-weight: bold;">sleep</mark> spindles (Figure 4.9). A <mark style="background-color: #ffeb3b; font-weight: bold;">sleep</mark> spindle is a rapid burst of higher frequency brain waves that may be important for learning and memory (Fogel & Smith, 2011; Poe, Walsh, & Bjorness, 2010). In addition, the appearance of K-complexes is often associated with stage 2 <mark style="background-color: #ffeb3b; font-weight: bold;">sleep</mark>. A K-complex is a very high amplitude pattern of brain activity that may in some cases occur in response to environmental stimuli. Thus, K-complexes might serve as a bridge to higher levels of arousal in response to what is going on in our environments (Halász, 1993; Steriade & Amzica, 1998). FIGURE 4.9 Stage 2 <mark style="background-color: #ffeb3b; font-weight: bold;">sleep</mark> is characterized by the appearance of both <mark style="background-color: #ffeb3b; font-weight: bold;">sleep</mark> spindles and K-complexes. NREM stage 3 <mark style="background-color: #ffeb3b; font-weight: bold;">sleep</mark> is often referred to as deep <mark style="background-color: #ffeb3b; font-weight: bold;">sleep</mark> or slow-wave <mark style="background-color: #ffeb3b; font-weight: bold;">sleep</mark> because this stage is characterized by low frequency (less than 3 Hz), high amplitude delta waves (Figure 4.10). These delta waves have the lowest frequency and highest amplitude of our <mark style="background-color: #ffeb3b; font-weight: bold;">sleep</mark>ing brain wave patterns. During this time, an individual’s heart rate and respiration slow dramatically, and it is much more difficult to awaken someone from <mark style="background-color: #ffeb3b; font-weight: bold;">sleep</mark> during 118 4 • States of Consciousness Access for free at openstax.org
 
-between 73 and 79 years old (Singh & Siahpush, 2006), we can expect to spend approximately 25 years of our lives <mark style="background-color: #ffeb3b; font-weight: bold;">sleep</mark>ing. Some animals never <mark style="background-color: #ffeb3b; font-weight: bold;">sleep</mark> (e.g., some fish and amphibian species); other animals <mark style="background-color: #ffeb3b; font-weight: bold;">sleep</mark> very little without apparent negative consequences (e.g., giraffes); yet some animals (e.g., rats) die after two weeks of <mark style="background-color: #ffeb3b; font-weight: bold;">sleep</mark> deprivation (Siegel, 2008). Why do we devote so much time to <mark style="background-color: #ffeb3b; font-weight: bold;">sleep</mark>ing? Is it absolutely essential that we <mark style="background-color: #ffeb3b; font-weight: bold;">sleep</mark>? This section will consider these questions and explore various explanations for why we <mark style="background-color: #ffeb3b; font-weight: bold;">sleep</mark>. What is <mark style="background-color: #ffeb3b; font-weight: bold;">sleep</mark>? You have read that <mark style="background-color: #ffeb3b; font-weight: bold;">sleep</mark> is distinguished by low levels of physical activity and reduced sensory awareness. As discussed by Siegel (2008), a definition of <mark style="background-color: #ffeb3b; font-weight: bold;">sleep</mark> must also include mention of the interplay of the circadian and homeostatic mechanisms that regulate <mark style="background-color: #ffeb3b; font-weight: bold;">sleep</mark>. Homeostatic regulation of <mark style="background-color: #ffeb3b; font-weight: bold;">sleep</mark> is evidenced by <mark style="background-color: #ffeb3b; font-weight: bold;">sleep</mark> rebound following <mark style="background-color: #ffeb3b; font-weight: bold;">sleep</mark> deprivation. <mark style="background-color: #ffeb3b; font-weight: bold;">sleep</mark> rebound refers to the fact that a <mark style="background-color: #ffeb3b; font-weight: bold;">sleep</mark>-deprived individual will fall a<mark style="background-color: #ffeb3b; font-weight: bold;">sleep</mark> more quickly during subsequent opportunities for <mark style="background-color: #ffeb3b; font-weight: bold;">sleep</mark>. <mark style="background-color: #ffeb3b; font-weight: bold;">sleep</mark> is characterized by certain patterns of activity of the brain that can be visualized using electroencephalography (EEG), and different phases of <mark style="background-color: #ffeb3b; font-weight: bold;">sleep</mark> can be differentiated using EEG as well. <mark style="background-color: #ffeb3b; font-weight: bold;">sleep</mark>-wake cycles seem to be controlled by multiple brain areas acting in conjunction with one another. Some of these areas include the thalamus, the hypothalamus, and the pons. As already mentioned, the hypothalamus contains the SCN—the biological clock of the body—in addition to other nuclei that, in conjunction with t  <!-- HIGHLIGHTING HERE ONLY -->
+between 73 and 79 years old (Singh & Siahpush, 2006), we can expect to spend approximately 25 years of our lives <mark style="background-color: #ffeb3b; font-weight: bold;">sleep</mark>ing. Some animals never <mark style="background-color: #ffeb3b; font-weight: bold;">sleep</mark> (e.g., some fish and amphibian species); other animals <mark style="background-color: #ffeb3b; font-weight: bold;">sleep</mark> very little without apparent negative consequences (e.g., giraffes); yet some animals (e.g., rats) die after two weeks of <mark style="background-color: #ffeb3b; font-weight: bold;">sleep</mark> deprivation (Siegel, 2008). Why do we devote so much time to <mark style="background-color: #ffeb3b; font-weight: bold;">sleep</mark>ing? Is it absolutely essential that we <mark style="background-color: #ffeb3b; font-weight: bold;">sleep</mark>? This section will consider these questions and explore various explanations for why we <mark style="background-color: #ffeb3b; font-weight: bold;">sleep</mark>. What is <mark style="background-color: #ffeb3b; font-weight: bold;">sleep</mark>? You have read that <mark style="background-color: #ffeb3b; font-weight: bold;">sleep</mark> is distinguished by low levels of physical activity and reduced sensory awareness. As discussed by Siegel (2008), a definition of <mark style="background-color: #ffeb3b; font-weight: bold;">sleep</mark> must also include mention of the interplay of the circadian and homeostatic mechanisms that regulate <mark style="background-color: #ffeb3b; font-weight: bold;">sleep</mark>. Homeostatic regulation of <mark style="background-color: #ffeb3b; font-weight: bold;">sleep</mark> is evidenced by <mark style="background-color: #ffeb3b; font-weight: bold;">sleep</mark> rebound following <mark style="background-color: #ffeb3b; font-weight: bold;">sleep</mark> deprivation. <mark style="background-color: #ffeb3b; font-weight: bold;">sleep</mark> rebound refers to the fact that a <mark style="background-color: #ffeb3b; font-weight: bold;">sleep</mark>-deprived individual will fall a<mark style="background-color: #ffeb3b; font-weight: bold;">sleep</mark> more quickly during subsequent opportunities for <mark style="background-color: #ffeb3b; font-weight: bold;">sleep</mark>. <mark style="background-color: #ffeb3b; font-weight: bold;">sleep</mark> is characterized by certain patterns of activity of the brain that can be visualized using electroencephalography (EEG), and different phases of <mark style="background-color: #ffeb3b; font-weight: bold;">sleep</mark> can be differentiated using EEG as well. <mark style="background-color: #ffeb3b; font-weight: bold;">sleep</mark>-wake cycles seem to be controlled by multiple brain areas acting in conjunction with one another. Some of these areas include the thalamus, the hypothalamus, and the pons. As already mentioned, the hypothalamus contains the SCN—the biological clock of the body—in addition to other nuclei that, in conjunction with t
                 </div>
             </div>
             
@@ -376,14 +418,22 @@ between 73 and 79 years old (Singh & Siahpush, 2006), we can expect to spend app
                 <div class="stat-item">
                     <div class="stat-label">Sections Used</div>
                     <div class="stat-value">8</div>
+                    <div class="stat-factor">Factor: 1.00</div>
                 </div>
                 <div class="stat-item">
                     <div class="stat-label">Pages Referenced</div>
                     <div class="stat-value">11</div>
+                    <div class="stat-factor">Factor: 1.00</div>
                 </div>
                 <div class="stat-item">
-                    <div class="stat-label">Keywords Found</div>
-                    <div class="stat-value">2</div>
+                    <div class="stat-label">Answer Length</div>
+                    <div class="stat-value">813</div>
+                    <div class="stat-factor">Factor: 1.00</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Overall</div>
+                    <div class="stat-value">100%</div>
+                    <div class="stat-factor">HIGH</div>
                 </div>
             </div>
             

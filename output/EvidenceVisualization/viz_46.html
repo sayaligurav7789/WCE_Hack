@@ -73,6 +73,45 @@
                 box-shadow: 0 2px 4px rgba(0,0,0,0.1);
             }
             
+            .confidence-meter {
+                background: #f0f0f0;
+                padding: 15px 30px;
+                border-bottom: 1px solid #e0e0e0;
+                display: flex;
+                align-items: center;
+                gap: 20px;
+                flex-wrap: wrap;
+            }
+            
+            .confidence-bar {
+                flex: 1;
+                height: 20px;
+                background: #e0e0e0;
+                border-radius: 10px;
+                overflow: hidden;
+            }
+            
+            .confidence-fill {
+                height: 100%;
+                border-radius: 10px;
+                transition: width 0.3s ease;
+            }
+            
+            .confidence-fill.high { background: linear-gradient(90deg, #4caf50, #8bc34a); }
+            .confidence-fill.medium { background: linear-gradient(90deg, #ff9800, #ffc107); }
+            .confidence-fill.low { background: linear-gradient(90deg, #f44336, #ff7043); }
+            
+            .confidence-text {
+                font-size: 18px;
+                font-weight: 600;
+                min-width: 100px;
+                text-align: center;
+            }
+            
+            .confidence-text.high { color: #4caf50; }
+            .confidence-text.medium { color: #ff9800; }
+            .confidence-text.low { color: #f44336; }
+            
             .answer-section {
                 padding: 30px;
                 background: #f8f9fa;
@@ -99,8 +138,6 @@
                 color: #444;
                 border-left: 4px solid #667eea;
             }
-            
-            /* NO mark styling for answer - it stays plain */
             
             .evidence-section {
                 padding: 30px;
@@ -153,17 +190,6 @@
                 border: 1px solid #e0e0e0;
             }
             
-            .term-badge {
-                display: inline-block;
-                background: #ffeb3b;
-                color: #333;
-                padding: 3px 10px;
-                border-radius: 15px;
-                font-size: 12px;
-                margin: 0 5px 5px 0;
-                font-weight: 500;
-            }
-            
             .evidence-text {
                 background: white;
                 padding: 15px;
@@ -213,19 +239,17 @@
             }
             
             .stats {
-                display: flex;
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
                 gap: 15px;
                 padding: 20px 30px;
                 background: white;
-                flex-wrap: wrap;
             }
             
             .stat-item {
                 background: #f8f9fa;
-                padding: 10px 20px;
+                padding: 15px;
                 border-radius: 10px;
-                flex: 1;
-                min-width: 120px;
                 text-align: center;
                 border: 1px solid #e0e0e0;
             }
@@ -242,6 +266,12 @@
                 color: #667eea;
             }
             
+            .stat-factor {
+                font-size: 11px;
+                color: #999;
+                margin-top: 5px;
+            }
+            
             .footer {
                 padding: 20px 30px;
                 background: #f0f0f0;
@@ -252,6 +282,10 @@
             }
             
             @media (max-width: 768px) {
+                .stats {
+                    grid-template-columns: repeat(2, 1fr);
+                }
+                
                 .header {
                     padding: 20px;
                 }
@@ -279,14 +313,22 @@
             </div>
             
             <div class="keywords-bar">
-                <div class="keywords-title">🔑 Extracted Keywords:</div>
+                <div class="keywords-title"><i class="fas fa-key"></i> Extracted Keywords:</div>
     <span class="keyword-badge">scientific</span><span class="keyword-badge">process</span><span class="keyword-badge">hypothesis</span><span class="keyword-badge">testing</span>
+            </div>
+            
+            <div class="confidence-meter">
+                <i class="fas fa-bullseye"></i><span style="font-weight: 600;">Confidence:</span>
+                <div class="confidence-bar">
+                    <div class="confidence-fill high" style="width: 100.0%;"></div>
+                </div>
+                <div class="confidence-text high">HIGH (100%)</div>
             </div>
             
             <div class="answer-section">
                 <h3><i class="fas fa-robot"></i> Generated Answer</h3>
                 <div class="answer-content">
-                    The scientific process of hypothesis testing involves deriving hypotheses from theories and then testing those hypotheses. If the results are consistent with the theory, then the theory is supported. If the results are not consistent, then the theory should be modified and new hypotheses will be generated. This process involves deductive reasoning, where a generalization is tested against real-world observations. The hypothesis is a testable prediction about how the world will behave if our idea is correct, and it is often worded as an if-then statement. The results of the test are then analyzed to determine if they support or reject the hypothesis, and the theory is refined or modified accordingly.  <!-- NO HIGHLIGHTING HERE -->
+                    The scientific process of hypothesis testing involves deriving hypotheses from theories and then testing those hypotheses. If the results are consistent with the theory, then the theory is supported. If the results are not consistent, then the theory should be modified and new hypotheses will be generated. This process involves deductive reasoning, where a generalization is tested against real-world observations. The hypothesis is a testable prediction about how the world will behave if our idea is correct, and it is often worded as an if-then statement. The results of the test are then analyzed to determine if they support or reject the hypothesis, and the theory is refined or modified accordingly.
                 </div>
             </div>
             
@@ -299,7 +341,7 @@
                     <span class="page-number">📄 Page 20</span>
                 </div>
                 <div class="evidence-text">
-                    <mark style="background-color: #ffeb3b; font-weight: bold;">hypothesis</mark> may lead to a logical but incorrect conclusion. Consider this argument: all ducks are born with the ability to see. Quackers is a duck. Therefore, Quackers was born with the ability to see. Scientists use deductive reasoning to empirically test their hypotheses. Returning to the example o  <!-- HIGHLIGHTING HERE ONLY -->
+                    <mark style="background-color: #ffeb3b; font-weight: bold;">hypothesis</mark> may lead to a logical but incorrect conclusion. Consider this argument: all ducks are born with the ability to see. Quackers is a duck. Therefore, Quackers was born with the ability to see. Scientists use deductive reasoning to empirically test their hypotheses. Returning to the example o
                 </div>
             </div>
     
@@ -309,7 +351,7 @@
                     <span class="page-number">📄 Page 51</span>
                 </div>
                 <div class="evidence-text">
-                    <mark style="background-color: #ffeb3b; font-weight: bold;">hypothesis</mark> may lead to a logical but incorrect conclusion. Consider this argument: all ducks are born with the ability to see. Quackers is a duck. Therefore, Quackers was born with the ability to see. Scientists use deductive reasoning to empirically test their hypotheses. Returning to the example o  <!-- HIGHLIGHTING HERE ONLY -->
+                    <mark style="background-color: #ffeb3b; font-weight: bold;">hypothesis</mark> may lead to a logical but incorrect conclusion. Consider this argument: all ducks are born with the ability to see. Quackers is a duck. Therefore, Quackers was born with the ability to see. Scientists use deductive reasoning to empirically test their hypotheses. Returning to the example o
                 </div>
             </div>
     
@@ -321,7 +363,7 @@ By the end of this section</span>
                     <span class="page-number">📄 Page 52</span>
                 </div>
                 <div class="evidence-text">
-                    <mark style="background-color: #ffeb3b; font-weight: bold;">hypothesis</mark> may lead to a logical but incorrect conclusion. Consider this argument: all ducks are born with the ability to see. Quackers is a duck. Therefore, Quackers was born with the ability to see. Scientists use deductive reasoning to empirically test their hypotheses. Returning to the example o  <!-- HIGHLIGHTING HERE ONLY -->
+                    <mark style="background-color: #ffeb3b; font-weight: bold;">hypothesis</mark> may lead to a logical but incorrect conclusion. Consider this argument: all ducks are born with the ability to see. Quackers is a duck. Therefore, Quackers was born with the ability to see. Scientists use deductive reasoning to empirically test their hypotheses. Returning to the example o
                 </div>
             </div>
     
@@ -331,7 +373,7 @@ By the end of this section</span>
                     <span class="page-number">📄 Page 54</span>
                 </div>
                 <div class="evidence-text">
-                    <mark style="background-color: #ffeb3b; font-weight: bold;">hypothesis</mark> may lead to a logical but incorrect conclusion. Consider this argument: all ducks are born with the ability to see. Quackers is a duck. Therefore, Quackers was born with the ability to see. Scientists use deductive reasoning to empirically test their hypotheses. Returning to the example o  <!-- HIGHLIGHTING HERE ONLY -->
+                    <mark style="background-color: #ffeb3b; font-weight: bold;">hypothesis</mark> may lead to a logical but incorrect conclusion. Consider this argument: all ducks are born with the ability to see. Quackers is a duck. Therefore, Quackers was born with the ability to see. Scientists use deductive reasoning to empirically test their hypotheses. Returning to the example o
                 </div>
             </div>
     
@@ -341,7 +383,7 @@ By the end of this section</span>
                     <span class="page-number">📄 Page 63</span>
                 </div>
                 <div class="evidence-text">
-                    <mark style="background-color: #ffeb3b; font-weight: bold;">hypothesis</mark> may lead to a logical but incorrect conclusion. Consider this argument: all ducks are born with the ability to see. Quackers is a duck. Therefore, Quackers was born with the ability to see. Scientists use deductive reasoning to empirically test their hypotheses. Returning to the example o  <!-- HIGHLIGHTING HERE ONLY -->
+                    <mark style="background-color: #ffeb3b; font-weight: bold;">hypothesis</mark> may lead to a logical but incorrect conclusion. Consider this argument: all ducks are born with the ability to see. Quackers is a duck. Therefore, Quackers was born with the ability to see. Scientists use deductive reasoning to empirically test their hypotheses. Returning to the example o
                 </div>
             </div>
     
@@ -362,7 +404,7 @@ explain behavior and the cognitive and biological <mark style="background-color:
 
 experiments require the experimenter to manipulate an independent variable, and that can complicate many questions that psychologists might want to address. For instance, imagine that you want to know what effect sex (the independent variable) has on spatial memory (the dependent variable). Although you can certainly look for differences between males and females on a task that taps into spatial memory, you cannot directly control a person’s sex. We categorize this type of research approach as quasi-experimental and recognize that we cannot make cause-and-effect claims in these circumstances. Experimenters are also limited by ethical constraints. For instance, you would not be able to conduct an experiment designed to determine if experiencing abuse as a child leads to lower levels of self-esteem among adults. To conduct such an experiment, you would need to randomly assign some experimental participants to a group that receives abuse, and that experiment would be unethical. Interpreting Experimental Findings Once data is collected from both the experimental and the control groups, a statistical analysis is conducted to find out if there are meaningful differences between the two groups. A statistical analysis determines how likely any difference found is due to chance (and thus not meaningful). For example, if an experiment is done on the effectiveness of a nutritional supplement, and those taking a placebo pill (and not the supplement) have the same result as those taking the supplement, then the experiment has shown that the nutritional supplement is not effective. Generally, psychologists consider differences to be statistically significant if there is less than a five percent chance of observing them if the groups did not actually differ from one another. Stated another way, psychologists want to limit the chances of making “false positive” claims to five percent or less. The greatest strength of experiments is the ability to assert that any significant differences in the findings are caused by the independent variable. This occurs because random selection, random assignment, and a design that limits the effects of both experimenter bias and participant expectancy should create groups that are similar in composition and treatment. Therefore, any difference between the groups is attributable to the independent variable, and now we can finally make a causal statement. If we find that watching a violent television program results in more violent behavior than watching a nonviolent program, we can safely say that watching violent television programs causes an increase in the
 
-2002). Nash was the subject of the 2001 movie A Beautiful Mind. Why did these people have these experiences? How does the human brain work? And what is the connection between the brain’s internal <mark style="background-color: #ffeb3b; font-weight: bold;">process</mark>es and people’s external behaviors? This textbook will introduce you to various ways that the field of psychology has explored these questions. 1.1 What Is Psychology? LEARNING OBJECTIVES By the end of this section, you will be able to: • Define psychology • Understand the merits of an education in psychology What is creativity? What are prejudice and discrimination? What is consciousness? The field of psychology explores questions like these. Psychology refers to the <mark style="background-color: #ffeb3b; font-weight: bold;">scientific</mark> study of the mind and behavior. Psychologists use the <mark style="background-color: #ffeb3b; font-weight: bold;">scientific</mark> method to acquire knowledge. To apply the <mark style="background-color: #ffeb3b; font-weight: bold;">scientific</mark> method, a researcher with a question about how or why something happens will propose a tentative explanation, called a <mark style="background-color: #ffeb3b; font-weight: bold;">hypothesis</mark>, to explain the phenomenon. A <mark style="background-color: #ffeb3b; font-weight: bold;">hypothesis</mark> should fit into the context of a <mark style="background-color: #ffeb3b; font-weight: bold;">scientific</mark> theory, which is a broad explanation or group of explanations for some aspect of the natural world that is consistently supported by evidence over time. A theory is the best understanding we have of that part of the natural world. The researcher then makes observations or carries out an experiment to test the validity of the <mark style="background-color: #ffeb3b; font-weight: bold;">hypothesis</mark>. Those results are then published or presented at research conferences so that others can replicate or build on the results. Scientists test that which is perceivable and measurable. For example, the <mark style="background-color: #ffeb3b; font-weight: bold;">hypothesis</mark> that a bird sings because it is happy is not a <mark style="background-color: #ffeb3b; font-weight: bold;">hypothesis</mark> that can be tested since we have no way to measure the happiness of a bird. We must ask a different question, perhaps about the brain state of the bird, since this can be measured. However, we can ask individuals about whether they sing because they are happy since they are able to tell us. Thus, psychological science is empirical, based on measurable data. In general, science deals only with  <!-- HIGHLIGHTING HERE ONLY -->
+2002). Nash was the subject of the 2001 movie A Beautiful Mind. Why did these people have these experiences? How does the human brain work? And what is the connection between the brain’s internal <mark style="background-color: #ffeb3b; font-weight: bold;">process</mark>es and people’s external behaviors? This textbook will introduce you to various ways that the field of psychology has explored these questions. 1.1 What Is Psychology? LEARNING OBJECTIVES By the end of this section, you will be able to: • Define psychology • Understand the merits of an education in psychology What is creativity? What are prejudice and discrimination? What is consciousness? The field of psychology explores questions like these. Psychology refers to the <mark style="background-color: #ffeb3b; font-weight: bold;">scientific</mark> study of the mind and behavior. Psychologists use the <mark style="background-color: #ffeb3b; font-weight: bold;">scientific</mark> method to acquire knowledge. To apply the <mark style="background-color: #ffeb3b; font-weight: bold;">scientific</mark> method, a researcher with a question about how or why something happens will propose a tentative explanation, called a <mark style="background-color: #ffeb3b; font-weight: bold;">hypothesis</mark>, to explain the phenomenon. A <mark style="background-color: #ffeb3b; font-weight: bold;">hypothesis</mark> should fit into the context of a <mark style="background-color: #ffeb3b; font-weight: bold;">scientific</mark> theory, which is a broad explanation or group of explanations for some aspect of the natural world that is consistently supported by evidence over time. A theory is the best understanding we have of that part of the natural world. The researcher then makes observations or carries out an experiment to test the validity of the <mark style="background-color: #ffeb3b; font-weight: bold;">hypothesis</mark>. Those results are then published or presented at research conferences so that others can replicate or build on the results. Scientists test that which is perceivable and measurable. For example, the <mark style="background-color: #ffeb3b; font-weight: bold;">hypothesis</mark> that a bird sings because it is happy is not a <mark style="background-color: #ffeb3b; font-weight: bold;">hypothesis</mark> that can be tested since we have no way to measure the happiness of a bird. We must ask a different question, perhaps about the brain state of the bird, since this can be measured. However, we can ask individuals about whether they sing because they are happy since they are able to tell us. Thus, psychological science is empirical, based on measurable data. In general, science deals only with
                 </div>
             </div>
             
@@ -370,14 +412,22 @@ experiments require the experimenter to manipulate an independent variable, and 
                 <div class="stat-item">
                     <div class="stat-label">Sections Used</div>
                     <div class="stat-value">11</div>
+                    <div class="stat-factor">Factor: 1.00</div>
                 </div>
                 <div class="stat-item">
                     <div class="stat-label">Pages Referenced</div>
                     <div class="stat-value">12</div>
+                    <div class="stat-factor">Factor: 1.00</div>
                 </div>
                 <div class="stat-item">
-                    <div class="stat-label">Keywords Found</div>
-                    <div class="stat-value">4</div>
+                    <div class="stat-label">Answer Length</div>
+                    <div class="stat-value">708</div>
+                    <div class="stat-factor">Factor: 1.00</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Overall</div>
+                    <div class="stat-value">100%</div>
+                    <div class="stat-factor">HIGH</div>
                 </div>
             </div>
             

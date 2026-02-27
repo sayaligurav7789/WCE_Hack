@@ -73,6 +73,45 @@
                 box-shadow: 0 2px 4px rgba(0,0,0,0.1);
             }
             
+            .confidence-meter {
+                background: #f0f0f0;
+                padding: 15px 30px;
+                border-bottom: 1px solid #e0e0e0;
+                display: flex;
+                align-items: center;
+                gap: 20px;
+                flex-wrap: wrap;
+            }
+            
+            .confidence-bar {
+                flex: 1;
+                height: 20px;
+                background: #e0e0e0;
+                border-radius: 10px;
+                overflow: hidden;
+            }
+            
+            .confidence-fill {
+                height: 100%;
+                border-radius: 10px;
+                transition: width 0.3s ease;
+            }
+            
+            .confidence-fill.high { background: linear-gradient(90deg, #4caf50, #8bc34a); }
+            .confidence-fill.medium { background: linear-gradient(90deg, #ff9800, #ffc107); }
+            .confidence-fill.low { background: linear-gradient(90deg, #f44336, #ff7043); }
+            
+            .confidence-text {
+                font-size: 18px;
+                font-weight: 600;
+                min-width: 100px;
+                text-align: center;
+            }
+            
+            .confidence-text.high { color: #4caf50; }
+            .confidence-text.medium { color: #ff9800; }
+            .confidence-text.low { color: #f44336; }
+            
             .answer-section {
                 padding: 30px;
                 background: #f8f9fa;
@@ -99,8 +138,6 @@
                 color: #444;
                 border-left: 4px solid #667eea;
             }
-            
-            /* NO mark styling for answer - it stays plain */
             
             .evidence-section {
                 padding: 30px;
@@ -153,17 +190,6 @@
                 border: 1px solid #e0e0e0;
             }
             
-            .term-badge {
-                display: inline-block;
-                background: #ffeb3b;
-                color: #333;
-                padding: 3px 10px;
-                border-radius: 15px;
-                font-size: 12px;
-                margin: 0 5px 5px 0;
-                font-weight: 500;
-            }
-            
             .evidence-text {
                 background: white;
                 padding: 15px;
@@ -213,19 +239,17 @@
             }
             
             .stats {
-                display: flex;
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
                 gap: 15px;
                 padding: 20px 30px;
                 background: white;
-                flex-wrap: wrap;
             }
             
             .stat-item {
                 background: #f8f9fa;
-                padding: 10px 20px;
+                padding: 15px;
                 border-radius: 10px;
-                flex: 1;
-                min-width: 120px;
                 text-align: center;
                 border: 1px solid #e0e0e0;
             }
@@ -242,6 +266,12 @@
                 color: #667eea;
             }
             
+            .stat-factor {
+                font-size: 11px;
+                color: #999;
+                margin-top: 5px;
+            }
+            
             .footer {
                 padding: 20px 30px;
                 background: #f0f0f0;
@@ -252,6 +282,10 @@
             }
             
             @media (max-width: 768px) {
+                .stats {
+                    grid-template-columns: repeat(2, 1fr);
+                }
+                
                 .header {
                     padding: 20px;
                 }
@@ -279,14 +313,22 @@
             </div>
             
             <div class="keywords-bar">
-                <div class="keywords-title">🔑 Extracted Keywords:</div>
+                <div class="keywords-title"><i class="fas fa-key"></i> Extracted Keywords:</div>
     <span class="keyword-badge">maslow</span><span class="keyword-badge">hierarchy</span><span class="keyword-badge">needs</span>
+            </div>
+            
+            <div class="confidence-meter">
+                <i class="fas fa-bullseye"></i><span style="font-weight: 600;">Confidence:</span>
+                <div class="confidence-bar">
+                    <div class="confidence-fill high" style="width: 100.0%;"></div>
+                </div>
+                <div class="confidence-text high">HIGH (100%)</div>
             </div>
             
             <div class="answer-section">
                 <h3><i class="fas fa-robot"></i> Generated Answer</h3>
                 <div class="answer-content">
-                    According to the provided textbook context, Maslow's hierarchy of needs is a pyramid-shaped model that illustrates the different levels of human needs, ranging from basic physiological needs to self-actualization. The hierarchy is divided into several tiers, with the most basic physiological needs (such as food, water, and shelter) at the base, followed by safety and security needs, love and belonging needs, esteem needs, and finally, self-actualization needs at the top. The theory suggests that lower-level needs must be met before higher-level needs can be addressed, and that self-actualization can only be achieved when all the lower-level needs have been satisfied.  <!-- NO HIGHLIGHTING HERE -->
+                    According to the provided textbook context, Maslow's hierarchy of needs is a pyramid-shaped model that illustrates the different levels of human needs, ranging from basic physiological needs to self-actualization. The hierarchy is divided into several tiers, with the most basic physiological needs (such as food, water, and shelter) at the base, followed by safety and security needs, love and belonging needs, esteem needs, and finally, self-actualization needs at the top. The theory suggests that lower-level needs must be met before higher-level needs can be addressed, and that self-actualization can only be achieved when all the lower-level needs have been satisfied.
                 </div>
             </div>
             
@@ -300,7 +342,7 @@ Ahima</span>
                     <span class="page-number">📄 Page 27</span>
                 </div>
                 <div class="evidence-text">
-                    FIGURE 10.8 <mark style="background-color: #ffeb3b; font-weight: bold;">maslow</mark>’s <mark style="background-color: #ffeb3b; font-weight: bold;">hierarchy</mark> of <mark style="background-color: #ffeb3b; font-weight: bold;">needs</mark> is illustrated here. In some versions of the pyramid, cognitive and aesthetic <mark style="background-color: #ffeb3b; font-weight: bold;">needs</mark> are also included between esteem and self-actualization. Others include another tier at the top of the pyramid for self-transcendence. At the base of the pyramid are all of the  <!-- HIGHLIGHTING HERE ONLY -->
+                    FIGURE 10.8 <mark style="background-color: #ffeb3b; font-weight: bold;">maslow</mark>’s <mark style="background-color: #ffeb3b; font-weight: bold;">hierarchy</mark> of <mark style="background-color: #ffeb3b; font-weight: bold;">needs</mark> is illustrated here. In some versions of the pyramid, cognitive and aesthetic <mark style="background-color: #ffeb3b; font-weight: bold;">needs</mark> are also included between esteem and self-actualization. Others include another tier at the top of the pyramid for self-transcendence. At the base of the pyramid are all of the
                 </div>
             </div>
     
@@ -310,7 +352,7 @@ Ahima</span>
                     <span class="page-number">📄 Page 298</span>
                 </div>
                 <div class="evidence-text">
-                    FIGURE 10.8 <mark style="background-color: #ffeb3b; font-weight: bold;">maslow</mark>’s <mark style="background-color: #ffeb3b; font-weight: bold;">hierarchy</mark> of <mark style="background-color: #ffeb3b; font-weight: bold;">needs</mark> is illustrated here. In some versions of the pyramid, cognitive and aesthetic <mark style="background-color: #ffeb3b; font-weight: bold;">needs</mark> are also included between esteem and self-actualization. Others include another tier at the top of the pyramid for self-transcendence. At the base of the pyramid are all of the  <!-- HIGHLIGHTING HERE ONLY -->
+                    FIGURE 10.8 <mark style="background-color: #ffeb3b; font-weight: bold;">maslow</mark>’s <mark style="background-color: #ffeb3b; font-weight: bold;">hierarchy</mark> of <mark style="background-color: #ffeb3b; font-weight: bold;">needs</mark> is illustrated here. In some versions of the pyramid, cognitive and aesthetic <mark style="background-color: #ffeb3b; font-weight: bold;">needs</mark> are also included between esteem and self-actualization. Others include another tier at the top of the pyramid for self-transcendence. At the base of the pyramid are all of the
                 </div>
             </div>
     
@@ -322,7 +364,7 @@ By the end of this section</span>
                     <span class="page-number">📄 Page 334</span>
                 </div>
                 <div class="evidence-text">
-                    FIGURE 10.8 <mark style="background-color: #ffeb3b; font-weight: bold;">maslow</mark>’s <mark style="background-color: #ffeb3b; font-weight: bold;">hierarchy</mark> of <mark style="background-color: #ffeb3b; font-weight: bold;">needs</mark> is illustrated here. In some versions of the pyramid, cognitive and aesthetic <mark style="background-color: #ffeb3b; font-weight: bold;">needs</mark> are also included between esteem and self-actualization. Others include another tier at the top of the pyramid for self-transcendence. At the base of the pyramid are all of the  <!-- HIGHLIGHTING HERE ONLY -->
+                    FIGURE 10.8 <mark style="background-color: #ffeb3b; font-weight: bold;">maslow</mark>’s <mark style="background-color: #ffeb3b; font-weight: bold;">hierarchy</mark> of <mark style="background-color: #ffeb3b; font-weight: bold;">needs</mark> is illustrated here. In some versions of the pyramid, cognitive and aesthetic <mark style="background-color: #ffeb3b; font-weight: bold;">needs</mark> are also included between esteem and self-actualization. Others include another tier at the top of the pyramid for self-transcendence. At the base of the pyramid are all of the
                 </div>
             </div>
     
@@ -332,7 +374,7 @@ By the end of this section</span>
                     <span class="page-number">📄 Page 339</span>
                 </div>
                 <div class="evidence-text">
-                    FIGURE 10.8 <mark style="background-color: #ffeb3b; font-weight: bold;">maslow</mark>’s <mark style="background-color: #ffeb3b; font-weight: bold;">hierarchy</mark> of <mark style="background-color: #ffeb3b; font-weight: bold;">needs</mark> is illustrated here. In some versions of the pyramid, cognitive and aesthetic <mark style="background-color: #ffeb3b; font-weight: bold;">needs</mark> are also included between esteem and self-actualization. Others include another tier at the top of the pyramid for self-transcendence. At the base of the pyramid are all of the  <!-- HIGHLIGHTING HERE ONLY -->
+                    FIGURE 10.8 <mark style="background-color: #ffeb3b; font-weight: bold;">maslow</mark>’s <mark style="background-color: #ffeb3b; font-weight: bold;">hierarchy</mark> of <mark style="background-color: #ffeb3b; font-weight: bold;">needs</mark> is illustrated here. In some versions of the pyramid, cognitive and aesthetic <mark style="background-color: #ffeb3b; font-weight: bold;">needs</mark> are also included between esteem and self-actualization. Others include another tier at the top of the pyramid for self-transcendence. At the base of the pyramid are all of the
                 </div>
             </div>
     
@@ -344,7 +386,7 @@ Carl Jung</span>
                     <span class="page-number">📄 Page 381</span>
                 </div>
                 <div class="evidence-text">
-                    FIGURE 10.8 <mark style="background-color: #ffeb3b; font-weight: bold;">maslow</mark>’s <mark style="background-color: #ffeb3b; font-weight: bold;">hierarchy</mark> of <mark style="background-color: #ffeb3b; font-weight: bold;">needs</mark> is illustrated here. In some versions of the pyramid, cognitive and aesthetic <mark style="background-color: #ffeb3b; font-weight: bold;">needs</mark> are also included between esteem and self-actualization. Others include another tier at the top of the pyramid for self-transcendence. At the base of the pyramid are all of the  <!-- HIGHLIGHTING HERE ONLY -->
+                    FIGURE 10.8 <mark style="background-color: #ffeb3b; font-weight: bold;">maslow</mark>’s <mark style="background-color: #ffeb3b; font-weight: bold;">hierarchy</mark> of <mark style="background-color: #ffeb3b; font-weight: bold;">needs</mark> is illustrated here. In some versions of the pyramid, cognitive and aesthetic <mark style="background-color: #ffeb3b; font-weight: bold;">needs</mark> are also included between esteem and self-actualization. Others include another tier at the top of the pyramid for self-transcendence. At the base of the pyramid are all of the
                 </div>
             </div>
     
@@ -361,7 +403,7 @@ FIGURE 1.7 <mark style="background-color: #ffeb3b; font-weight: bold;">maslow</m
 
 Quan, 2018) and measures of achievement in adolescence. However, researchers also found that the associations were not as strong as those reported during Mischel's initial experiment and were quite sensitive to situational factors such as early measures of cognitive capacity, family background, and home environment. This research suggests that consideration of situational factors is important to better understand behavior. LINK TO LEARNING Watch Joachim de Posada's TEDTalk about the marshmallow test (http://openstax.org/l/TEDPosada) to learn more and to see the test given to children in Colombia. Today, the debate is mostly resolved, and most psychologists consider both the situation and personal factors in understanding behavior. For Mischel (1993), people are situation processors. The children in the marshmallow test each processed, or interpreted, the rewards structure of that situation in their own way. Mischel’s approach to personality stresses the importance of both the situation and the way the person perceives the situation. Instead of behavior being determined by the situation, people use cognitive processes to interpret the situation and then behave in accordance with that interpretation. 11.5 Humanistic Approaches LEARNING OBJECTIVES By the end of this section, you will be able to: • Discuss the contributions of Abraham <mark style="background-color: #ffeb3b; font-weight: bold;">maslow</mark> and Carl Rogers to personality development As the “third force” in psychology, humanism is touted as a reaction both to the pessimistic determinism of psychoanalysis, with its emphasis on psychological disturbance, and to the behaviorists’ view of humans passively reacting to the environment, which has been criticized as making people out to be personality-less robots. It does not suggest that psychoanalytic, behaviorist, and other points of view are incorrect but argues that these perspectives do not recognize the depth and meaning of human experience, and fail to recognize the innate capacity for self-directed change and transforming personal experiences. This perspective focuses on how healthy people develop. One pioneering humanist, Abraham <mark style="background-color: #ffeb3b; font-weight: bold;">maslow</mark>, studied people who he considered to be healthy, creative, and productive, including Albert Einstein, Eleanor Roosevelt, Thomas Jefferson, Abraham Lincoln, and others. <mark style="background-color: #ffeb3b; font-weight: bold;">maslow</mark> (1950, 1970) found that such people share similar characteristics, such as being open, creative, loving, spontaneous, compassionate, concerned for others, and accepting of themselves. When you studied motivation, you learned about one of the best-known humanistic theories, <mark style="background-color: #ffeb3b; font-weight: bold;">maslow</mark>'s <mark style="background-color: #ffeb3b; font-weight: bold;">hierarchy</mark> of <mark style="background-color: #ffeb3b; font-weight: bold;">needs</mark> theory, in which <mark style="background-color: #ffeb3b; font-weight: bold;">maslow</mark> proposes that human beings have certain <mark style="background-color: #ffeb3b; font-weight: bold;">needs</mark> in common and that these <mark style="background-color: #ffeb3b; font-weight: bold;">needs</mark> must be met in a certain order. The highest need is
 
-needed to fulfill family obligations. In contrast, flextime did not help with coping and telecommuting actually made things worse, perhaps reflecting the fact that being at home intensifies the conflict between work and family because with the employee in the home, the demands of family are more evident. Posig & Kickul (2004) identify exemplar corporations with policies designed to reduce work–family conflict. Examples include IBM’s policy of three years of job-guaranteed leave after the birth of a child, Lucent Technologies offer of one year’s childbirth leave at half pay, and SC Johnson’s program of concierge services for daytime errands. LINK TO LEARNING The Glassdoor website (http://openstax.org/l/glassdoor) posts job satisfaction reviews for different careers and organizations. Use this site to research possible careers and/or organizations that interest you. Management and Organizational Structure A significant portion of I-O research focuses on management and human relations. Douglas McGregor (1960) combined scientific management (a theory of management that analyzes and synthesizes workflows with the main objective of improving economic efficiency, especially labor productivity) and human relations into the notion of leadership behavior. His theory lays out two different styles called Theory X and Theory Y. In the Theory X approach to management, managers assume that most people dislike work and are not innately self- directed. Theory X managers perceive employees as people who prefer to be led and told which tasks to perform and when. Their employees have to be watched carefully to be sure that they work hard enough to fulfill the organization’s goals. Theory X workplaces will often have employees punch a clock when arriving and leaving the workplace: Tardiness is punished. Supervisors, not employees, determine whether an employee <mark style="background-color: #ffeb3b; font-weight: bold;">needs</mark> to stay late, and even this decision would require someone higher up in the command chain to approve the extra hours. Theory X supervisors will ignore employees’ suggestions for improved efficiency and reprimand employees for speaking out of order. These supervisors blam  <!-- HIGHLIGHTING HERE ONLY -->
+needed to fulfill family obligations. In contrast, flextime did not help with coping and telecommuting actually made things worse, perhaps reflecting the fact that being at home intensifies the conflict between work and family because with the employee in the home, the demands of family are more evident. Posig & Kickul (2004) identify exemplar corporations with policies designed to reduce work–family conflict. Examples include IBM’s policy of three years of job-guaranteed leave after the birth of a child, Lucent Technologies offer of one year’s childbirth leave at half pay, and SC Johnson’s program of concierge services for daytime errands. LINK TO LEARNING The Glassdoor website (http://openstax.org/l/glassdoor) posts job satisfaction reviews for different careers and organizations. Use this site to research possible careers and/or organizations that interest you. Management and Organizational Structure A significant portion of I-O research focuses on management and human relations. Douglas McGregor (1960) combined scientific management (a theory of management that analyzes and synthesizes workflows with the main objective of improving economic efficiency, especially labor productivity) and human relations into the notion of leadership behavior. His theory lays out two different styles called Theory X and Theory Y. In the Theory X approach to management, managers assume that most people dislike work and are not innately self- directed. Theory X managers perceive employees as people who prefer to be led and told which tasks to perform and when. Their employees have to be watched carefully to be sure that they work hard enough to fulfill the organization’s goals. Theory X workplaces will often have employees punch a clock when arriving and leaving the workplace: Tardiness is punished. Supervisors, not employees, determine whether an employee <mark style="background-color: #ffeb3b; font-weight: bold;">needs</mark> to stay late, and even this decision would require someone higher up in the command chain to approve the extra hours. Theory X supervisors will ignore employees’ suggestions for improved efficiency and reprimand employees for speaking out of order. These supervisors blam
                 </div>
             </div>
             
@@ -369,14 +411,22 @@ needed to fulfill family obligations. In contrast, flextime did not help with co
                 <div class="stat-item">
                     <div class="stat-label">Sections Used</div>
                     <div class="stat-value">10</div>
+                    <div class="stat-factor">Factor: 1.00</div>
                 </div>
                 <div class="stat-item">
                     <div class="stat-label">Pages Referenced</div>
                     <div class="stat-value">11</div>
+                    <div class="stat-factor">Factor: 1.00</div>
                 </div>
                 <div class="stat-item">
-                    <div class="stat-label">Keywords Found</div>
-                    <div class="stat-value">3</div>
+                    <div class="stat-label">Answer Length</div>
+                    <div class="stat-value">675</div>
+                    <div class="stat-factor">Factor: 1.00</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Overall</div>
+                    <div class="stat-value">100%</div>
+                    <div class="stat-factor">HIGH</div>
                 </div>
             </div>
             

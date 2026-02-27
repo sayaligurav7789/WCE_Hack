@@ -73,6 +73,45 @@
                 box-shadow: 0 2px 4px rgba(0,0,0,0.1);
             }
             
+            .confidence-meter {
+                background: #f0f0f0;
+                padding: 15px 30px;
+                border-bottom: 1px solid #e0e0e0;
+                display: flex;
+                align-items: center;
+                gap: 20px;
+                flex-wrap: wrap;
+            }
+            
+            .confidence-bar {
+                flex: 1;
+                height: 20px;
+                background: #e0e0e0;
+                border-radius: 10px;
+                overflow: hidden;
+            }
+            
+            .confidence-fill {
+                height: 100%;
+                border-radius: 10px;
+                transition: width 0.3s ease;
+            }
+            
+            .confidence-fill.high { background: linear-gradient(90deg, #4caf50, #8bc34a); }
+            .confidence-fill.medium { background: linear-gradient(90deg, #ff9800, #ffc107); }
+            .confidence-fill.low { background: linear-gradient(90deg, #f44336, #ff7043); }
+            
+            .confidence-text {
+                font-size: 18px;
+                font-weight: 600;
+                min-width: 100px;
+                text-align: center;
+            }
+            
+            .confidence-text.high { color: #4caf50; }
+            .confidence-text.medium { color: #ff9800; }
+            .confidence-text.low { color: #f44336; }
+            
             .answer-section {
                 padding: 30px;
                 background: #f8f9fa;
@@ -99,8 +138,6 @@
                 color: #444;
                 border-left: 4px solid #667eea;
             }
-            
-            /* NO mark styling for answer - it stays plain */
             
             .evidence-section {
                 padding: 30px;
@@ -153,17 +190,6 @@
                 border: 1px solid #e0e0e0;
             }
             
-            .term-badge {
-                display: inline-block;
-                background: #ffeb3b;
-                color: #333;
-                padding: 3px 10px;
-                border-radius: 15px;
-                font-size: 12px;
-                margin: 0 5px 5px 0;
-                font-weight: 500;
-            }
-            
             .evidence-text {
                 background: white;
                 padding: 15px;
@@ -213,19 +239,17 @@
             }
             
             .stats {
-                display: flex;
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
                 gap: 15px;
                 padding: 20px 30px;
                 background: white;
-                flex-wrap: wrap;
             }
             
             .stat-item {
                 background: #f8f9fa;
-                padding: 10px 20px;
+                padding: 15px;
                 border-radius: 10px;
-                flex: 1;
-                min-width: 120px;
                 text-align: center;
                 border: 1px solid #e0e0e0;
             }
@@ -242,6 +266,12 @@
                 color: #667eea;
             }
             
+            .stat-factor {
+                font-size: 11px;
+                color: #999;
+                margin-top: 5px;
+            }
+            
             .footer {
                 padding: 20px 30px;
                 background: #f0f0f0;
@@ -252,6 +282,10 @@
             }
             
             @media (max-width: 768px) {
+                .stats {
+                    grid-template-columns: repeat(2, 1fr);
+                }
+                
                 .header {
                     padding: 20px;
                 }
@@ -279,8 +313,16 @@
             </div>
             
             <div class="keywords-bar">
-                <div class="keywords-title">🔑 Extracted Keywords:</div>
+                <div class="keywords-title"><i class="fas fa-key"></i> Extracted Keywords:</div>
     <span class="keyword-badge">stages</span><span class="keyword-badge">psychosexual</span><span class="keyword-badge">development</span>
+            </div>
+            
+            <div class="confidence-meter">
+                <i class="fas fa-bullseye"></i><span style="font-weight: 600;">Confidence:</span>
+                <div class="confidence-bar">
+                    <div class="confidence-fill high" style="width: 100.0%;"></div>
+                </div>
+                <div class="confidence-text high">HIGH (100%)</div>
             </div>
             
             <div class="answer-section">
@@ -294,7 +336,7 @@
 4. Latency Stage (6-12 years): No specific erogenous zone is focused on, and children redirect their energy to other activities.
 5. Genital Stage (12+ years): Pleasure is focused on the genitals, and individuals develop mature sexual interests.
 
-These stages are outlined in Table 11.1 in the provided textbook context.  <!-- NO HIGHLIGHTING HERE -->
+These stages are outlined in Table 11.1 in the provided textbook context.
                 </div>
             </div>
             
@@ -309,7 +351,7 @@ In the oral stage</span>
                     <span class="page-number">📄 Page 292</span>
                 </div>
                 <div class="evidence-text">
-                    theories regarding how babies and children grow and develop into happy, healthy adults. We explore several of these theories in this section. <mark style="background-color: #ffeb3b; font-weight: bold;">psychosexual</mark> Theory of <mark style="background-color: #ffeb3b; font-weight: bold;">development</mark> Sigmund Freud (1856–1939) believed that personality develops during early childhood. For Freud, childhood experiences shape  <!-- HIGHLIGHTING HERE ONLY -->
+                    theories regarding how babies and children grow and develop into happy, healthy adults. We explore several of these theories in this section. <mark style="background-color: #ffeb3b; font-weight: bold;">psychosexual</mark> Theory of <mark style="background-color: #ffeb3b; font-weight: bold;">development</mark> Sigmund Freud (1856–1939) believed that personality develops during early childhood. For Freud, childhood experiences shape
                 </div>
             </div>
     
@@ -319,7 +361,7 @@ In the oral stage</span>
                     <span class="page-number">📄 Page 296</span>
                 </div>
                 <div class="evidence-text">
-                    theories regarding how babies and children grow and develop into happy, healthy adults. We explore several of these theories in this section. <mark style="background-color: #ffeb3b; font-weight: bold;">psychosexual</mark> Theory of <mark style="background-color: #ffeb3b; font-weight: bold;">development</mark> Sigmund Freud (1856–1939) believed that personality develops during early childhood. For Freud, childhood experiences shape  <!-- HIGHLIGHTING HERE ONLY -->
+                    theories regarding how babies and children grow and develop into happy, healthy adults. We explore several of these theories in this section. <mark style="background-color: #ffeb3b; font-weight: bold;">psychosexual</mark> Theory of <mark style="background-color: #ffeb3b; font-weight: bold;">development</mark> Sigmund Freud (1856–1939) believed that personality develops during early childhood. For Freud, childhood experiences shape
                 </div>
             </div>
     
@@ -329,7 +371,7 @@ In the oral stage</span>
                     <span class="page-number">📄 Page 297</span>
                 </div>
                 <div class="evidence-text">
-                    theories regarding how babies and children grow and develop into happy, healthy adults. We explore several of these theories in this section. <mark style="background-color: #ffeb3b; font-weight: bold;">psychosexual</mark> Theory of <mark style="background-color: #ffeb3b; font-weight: bold;">development</mark> Sigmund Freud (1856–1939) believed that personality develops during early childhood. For Freud, childhood experiences shape  <!-- HIGHLIGHTING HERE ONLY -->
+                    theories regarding how babies and children grow and develop into happy, healthy adults. We explore several of these theories in this section. <mark style="background-color: #ffeb3b; font-weight: bold;">psychosexual</mark> Theory of <mark style="background-color: #ffeb3b; font-weight: bold;">development</mark> Sigmund Freud (1856–1939) believed that personality develops during early childhood. For Freud, childhood experiences shape
                 </div>
             </div>
     
@@ -339,7 +381,7 @@ In the oral stage</span>
                     <span class="page-number">📄 Page 305</span>
                 </div>
                 <div class="evidence-text">
-                    theories regarding how babies and children grow and develop into happy, healthy adults. We explore several of these theories in this section. <mark style="background-color: #ffeb3b; font-weight: bold;">psychosexual</mark> Theory of <mark style="background-color: #ffeb3b; font-weight: bold;">development</mark> Sigmund Freud (1856–1939) believed that personality develops during early childhood. For Freud, childhood experiences shape  <!-- HIGHLIGHTING HERE ONLY -->
+                    theories regarding how babies and children grow and develop into happy, healthy adults. We explore several of these theories in this section. <mark style="background-color: #ffeb3b; font-weight: bold;">psychosexual</mark> Theory of <mark style="background-color: #ffeb3b; font-weight: bold;">development</mark> Sigmund Freud (1856–1939) believed that personality develops during early childhood. For Freud, childhood experiences shape
                 </div>
             </div>
     
@@ -349,7 +391,7 @@ In the oral stage</span>
                     <span class="page-number">📄 Page 319</span>
                 </div>
                 <div class="evidence-text">
-                    theories regarding how babies and children grow and develop into happy, healthy adults. We explore several of these theories in this section. <mark style="background-color: #ffeb3b; font-weight: bold;">psychosexual</mark> Theory of <mark style="background-color: #ffeb3b; font-weight: bold;">development</mark> Sigmund Freud (1856–1939) believed that personality develops during early childhood. For Freud, childhood experiences shape  <!-- HIGHLIGHTING HERE ONLY -->
+                    theories regarding how babies and children grow and develop into happy, healthy adults. We explore several of these theories in this section. <mark style="background-color: #ffeb3b; font-weight: bold;">psychosexual</mark> Theory of <mark style="background-color: #ffeb3b; font-weight: bold;">development</mark> Sigmund Freud (1856–1939) believed that personality develops during early childhood. For Freud, childhood experiences shape
                 </div>
             </div>
     
@@ -374,7 +416,7 @@ Stage Age (years) Erogenous Zone Major Conflict Adult Fixation Example Genital 1
 
 Freud also proposed three components to our personality: the id, ego, and superego. The job of the ego is to balance the sexual and aggressive drives of the id with the moral ideal of the superego. Freud also said that personality develops through a series of <mark style="background-color: #ffeb3b; font-weight: bold;">psychosexual</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">stages</mark>. In each stage, pleasure focuses on a specific erogenous zone. Failure to resolve a stage can lead one to become fixated in that stage, leading to unhealthy personality traits. Successful resolution of the <mark style="background-color: #ffeb3b; font-weight: bold;">stages</mark> leads to a healthy adult. 11.3 Neo-Freudians: Adler, Erikson, Jung, and Horney The neo-Freudians were psychologists whose work followed from Freud’s. They generally agreed with Freud that childhood experiences matter, but they decreased the emphasis on sex and focused more on the social 392 11 • Summary Access for free at openstax.org
 
-cognitive, and psychosocial milestones. FIGURE 9.15 Peers are a primary influence on our <mark style="background-color: #ffeb3b; font-weight: bold;">development</mark> in adolescence. (credit: "manseok_Pixabay"/ Pixabay) Physical <mark style="background-color: #ffeb3b; font-weight: bold;">development</mark> As noted above, adolescence begins with puberty. While the sequence of physical changes in puberty is predictable, the onset and pace of puberty vary widely. Several physical changes occur during puberty, such as adrenarche and gonadarche, the maturing of the adrenal glands and sex glands, respectively. Also during this time, primary and secondary sexual characteristics develop and mature. Primary sexual characteristics are organs specifically needed for reproduction, like the uterus and ovaries in females and testes in males. Secondary sexual characteristics are physical signs of sexual maturation that do not directly involve sex organs, such as <mark style="background-color: #ffeb3b; font-weight: bold;">development</mark> of breasts and hips in females, and <mark style="background-color: #ffeb3b; font-weight: bold;">development</mark> of facial hair and a deepened voice in males. Females experience menarche, the beginning of menstrual periods, usually around  <!-- HIGHLIGHTING HERE ONLY -->
+cognitive, and psychosocial milestones. FIGURE 9.15 Peers are a primary influence on our <mark style="background-color: #ffeb3b; font-weight: bold;">development</mark> in adolescence. (credit: "manseok_Pixabay"/ Pixabay) Physical <mark style="background-color: #ffeb3b; font-weight: bold;">development</mark> As noted above, adolescence begins with puberty. While the sequence of physical changes in puberty is predictable, the onset and pace of puberty vary widely. Several physical changes occur during puberty, such as adrenarche and gonadarche, the maturing of the adrenal glands and sex glands, respectively. Also during this time, primary and secondary sexual characteristics develop and mature. Primary sexual characteristics are organs specifically needed for reproduction, like the uterus and ovaries in females and testes in males. Secondary sexual characteristics are physical signs of sexual maturation that do not directly involve sex organs, such as <mark style="background-color: #ffeb3b; font-weight: bold;">development</mark> of breasts and hips in females, and <mark style="background-color: #ffeb3b; font-weight: bold;">development</mark> of facial hair and a deepened voice in males. Females experience menarche, the beginning of menstrual periods, usually around
                 </div>
             </div>
             
@@ -382,14 +424,22 @@ cognitive, and psychosocial milestones. FIGURE 9.15 Peers are a primary influenc
                 <div class="stat-item">
                     <div class="stat-label">Sections Used</div>
                     <div class="stat-value">10</div>
+                    <div class="stat-factor">Factor: 1.00</div>
                 </div>
                 <div class="stat-item">
                     <div class="stat-label">Pages Referenced</div>
                     <div class="stat-value">11</div>
+                    <div class="stat-factor">Factor: 1.00</div>
                 </div>
                 <div class="stat-item">
-                    <div class="stat-label">Keywords Found</div>
-                    <div class="stat-value">3</div>
+                    <div class="stat-label">Answer Length</div>
+                    <div class="stat-value">699</div>
+                    <div class="stat-factor">Factor: 1.00</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Overall</div>
+                    <div class="stat-value">100%</div>
+                    <div class="stat-factor">HIGH</div>
                 </div>
             </div>
             

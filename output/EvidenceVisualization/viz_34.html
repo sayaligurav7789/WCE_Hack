@@ -73,6 +73,45 @@
                 box-shadow: 0 2px 4px rgba(0,0,0,0.1);
             }
             
+            .confidence-meter {
+                background: #f0f0f0;
+                padding: 15px 30px;
+                border-bottom: 1px solid #e0e0e0;
+                display: flex;
+                align-items: center;
+                gap: 20px;
+                flex-wrap: wrap;
+            }
+            
+            .confidence-bar {
+                flex: 1;
+                height: 20px;
+                background: #e0e0e0;
+                border-radius: 10px;
+                overflow: hidden;
+            }
+            
+            .confidence-fill {
+                height: 100%;
+                border-radius: 10px;
+                transition: width 0.3s ease;
+            }
+            
+            .confidence-fill.high { background: linear-gradient(90deg, #4caf50, #8bc34a); }
+            .confidence-fill.medium { background: linear-gradient(90deg, #ff9800, #ffc107); }
+            .confidence-fill.low { background: linear-gradient(90deg, #f44336, #ff7043); }
+            
+            .confidence-text {
+                font-size: 18px;
+                font-weight: 600;
+                min-width: 100px;
+                text-align: center;
+            }
+            
+            .confidence-text.high { color: #4caf50; }
+            .confidence-text.medium { color: #ff9800; }
+            .confidence-text.low { color: #f44336; }
+            
             .answer-section {
                 padding: 30px;
                 background: #f8f9fa;
@@ -99,8 +138,6 @@
                 color: #444;
                 border-left: 4px solid #667eea;
             }
-            
-            /* NO mark styling for answer - it stays plain */
             
             .evidence-section {
                 padding: 30px;
@@ -153,17 +190,6 @@
                 border: 1px solid #e0e0e0;
             }
             
-            .term-badge {
-                display: inline-block;
-                background: #ffeb3b;
-                color: #333;
-                padding: 3px 10px;
-                border-radius: 15px;
-                font-size: 12px;
-                margin: 0 5px 5px 0;
-                font-weight: 500;
-            }
-            
             .evidence-text {
                 background: white;
                 padding: 15px;
@@ -213,19 +239,17 @@
             }
             
             .stats {
-                display: flex;
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
                 gap: 15px;
                 padding: 20px 30px;
                 background: white;
-                flex-wrap: wrap;
             }
             
             .stat-item {
                 background: #f8f9fa;
-                padding: 10px 20px;
+                padding: 15px;
                 border-radius: 10px;
-                flex: 1;
-                min-width: 120px;
                 text-align: center;
                 border: 1px solid #e0e0e0;
             }
@@ -242,6 +266,12 @@
                 color: #667eea;
             }
             
+            .stat-factor {
+                font-size: 11px;
+                color: #999;
+                margin-top: 5px;
+            }
+            
             .footer {
                 padding: 20px 30px;
                 background: #f0f0f0;
@@ -252,6 +282,10 @@
             }
             
             @media (max-width: 768px) {
+                .stats {
+                    grid-template-columns: repeat(2, 1fr);
+                }
+                
                 .header {
                     padding: 20px;
                 }
@@ -279,14 +313,22 @@
             </div>
             
             <div class="keywords-bar">
-                <div class="keywords-title">🔑 Extracted Keywords:</div>
+                <div class="keywords-title"><i class="fas fa-key"></i> Extracted Keywords:</div>
     <span class="keyword-badge">feminist</span><span class="keyword-badge">psychology</span>
+            </div>
+            
+            <div class="confidence-meter">
+                <i class="fas fa-bullseye"></i><span style="font-weight: 600;">Confidence:</span>
+                <div class="confidence-bar">
+                    <div class="confidence-fill high" style="width: 100.0%;"></div>
+                </div>
+                <div class="confidence-text high">HIGH (100%)</div>
             </div>
             
             <div class="answer-section">
                 <h3><i class="fas fa-robot"></i> Generated Answer</h3>
                 <div class="answer-content">
-                    According to the provided textbook context, feminist psychology is an approach to psychology that attempts to be free of the influence of male cultural biases on our knowledge of the psychology of women. It involves re-evaluating and discovering the contributions of women to the history of psychology, studying psychological gender differences, and questioning the male bias present across the practice of the scientific approach to knowledge.  <!-- NO HIGHLIGHTING HERE -->
+                    According to the provided textbook context, feminist psychology is an approach to psychology that attempts to be free of the influence of male cultural biases on our knowledge of the psychology of women. It involves re-evaluating and discovering the contributions of women to the history of psychology, studying psychological gender differences, and questioning the male bias present across the practice of the scientific approach to knowledge.
                 </div>
             </div>
             
@@ -300,7 +342,7 @@ Blann</span>
                     <span class="page-number">📄 Page 20</span>
                 </div>
                 <div class="evidence-text">
-                    developed and worked. Until the 1960s, the science of <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> was largely a “womanless” <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> (Crawford & Marecek, 1989), meaning that few women were able to practice <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark>, so they had little influence on what was studied. In addition, the experimental subjects of <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> were mostl  <!-- HIGHLIGHTING HERE ONLY -->
+                    developed and worked. Until the 1960s, the science of <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> was largely a “womanless” <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> (Crawford & Marecek, 1989), meaning that few women were able to practice <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark>, so they had little influence on what was studied. In addition, the experimental subjects of <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> were mostl
                 </div>
             </div>
     
@@ -310,7 +352,7 @@ Blann</span>
                     <span class="page-number">📄 Page 28</span>
                 </div>
                 <div class="evidence-text">
-                    developed and worked. Until the 1960s, the science of <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> was largely a “womanless” <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> (Crawford & Marecek, 1989), meaning that few women were able to practice <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark>, so they had little influence on what was studied. In addition, the experimental subjects of <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> were mostl  <!-- HIGHLIGHTING HERE ONLY -->
+                    developed and worked. Until the 1960s, the science of <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> was largely a “womanless” <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> (Crawford & Marecek, 1989), meaning that few women were able to practice <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark>, so they had little influence on what was studied. In addition, the experimental subjects of <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> were mostl
                 </div>
             </div>
     
@@ -322,7 +364,7 @@ By the end of this section</span>
                     <span class="page-number">📄 Page 29</span>
                 </div>
                 <div class="evidence-text">
-                    developed and worked. Until the 1960s, the science of <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> was largely a “womanless” <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> (Crawford & Marecek, 1989), meaning that few women were able to practice <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark>, so they had little influence on what was studied. In addition, the experimental subjects of <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> were mostl  <!-- HIGHLIGHTING HERE ONLY -->
+                    developed and worked. Until the 1960s, the science of <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> was largely a “womanless” <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> (Crawford & Marecek, 1989), meaning that few women were able to practice <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark>, so they had little influence on what was studied. In addition, the experimental subjects of <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> were mostl
                 </div>
             </div>
     
@@ -332,7 +374,7 @@ By the end of this section</span>
                     <span class="page-number">📄 Page 30</span>
                 </div>
                 <div class="evidence-text">
-                    developed and worked. Until the 1960s, the science of <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> was largely a “womanless” <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> (Crawford & Marecek, 1989), meaning that few women were able to practice <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark>, so they had little influence on what was studied. In addition, the experimental subjects of <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> were mostl  <!-- HIGHLIGHTING HERE ONLY -->
+                    developed and worked. Until the 1960s, the science of <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> was largely a “womanless” <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> (Crawford & Marecek, 1989), meaning that few women were able to practice <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark>, so they had little influence on what was studied. In addition, the experimental subjects of <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> were mostl
                 </div>
             </div>
     
@@ -342,7 +384,7 @@ By the end of this section</span>
                     <span class="page-number">📄 Page 50</span>
                 </div>
                 <div class="evidence-text">
-                    developed and worked. Until the 1960s, the science of <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> was largely a “womanless” <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> (Crawford & Marecek, 1989), meaning that few women were able to practice <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark>, so they had little influence on what was studied. In addition, the experimental subjects of <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> were mostl  <!-- HIGHLIGHTING HERE ONLY -->
+                    developed and worked. Until the 1960s, the science of <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> was largely a “womanless” <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> (Crawford & Marecek, 1989), meaning that few women were able to practice <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark>, so they had little influence on what was studied. In addition, the experimental subjects of <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> were mostl
                 </div>
             </div>
     
@@ -361,7 +403,7 @@ of <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark>
 
 the form of men holding biases against women, but anyone can show sexism toward their own or the other sex. Like racism, sexism may be subtle and difficult to detect. Common forms of sexism in modern society include gender role expectations, such as expecting women to be the caretakers of the household. Sexism also includes people’s expectations for how members of a gender group should behave. For example, women are expected to be friendly, passive, and nurturing, and when women behave in an unfriendly, assertive, or neglectful manner they often are disliked for violating their gender role (Rudman, 1998). Research by Laurie Rudman (1998) finds that when female job applicants self-promote, they are likely to be viewed as competent, but they may be disliked and are less likely to be hired because they violated gender expectations for modesty. In this way, women are sometimes blamed for wage and employment inequality, but they would be viewed negatively for trying to overcome them, a phenomenon sometimes referred to as the double bind. Sexism can exist on a societal level such as in hiring, employment opportunities, and education. Women are less likely to be hired or promoted in male-dominated professions such as engineering, aviation, and construction (Figure 12.22) (Blau, Ferber, & Winkler, 2010; Ceci & Williams, 2011). Have you ever experienced or witnessed sexism? Think about your family members’ jobs or careers. Why do you think there are differences in the jobs women and men have, such as more women nurses but more male surgeons (Betz, 2008)? 12.5 • Prejudice and Discrimination 425
 
-Bartels, J. M., Milovich, M. M., & Moussier, S. (2016). Coverage of the Stanford prison experiment in introductory <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> courses: A survey of introductory <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> instructors. Teaching of <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark>, 43(2), 136–141. Batson, C. D. (1991). The altruism question: Toward a social-psychological answer. Erlbaum. Berkowitz, A. D. (2004). The social norms approach: Theory, research and annotated bibliography. http://www.alanberkowitz.com/articles/social_norms.pdf. Berkowitz, L. (1993). Aggression: Its causes, consequences, and control. McGraw-Hill. Betz, N. E. (2008). Women’s career development. In F. Denmark & M. Paludi (Eds.), <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> of women: Handbook of issues and theories (2nd ed., pp. 717–752). Praeger. Blau, F. D., Ferber, M. A., & Winkler, A. E. (2010). The economics of women, men, and work (6th ed.). Prentice Hall. Bond, C. F., & Titus, L. J. (1983). Social facilitation: A meta-analysis of 241 studies. Psychological Bulletin, 94, 265–292. Bond, R., & Smith, P. B. (1996). Culture and conformity: A meta-analysis of studies using Asch’s (1952b, 1956) line judgment task. Psychological Bulletin, 119(1), 111–137. Bowen, L. (2011). Bullying may contribute to lower test scores. Monitor on <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark>, 42(9), 19. Brown, R. (2010). Prejudice: Its social <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> (2nd ed.). Wiley-Blackwell. Burger, J. (2009). Replicating Milgram: Would people still obey today? American Psychologist, 64, 1–11. https://www.ncbi.nlm.nih.gov/pubmed/19209958 Buss, D. M. (2004). Evolutionary <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark>: The new science of the mind (2nd ed.). Allyn and Bacon. Buss, D. M. (1989). Sex differences in human mate preferences: Evolutionary hypotheses tested in 37 cultures. Behavioral and Brain Sciences, 12, 1–49. Carnahan, T., & McFarland, S. (2007). Revisiting the Stanford Prison Experiment: Could participant self- selection have led to the cruelty? Personality and Social <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> Bulletin, 33(5), 603–614. Ceci, S. J., & Williams, W. M. (2011). Understanding current causes of women’s underrepresentation in science. Proceedings of the National Academy of Sciences, 108, 3157–3162. Chang, E., Kannoth, S., Levy, S., Wang, S., Lee, J., & Levy, B. (2020). Global reach of ageism on older persons' health: A systematic review. PLoS ONE, 15, 1–24. Choi, I., & Nisbett R. E. (1998). Situati  <!-- HIGHLIGHTING HERE ONLY -->
+Bartels, J. M., Milovich, M. M., & Moussier, S. (2016). Coverage of the Stanford prison experiment in introductory <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> courses: A survey of introductory <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> instructors. Teaching of <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark>, 43(2), 136–141. Batson, C. D. (1991). The altruism question: Toward a social-psychological answer. Erlbaum. Berkowitz, A. D. (2004). The social norms approach: Theory, research and annotated bibliography. http://www.alanberkowitz.com/articles/social_norms.pdf. Berkowitz, L. (1993). Aggression: Its causes, consequences, and control. McGraw-Hill. Betz, N. E. (2008). Women’s career development. In F. Denmark & M. Paludi (Eds.), <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> of women: Handbook of issues and theories (2nd ed., pp. 717–752). Praeger. Blau, F. D., Ferber, M. A., & Winkler, A. E. (2010). The economics of women, men, and work (6th ed.). Prentice Hall. Bond, C. F., & Titus, L. J. (1983). Social facilitation: A meta-analysis of 241 studies. Psychological Bulletin, 94, 265–292. Bond, R., & Smith, P. B. (1996). Culture and conformity: A meta-analysis of studies using Asch’s (1952b, 1956) line judgment task. Psychological Bulletin, 119(1), 111–137. Bowen, L. (2011). Bullying may contribute to lower test scores. Monitor on <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark>, 42(9), 19. Brown, R. (2010). Prejudice: Its social <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> (2nd ed.). Wiley-Blackwell. Burger, J. (2009). Replicating Milgram: Would people still obey today? American Psychologist, 64, 1–11. https://www.ncbi.nlm.nih.gov/pubmed/19209958 Buss, D. M. (2004). Evolutionary <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark>: The new science of the mind (2nd ed.). Allyn and Bacon. Buss, D. M. (1989). Sex differences in human mate preferences: Evolutionary hypotheses tested in 37 cultures. Behavioral and Brain Sciences, 12, 1–49. Carnahan, T., & McFarland, S. (2007). Revisiting the Stanford Prison Experiment: Could participant self- selection have led to the cruelty? Personality and Social <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> Bulletin, 33(5), 603–614. Ceci, S. J., & Williams, W. M. (2011). Understanding current causes of women’s underrepresentation in science. Proceedings of the National Academy of Sciences, 108, 3157–3162. Chang, E., Kannoth, S., Levy, S., Wang, S., Lee, J., & Levy, B. (2020). Global reach of ageism on older persons' health: A systematic review. PLoS ONE, 15, 1–24. Choi, I., & Nisbett R. E. (1998). Situati
                 </div>
             </div>
             
@@ -369,14 +411,22 @@ Bartels, J. M., Milovich, M. M., & Moussier, S. (2016). Coverage of the Stanford
                 <div class="stat-item">
                     <div class="stat-label">Sections Used</div>
                     <div class="stat-value">10</div>
+                    <div class="stat-factor">Factor: 1.00</div>
                 </div>
                 <div class="stat-item">
                     <div class="stat-label">Pages Referenced</div>
                     <div class="stat-value">11</div>
+                    <div class="stat-factor">Factor: 1.00</div>
                 </div>
                 <div class="stat-item">
-                    <div class="stat-label">Keywords Found</div>
-                    <div class="stat-value">2</div>
+                    <div class="stat-label">Answer Length</div>
+                    <div class="stat-value">444</div>
+                    <div class="stat-factor">Factor: 0.89</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Overall</div>
+                    <div class="stat-value">100%</div>
+                    <div class="stat-factor">HIGH</div>
                 </div>
             </div>
             

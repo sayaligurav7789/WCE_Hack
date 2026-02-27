@@ -73,6 +73,45 @@
                 box-shadow: 0 2px 4px rgba(0,0,0,0.1);
             }
             
+            .confidence-meter {
+                background: #f0f0f0;
+                padding: 15px 30px;
+                border-bottom: 1px solid #e0e0e0;
+                display: flex;
+                align-items: center;
+                gap: 20px;
+                flex-wrap: wrap;
+            }
+            
+            .confidence-bar {
+                flex: 1;
+                height: 20px;
+                background: #e0e0e0;
+                border-radius: 10px;
+                overflow: hidden;
+            }
+            
+            .confidence-fill {
+                height: 100%;
+                border-radius: 10px;
+                transition: width 0.3s ease;
+            }
+            
+            .confidence-fill.high { background: linear-gradient(90deg, #4caf50, #8bc34a); }
+            .confidence-fill.medium { background: linear-gradient(90deg, #ff9800, #ffc107); }
+            .confidence-fill.low { background: linear-gradient(90deg, #f44336, #ff7043); }
+            
+            .confidence-text {
+                font-size: 18px;
+                font-weight: 600;
+                min-width: 100px;
+                text-align: center;
+            }
+            
+            .confidence-text.high { color: #4caf50; }
+            .confidence-text.medium { color: #ff9800; }
+            .confidence-text.low { color: #f44336; }
+            
             .answer-section {
                 padding: 30px;
                 background: #f8f9fa;
@@ -99,8 +138,6 @@
                 color: #444;
                 border-left: 4px solid #667eea;
             }
-            
-            /* NO mark styling for answer - it stays plain */
             
             .evidence-section {
                 padding: 30px;
@@ -153,17 +190,6 @@
                 border: 1px solid #e0e0e0;
             }
             
-            .term-badge {
-                display: inline-block;
-                background: #ffeb3b;
-                color: #333;
-                padding: 3px 10px;
-                border-radius: 15px;
-                font-size: 12px;
-                margin: 0 5px 5px 0;
-                font-weight: 500;
-            }
-            
             .evidence-text {
                 background: white;
                 padding: 15px;
@@ -213,19 +239,17 @@
             }
             
             .stats {
-                display: flex;
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
                 gap: 15px;
                 padding: 20px 30px;
                 background: white;
-                flex-wrap: wrap;
             }
             
             .stat-item {
                 background: #f8f9fa;
-                padding: 10px 20px;
+                padding: 15px;
                 border-radius: 10px;
-                flex: 1;
-                min-width: 120px;
                 text-align: center;
                 border: 1px solid #e0e0e0;
             }
@@ -242,6 +266,12 @@
                 color: #667eea;
             }
             
+            .stat-factor {
+                font-size: 11px;
+                color: #999;
+                margin-top: 5px;
+            }
+            
             .footer {
                 padding: 20px 30px;
                 background: #f0f0f0;
@@ -252,6 +282,10 @@
             }
             
             @media (max-width: 768px) {
+                .stats {
+                    grid-template-columns: repeat(2, 1fr);
+                }
+                
                 .header {
                     padding: 20px;
                 }
@@ -279,14 +313,22 @@
             </div>
             
             <div class="keywords-bar">
-                <div class="keywords-title">🔑 Extracted Keywords:</div>
+                <div class="keywords-title"><i class="fas fa-key"></i> Extracted Keywords:</div>
     <span class="keyword-badge">biopsychology</span>
+            </div>
+            
+            <div class="confidence-meter">
+                <i class="fas fa-bullseye"></i><span style="font-weight: 600;">Confidence:</span>
+                <div class="confidence-bar">
+                    <div class="confidence-fill high" style="width: 100.0%;"></div>
+                </div>
+                <div class="confidence-text high">HIGH (100%)</div>
             </div>
             
             <div class="answer-section">
                 <h3><i class="fas fa-robot"></i> Generated Answer</h3>
                 <div class="answer-content">
-                    Biopsychology, also referred to as biological psychology, is the area of psychology that focuses on the immediate causes of behavior based in the physiology of a human or other animal. It is an interdisciplinary approach that involves collaborations among people from diverse backgrounds, including biologists, medical professionals, physiologists, and chemists, and is often referred to as neuroscience.  <!-- NO HIGHLIGHTING HERE -->
+                    Biopsychology, also referred to as biological psychology, is the area of psychology that focuses on the immediate causes of behavior based in the physiology of a human or other animal. It is an interdisciplinary approach that involves collaborations among people from diverse backgrounds, including biologists, medical professionals, physiologists, and chemists, and is often referred to as neuroscience.
                 </div>
             </div>
             
@@ -299,7 +341,7 @@
                     <span class="page-number">📄 Page 20</span>
                 </div>
                 <div class="evidence-text">
-                    sensory and motor systems, sleep, drug use and abuse, ingestive behavior, reproductive behavior, neurodevelopment, plasticity of the nervous system, and biological correlates of psychological disorders. Given the broad areas of interest falling under the purview of biological psychology, it will pro  <!-- HIGHLIGHTING HERE ONLY -->
+                    sensory and motor systems, sleep, drug use and abuse, ingestive behavior, reproductive behavior, neurodevelopment, plasticity of the nervous system, and biological correlates of psychological disorders. Given the broad areas of interest falling under the purview of biological psychology, it will pro
                 </div>
             </div>
     
@@ -310,7 +352,7 @@ behavior</span>
                     <span class="page-number">📄 Page 23</span>
                 </div>
                 <div class="evidence-text">
-                    sensory and motor systems, sleep, drug use and abuse, ingestive behavior, reproductive behavior, neurodevelopment, plasticity of the nervous system, and biological correlates of psychological disorders. Given the broad areas of interest falling under the purview of biological psychology, it will pro  <!-- HIGHLIGHTING HERE ONLY -->
+                    sensory and motor systems, sleep, drug use and abuse, ingestive behavior, reproductive behavior, neurodevelopment, plasticity of the nervous system, and biological correlates of psychological disorders. Given the broad areas of interest falling under the purview of biological psychology, it will pro
                 </div>
             </div>
     
@@ -320,7 +362,7 @@ behavior</span>
                     <span class="page-number">📄 Page 32</span>
                 </div>
                 <div class="evidence-text">
-                    sensory and motor systems, sleep, drug use and abuse, ingestive behavior, reproductive behavior, neurodevelopment, plasticity of the nervous system, and biological correlates of psychological disorders. Given the broad areas of interest falling under the purview of biological psychology, it will pro  <!-- HIGHLIGHTING HERE ONLY -->
+                    sensory and motor systems, sleep, drug use and abuse, ingestive behavior, reproductive behavior, neurodevelopment, plasticity of the nervous system, and biological correlates of psychological disorders. Given the broad areas of interest falling under the purview of biological psychology, it will pro
                 </div>
             </div>
     
@@ -331,7 +373,7 @@ psychotherapy</span>
                     <span class="page-number">📄 Page 33</span>
                 </div>
                 <div class="evidence-text">
-                    sensory and motor systems, sleep, drug use and abuse, ingestive behavior, reproductive behavior, neurodevelopment, plasticity of the nervous system, and biological correlates of psychological disorders. Given the broad areas of interest falling under the purview of biological psychology, it will pro  <!-- HIGHLIGHTING HERE ONLY -->
+                    sensory and motor systems, sleep, drug use and abuse, ingestive behavior, reproductive behavior, neurodevelopment, plasticity of the nervous system, and biological correlates of psychological disorders. Given the broad areas of interest falling under the purview of biological psychology, it will pro
                 </div>
             </div>
     
@@ -342,7 +384,7 @@ Psychology is a diverse discipline that is made up of several major subdivisions
                     <span class="page-number">📄 Page 38</span>
                 </div>
                 <div class="evidence-text">
-                    sensory and motor systems, sleep, drug use and abuse, ingestive behavior, reproductive behavior, neurodevelopment, plasticity of the nervous system, and biological correlates of psychological disorders. Given the broad areas of interest falling under the purview of biological psychology, it will pro  <!-- HIGHLIGHTING HERE ONLY -->
+                    sensory and motor systems, sleep, drug use and abuse, ingestive behavior, reproductive behavior, neurodevelopment, plasticity of the nervous system, and biological correlates of psychological disorders. Given the broad areas of interest falling under the purview of biological psychology, it will pro
                 </div>
             </div>
     
@@ -365,7 +407,7 @@ including experimentation, rather than a method based only on forms of logical a
 
 able to do so by coming up with theories that generate hypotheses that are testable and falsifiable. Theories that stand up to their tests are retained and refined, while those that do not are discarded or modified. In this way, research enables scientists to separate fact from simple opinion. Having good information generated from research aids in making wise decisions both in public policy and in our personal lives. 2.2 Approaches to Research The clinical or case study involves studying just a few individuals for an extended period of time. While this approach provides an incredible depth of information, the ability to generalize these observations to the larger population is problematic. Naturalistic observation involves observing behavior in a natural setting and allows 64 2 • Summary Access for free at openstax.org
 
-received, and how this information is transformed into our perceptual experiences of the world around us. Cognitive psychology is concerned with the relationship that exists between thought and behavior, and developmental psychologists study the physical and cognit  <!-- HIGHLIGHTING HERE ONLY -->
+received, and how this information is transformed into our perceptual experiences of the world around us. Cognitive psychology is concerned with the relationship that exists between thought and behavior, and developmental psychologists study the physical and cognit
                 </div>
             </div>
             
@@ -373,14 +415,22 @@ received, and how this information is transformed into our perceptual experience
                 <div class="stat-item">
                     <div class="stat-label">Sections Used</div>
                     <div class="stat-value">11</div>
+                    <div class="stat-factor">Factor: 1.00</div>
                 </div>
                 <div class="stat-item">
                     <div class="stat-label">Pages Referenced</div>
                     <div class="stat-value">11</div>
+                    <div class="stat-factor">Factor: 1.00</div>
                 </div>
                 <div class="stat-item">
-                    <div class="stat-label">Keywords Found</div>
-                    <div class="stat-value">1</div>
+                    <div class="stat-label">Answer Length</div>
+                    <div class="stat-value">404</div>
+                    <div class="stat-factor">Factor: 0.81</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Overall</div>
+                    <div class="stat-value">100%</div>
+                    <div class="stat-factor">HIGH</div>
                 </div>
             </div>
             

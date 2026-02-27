@@ -73,6 +73,45 @@
                 box-shadow: 0 2px 4px rgba(0,0,0,0.1);
             }
             
+            .confidence-meter {
+                background: #f0f0f0;
+                padding: 15px 30px;
+                border-bottom: 1px solid #e0e0e0;
+                display: flex;
+                align-items: center;
+                gap: 20px;
+                flex-wrap: wrap;
+            }
+            
+            .confidence-bar {
+                flex: 1;
+                height: 20px;
+                background: #e0e0e0;
+                border-radius: 10px;
+                overflow: hidden;
+            }
+            
+            .confidence-fill {
+                height: 100%;
+                border-radius: 10px;
+                transition: width 0.3s ease;
+            }
+            
+            .confidence-fill.high { background: linear-gradient(90deg, #4caf50, #8bc34a); }
+            .confidence-fill.medium { background: linear-gradient(90deg, #ff9800, #ffc107); }
+            .confidence-fill.low { background: linear-gradient(90deg, #f44336, #ff7043); }
+            
+            .confidence-text {
+                font-size: 18px;
+                font-weight: 600;
+                min-width: 100px;
+                text-align: center;
+            }
+            
+            .confidence-text.high { color: #4caf50; }
+            .confidence-text.medium { color: #ff9800; }
+            .confidence-text.low { color: #f44336; }
+            
             .answer-section {
                 padding: 30px;
                 background: #f8f9fa;
@@ -99,8 +138,6 @@
                 color: #444;
                 border-left: 4px solid #667eea;
             }
-            
-            /* NO mark styling for answer - it stays plain */
             
             .evidence-section {
                 padding: 30px;
@@ -153,17 +190,6 @@
                 border: 1px solid #e0e0e0;
             }
             
-            .term-badge {
-                display: inline-block;
-                background: #ffeb3b;
-                color: #333;
-                padding: 3px 10px;
-                border-radius: 15px;
-                font-size: 12px;
-                margin: 0 5px 5px 0;
-                font-weight: 500;
-            }
-            
             .evidence-text {
                 background: white;
                 padding: 15px;
@@ -213,19 +239,17 @@
             }
             
             .stats {
-                display: flex;
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
                 gap: 15px;
                 padding: 20px 30px;
                 background: white;
-                flex-wrap: wrap;
             }
             
             .stat-item {
                 background: #f8f9fa;
-                padding: 10px 20px;
+                padding: 15px;
                 border-radius: 10px;
-                flex: 1;
-                min-width: 120px;
                 text-align: center;
                 border: 1px solid #e0e0e0;
             }
@@ -242,6 +266,12 @@
                 color: #667eea;
             }
             
+            .stat-factor {
+                font-size: 11px;
+                color: #999;
+                margin-top: 5px;
+            }
+            
             .footer {
                 padding: 20px 30px;
                 background: #f0f0f0;
@@ -252,6 +282,10 @@
             }
             
             @media (max-width: 768px) {
+                .stats {
+                    grid-template-columns: repeat(2, 1fr);
+                }
+                
                 .header {
                     padding: 20px;
                 }
@@ -279,14 +313,22 @@
             </div>
             
             <div class="keywords-bar">
-                <div class="keywords-title">🔑 Extracted Keywords:</div>
+                <div class="keywords-title"><i class="fas fa-key"></i> Extracted Keywords:</div>
     <span class="keyword-badge">client</span><span class="keyword-badge">centered</span><span class="keyword-badge">therapy</span>
+            </div>
+            
+            <div class="confidence-meter">
+                <i class="fas fa-bullseye"></i><span style="font-weight: 600;">Confidence:</span>
+                <div class="confidence-bar">
+                    <div class="confidence-fill high" style="width: 100.0%;"></div>
+                </div>
+                <div class="confidence-text high">HIGH (100%)</div>
             </div>
             
             <div class="answer-section">
                 <h3><i class="fas fa-robot"></i> Generated Answer</h3>
                 <div class="answer-content">
-                    Client-centered therapy is a therapeutic technique developed by Carl Rogers that focuses on helping clients deal with problematic issues. In this approach, the client takes a lead role in the therapy session, and the therapist displays three features to maximize effectiveness: unconditional positive regard, genuineness, and empathy. The therapist accepts the client for who they are, without judgment, and helps them work through their own issues. This approach emphasizes the potential for good that exists within all people and aims to help clients become more accepting of themselves.  <!-- NO HIGHLIGHTING HERE -->
+                    Client-centered therapy is a therapeutic technique developed by Carl Rogers that focuses on helping clients deal with problematic issues. In this approach, the client takes a lead role in the therapy session, and the therapist displays three features to maximize effectiveness: unconditional positive regard, genuineness, and empathy. The therapist accepts the client for who they are, without judgment, and helps them work through their own issues. This approach emphasizes the potential for good that exists within all people and aims to help clients become more accepting of themselves.
                 </div>
             </div>
             
@@ -299,7 +341,7 @@
                     <span class="page-number">📄 Page 27</span>
                 </div>
                 <div class="evidence-text">
-                    which a <mark style="background-color: #ffeb3b; font-weight: bold;">client</mark> learns a new response to a stimulus that has previously elicited an undesirable behavior via classical conditioning. Principles of operant conditioning can be applied to help people deal with a wide range of psychological problems. Token economy is an example of a popular operant cond  <!-- HIGHLIGHTING HERE ONLY -->
+                    which a <mark style="background-color: #ffeb3b; font-weight: bold;">client</mark> learns a new response to a stimulus that has previously elicited an undesirable behavior via classical conditioning. Principles of operant conditioning can be applied to help people deal with a wide range of psychological problems. Token economy is an example of a popular operant cond
                 </div>
             </div>
     
@@ -310,7 +352,7 @@ It was once believed that people with psychological disorders</span>
                     <span class="page-number">📄 Page 620</span>
                 </div>
                 <div class="evidence-text">
-                    which a <mark style="background-color: #ffeb3b; font-weight: bold;">client</mark> learns a new response to a stimulus that has previously elicited an undesirable behavior via classical conditioning. Principles of operant conditioning can be applied to help people deal with a wide range of psychological problems. Token economy is an example of a popular operant cond  <!-- HIGHLIGHTING HERE ONLY -->
+                    which a <mark style="background-color: #ffeb3b; font-weight: bold;">client</mark> learns a new response to a stimulus that has previously elicited an undesirable behavior via classical conditioning. Principles of operant conditioning can be applied to help people deal with a wide range of psychological problems. Token economy is an example of a popular operant cond
                 </div>
             </div>
     
@@ -321,7 +363,7 @@ itself</span>
                     <span class="page-number">📄 Page 624</span>
                 </div>
                 <div class="evidence-text">
-                    which a <mark style="background-color: #ffeb3b; font-weight: bold;">client</mark> learns a new response to a stimulus that has previously elicited an undesirable behavior via classical conditioning. Principles of operant conditioning can be applied to help people deal with a wide range of psychological problems. Token economy is an example of a popular operant cond  <!-- HIGHLIGHTING HERE ONLY -->
+                    which a <mark style="background-color: #ffeb3b; font-weight: bold;">client</mark> learns a new response to a stimulus that has previously elicited an undesirable behavior via classical conditioning. Principles of operant conditioning can be applied to help people deal with a wide range of psychological problems. Token economy is an example of a popular operant cond
                 </div>
             </div>
     
@@ -331,7 +373,7 @@ itself</span>
                     <span class="page-number">📄 Page 629</span>
                 </div>
                 <div class="evidence-text">
-                    which a <mark style="background-color: #ffeb3b; font-weight: bold;">client</mark> learns a new response to a stimulus that has previously elicited an undesirable behavior via classical conditioning. Principles of operant conditioning can be applied to help people deal with a wide range of psychological problems. Token economy is an example of a popular operant cond  <!-- HIGHLIGHTING HERE ONLY -->
+                    which a <mark style="background-color: #ffeb3b; font-weight: bold;">client</mark> learns a new response to a stimulus that has previously elicited an undesirable behavior via classical conditioning. Principles of operant conditioning can be applied to help people deal with a wide range of psychological problems. Token economy is an example of a popular operant cond
                 </div>
             </div>
     
@@ -341,7 +383,7 @@ itself</span>
                     <span class="page-number">📄 Page 630</span>
                 </div>
                 <div class="evidence-text">
-                    which a <mark style="background-color: #ffeb3b; font-weight: bold;">client</mark> learns a new response to a stimulus that has previously elicited an undesirable behavior via classical conditioning. Principles of operant conditioning can be applied to help people deal with a wide range of psychological problems. Token economy is an example of a popular operant cond  <!-- HIGHLIGHTING HERE ONLY -->
+                    which a <mark style="background-color: #ffeb3b; font-weight: bold;">client</mark> learns a new response to a stimulus that has previously elicited an undesirable behavior via classical conditioning. Principles of operant conditioning can be applied to help people deal with a wide range of psychological problems. Token economy is an example of a popular operant cond
                 </div>
             </div>
     
@@ -362,7 +404,7 @@ more logical ways to interpret situations. LINK TO LEARNING View a brief video i
 
 hospitalized. A person suffering symptoms could speak with a primary care physician, who most likely would refer him to someone who specializes in <mark style="background-color: #ffeb3b; font-weight: bold;">therapy</mark>. The person can receive outpatient mental health services from a variety of sources, including psychologists, psychiatrists, marriage and family therapists, school counselors, clinical social workers, and religious personnel. These <mark style="background-color: #ffeb3b; font-weight: bold;">therapy</mark> sessions would be covered through insurance, government funds, or private (self) pay. 16.2 Types of Treatment Psychoanalysis was developed by Sigmund Freud. Freud’s theory is that a person’s psychological problems are the result of repressed impulses or childhood trauma. The goal of the therapist is to help a person uncover buried feelings by using techniques such as free association and dream analysis. Play <mark style="background-color: #ffeb3b; font-weight: bold;">therapy</mark> is a psychodynamic <mark style="background-color: #ffeb3b; font-weight: bold;">therapy</mark> technique often used with children. The idea is that children play out their hopes, fantasies, and traumas, using dolls, stuffed animals, and sandbox figurines. In behavior <mark style="background-color: #ffeb3b; font-weight: bold;">therapy</mark>, a therapist employs principles of learning from classical and operant conditioning to help <mark style="background-color: #ffeb3b; font-weight: bold;">client</mark>s change undesirable behaviors. Counterconditioning is a commonly used therapeutic technique in 628 16 • Summary Access for free at openstax.org
 
-Couples <mark style="background-color: #ffeb3b; font-weight: bold;">therapy</mark> Couples <mark style="background-color: #ffeb3b; font-weight: bold;">therapy</mark> involves two people in an intimate relationship who are having difficulties and are trying to resolve them (Figure 16.17). The couple may be dating, partnered, engaged, or married. The primary therapeutic orientation used in couples counseling is cognitive-behavioral <mark style="background-color: #ffeb3b; font-weight: bold;">therapy</mark> (Rathus & Sanderson, 1999). Couples meet with a therapist to discuss conflicts and/or aspects of their relationship that they want to change. The therapist helps them see how their individual backgrounds, beliefs, and actions are affecting their relationship. Often, a therapist tries to help the couple resolve these problems, as well as implement strategies that will lead to a healthier and happier relationship, such as how to listen, how to argue, and how to express feelings. However, sometimes, after working with a therapist, a couple will realize that they are too incompatible and will decide to separate. Some couples seek <mark style="background-color: #ffeb3b; font-weight: bold;">therapy</mark> to work out their problems, while others attend <mark style="background-color: #ffeb3b; font-weight: bold;">therapy</mark> to determine whether staying together is the best solution. Counseling couples in a high- conflict and volatile relationship can be difficult. In fact, psychologists Peter Pearson and Ellyn Bader, who founded the Couples Institute in Palo Alto, California, have compared the experience of the clinician in couples’ <mark style="background-color: #ffeb3b; font-weight: bold;">therapy</mark> to be like “piloting a helicopter in a hurricane” (Weil, 2012, para. 7). FIGURE 16.17 In couples counseling, a therapist helps people work on their relationship. (credit: Cory Zanker) Family <mark style="background-color: #ffeb3b; font-weight: bold;">therapy</mark> Family <mark style="background-color: #ffeb3b; font-weight: bold;">therapy</mark> is a special form of group <mark style="background-color: #ffeb3b; font-weight: bold;">therapy</mark>, consisting of one or more families. Although there are many theoretical orientations in family <mark style="background-color: #ffeb3b; font-weight: bold;">therapy</mark>, one of the most predominant is the systems approach. The family is viewed as an organized system, and each individual within the family is a contributing member who creates and maintains processes within the system that shape behavior (Minuchin, 1985). Each member of the family influences and is influenced by the others. The goal of this approach is to enhance the growth of each family member as well as that of the family as a whole. Often, dysfunctional patterns of communication that develop between family members can lead to conflict. A family with this dynamic might wish to attend <mark style="background-color: #ffeb3b; font-weight: bold;">therapy</mark> together rather than individually. In many cases, one member of the family has problems that detrimentally affect everyone. For example, a mother’s depression, teen daughter’s eating disorder, or father’s alcohol dependence could affect all members  <!-- HIGHLIGHTING HERE ONLY -->
+Couples <mark style="background-color: #ffeb3b; font-weight: bold;">therapy</mark> Couples <mark style="background-color: #ffeb3b; font-weight: bold;">therapy</mark> involves two people in an intimate relationship who are having difficulties and are trying to resolve them (Figure 16.17). The couple may be dating, partnered, engaged, or married. The primary therapeutic orientation used in couples counseling is cognitive-behavioral <mark style="background-color: #ffeb3b; font-weight: bold;">therapy</mark> (Rathus & Sanderson, 1999). Couples meet with a therapist to discuss conflicts and/or aspects of their relationship that they want to change. The therapist helps them see how their individual backgrounds, beliefs, and actions are affecting their relationship. Often, a therapist tries to help the couple resolve these problems, as well as implement strategies that will lead to a healthier and happier relationship, such as how to listen, how to argue, and how to express feelings. However, sometimes, after working with a therapist, a couple will realize that they are too incompatible and will decide to separate. Some couples seek <mark style="background-color: #ffeb3b; font-weight: bold;">therapy</mark> to work out their problems, while others attend <mark style="background-color: #ffeb3b; font-weight: bold;">therapy</mark> to determine whether staying together is the best solution. Counseling couples in a high- conflict and volatile relationship can be difficult. In fact, psychologists Peter Pearson and Ellyn Bader, who founded the Couples Institute in Palo Alto, California, have compared the experience of the clinician in couples’ <mark style="background-color: #ffeb3b; font-weight: bold;">therapy</mark> to be like “piloting a helicopter in a hurricane” (Weil, 2012, para. 7). FIGURE 16.17 In couples counseling, a therapist helps people work on their relationship. (credit: Cory Zanker) Family <mark style="background-color: #ffeb3b; font-weight: bold;">therapy</mark> Family <mark style="background-color: #ffeb3b; font-weight: bold;">therapy</mark> is a special form of group <mark style="background-color: #ffeb3b; font-weight: bold;">therapy</mark>, consisting of one or more families. Although there are many theoretical orientations in family <mark style="background-color: #ffeb3b; font-weight: bold;">therapy</mark>, one of the most predominant is the systems approach. The family is viewed as an organized system, and each individual within the family is a contributing member who creates and maintains processes within the system that shape behavior (Minuchin, 1985). Each member of the family influences and is influenced by the others. The goal of this approach is to enhance the growth of each family member as well as that of the family as a whole. Often, dysfunctional patterns of communication that develop between family members can lead to conflict. A family with this dynamic might wish to attend <mark style="background-color: #ffeb3b; font-weight: bold;">therapy</mark> together rather than individually. In many cases, one member of the family has problems that detrimentally affect everyone. For example, a mother’s depression, teen daughter’s eating disorder, or father’s alcohol dependence could affect all members
                 </div>
             </div>
             
@@ -370,14 +412,22 @@ Couples <mark style="background-color: #ffeb3b; font-weight: bold;">therapy</mar
                 <div class="stat-item">
                     <div class="stat-label">Sections Used</div>
                     <div class="stat-value">10</div>
+                    <div class="stat-factor">Factor: 1.00</div>
                 </div>
                 <div class="stat-item">
                     <div class="stat-label">Pages Referenced</div>
                     <div class="stat-value">10</div>
+                    <div class="stat-factor">Factor: 1.00</div>
                 </div>
                 <div class="stat-item">
-                    <div class="stat-label">Keywords Found</div>
-                    <div class="stat-value">3</div>
+                    <div class="stat-label">Answer Length</div>
+                    <div class="stat-value">589</div>
+                    <div class="stat-factor">Factor: 1.00</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Overall</div>
+                    <div class="stat-value">100%</div>
+                    <div class="stat-factor">HIGH</div>
                 </div>
             </div>
             

@@ -73,6 +73,45 @@
                 box-shadow: 0 2px 4px rgba(0,0,0,0.1);
             }
             
+            .confidence-meter {
+                background: #f0f0f0;
+                padding: 15px 30px;
+                border-bottom: 1px solid #e0e0e0;
+                display: flex;
+                align-items: center;
+                gap: 20px;
+                flex-wrap: wrap;
+            }
+            
+            .confidence-bar {
+                flex: 1;
+                height: 20px;
+                background: #e0e0e0;
+                border-radius: 10px;
+                overflow: hidden;
+            }
+            
+            .confidence-fill {
+                height: 100%;
+                border-radius: 10px;
+                transition: width 0.3s ease;
+            }
+            
+            .confidence-fill.high { background: linear-gradient(90deg, #4caf50, #8bc34a); }
+            .confidence-fill.medium { background: linear-gradient(90deg, #ff9800, #ffc107); }
+            .confidence-fill.low { background: linear-gradient(90deg, #f44336, #ff7043); }
+            
+            .confidence-text {
+                font-size: 18px;
+                font-weight: 600;
+                min-width: 100px;
+                text-align: center;
+            }
+            
+            .confidence-text.high { color: #4caf50; }
+            .confidence-text.medium { color: #ff9800; }
+            .confidence-text.low { color: #f44336; }
+            
             .answer-section {
                 padding: 30px;
                 background: #f8f9fa;
@@ -99,8 +138,6 @@
                 color: #444;
                 border-left: 4px solid #667eea;
             }
-            
-            /* NO mark styling for answer - it stays plain */
             
             .evidence-section {
                 padding: 30px;
@@ -153,17 +190,6 @@
                 border: 1px solid #e0e0e0;
             }
             
-            .term-badge {
-                display: inline-block;
-                background: #ffeb3b;
-                color: #333;
-                padding: 3px 10px;
-                border-radius: 15px;
-                font-size: 12px;
-                margin: 0 5px 5px 0;
-                font-weight: 500;
-            }
-            
             .evidence-text {
                 background: white;
                 padding: 15px;
@@ -213,19 +239,17 @@
             }
             
             .stats {
-                display: flex;
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
                 gap: 15px;
                 padding: 20px 30px;
                 background: white;
-                flex-wrap: wrap;
             }
             
             .stat-item {
                 background: #f8f9fa;
-                padding: 10px 20px;
+                padding: 15px;
                 border-radius: 10px;
-                flex: 1;
-                min-width: 120px;
                 text-align: center;
                 border: 1px solid #e0e0e0;
             }
@@ -242,6 +266,12 @@
                 color: #667eea;
             }
             
+            .stat-factor {
+                font-size: 11px;
+                color: #999;
+                margin-top: 5px;
+            }
+            
             .footer {
                 padding: 20px 30px;
                 background: #f0f0f0;
@@ -252,6 +282,10 @@
             }
             
             @media (max-width: 768px) {
+                .stats {
+                    grid-template-columns: repeat(2, 1fr);
+                }
+                
                 .header {
                     padding: 20px;
                 }
@@ -279,14 +313,22 @@
             </div>
             
             <div class="keywords-bar">
-                <div class="keywords-title">🔑 Extracted Keywords:</div>
+                <div class="keywords-title"><i class="fas fa-key"></i> Extracted Keywords:</div>
     <span class="keyword-badge">functionalism</span><span class="keyword-badge">psychology</span>
+            </div>
+            
+            <div class="confidence-meter">
+                <i class="fas fa-bullseye"></i><span style="font-weight: 600;">Confidence:</span>
+                <div class="confidence-bar">
+                    <div class="confidence-fill high" style="width: 100.0%;"></div>
+                </div>
+                <div class="confidence-text high">HIGH (100%)</div>
             </div>
             
             <div class="answer-section">
                 <h3><i class="fas fa-robot"></i> Generated Answer</h3>
                 <div class="answer-content">
-                    According to the provided textbook context, functionalism in psychology is a perspective that focuses on how mental activities serve as adaptive responses to an organism's environment. This perspective was promoted by William James, who was the first American psychologist.  <!-- NO HIGHLIGHTING HERE -->
+                    According to the provided textbook context, functionalism in psychology is a perspective that focuses on how mental activities serve as adaptive responses to an organism's environment. This perspective was promoted by William James, who was the first American psychologist.
                 </div>
             </div>
             
@@ -299,7 +341,7 @@
                     <span class="page-number">📄 Page 20</span>
                 </div>
                 <div class="evidence-text">
-                    2002). Nash was the subject of the 2001 movie A Beautiful Mind. Why did these people have these experiences? How does the human brain work? And what is the connection between the brain’s internal processes and people’s external behaviors? This textbook will introduce you to various ways that the fie  <!-- HIGHLIGHTING HERE ONLY -->
+                    2002). Nash was the subject of the 2001 movie A Beautiful Mind. Why did these people have these experiences? How does the human brain work? And what is the connection between the brain’s internal processes and people’s external behaviors? This textbook will introduce you to various ways that the fie
                 </div>
             </div>
     
@@ -310,7 +352,7 @@ behavior</span>
                     <span class="page-number">📄 Page 24</span>
                 </div>
                 <div class="evidence-text">
-                    2002). Nash was the subject of the 2001 movie A Beautiful Mind. Why did these people have these experiences? How does the human brain work? And what is the connection between the brain’s internal processes and people’s external behaviors? This textbook will introduce you to various ways that the fie  <!-- HIGHLIGHTING HERE ONLY -->
+                    2002). Nash was the subject of the 2001 movie A Beautiful Mind. Why did these people have these experiences? How does the human brain work? And what is the connection between the brain’s internal processes and people’s external behaviors? This textbook will introduce you to various ways that the fie
                 </div>
             </div>
     
@@ -320,7 +362,7 @@ behavior</span>
                     <span class="page-number">📄 Page 25</span>
                 </div>
                 <div class="evidence-text">
-                    2002). Nash was the subject of the 2001 movie A Beautiful Mind. Why did these people have these experiences? How does the human brain work? And what is the connection between the brain’s internal processes and people’s external behaviors? This textbook will introduce you to various ways that the fie  <!-- HIGHLIGHTING HERE ONLY -->
+                    2002). Nash was the subject of the 2001 movie A Beautiful Mind. Why did these people have these experiences? How does the human brain work? And what is the connection between the brain’s internal processes and people’s external behaviors? This textbook will introduce you to various ways that the fie
                 </div>
             </div>
     
@@ -331,7 +373,7 @@ Psychology is a diverse discipline that is made up of several major subdivisions
                     <span class="page-number">📄 Page 32</span>
                 </div>
                 <div class="evidence-text">
-                    2002). Nash was the subject of the 2001 movie A Beautiful Mind. Why did these people have these experiences? How does the human brain work? And what is the connection between the brain’s internal processes and people’s external behaviors? This textbook will introduce you to various ways that the fie  <!-- HIGHLIGHTING HERE ONLY -->
+                    2002). Nash was the subject of the 2001 movie A Beautiful Mind. Why did these people have these experiences? How does the human brain work? And what is the connection between the brain’s internal processes and people’s external behaviors? This textbook will introduce you to various ways that the fie
                 </div>
             </div>
     
@@ -341,7 +383,7 @@ Psychology is a diverse discipline that is made up of several major subdivisions
                     <span class="page-number">📄 Page 33</span>
                 </div>
                 <div class="evidence-text">
-                    2002). Nash was the subject of the 2001 movie A Beautiful Mind. Why did these people have these experiences? How does the human brain work? And what is the connection between the brain’s internal processes and people’s external behaviors? This textbook will introduce you to various ways that the fie  <!-- HIGHLIGHTING HERE ONLY -->
+                    2002). Nash was the subject of the 2001 movie A Beautiful Mind. Why did these people have these experiences? How does the human brain work? And what is the connection between the brain’s internal processes and people’s external behaviors? This textbook will introduce you to various ways that the fie
                 </div>
             </div>
     
@@ -360,7 +402,7 @@ environment and effects of culture on personality. Some of the notable neo-Freud
 
 oncologist. Behaviorism John B. Watson, shown in Figure 6.8, is considered the founder of behaviorism. Behaviorism is a school of thought that arose during the first part of the 20th century, which incorporates elements of Pavlov’s classical conditioning (Hunt, 2007). In stark contrast with Freud, who considered the reasons for behavior to be hidden in the unconscious, Watson championed the idea that all behavior can be studied as a simple stimulus- response reaction, without regard for internal processes. Watson argued that in order for <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> to become a legitimate science, it must shift its concern away from internal mental processes because mental processes cannot be seen or measured. Instead, he asserted that <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> must focus on outward observable behavior that can be measured. 190 6 • Learning Access for free at openstax.org
 
-scale. These factors along with the rise of behaviorism (described next) in the United States prevented principles of Gestalt <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> from being as influential in the United States as they had been in their native Germany (Thorne & Henley, 2005). Despite these issues, several Gestalt principles are still very influential today. Considering the human individual as a whole rather than as a sum of individually measured parts became an important foundation in humanistic theory late in the century. The idea  <!-- HIGHLIGHTING HERE ONLY -->
+scale. These factors along with the rise of behaviorism (described next) in the United States prevented principles of Gestalt <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> from being as influential in the United States as they had been in their native Germany (Thorne & Henley, 2005). Despite these issues, several Gestalt principles are still very influential today. Considering the human individual as a whole rather than as a sum of individually measured parts became an important foundation in humanistic theory late in the century. The idea
                 </div>
             </div>
             
@@ -368,14 +410,22 @@ scale. These factors along with the rise of behaviorism (described next) in the 
                 <div class="stat-item">
                     <div class="stat-label">Sections Used</div>
                     <div class="stat-value">11</div>
+                    <div class="stat-factor">Factor: 1.00</div>
                 </div>
                 <div class="stat-item">
                     <div class="stat-label">Pages Referenced</div>
                     <div class="stat-value">11</div>
+                    <div class="stat-factor">Factor: 1.00</div>
                 </div>
                 <div class="stat-item">
-                    <div class="stat-label">Keywords Found</div>
-                    <div class="stat-value">2</div>
+                    <div class="stat-label">Answer Length</div>
+                    <div class="stat-value">273</div>
+                    <div class="stat-factor">Factor: 0.55</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Overall</div>
+                    <div class="stat-value">100%</div>
+                    <div class="stat-factor">HIGH</div>
                 </div>
             </div>
             

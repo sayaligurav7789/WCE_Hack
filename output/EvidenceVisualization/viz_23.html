@@ -73,6 +73,45 @@
                 box-shadow: 0 2px 4px rgba(0,0,0,0.1);
             }
             
+            .confidence-meter {
+                background: #f0f0f0;
+                padding: 15px 30px;
+                border-bottom: 1px solid #e0e0e0;
+                display: flex;
+                align-items: center;
+                gap: 20px;
+                flex-wrap: wrap;
+            }
+            
+            .confidence-bar {
+                flex: 1;
+                height: 20px;
+                background: #e0e0e0;
+                border-radius: 10px;
+                overflow: hidden;
+            }
+            
+            .confidence-fill {
+                height: 100%;
+                border-radius: 10px;
+                transition: width 0.3s ease;
+            }
+            
+            .confidence-fill.high { background: linear-gradient(90deg, #4caf50, #8bc34a); }
+            .confidence-fill.medium { background: linear-gradient(90deg, #ff9800, #ffc107); }
+            .confidence-fill.low { background: linear-gradient(90deg, #f44336, #ff7043); }
+            
+            .confidence-text {
+                font-size: 18px;
+                font-weight: 600;
+                min-width: 100px;
+                text-align: center;
+            }
+            
+            .confidence-text.high { color: #4caf50; }
+            .confidence-text.medium { color: #ff9800; }
+            .confidence-text.low { color: #f44336; }
+            
             .answer-section {
                 padding: 30px;
                 background: #f8f9fa;
@@ -99,8 +138,6 @@
                 color: #444;
                 border-left: 4px solid #667eea;
             }
-            
-            /* NO mark styling for answer - it stays plain */
             
             .evidence-section {
                 padding: 30px;
@@ -153,17 +190,6 @@
                 border: 1px solid #e0e0e0;
             }
             
-            .term-badge {
-                display: inline-block;
-                background: #ffeb3b;
-                color: #333;
-                padding: 3px 10px;
-                border-radius: 15px;
-                font-size: 12px;
-                margin: 0 5px 5px 0;
-                font-weight: 500;
-            }
-            
             .evidence-text {
                 background: white;
                 padding: 15px;
@@ -213,19 +239,17 @@
             }
             
             .stats {
-                display: flex;
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
                 gap: 15px;
                 padding: 20px 30px;
                 background: white;
-                flex-wrap: wrap;
             }
             
             .stat-item {
                 background: #f8f9fa;
-                padding: 10px 20px;
+                padding: 15px;
                 border-radius: 10px;
-                flex: 1;
-                min-width: 120px;
                 text-align: center;
                 border: 1px solid #e0e0e0;
             }
@@ -242,6 +266,12 @@
                 color: #667eea;
             }
             
+            .stat-factor {
+                font-size: 11px;
+                color: #999;
+                margin-top: 5px;
+            }
+            
             .footer {
                 padding: 20px 30px;
                 background: #f0f0f0;
@@ -252,6 +282,10 @@
             }
             
             @media (max-width: 768px) {
+                .stats {
+                    grid-template-columns: repeat(2, 1fr);
+                }
+                
                 .header {
                     padding: 20px;
                 }
@@ -279,14 +313,22 @@
             </div>
             
             <div class="keywords-bar">
-                <div class="keywords-title">🔑 Extracted Keywords:</div>
+                <div class="keywords-title"><i class="fas fa-key"></i> Extracted Keywords:</div>
     <span class="keyword-badge">evolutionary</span><span class="keyword-badge">psychologists</span><span class="keyword-badge">interested</span>
+            </div>
+            
+            <div class="confidence-meter">
+                <i class="fas fa-bullseye"></i><span style="font-weight: 600;">Confidence:</span>
+                <div class="confidence-bar">
+                    <div class="confidence-fill high" style="width: 100.0%;"></div>
+                </div>
+                <div class="confidence-text high">HIGH (100%)</div>
             </div>
             
             <div class="answer-section">
                 <h3><i class="fas fa-robot"></i> Generated Answer</h3>
                 <div class="answer-content">
-                    Evolutionary psychologists are interested in studying the ultimate biological causes of behavior. They seek to understand how behaviors have evolved over time to adapt to the environment and social surroundings, and how these adaptations have contributed to survival and reproduction. They are interested in predicting the outcome of a behavior in a particular situation based on evolutionary theory and then testing these predictions through observations or experiments.  <!-- NO HIGHLIGHTING HERE -->
+                    Evolutionary psychologists are interested in studying the ultimate biological causes of behavior. They seek to understand how behaviors have evolved over time to adapt to the environment and social surroundings, and how these adaptations have contributed to survival and reproduction. They are interested in predicting the outcome of a behavior in a particular situation based on evolutionary theory and then testing these predictions through observations or experiments.
                 </div>
             </div>
             
@@ -300,7 +342,7 @@ behavior</span>
                     <span class="page-number">📄 Page 28</span>
                 </div>
                 <div class="evidence-text">
-                    Psychiatric Genetics, 10, 185–189. Confer, J. C., Easton, J. A., Fleischman, D. S., Goetz, C. D., Lewis, D. M. G, Perilloux, C., & Buss, D. M. (2010). <mark style="background-color: #ffeb3b; font-weight: bold;">evolutionary</mark> psychology: Controversies, questions, prospects, and limitations. American Psychologist, 65, 638 References Access for free at openstax.  <!-- HIGHLIGHTING HERE ONLY -->
+                    Psychiatric Genetics, 10, 185–189. Confer, J. C., Easton, J. A., Fleischman, D. S., Goetz, C. D., Lewis, D. M. G, Perilloux, C., & Buss, D. M. (2010). <mark style="background-color: #ffeb3b; font-weight: bold;">evolutionary</mark> psychology: Controversies, questions, prospects, and limitations. American Psychologist, 65, 638 References Access for free at openstax.
                 </div>
             </div>
     
@@ -310,7 +352,7 @@ behavior</span>
                     <span class="page-number">📄 Page 32</span>
                 </div>
                 <div class="evidence-text">
-                    Psychiatric Genetics, 10, 185–189. Confer, J. C., Easton, J. A., Fleischman, D. S., Goetz, C. D., Lewis, D. M. G, Perilloux, C., & Buss, D. M. (2010). <mark style="background-color: #ffeb3b; font-weight: bold;">evolutionary</mark> psychology: Controversies, questions, prospects, and limitations. American Psychologist, 65, 638 References Access for free at openstax.  <!-- HIGHLIGHTING HERE ONLY -->
+                    Psychiatric Genetics, 10, 185–189. Confer, J. C., Easton, J. A., Fleischman, D. S., Goetz, C. D., Lewis, D. M. G, Perilloux, C., & Buss, D. M. (2010). <mark style="background-color: #ffeb3b; font-weight: bold;">evolutionary</mark> psychology: Controversies, questions, prospects, and limitations. American Psychologist, 65, 638 References Access for free at openstax.
                 </div>
             </div>
     
@@ -322,7 +364,7 @@ consequences outside of the organism</span>
                     <span class="page-number">📄 Page 86</span>
                 </div>
                 <div class="evidence-text">
-                    Psychiatric Genetics, 10, 185–189. Confer, J. C., Easton, J. A., Fleischman, D. S., Goetz, C. D., Lewis, D. M. G, Perilloux, C., & Buss, D. M. (2010). <mark style="background-color: #ffeb3b; font-weight: bold;">evolutionary</mark> psychology: Controversies, questions, prospects, and limitations. American Psychologist, 65, 638 References Access for free at openstax.  <!-- HIGHLIGHTING HERE ONLY -->
+                    Psychiatric Genetics, 10, 185–189. Confer, J. C., Easton, J. A., Fleischman, D. S., Goetz, C. D., Lewis, D. M. G, Perilloux, C., & Buss, D. M. (2010). <mark style="background-color: #ffeb3b; font-weight: bold;">evolutionary</mark> psychology: Controversies, questions, prospects, and limitations. American Psychologist, 65, 638 References Access for free at openstax.
                 </div>
             </div>
     
@@ -334,7 +376,7 @@ By the end of this section</span>
                     <span class="page-number">📄 Page 227</span>
                 </div>
                 <div class="evidence-text">
-                    Psychiatric Genetics, 10, 185–189. Confer, J. C., Easton, J. A., Fleischman, D. S., Goetz, C. D., Lewis, D. M. G, Perilloux, C., & Buss, D. M. (2010). <mark style="background-color: #ffeb3b; font-weight: bold;">evolutionary</mark> psychology: Controversies, questions, prospects, and limitations. American Psychologist, 65, 638 References Access for free at openstax.  <!-- HIGHLIGHTING HERE ONLY -->
+                    Psychiatric Genetics, 10, 185–189. Confer, J. C., Easton, J. A., Fleischman, D. S., Goetz, C. D., Lewis, D. M. G, Perilloux, C., & Buss, D. M. (2010). <mark style="background-color: #ffeb3b; font-weight: bold;">evolutionary</mark> psychology: Controversies, questions, prospects, and limitations. American Psychologist, 65, 638 References Access for free at openstax.
                 </div>
             </div>
     
@@ -345,7 +387,7 @@ There are several modalities of treatment: individual therapy</span>
                     <span class="page-number">📄 Page 292</span>
                 </div>
                 <div class="evidence-text">
-                    Psychiatric Genetics, 10, 185–189. Confer, J. C., Easton, J. A., Fleischman, D. S., Goetz, C. D., Lewis, D. M. G, Perilloux, C., & Buss, D. M. (2010). <mark style="background-color: #ffeb3b; font-weight: bold;">evolutionary</mark> psychology: Controversies, questions, prospects, and limitations. American Psychologist, 65, 638 References Access for free at openstax.  <!-- HIGHLIGHTING HERE ONLY -->
+                    Psychiatric Genetics, 10, 185–189. Confer, J. C., Easton, J. A., Fleischman, D. S., Goetz, C. D., Lewis, D. M. G, Perilloux, C., & Buss, D. M. (2010). <mark style="background-color: #ffeb3b; font-weight: bold;">evolutionary</mark> psychology: Controversies, questions, prospects, and limitations. American Psychologist, 65, 638 References Access for free at openstax.
                 </div>
             </div>
     
@@ -366,7 +408,7 @@ Watson, J. B. & Rayner, R. (1920). Conditioned emotional reactions. Journal of E
 
 of psychology and therefore influencing its development. They also suffered from the attitudes of White male <mark style="background-color: #ffeb3b; font-weight: bold;">psychologists</mark> who were not immune to the nonscientific attitudes prevalent in the society in which they DIG DEEPER 16 1 • Introduction to Psychology Access for free at openstax.org
 
-actual selves, we experience a state Rogers called incongruence, which can lead to maladjustment. Both Rogers’s and Maslow’s theories focus on individual choices and do not believe that biology is deterministic. 11.6 Biological Approaches LEARNING OBJECTIVES By the end of this section, you will be able to: • Discuss the findings of the Minnesota Study of Twins Reared Apart as they relate to personality and genetics • Discuss temperament and describe the three infant temperaments identified by Thomas and Chess • Discuss the <mark style="background-color: #ffeb3b; font-weight: bold;">evolutionary</mark> perspective on personality development How much of our personality is in-born and biological, and how much is influenced by the environment and culture we are raised in? <mark style="background-color: #ffeb3b; font-weight: bold;">psychologists</mark> who favor the biological approach believe that inherited predispositions as well as physiological processes can be used to explain differences in our personalities (Burger, 2008). <mark style="background-color: #ffeb3b; font-weight: bold;">evolutionary</mark> psychology relative to personality development looks at personality traits that are universal, as well as differences across individuals. In this view, adaptive differences have evolved and then provide a survival and reproductive advantage. Individual differences are important from an <mark style="background-color: #ffeb3b; font-weight: bold;">evolutionary</mark> viewpoint for several reasons. Certain ind  <!-- HIGHLIGHTING HERE ONLY -->
+actual selves, we experience a state Rogers called incongruence, which can lead to maladjustment. Both Rogers’s and Maslow’s theories focus on individual choices and do not believe that biology is deterministic. 11.6 Biological Approaches LEARNING OBJECTIVES By the end of this section, you will be able to: • Discuss the findings of the Minnesota Study of Twins Reared Apart as they relate to personality and genetics • Discuss temperament and describe the three infant temperaments identified by Thomas and Chess • Discuss the <mark style="background-color: #ffeb3b; font-weight: bold;">evolutionary</mark> perspective on personality development How much of our personality is in-born and biological, and how much is influenced by the environment and culture we are raised in? <mark style="background-color: #ffeb3b; font-weight: bold;">psychologists</mark> who favor the biological approach believe that inherited predispositions as well as physiological processes can be used to explain differences in our personalities (Burger, 2008). <mark style="background-color: #ffeb3b; font-weight: bold;">evolutionary</mark> psychology relative to personality development looks at personality traits that are universal, as well as differences across individuals. In this view, adaptive differences have evolved and then provide a survival and reproductive advantage. Individual differences are important from an <mark style="background-color: #ffeb3b; font-weight: bold;">evolutionary</mark> viewpoint for several reasons. Certain ind
                 </div>
             </div>
             
@@ -374,14 +416,22 @@ actual selves, we experience a state Rogers called incongruence, which can lead 
                 <div class="stat-item">
                     <div class="stat-label">Sections Used</div>
                     <div class="stat-value">11</div>
+                    <div class="stat-factor">Factor: 1.00</div>
                 </div>
                 <div class="stat-item">
                     <div class="stat-label">Pages Referenced</div>
                     <div class="stat-value">11</div>
+                    <div class="stat-factor">Factor: 1.00</div>
                 </div>
                 <div class="stat-item">
-                    <div class="stat-label">Keywords Found</div>
-                    <div class="stat-value">3</div>
+                    <div class="stat-label">Answer Length</div>
+                    <div class="stat-value">471</div>
+                    <div class="stat-factor">Factor: 0.94</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Overall</div>
+                    <div class="stat-value">100%</div>
+                    <div class="stat-factor">HIGH</div>
                 </div>
             </div>
             

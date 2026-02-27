@@ -73,6 +73,45 @@
                 box-shadow: 0 2px 4px rgba(0,0,0,0.1);
             }
             
+            .confidence-meter {
+                background: #f0f0f0;
+                padding: 15px 30px;
+                border-bottom: 1px solid #e0e0e0;
+                display: flex;
+                align-items: center;
+                gap: 20px;
+                flex-wrap: wrap;
+            }
+            
+            .confidence-bar {
+                flex: 1;
+                height: 20px;
+                background: #e0e0e0;
+                border-radius: 10px;
+                overflow: hidden;
+            }
+            
+            .confidence-fill {
+                height: 100%;
+                border-radius: 10px;
+                transition: width 0.3s ease;
+            }
+            
+            .confidence-fill.high { background: linear-gradient(90deg, #4caf50, #8bc34a); }
+            .confidence-fill.medium { background: linear-gradient(90deg, #ff9800, #ffc107); }
+            .confidence-fill.low { background: linear-gradient(90deg, #f44336, #ff7043); }
+            
+            .confidence-text {
+                font-size: 18px;
+                font-weight: 600;
+                min-width: 100px;
+                text-align: center;
+            }
+            
+            .confidence-text.high { color: #4caf50; }
+            .confidence-text.medium { color: #ff9800; }
+            .confidence-text.low { color: #f44336; }
+            
             .answer-section {
                 padding: 30px;
                 background: #f8f9fa;
@@ -99,8 +138,6 @@
                 color: #444;
                 border-left: 4px solid #667eea;
             }
-            
-            /* NO mark styling for answer - it stays plain */
             
             .evidence-section {
                 padding: 30px;
@@ -153,17 +190,6 @@
                 border: 1px solid #e0e0e0;
             }
             
-            .term-badge {
-                display: inline-block;
-                background: #ffeb3b;
-                color: #333;
-                padding: 3px 10px;
-                border-radius: 15px;
-                font-size: 12px;
-                margin: 0 5px 5px 0;
-                font-weight: 500;
-            }
-            
             .evidence-text {
                 background: white;
                 padding: 15px;
@@ -213,19 +239,17 @@
             }
             
             .stats {
-                display: flex;
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
                 gap: 15px;
                 padding: 20px 30px;
                 background: white;
-                flex-wrap: wrap;
             }
             
             .stat-item {
                 background: #f8f9fa;
-                padding: 10px 20px;
+                padding: 15px;
                 border-radius: 10px;
-                flex: 1;
-                min-width: 120px;
                 text-align: center;
                 border: 1px solid #e0e0e0;
             }
@@ -242,6 +266,12 @@
                 color: #667eea;
             }
             
+            .stat-factor {
+                font-size: 11px;
+                color: #999;
+                margin-top: 5px;
+            }
+            
             .footer {
                 padding: 20px 30px;
                 background: #f0f0f0;
@@ -252,6 +282,10 @@
             }
             
             @media (max-width: 768px) {
+                .stats {
+                    grid-template-columns: repeat(2, 1fr);
+                }
+                
                 .header {
                     padding: 20px;
                 }
@@ -279,8 +313,16 @@
             </div>
             
             <div class="keywords-bar">
-                <div class="keywords-title">🔑 Extracted Keywords:</div>
+                <div class="keywords-title"><i class="fas fa-key"></i> Extracted Keywords:</div>
     <span class="keyword-badge">three</span><span class="keyword-badge">stages</span><span class="keyword-badge">memory</span>
+            </div>
+            
+            <div class="confidence-meter">
+                <i class="fas fa-bullseye"></i><span style="font-weight: 600;">Confidence:</span>
+                <div class="confidence-bar">
+                    <div class="confidence-fill high" style="width: 100.0%;"></div>
+                </div>
+                <div class="confidence-text high">HIGH (100%)</div>
             </div>
             
             <div class="answer-section">
@@ -290,7 +332,7 @@
 
 1. Sensory Memory: storage of brief sensory events, such as sights, sounds, and tastes, which lasts for a period of less than a second to a few seconds.
 2. Short-Term Memory (STM): holds about seven bits of information before it is forgotten or stored, as well as information that has been retrieved and is being used.
-3. Long-Term Memory: permanent storage of information, which has a practically limitless storage capacity and is divided into implicit and explicit memory.  <!-- NO HIGHLIGHTING HERE -->
+3. Long-Term Memory: permanent storage of information, which has a practically limitless storage capacity and is divided into implicit and explicit memory.
                 </div>
             </div>
             
@@ -303,7 +345,7 @@
                     <span class="page-number">📄 Page 226</span>
                 </div>
                 <div class="evidence-text">
-                    8.1 How <mark style="background-color: #ffeb3b; font-weight: bold;">memory</mark> Functions LEARNING OBJECTIVES By the end of this section, you will be able to: • Discuss the <mark style="background-color: #ffeb3b; font-weight: bold;">three</mark> basic functions of <mark style="background-color: #ffeb3b; font-weight: bold;">memory</mark> • Describe the <mark style="background-color: #ffeb3b; font-weight: bold;">three</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">stages</mark> of <mark style="background-color: #ffeb3b; font-weight: bold;">memory</mark> storage • Describe and distinguish between procedural and declarative <mark style="background-color: #ffeb3b; font-weight: bold;">memory</mark> and semantic and episodic <mark style="background-color: #ffeb3b; font-weight: bold;">memory</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">memory</mark> is an  <!-- HIGHLIGHTING HERE ONLY -->
+                    8.1 How <mark style="background-color: #ffeb3b; font-weight: bold;">memory</mark> Functions LEARNING OBJECTIVES By the end of this section, you will be able to: • Discuss the <mark style="background-color: #ffeb3b; font-weight: bold;">three</mark> basic functions of <mark style="background-color: #ffeb3b; font-weight: bold;">memory</mark> • Describe the <mark style="background-color: #ffeb3b; font-weight: bold;">three</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">stages</mark> of <mark style="background-color: #ffeb3b; font-weight: bold;">memory</mark> storage • Describe and distinguish between procedural and declarative <mark style="background-color: #ffeb3b; font-weight: bold;">memory</mark> and semantic and episodic <mark style="background-color: #ffeb3b; font-weight: bold;">memory</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">memory</mark> is an
                 </div>
             </div>
     
@@ -313,7 +355,7 @@
                     <span class="page-number">📄 Page 227</span>
                 </div>
                 <div class="evidence-text">
-                    8.1 How <mark style="background-color: #ffeb3b; font-weight: bold;">memory</mark> Functions LEARNING OBJECTIVES By the end of this section, you will be able to: • Discuss the <mark style="background-color: #ffeb3b; font-weight: bold;">three</mark> basic functions of <mark style="background-color: #ffeb3b; font-weight: bold;">memory</mark> • Describe the <mark style="background-color: #ffeb3b; font-weight: bold;">three</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">stages</mark> of <mark style="background-color: #ffeb3b; font-weight: bold;">memory</mark> storage • Describe and distinguish between procedural and declarative <mark style="background-color: #ffeb3b; font-weight: bold;">memory</mark> and semantic and episodic <mark style="background-color: #ffeb3b; font-weight: bold;">memory</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">memory</mark> is an  <!-- HIGHLIGHTING HERE ONLY -->
+                    8.1 How <mark style="background-color: #ffeb3b; font-weight: bold;">memory</mark> Functions LEARNING OBJECTIVES By the end of this section, you will be able to: • Discuss the <mark style="background-color: #ffeb3b; font-weight: bold;">three</mark> basic functions of <mark style="background-color: #ffeb3b; font-weight: bold;">memory</mark> • Describe the <mark style="background-color: #ffeb3b; font-weight: bold;">three</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">stages</mark> of <mark style="background-color: #ffeb3b; font-weight: bold;">memory</mark> storage • Describe and distinguish between procedural and declarative <mark style="background-color: #ffeb3b; font-weight: bold;">memory</mark> and semantic and episodic <mark style="background-color: #ffeb3b; font-weight: bold;">memory</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">memory</mark> is an
                 </div>
             </div>
     
@@ -325,7 +367,7 @@ By the end of this section</span>
                     <span class="page-number">📄 Page 260</span>
                 </div>
                 <div class="evidence-text">
-                    8.1 How <mark style="background-color: #ffeb3b; font-weight: bold;">memory</mark> Functions LEARNING OBJECTIVES By the end of this section, you will be able to: • Discuss the <mark style="background-color: #ffeb3b; font-weight: bold;">three</mark> basic functions of <mark style="background-color: #ffeb3b; font-weight: bold;">memory</mark> • Describe the <mark style="background-color: #ffeb3b; font-weight: bold;">three</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">stages</mark> of <mark style="background-color: #ffeb3b; font-weight: bold;">memory</mark> storage • Describe and distinguish between procedural and declarative <mark style="background-color: #ffeb3b; font-weight: bold;">memory</mark> and semantic and episodic <mark style="background-color: #ffeb3b; font-weight: bold;">memory</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">memory</mark> is an  <!-- HIGHLIGHTING HERE ONLY -->
+                    8.1 How <mark style="background-color: #ffeb3b; font-weight: bold;">memory</mark> Functions LEARNING OBJECTIVES By the end of this section, you will be able to: • Discuss the <mark style="background-color: #ffeb3b; font-weight: bold;">three</mark> basic functions of <mark style="background-color: #ffeb3b; font-weight: bold;">memory</mark> • Describe the <mark style="background-color: #ffeb3b; font-weight: bold;">three</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">stages</mark> of <mark style="background-color: #ffeb3b; font-weight: bold;">memory</mark> storage • Describe and distinguish between procedural and declarative <mark style="background-color: #ffeb3b; font-weight: bold;">memory</mark> and semantic and episodic <mark style="background-color: #ffeb3b; font-weight: bold;">memory</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">memory</mark> is an
                 </div>
             </div>
     
@@ -336,7 +378,7 @@ Memory is a system or process that stores what we learn for future use</span>
                     <span class="page-number">📄 Page 262</span>
                 </div>
                 <div class="evidence-text">
-                    8.1 How <mark style="background-color: #ffeb3b; font-weight: bold;">memory</mark> Functions LEARNING OBJECTIVES By the end of this section, you will be able to: • Discuss the <mark style="background-color: #ffeb3b; font-weight: bold;">three</mark> basic functions of <mark style="background-color: #ffeb3b; font-weight: bold;">memory</mark> • Describe the <mark style="background-color: #ffeb3b; font-weight: bold;">three</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">stages</mark> of <mark style="background-color: #ffeb3b; font-weight: bold;">memory</mark> storage • Describe and distinguish between procedural and declarative <mark style="background-color: #ffeb3b; font-weight: bold;">memory</mark> and semantic and episodic <mark style="background-color: #ffeb3b; font-weight: bold;">memory</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">memory</mark> is an  <!-- HIGHLIGHTING HERE ONLY -->
+                    8.1 How <mark style="background-color: #ffeb3b; font-weight: bold;">memory</mark> Functions LEARNING OBJECTIVES By the end of this section, you will be able to: • Discuss the <mark style="background-color: #ffeb3b; font-weight: bold;">three</mark> basic functions of <mark style="background-color: #ffeb3b; font-weight: bold;">memory</mark> • Describe the <mark style="background-color: #ffeb3b; font-weight: bold;">three</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">stages</mark> of <mark style="background-color: #ffeb3b; font-weight: bold;">memory</mark> storage • Describe and distinguish between procedural and declarative <mark style="background-color: #ffeb3b; font-weight: bold;">memory</mark> and semantic and episodic <mark style="background-color: #ffeb3b; font-weight: bold;">memory</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">memory</mark> is an
                 </div>
             </div>
     
@@ -346,7 +388,7 @@ Memory is a system or process that stores what we learn for future use</span>
                     <span class="page-number">📄 Page 263</span>
                 </div>
                 <div class="evidence-text">
-                    8.1 How <mark style="background-color: #ffeb3b; font-weight: bold;">memory</mark> Functions LEARNING OBJECTIVES By the end of this section, you will be able to: • Discuss the <mark style="background-color: #ffeb3b; font-weight: bold;">three</mark> basic functions of <mark style="background-color: #ffeb3b; font-weight: bold;">memory</mark> • Describe the <mark style="background-color: #ffeb3b; font-weight: bold;">three</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">stages</mark> of <mark style="background-color: #ffeb3b; font-weight: bold;">memory</mark> storage • Describe and distinguish between procedural and declarative <mark style="background-color: #ffeb3b; font-weight: bold;">memory</mark> and semantic and episodic <mark style="background-color: #ffeb3b; font-weight: bold;">memory</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">memory</mark> is an  <!-- HIGHLIGHTING HERE ONLY -->
+                    8.1 How <mark style="background-color: #ffeb3b; font-weight: bold;">memory</mark> Functions LEARNING OBJECTIVES By the end of this section, you will be able to: • Discuss the <mark style="background-color: #ffeb3b; font-weight: bold;">three</mark> basic functions of <mark style="background-color: #ffeb3b; font-weight: bold;">memory</mark> • Describe the <mark style="background-color: #ffeb3b; font-weight: bold;">three</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">stages</mark> of <mark style="background-color: #ffeb3b; font-weight: bold;">memory</mark> storage • Describe and distinguish between procedural and declarative <mark style="background-color: #ffeb3b; font-weight: bold;">memory</mark> and semantic and episodic <mark style="background-color: #ffeb3b; font-weight: bold;">memory</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">memory</mark> is an
                 </div>
             </div>
     
@@ -367,7 +409,7 @@ introduced to H. M. and then you left the room for a few minutes, he would not k
 
 physical trace of <mark style="background-color: #ffeb3b; font-weight: bold;">memory</mark>. Lashley did not find the engram, but he did suggest that memories are distributed throughout the entire brain rather than stored in one specific area. Now we know that <mark style="background-color: #ffeb3b; font-weight: bold;">three</mark> brain areas do play significant roles in the processing and storage of different types of memories: cerebellum, hippocampus, and amygdala. The cerebellum’s job is to process procedural memories; the hippocampus is where new memories are encoded; the amygdala helps determine what memories to store, and it plays a part in determining where the memories are stored based on whether we have a strong or weak emotional response to the event. Strong emotional experiences can trigger the release of neurotransmitters, as well as hormones, which strengthen <mark style="background-color: #ffeb3b; font-weight: bold;">memory</mark>, so that <mark style="background-color: #ffeb3b; font-weight: bold;">memory</mark> for an emotional event is usually stronger than <mark style="background-color: #ffeb3b; font-weight: bold;">memory</mark> for a non-emotional event. This is shown by what is known as the flashbulb <mark style="background-color: #ffeb3b; font-weight: bold;">memory</mark> phenomenon: our ability to remember significant life events. However, our <mark style="background-color: #ffeb3b; font-weight: bold;">memory</mark> for life events (autobiographical <mark style="background-color: #ffeb3b; font-weight: bold;">memory</mark>) is not always accurate. 274 8 • Summary Access for free at openstax.org
 
-7.1 What Is Cognition? LEARNING OBJECTIVES By the end of this section, you will be able to: • Describe cognition • Distinguish concepts and prototypes • Explain the difference between natural and artificial concepts • Describe how schemata are organized and constructed Imagine all of your thoughts as if they were physical entities, swirling rapidly inside your mind. Ho  <!-- HIGHLIGHTING HERE ONLY -->
+7.1 What Is Cognition? LEARNING OBJECTIVES By the end of this section, you will be able to: • Describe cognition • Distinguish concepts and prototypes • Explain the difference between natural and artificial concepts • Describe how schemata are organized and constructed Imagine all of your thoughts as if they were physical entities, swirling rapidly inside your mind. Ho
                 </div>
             </div>
             
@@ -375,14 +417,22 @@ physical trace of <mark style="background-color: #ffeb3b; font-weight: bold;">me
                 <div class="stat-item">
                     <div class="stat-label">Sections Used</div>
                     <div class="stat-value">9</div>
+                    <div class="stat-factor">Factor: 1.00</div>
                 </div>
                 <div class="stat-item">
                     <div class="stat-label">Pages Referenced</div>
                     <div class="stat-value">11</div>
+                    <div class="stat-factor">Factor: 1.00</div>
                 </div>
                 <div class="stat-item">
-                    <div class="stat-label">Keywords Found</div>
-                    <div class="stat-value">3</div>
+                    <div class="stat-label">Answer Length</div>
+                    <div class="stat-value">534</div>
+                    <div class="stat-factor">Factor: 1.00</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Overall</div>
+                    <div class="stat-value">100%</div>
+                    <div class="stat-factor">HIGH</div>
                 </div>
             </div>
             

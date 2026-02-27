@@ -73,6 +73,45 @@
                 box-shadow: 0 2px 4px rgba(0,0,0,0.1);
             }
             
+            .confidence-meter {
+                background: #f0f0f0;
+                padding: 15px 30px;
+                border-bottom: 1px solid #e0e0e0;
+                display: flex;
+                align-items: center;
+                gap: 20px;
+                flex-wrap: wrap;
+            }
+            
+            .confidence-bar {
+                flex: 1;
+                height: 20px;
+                background: #e0e0e0;
+                border-radius: 10px;
+                overflow: hidden;
+            }
+            
+            .confidence-fill {
+                height: 100%;
+                border-radius: 10px;
+                transition: width 0.3s ease;
+            }
+            
+            .confidence-fill.high { background: linear-gradient(90deg, #4caf50, #8bc34a); }
+            .confidence-fill.medium { background: linear-gradient(90deg, #ff9800, #ffc107); }
+            .confidence-fill.low { background: linear-gradient(90deg, #f44336, #ff7043); }
+            
+            .confidence-text {
+                font-size: 18px;
+                font-weight: 600;
+                min-width: 100px;
+                text-align: center;
+            }
+            
+            .confidence-text.high { color: #4caf50; }
+            .confidence-text.medium { color: #ff9800; }
+            .confidence-text.low { color: #f44336; }
+            
             .answer-section {
                 padding: 30px;
                 background: #f8f9fa;
@@ -99,8 +138,6 @@
                 color: #444;
                 border-left: 4px solid #667eea;
             }
-            
-            /* NO mark styling for answer - it stays plain */
             
             .evidence-section {
                 padding: 30px;
@@ -153,17 +190,6 @@
                 border: 1px solid #e0e0e0;
             }
             
-            .term-badge {
-                display: inline-block;
-                background: #ffeb3b;
-                color: #333;
-                padding: 3px 10px;
-                border-radius: 15px;
-                font-size: 12px;
-                margin: 0 5px 5px 0;
-                font-weight: 500;
-            }
-            
             .evidence-text {
                 background: white;
                 padding: 15px;
@@ -213,19 +239,17 @@
             }
             
             .stats {
-                display: flex;
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
                 gap: 15px;
                 padding: 20px 30px;
                 background: white;
-                flex-wrap: wrap;
             }
             
             .stat-item {
                 background: #f8f9fa;
-                padding: 10px 20px;
+                padding: 15px;
                 border-radius: 10px;
-                flex: 1;
-                min-width: 120px;
                 text-align: center;
                 border: 1px solid #e0e0e0;
             }
@@ -242,6 +266,12 @@
                 color: #667eea;
             }
             
+            .stat-factor {
+                font-size: 11px;
+                color: #999;
+                margin-top: 5px;
+            }
+            
             .footer {
                 padding: 20px 30px;
                 background: #f0f0f0;
@@ -252,6 +282,10 @@
             }
             
             @media (max-width: 768px) {
+                .stats {
+                    grid-template-columns: repeat(2, 1fr);
+                }
+                
                 .header {
                     padding: 20px;
                 }
@@ -279,8 +313,16 @@
             </div>
             
             <div class="keywords-bar">
-                <div class="keywords-title">🔑 Extracted Keywords:</div>
+                <div class="keywords-title"><i class="fas fa-key"></i> Extracted Keywords:</div>
     <span class="keyword-badge">difference</span><span class="keyword-badge">between</span><span class="keyword-badge">mood</span><span class="keyword-badge">disorders</span><span class="keyword-badge">personality</span><span class="keyword-badge">disorders</span>
+            </div>
+            
+            <div class="confidence-meter">
+                <i class="fas fa-bullseye"></i><span style="font-weight: 600;">Confidence:</span>
+                <div class="confidence-bar">
+                    <div class="confidence-fill high" style="width: 100.0%;"></div>
+                </div>
+                <div class="confidence-text high">HIGH (100%)</div>
             </div>
             
             <div class="answer-section">
@@ -292,7 +334,7 @@ Mood disorders are characterized by severe disturbances in mood and emotions, su
 
 Personality disorders, on the other hand, are characterized by enduring patterns of thought, feeling, and behavior that deviate from societal norms and expectations. Borderline personality disorder, for example, is marked by instability in interpersonal relationships, self-image, and mood, as well as impulsivity (APA, 2013).
 
-While both mood disorders and personality disorders can affect an individual's emotional state and behavior, they are distinct categories of psychological disorders with different diagnostic criteria and characteristics.  <!-- NO HIGHLIGHTING HERE -->
+While both mood disorders and personality disorders can affect an individual's emotional state and behavior, they are distinct categories of psychological disorders with different diagnostic criteria and characteristics.
                 </div>
             </div>
             
@@ -306,7 +348,7 @@ Friedman and Booth-Kewley</span>
                     <span class="page-number">📄 Page 515</span>
                 </div>
                 <div class="evidence-text">
-                    depression, but also mania and elation (Rothschild, 1999). All of us experience fluctuations in our <mark style="background-color: #ffeb3b; font-weight: bold;">mood</mark>s and emotional states, and often these fluctuations are caused by events in our lives. We become elated if our favorite team wins the World Series and dejected if a romantic relationship ends or   <!-- HIGHLIGHTING HERE ONLY -->
+                    depression, but also mania and elation (Rothschild, 1999). All of us experience fluctuations in our <mark style="background-color: #ffeb3b; font-weight: bold;">mood</mark>s and emotional states, and often these fluctuations are caused by events in our lives. We become elated if our favorite team wins the World Series and dejected if a romantic relationship ends or 
                 </div>
             </div>
     
@@ -316,7 +358,7 @@ Friedman and Booth-Kewley</span>
                     <span class="page-number">📄 Page 550</span>
                 </div>
                 <div class="evidence-text">
-                    depression, but also mania and elation (Rothschild, 1999). All of us experience fluctuations in our <mark style="background-color: #ffeb3b; font-weight: bold;">mood</mark>s and emotional states, and often these fluctuations are caused by events in our lives. We become elated if our favorite team wins the World Series and dejected if a romantic relationship ends or   <!-- HIGHLIGHTING HERE ONLY -->
+                    depression, but also mania and elation (Rothschild, 1999). All of us experience fluctuations in our <mark style="background-color: #ffeb3b; font-weight: bold;">mood</mark>s and emotional states, and often these fluctuations are caused by events in our lives. We become elated if our favorite team wins the World Series and dejected if a romantic relationship ends or 
                 </div>
             </div>
     
@@ -326,7 +368,7 @@ Friedman and Booth-Kewley</span>
                     <span class="page-number">📄 Page 557</span>
                 </div>
                 <div class="evidence-text">
-                    depression, but also mania and elation (Rothschild, 1999). All of us experience fluctuations in our <mark style="background-color: #ffeb3b; font-weight: bold;">mood</mark>s and emotional states, and often these fluctuations are caused by events in our lives. We become elated if our favorite team wins the World Series and dejected if a romantic relationship ends or   <!-- HIGHLIGHTING HERE ONLY -->
+                    depression, but also mania and elation (Rothschild, 1999). All of us experience fluctuations in our <mark style="background-color: #ffeb3b; font-weight: bold;">mood</mark>s and emotional states, and often these fluctuations are caused by events in our lives. We become elated if our favorite team wins the World Series and dejected if a romantic relationship ends or 
                 </div>
             </div>
     
@@ -337,7 +379,7 @@ Slightly over</span>
                     <span class="page-number">📄 Page 572</span>
                 </div>
                 <div class="evidence-text">
-                    depression, but also mania and elation (Rothschild, 1999). All of us experience fluctuations in our <mark style="background-color: #ffeb3b; font-weight: bold;">mood</mark>s and emotional states, and often these fluctuations are caused by events in our lives. We become elated if our favorite team wins the World Series and dejected if a romantic relationship ends or   <!-- HIGHLIGHTING HERE ONLY -->
+                    depression, but also mania and elation (Rothschild, 1999). All of us experience fluctuations in our <mark style="background-color: #ffeb3b; font-weight: bold;">mood</mark>s and emotional states, and often these fluctuations are caused by events in our lives. We become elated if our favorite team wins the World Series and dejected if a romantic relationship ends or 
                 </div>
             </div>
     
@@ -349,7 +391,7 @@ By the end of this section</span>
                     <span class="page-number">📄 Page 573</span>
                 </div>
                 <div class="evidence-text">
-                    depression, but also mania and elation (Rothschild, 1999). All of us experience fluctuations in our <mark style="background-color: #ffeb3b; font-weight: bold;">mood</mark>s and emotional states, and often these fluctuations are caused by events in our lives. We become elated if our favorite team wins the World Series and dejected if a romantic relationship ends or   <!-- HIGHLIGHTING HERE ONLY -->
+                    depression, but also mania and elation (Rothschild, 1999). All of us experience fluctuations in our <mark style="background-color: #ffeb3b; font-weight: bold;">mood</mark>s and emotional states, and often these fluctuations are caused by events in our lives. We become elated if our favorite team wins the World Series and dejected if a romantic relationship ends or 
                 </div>
             </div>
     
@@ -366,7 +408,7 @@ preventing both a change in the nature of the memory and a change in the problem
 
 LINK TO LEARNING Watch this video about treating substance-related <mark style="background-color: #ffeb3b; font-weight: bold;">disorders</mark> using the biological, behavioral, and psychodynamic approaches (http://openstax.org/l/subdisorder) to learn more. Comorbid <mark style="background-color: #ffeb3b; font-weight: bold;">disorders</mark> Frequently, a person with an addiction to drugs and/or alcohol has an additional psychological disorder. Saying a person has comorbid <mark style="background-color: #ffeb3b; font-weight: bold;">disorders</mark> means the individual has two or more diagnoses. This can often be a substance-related diagnosis and another psychiatric diagnosis, such as depression, bipolar disorder, or schizophrenia. These individuals fall into the category of mentally ill and chemically addicted (MICA)—their problems are often chronic and expensive to treat, with limited success. Compared with the overall population, people who use illicit drugs or misuse prescription drugs are twice as likely to have a <mark style="background-color: #ffeb3b; font-weight: bold;">mood</mark> or anxiety disorder. Drug use can cause symptoms of <mark style="background-color: #ffeb3b; font-weight: bold;">mood</mark> and anxiety <mark style="background-color: #ffeb3b; font-weight: bold;">disorders</mark> and the reverse is also true—people with debilitating symptoms of a psychiatric disorder may self-medicate and misuse substances. In cases of comorbidity, the best treatment is thought to address both (or multiple) <mark style="background-color: #ffeb3b; font-weight: bold;">disorders</mark> simultaneously (NIDA, 2012). Behavior therapies are used to treat comorbid conditions, and in many cases, psychotropic medications are used along with psychotherapy. For example, evidence suggests that bupropion (trade names: Wellbutrin and Zyban), approved for treating depression and nicotine dependence, might also help reduce craving and use of the drug methamphetamine (NIDA, 2011). However, more research is needed to better understand how these medications work—particularly when combined in patients with comorbidities. 16.5 The Sociocultural Model and Therapy Utilization LEARNING OBJECTIVES By the end of this section, you will be able to: • Explain how the sociocultural model is used in therapy • Discuss barriers to mental health services among ethnic minorities The sociocultural perspective looks at you, your behaviors, and your symptoms in the context of your culture and background. For example, José is an 18-year-old Hispanic male from a traditional family. José comes to treatment because of depression. During the intake session, he reveals that he is gay and is nervous about telling his family. He also discloses that he is concerned because his religious background has taught him that being gay is wrong. How does his religious and cultural background affect him? How might his cultural background affect how his family reacts if José were to tell them he is gay? Mental health professionals must develop cultural competence (Figure 16.20), which means they must understand and address issues of race, culture, and ethnicity. They must also
 
-Types of Psychophysiological <mark style="background-color: #ffeb3b; font-weight: bold;">disorders</mark> (adapted from Everly & Lating, 2002) Type of Psychophysiological Disorder Examples Cardiovascular hypertension, coronary heart disease Gastrointestinal irritable bowel syndrome Respiratory asthma, allergy Musculoskeletal low back pain, tension headaches Skin acne, eczema, psoriasis TABLE 14.3 Friedman and Booth-Kewley (1987) statistically reviewed 101 studies to examine the link <mark style="background-color: #ffeb3b; font-weight: bold;">between</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">personality</mark> and illness. They proposed the existence of disease-prone <mark style="background-color: #ffeb3b; font-weight: bold;">personality</mark> characteristics, including depression, anger/hostility, and anxiety. Indeed, a study of over 61,000 Norwegians identified depression as a risk factor for all major disease-related causes of death (Mykletun et al., 2007). In addition, neuroticism—a <mark style="background-color: #ffeb3b; font-weight: bold;">personality</mark> trait that reflects how anxious, <mark style="background-color: #ffeb3b; font-weight: bold;">mood</mark>y, and sad one is—has been identified as a risk factor for chronic health problems and mortality (Ploubidis & Grundy, 2009). Below, we discuss two kinds of psychophysiological <mark style="background-color: #ffeb3b; font-weight: bold;">disorders</mark> about which a great deal is known: cardiovascular <mark style="background-color: #ffeb3b; font-weight: bold;">disorders</mark> and asthma. First, however, it is necessary to turn our attention to a discussion of the immune system—one of the major pathways through which stress and emotional factors can lead to illness and disease. Social Status, Stress, and Health Care Psychologists have long been aware that social status (e.g., wealth, privilege) is intimately tied to stress, health, and well-being. Some factors that contribute to high stress and poor health among people with lower social status include lack of control and predictability (e.g., greater unemployment) and resource inequality (e.g., less access to health care and other community resources) (Marmot & Sapolsky, 2014). In the United States, resource inequalities tied to social status often create race and gender <mark style="background-color: #ffeb3b; font-weight: bold;">difference</mark>s in health care. For example, African American women have the highest rates of emergency room visits and unmet health care needs compared to any other group, and this disparity increased significantly from 2006 to 2014 (Manuel, 2018). Lesbian, gay, bisexual, and transgender youth often experience poor quality of care as a result of stigma, lack of understanding, and insensitivity among health care professionals (Hafeez, Zeshan, Tahir, Jahan, & Naveed, 2017). One goal of the U.S. government’s Healthy People 2020 initiative is to eliminate gender and race disparities in health care. Their interact  <!-- HIGHLIGHTING HERE ONLY -->
+Types of Psychophysiological <mark style="background-color: #ffeb3b; font-weight: bold;">disorders</mark> (adapted from Everly & Lating, 2002) Type of Psychophysiological Disorder Examples Cardiovascular hypertension, coronary heart disease Gastrointestinal irritable bowel syndrome Respiratory asthma, allergy Musculoskeletal low back pain, tension headaches Skin acne, eczema, psoriasis TABLE 14.3 Friedman and Booth-Kewley (1987) statistically reviewed 101 studies to examine the link <mark style="background-color: #ffeb3b; font-weight: bold;">between</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">personality</mark> and illness. They proposed the existence of disease-prone <mark style="background-color: #ffeb3b; font-weight: bold;">personality</mark> characteristics, including depression, anger/hostility, and anxiety. Indeed, a study of over 61,000 Norwegians identified depression as a risk factor for all major disease-related causes of death (Mykletun et al., 2007). In addition, neuroticism—a <mark style="background-color: #ffeb3b; font-weight: bold;">personality</mark> trait that reflects how anxious, <mark style="background-color: #ffeb3b; font-weight: bold;">mood</mark>y, and sad one is—has been identified as a risk factor for chronic health problems and mortality (Ploubidis & Grundy, 2009). Below, we discuss two kinds of psychophysiological <mark style="background-color: #ffeb3b; font-weight: bold;">disorders</mark> about which a great deal is known: cardiovascular <mark style="background-color: #ffeb3b; font-weight: bold;">disorders</mark> and asthma. First, however, it is necessary to turn our attention to a discussion of the immune system—one of the major pathways through which stress and emotional factors can lead to illness and disease. Social Status, Stress, and Health Care Psychologists have long been aware that social status (e.g., wealth, privilege) is intimately tied to stress, health, and well-being. Some factors that contribute to high stress and poor health among people with lower social status include lack of control and predictability (e.g., greater unemployment) and resource inequality (e.g., less access to health care and other community resources) (Marmot & Sapolsky, 2014). In the United States, resource inequalities tied to social status often create race and gender <mark style="background-color: #ffeb3b; font-weight: bold;">difference</mark>s in health care. For example, African American women have the highest rates of emergency room visits and unmet health care needs compared to any other group, and this disparity increased significantly from 2006 to 2014 (Manuel, 2018). Lesbian, gay, bisexual, and transgender youth often experience poor quality of care as a result of stigma, lack of understanding, and insensitivity among health care professionals (Hafeez, Zeshan, Tahir, Jahan, & Naveed, 2017). One goal of the U.S. government’s Healthy People 2020 initiative is to eliminate gender and race disparities in health care. Their interact
                 </div>
             </div>
             
@@ -374,14 +416,22 @@ Types of Psychophysiological <mark style="background-color: #ffeb3b; font-weight
                 <div class="stat-item">
                     <div class="stat-label">Sections Used</div>
                     <div class="stat-value">9</div>
+                    <div class="stat-factor">Factor: 1.00</div>
                 </div>
                 <div class="stat-item">
                     <div class="stat-label">Pages Referenced</div>
                     <div class="stat-value">11</div>
+                    <div class="stat-factor">Factor: 1.00</div>
                 </div>
                 <div class="stat-item">
-                    <div class="stat-label">Keywords Found</div>
-                    <div class="stat-value">6</div>
+                    <div class="stat-label">Answer Length</div>
+                    <div class="stat-value">1060</div>
+                    <div class="stat-factor">Factor: 1.00</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Overall</div>
+                    <div class="stat-value">100%</div>
+                    <div class="stat-factor">HIGH</div>
                 </div>
             </div>
             

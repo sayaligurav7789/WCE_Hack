@@ -73,6 +73,45 @@
                 box-shadow: 0 2px 4px rgba(0,0,0,0.1);
             }
             
+            .confidence-meter {
+                background: #f0f0f0;
+                padding: 15px 30px;
+                border-bottom: 1px solid #e0e0e0;
+                display: flex;
+                align-items: center;
+                gap: 20px;
+                flex-wrap: wrap;
+            }
+            
+            .confidence-bar {
+                flex: 1;
+                height: 20px;
+                background: #e0e0e0;
+                border-radius: 10px;
+                overflow: hidden;
+            }
+            
+            .confidence-fill {
+                height: 100%;
+                border-radius: 10px;
+                transition: width 0.3s ease;
+            }
+            
+            .confidence-fill.high { background: linear-gradient(90deg, #4caf50, #8bc34a); }
+            .confidence-fill.medium { background: linear-gradient(90deg, #ff9800, #ffc107); }
+            .confidence-fill.low { background: linear-gradient(90deg, #f44336, #ff7043); }
+            
+            .confidence-text {
+                font-size: 18px;
+                font-weight: 600;
+                min-width: 100px;
+                text-align: center;
+            }
+            
+            .confidence-text.high { color: #4caf50; }
+            .confidence-text.medium { color: #ff9800; }
+            .confidence-text.low { color: #f44336; }
+            
             .answer-section {
                 padding: 30px;
                 background: #f8f9fa;
@@ -99,8 +138,6 @@
                 color: #444;
                 border-left: 4px solid #667eea;
             }
-            
-            /* NO mark styling for answer - it stays plain */
             
             .evidence-section {
                 padding: 30px;
@@ -153,17 +190,6 @@
                 border: 1px solid #e0e0e0;
             }
             
-            .term-badge {
-                display: inline-block;
-                background: #ffeb3b;
-                color: #333;
-                padding: 3px 10px;
-                border-radius: 15px;
-                font-size: 12px;
-                margin: 0 5px 5px 0;
-                font-weight: 500;
-            }
-            
             .evidence-text {
                 background: white;
                 padding: 15px;
@@ -213,19 +239,17 @@
             }
             
             .stats {
-                display: flex;
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
                 gap: 15px;
                 padding: 20px 30px;
                 background: white;
-                flex-wrap: wrap;
             }
             
             .stat-item {
                 background: #f8f9fa;
-                padding: 10px 20px;
+                padding: 15px;
                 border-radius: 10px;
-                flex: 1;
-                min-width: 120px;
                 text-align: center;
                 border: 1px solid #e0e0e0;
             }
@@ -242,6 +266,12 @@
                 color: #667eea;
             }
             
+            .stat-factor {
+                font-size: 11px;
+                color: #999;
+                margin-top: 5px;
+            }
+            
             .footer {
                 padding: 20px 30px;
                 background: #f0f0f0;
@@ -252,6 +282,10 @@
             }
             
             @media (max-width: 768px) {
+                .stats {
+                    grid-template-columns: repeat(2, 1fr);
+                }
+                
                 .header {
                     padding: 20px;
                 }
@@ -279,14 +313,22 @@
             </div>
             
             <div class="keywords-bar">
-                <div class="keywords-title">🔑 Extracted Keywords:</div>
+                <div class="keywords-title"><i class="fas fa-key"></i> Extracted Keywords:</div>
     <span class="keyword-badge">object</span><span class="keyword-badge">permanence</span>
+            </div>
+            
+            <div class="confidence-meter">
+                <i class="fas fa-bullseye"></i><span style="font-weight: 600;">Confidence:</span>
+                <div class="confidence-bar">
+                    <div class="confidence-fill high" style="width: 100.0%;"></div>
+                </div>
+                <div class="confidence-text high">HIGH (100%)</div>
             </div>
             
             <div class="answer-section">
                 <h3><i class="fas fa-robot"></i> Generated Answer</h3>
                 <div class="answer-content">
-                    Object permanence is the understanding that objects continue to exist even when they are hidden from view. This concept is developed in infants, and it is achieved at a certain age, which is somewhat controversial (Munakata, McClelland, Johnson, and Siegler, 1997).  <!-- NO HIGHLIGHTING HERE -->
+                    Object permanence is the understanding that objects continue to exist even when they are hidden from view. This concept is developed in infants, and it is achieved at a certain age, which is somewhat controversial (Munakata, McClelland, Johnson, and Siegler, 1997).
                 </div>
             </div>
             
@@ -299,7 +341,7 @@
                     <span class="page-number">📄 Page 33</span>
                 </div>
                 <div class="evidence-text">
-                    race- biased weapon misidentifications. Journal of Experimental Social Psychology, 41, 36–47. Peck, M. (2012, July 19). How a movie changed one man’s vision forever. http://www.bbc.com/future/story/ 20120719-awoken-from-a-2d-world Peterson, M. A., & Gibson, B. S. (1994). Must figure-ground organizat  <!-- HIGHLIGHTING HERE ONLY -->
+                    race- biased weapon misidentifications. Journal of Experimental Social Psychology, 41, 36–47. Peck, M. (2012, July 19). How a movie changed one man’s vision forever. http://www.bbc.com/future/story/ 20120719-awoken-from-a-2d-world Peterson, M. A., & Gibson, B. S. (1994). Must figure-ground organizat
                 </div>
             </div>
     
@@ -310,7 +352,7 @@ Milner</span>
                     <span class="page-number">📄 Page 57</span>
                 </div>
                 <div class="evidence-text">
-                    race- biased weapon misidentifications. Journal of Experimental Social Psychology, 41, 36–47. Peck, M. (2012, July 19). How a movie changed one man’s vision forever. http://www.bbc.com/future/story/ 20120719-awoken-from-a-2d-world Peterson, M. A., & Gibson, B. S. (1994). Must figure-ground organizat  <!-- HIGHLIGHTING HERE ONLY -->
+                    race- biased weapon misidentifications. Journal of Experimental Social Psychology, 41, 36–47. Peck, M. (2012, July 19). How a movie changed one man’s vision forever. http://www.bbc.com/future/story/ 20120719-awoken-from-a-2d-world Peterson, M. A., & Gibson, B. S. (1994). Must figure-ground organizat
                 </div>
             </div>
     
@@ -320,7 +362,7 @@ Milner</span>
                     <span class="page-number">📄 Page 165</span>
                 </div>
                 <div class="evidence-text">
-                    race- biased weapon misidentifications. Journal of Experimental Social Psychology, 41, 36–47. Peck, M. (2012, July 19). How a movie changed one man’s vision forever. http://www.bbc.com/future/story/ 20120719-awoken-from-a-2d-world Peterson, M. A., & Gibson, B. S. (1994). Must figure-ground organizat  <!-- HIGHLIGHTING HERE ONLY -->
+                    race- biased weapon misidentifications. Journal of Experimental Social Psychology, 41, 36–47. Peck, M. (2012, July 19). How a movie changed one man’s vision forever. http://www.bbc.com/future/story/ 20120719-awoken-from-a-2d-world Peterson, M. A., & Gibson, B. S. (1994). Must figure-ground organizat
                 </div>
             </div>
     
@@ -330,7 +372,7 @@ Milner</span>
                     <span class="page-number">📄 Page 181</span>
                 </div>
                 <div class="evidence-text">
-                    race- biased weapon misidentifications. Journal of Experimental Social Psychology, 41, 36–47. Peck, M. (2012, July 19). How a movie changed one man’s vision forever. http://www.bbc.com/future/story/ 20120719-awoken-from-a-2d-world Peterson, M. A., & Gibson, B. S. (1994). Must figure-ground organizat  <!-- HIGHLIGHTING HERE ONLY -->
+                    race- biased weapon misidentifications. Journal of Experimental Social Psychology, 41, 36–47. Peck, M. (2012, July 19). How a movie changed one man’s vision forever. http://www.bbc.com/future/story/ 20120719-awoken-from-a-2d-world Peterson, M. A., & Gibson, B. S. (1994). Must figure-ground organizat
                 </div>
             </div>
     
@@ -340,7 +382,7 @@ Milner</span>
                     <span class="page-number">📄 Page 227</span>
                 </div>
                 <div class="evidence-text">
-                    race- biased weapon misidentifications. Journal of Experimental Social Psychology, 41, 36–47. Peck, M. (2012, July 19). How a movie changed one man’s vision forever. http://www.bbc.com/future/story/ 20120719-awoken-from-a-2d-world Peterson, M. A., & Gibson, B. S. (1994). Must figure-ground organizat  <!-- HIGHLIGHTING HERE ONLY -->
+                    race- biased weapon misidentifications. Journal of Experimental Social Psychology, 41, 36–47. Peck, M. (2012, July 19). How a movie changed one man’s vision forever. http://www.bbc.com/future/story/ 20120719-awoken-from-a-2d-world Peterson, M. A., & Gibson, B. S. (1994). Must figure-ground organizat
                 </div>
             </div>
     
@@ -361,7 +403,7 @@ your judgment representative sample subset of the population that accurately rep
 
 FIGURE 7.10 In Duncker's classic study, participants were provided the three <mark style="background-color: #ffeb3b; font-weight: bold;">object</mark>s in the top panel and asked to solve the problem. The solution is shown in the bottom portion. LINK TO LEARNING Check out this Apollo 13 scene about NASA engineers overcoming functional fixedness (http://openstax.org/l/ Apollo13) to learn more. Researchers have investigated whether functional fixedness is affected by culture. In one experiment, individuals from the Shuar group in Ecuador were asked to use an <mark style="background-color: #ffeb3b; font-weight: bold;">object</mark> for a purpose other than that for which the <mark style="background-color: #ffeb3b; font-weight: bold;">object</mark> was originally intended. For example, the participants were told a story about a bear and a rabbit that were separated by a river and asked to select among various <mark style="background-color: #ffeb3b; font-weight: bold;">object</mark>s, including a spoon, a cup, erasers, and so on, to help the animals. The spoon was the only <mark style="background-color: #ffeb3b; font-weight: bold;">object</mark> long enough to span the imaginary river, but if the spoon was presented in a way that reflected its normal usage, it took participants longer to choose the spoon to solve the problem. (German & Barrett, 2005). The researchers wanted to know if exposure to highly specialized tools, as occurs with individuals in industrialized nations, affects their ability to transcend functional fixedness. It was determined that functional fixedness is experienced in both industrialized and nonindustrialized cultures (German & Barrett, 2005). In order to make good decisions, we use our knowledge and our reasoning. Often, this knowledge and reasoning is sound and solid. Sometimes, however, we are swayed by biases or by others manipulating a situation. For example, let’s say you and three friends wanted to rent a house and had a combined target budget of $1,600. The realtor shows you only very run-down houses for $1,600 and then shows you a very nice house for $2,000. Might you ask each person to pay more in rent to get the $2,000 home? Why would the realtor show you the run-down houses and the nice house? The realtor may be challenging your anchoring bias. An anchoring bias occurs when you focus on one piece of information when making a decision or solving a problem. In this case, you’re so focused on the amount of money you are willing to spend that you may not recognize what kinds of houses are available at that price point. The confirmation bias is the tendency to focus on information that confirms your existing beliefs. For example, if you think that your
 
-8.1 How Memory Functions LEARNING <mark style="background-color: #ffeb3b; font-weight: bold;">object</mark>IVES By the end of this section, you will be able to: • Discuss the three basic functions of memory • Describe the three stages of memory storage • Describe and distinguish between procedural and declarative memory and semantic and episodic memory Memory is an information processing system; therefore, we often compare it to a computer. Memory is the set of processes used to encode, store, and retrieve information over different periods of time (Figure 8.2). FIGURE 8.2 Encoding involves the input of information into the memory system. Storage is the retention of the encoded information. Retrieval, or getting the information out of memory and back into awareness, is the third function. LINK TO LEARNING Watch this video about the neuroscience of memory (http://openstax.org/l/unexpectfact) to learn more. Encoding We get information into our brains through a process called encoding, which is the input of information into the memory system. Once we receive sensory information from the environment, our brains label or code it. We organize the information with other similar information and connect new concepts to existing concepts. Encoding information occurs through automatic processing and effortful processing. If someone asks you what you ate for lunch today, more than likely you could recall this information quite easily. This is known as automatic processing, or the encoding of details like time, space, frequency, and the meaning of words. Automatic processing is usually done without any conscious awareness. Recalling the last time you studied for a te  <!-- HIGHLIGHTING HERE ONLY -->
+8.1 How Memory Functions LEARNING <mark style="background-color: #ffeb3b; font-weight: bold;">object</mark>IVES By the end of this section, you will be able to: • Discuss the three basic functions of memory • Describe the three stages of memory storage • Describe and distinguish between procedural and declarative memory and semantic and episodic memory Memory is an information processing system; therefore, we often compare it to a computer. Memory is the set of processes used to encode, store, and retrieve information over different periods of time (Figure 8.2). FIGURE 8.2 Encoding involves the input of information into the memory system. Storage is the retention of the encoded information. Retrieval, or getting the information out of memory and back into awareness, is the third function. LINK TO LEARNING Watch this video about the neuroscience of memory (http://openstax.org/l/unexpectfact) to learn more. Encoding We get information into our brains through a process called encoding, which is the input of information into the memory system. Once we receive sensory information from the environment, our brains label or code it. We organize the information with other similar information and connect new concepts to existing concepts. Encoding information occurs through automatic processing and effortful processing. If someone asks you what you ate for lunch today, more than likely you could recall this information quite easily. This is known as automatic processing, or the encoding of details like time, space, frequency, and the meaning of words. Automatic processing is usually done without any conscious awareness. Recalling the last time you studied for a te
                 </div>
             </div>
             
@@ -369,14 +411,22 @@ FIGURE 7.10 In Duncker's classic study, participants were provided the three <ma
                 <div class="stat-item">
                     <div class="stat-label">Sections Used</div>
                     <div class="stat-value">11</div>
+                    <div class="stat-factor">Factor: 1.00</div>
                 </div>
                 <div class="stat-item">
                     <div class="stat-label">Pages Referenced</div>
                     <div class="stat-value">11</div>
+                    <div class="stat-factor">Factor: 1.00</div>
                 </div>
                 <div class="stat-item">
-                    <div class="stat-label">Keywords Found</div>
-                    <div class="stat-value">2</div>
+                    <div class="stat-label">Answer Length</div>
+                    <div class="stat-value">265</div>
+                    <div class="stat-factor">Factor: 0.53</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Overall</div>
+                    <div class="stat-value">100%</div>
+                    <div class="stat-factor">HIGH</div>
                 </div>
             </div>
             

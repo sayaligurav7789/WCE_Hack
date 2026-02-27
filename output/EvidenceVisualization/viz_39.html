@@ -73,6 +73,45 @@
                 box-shadow: 0 2px 4px rgba(0,0,0,0.1);
             }
             
+            .confidence-meter {
+                background: #f0f0f0;
+                padding: 15px 30px;
+                border-bottom: 1px solid #e0e0e0;
+                display: flex;
+                align-items: center;
+                gap: 20px;
+                flex-wrap: wrap;
+            }
+            
+            .confidence-bar {
+                flex: 1;
+                height: 20px;
+                background: #e0e0e0;
+                border-radius: 10px;
+                overflow: hidden;
+            }
+            
+            .confidence-fill {
+                height: 100%;
+                border-radius: 10px;
+                transition: width 0.3s ease;
+            }
+            
+            .confidence-fill.high { background: linear-gradient(90deg, #4caf50, #8bc34a); }
+            .confidence-fill.medium { background: linear-gradient(90deg, #ff9800, #ffc107); }
+            .confidence-fill.low { background: linear-gradient(90deg, #f44336, #ff7043); }
+            
+            .confidence-text {
+                font-size: 18px;
+                font-weight: 600;
+                min-width: 100px;
+                text-align: center;
+            }
+            
+            .confidence-text.high { color: #4caf50; }
+            .confidence-text.medium { color: #ff9800; }
+            .confidence-text.low { color: #f44336; }
+            
             .answer-section {
                 padding: 30px;
                 background: #f8f9fa;
@@ -99,8 +138,6 @@
                 color: #444;
                 border-left: 4px solid #667eea;
             }
-            
-            /* NO mark styling for answer - it stays plain */
             
             .evidence-section {
                 padding: 30px;
@@ -153,17 +190,6 @@
                 border: 1px solid #e0e0e0;
             }
             
-            .term-badge {
-                display: inline-block;
-                background: #ffeb3b;
-                color: #333;
-                padding: 3px 10px;
-                border-radius: 15px;
-                font-size: 12px;
-                margin: 0 5px 5px 0;
-                font-weight: 500;
-            }
-            
             .evidence-text {
                 background: white;
                 padding: 15px;
@@ -213,19 +239,17 @@
             }
             
             .stats {
-                display: flex;
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
                 gap: 15px;
                 padding: 20px 30px;
                 background: white;
-                flex-wrap: wrap;
             }
             
             .stat-item {
                 background: #f8f9fa;
-                padding: 10px 20px;
+                padding: 15px;
                 border-radius: 10px;
-                flex: 1;
-                min-width: 120px;
                 text-align: center;
                 border: 1px solid #e0e0e0;
             }
@@ -242,6 +266,12 @@
                 color: #667eea;
             }
             
+            .stat-factor {
+                font-size: 11px;
+                color: #999;
+                margin-top: 5px;
+            }
+            
             .footer {
                 padding: 20px 30px;
                 background: #f0f0f0;
@@ -252,6 +282,10 @@
             }
             
             @media (max-width: 768px) {
+                .stats {
+                    grid-template-columns: repeat(2, 1fr);
+                }
+                
                 .header {
                     padding: 20px;
                 }
@@ -279,8 +313,16 @@
             </div>
             
             <div class="keywords-bar">
-                <div class="keywords-title">🔑 Extracted Keywords:</div>
+                <div class="keywords-title"><i class="fas fa-key"></i> Extracted Keywords:</div>
     <span class="keyword-badge">importance</span><span class="keyword-badge">replication</span><span class="keyword-badge">psychological</span><span class="keyword-badge">research</span>
+            </div>
+            
+            <div class="confidence-meter">
+                <i class="fas fa-bullseye"></i><span style="font-weight: 600;">Confidence:</span>
+                <div class="confidence-bar">
+                    <div class="confidence-fill high" style="width: 100.0%;"></div>
+                </div>
+                <div class="confidence-text high">HIGH (100%)</div>
             </div>
             
             <div class="answer-section">
@@ -294,7 +336,7 @@
 4. Provide more evidence to support the original research findings, making scientists more apt to adopt them.
 5. Cast doubt on the legitimacy of the original article if repeated failures occur, leading scientists to look elsewhere.
 
-In summary, replication is essential in psychological research as it ensures the reliability and validity of research findings, prevents duplication of efforts, and promotes the advancement of scientific knowledge.  <!-- NO HIGHLIGHTING HERE -->
+In summary, replication is essential in psychological research as it ensures the reliability and validity of research findings, prevents duplication of efforts, and promotes the advancement of scientific knowledge.
                 </div>
             </div>
             
@@ -308,7 +350,7 @@ Blann</span>
                     <span class="page-number">📄 Page 26</span>
                 </div>
                 <div class="evidence-text">
-                    discipline’s knowledge. This helps prevent unnecessary duplication of <mark style="background-color: #ffeb3b; font-weight: bold;">research</mark> findings in the scientific literature and, to some extent, ensures that each <mark style="background-color: #ffeb3b; font-weight: bold;">research</mark> article provides new information. Ultimately, the journal editor will compile all of the peer reviewer feedback and determine whether t  <!-- HIGHLIGHTING HERE ONLY -->
+                    discipline’s knowledge. This helps prevent unnecessary duplication of <mark style="background-color: #ffeb3b; font-weight: bold;">research</mark> findings in the scientific literature and, to some extent, ensures that each <mark style="background-color: #ffeb3b; font-weight: bold;">research</mark> article provides new information. Ultimately, the journal editor will compile all of the peer reviewer feedback and determine whether t
                 </div>
             </div>
     
@@ -318,7 +360,7 @@ Blann</span>
                     <span class="page-number">📄 Page 36</span>
                 </div>
                 <div class="evidence-text">
-                    discipline’s knowledge. This helps prevent unnecessary duplication of <mark style="background-color: #ffeb3b; font-weight: bold;">research</mark> findings in the scientific literature and, to some extent, ensures that each <mark style="background-color: #ffeb3b; font-weight: bold;">research</mark> article provides new information. Ultimately, the journal editor will compile all of the peer reviewer feedback and determine whether t  <!-- HIGHLIGHTING HERE ONLY -->
+                    discipline’s knowledge. This helps prevent unnecessary duplication of <mark style="background-color: #ffeb3b; font-weight: bold;">research</mark> findings in the scientific literature and, to some extent, ensures that each <mark style="background-color: #ffeb3b; font-weight: bold;">research</mark> article provides new information. Ultimately, the journal editor will compile all of the peer reviewer feedback and determine whether t
                 </div>
             </div>
     
@@ -328,7 +370,7 @@ Blann</span>
                     <span class="page-number">📄 Page 54</span>
                 </div>
                 <div class="evidence-text">
-                    discipline’s knowledge. This helps prevent unnecessary duplication of <mark style="background-color: #ffeb3b; font-weight: bold;">research</mark> findings in the scientific literature and, to some extent, ensures that each <mark style="background-color: #ffeb3b; font-weight: bold;">research</mark> article provides new information. Ultimately, the journal editor will compile all of the peer reviewer feedback and determine whether t  <!-- HIGHLIGHTING HERE ONLY -->
+                    discipline’s knowledge. This helps prevent unnecessary duplication of <mark style="background-color: #ffeb3b; font-weight: bold;">research</mark> findings in the scientific literature and, to some extent, ensures that each <mark style="background-color: #ffeb3b; font-weight: bold;">research</mark> article provides new information. Ultimately, the journal editor will compile all of the peer reviewer feedback and determine whether t
                 </div>
             </div>
     
@@ -339,7 +381,7 @@ Another management style was described by Donald Clifton</span>
                     <span class="page-number">📄 Page 59</span>
                 </div>
                 <div class="evidence-text">
-                    discipline’s knowledge. This helps prevent unnecessary duplication of <mark style="background-color: #ffeb3b; font-weight: bold;">research</mark> findings in the scientific literature and, to some extent, ensures that each <mark style="background-color: #ffeb3b; font-weight: bold;">research</mark> article provides new information. Ultimately, the journal editor will compile all of the peer reviewer feedback and determine whether t  <!-- HIGHLIGHTING HERE ONLY -->
+                    discipline’s knowledge. This helps prevent unnecessary duplication of <mark style="background-color: #ffeb3b; font-weight: bold;">research</mark> findings in the scientific literature and, to some extent, ensures that each <mark style="background-color: #ffeb3b; font-weight: bold;">research</mark> article provides new information. Ultimately, the journal editor will compile all of the peer reviewer feedback and determine whether t
                 </div>
             </div>
     
@@ -349,7 +391,7 @@ Another management style was described by Donald Clifton</span>
                     <span class="page-number">📄 Page 68</span>
                 </div>
                 <div class="evidence-text">
-                    discipline’s knowledge. This helps prevent unnecessary duplication of <mark style="background-color: #ffeb3b; font-weight: bold;">research</mark> findings in the scientific literature and, to some extent, ensures that each <mark style="background-color: #ffeb3b; font-weight: bold;">research</mark> article provides new information. Ultimately, the journal editor will compile all of the peer reviewer feedback and determine whether t  <!-- HIGHLIGHTING HERE ONLY -->
+                    discipline’s knowledge. This helps prevent unnecessary duplication of <mark style="background-color: #ffeb3b; font-weight: bold;">research</mark> findings in the scientific literature and, to some extent, ensures that each <mark style="background-color: #ffeb3b; font-weight: bold;">research</mark> article provides new information. Ultimately, the journal editor will compile all of the peer reviewer feedback and determine whether t
                 </div>
             </div>
     
@@ -366,7 +408,7 @@ are not. <mark style="background-color: #ffeb3b; font-weight: bold;">replication
 
 explain behavior and the cognitive and biological processes that underlie it. Some methods rely on observational techniques. Other approaches involve interactions between the <mark style="background-color: #ffeb3b; font-weight: bold;">research</mark>er and the individuals who are being studied—ranging from a series of simple questions to extensive, in-depth interviews—to well- controlled experiments. Each of these <mark style="background-color: #ffeb3b; font-weight: bold;">research</mark> methods has unique strengths and weaknesses, and each method may only be appropriate for certain types of <mark style="background-color: #ffeb3b; font-weight: bold;">research</mark> questions. For example, studies that rely primarily on observation produce incredible amounts of information, but the ability to apply this information to the larger population is somewhat limited because of small sample sizes. Survey <mark style="background-color: #ffeb3b; font-weight: bold;">research</mark>, on the other hand, allows <mark style="background-color: #ffeb3b; font-weight: bold;">research</mark>ers to easily collect data from relatively large samples. While this allows for results to be generalized to the larger population more easily, the information that can be collected on any given survey is somewhat limited and subject to problems associated with any type of self-reported data. Some <mark style="background-color: #ffeb3b; font-weight: bold;">research</mark>ers conduct archival <mark style="background-color: #ffeb3b; font-weight: bold;">research</mark> by using existing records. While this can be a fairly inexpensive way to collect data that can provide insight into a number of <mark style="background-color: #ffeb3b; font-weight: bold;">research</mark> questions, <mark style="background-color: #ffeb3b; font-weight: bold;">research</mark>ers using this approach have no control on how or what kind of data was collected. All of the methods described thus far are correlational in nature. This means that <mark style="background-color: #ffeb3b; font-weight: bold;">research</mark>ers can speak to important relationships that might exist between two or more variables of interest. However, correlational data cannot be used to make claims about cause-and-effect relationships. Correlational <mark style="background-color: #ffeb3b; font-weight: bold;">research</mark> can find a relationship between two variables, but the only way a <mark style="background-color: #ffeb3b; font-weight: bold;">research</mark>er can claim that the relationship between the variables is cause and effect is to perform an experiment. In experimental <mark style="background-color: #ffeb3b; font-weight: bold;">research</mark>, which will be discussed later in this chapter, there is a tremendous amount of control over variables of interest. While this is a powerful approach, experiments are often conducted in artificial settings. This calls into question the validity of experimental findings with regard to how they would apply in real-world settings. In addition, many of the questions that psychologists would like to answer cannot be pursued through experimental <mark style="background-color: #ffeb3b; font-weight: bold;">research</mark> because of ethical concerns. Clinical or Case Studies In 2011, the New York Times published a feature story on Krista and Tatiana Hogan, Canadian twin girls. These particular twins are unique because Krista and Tatiana are conjoined twins, connected at the head. There is evidence that the two girls are connected in a part of
 
-for the collection of valid, true-to-life information from realistic situations. However, naturalistic observation does not allow for much control and often requires quite a bit of time and money to perform. <mark style="background-color: #ffeb3b; font-weight: bold;">research</mark>ers strive to ensure that their tools for collecting data are both reliable (consistent and replicable) and valid (accurate). Surveys can be administered in a number of ways and make it possible to collect large amounts of data quickly. However, the depth of information that can be collected through surveys is somewhat limited compared to a clinical or case study. Archival <mark style="background-color: #ffeb3b; font-weight: bold;">research</mark> involves studying existing data sets to answer <mark style="background-color: #ffeb3b; font-weight: bold;">research</mark> questions. Longitudinal <mark style="background-color: #ffeb3b; font-weight: bold;">research</mark> has been incredibly helpful to <mark style="background-color: #ffeb3b; font-weight: bold;">research</mark>ers who need to collect data on how people change over time. Cross-sectional <mark style="background-color: #ffeb3b; font-weight: bold;">research</mark> compares multiple segments of a population at a single time. 2.3 Analyzing Findings A correlation is described with a correlation coefficient, r, which ranges from -1 to 1. The correlation coefficient tells us about the nature (positive or negative) and the strength of the relationship between two or more variables. Correlations do not tell us anything about causation—regardless of how strong the relationship is between variables. In fact, the only way to demonstrate causation is by conducting an experiment. People often make the mistake of claiming that correlations exist when they really do not. <mark style="background-color: #ffeb3b; font-weight: bold;">research</mark>ers can test cause-and-effect hypotheses by conducting experiments. Ideally, experimental participants are randomly selected from the population of interest. Then, the participants are randomly assigned to their respective groups. Sometimes, the <mark style="background-color: #ffeb3b; font-weight: bold;">research</mark>er and the participants are blind to group membership to prevent their expectations from influencing the results. In ideal experimental design, the only difference between the experimental and control groups is whether participants are exposed to the experimental manipulation. Each group goes through all phases of the experiment, but each group will experience a different level of the indepen  <!-- HIGHLIGHTING HERE ONLY -->
+for the collection of valid, true-to-life information from realistic situations. However, naturalistic observation does not allow for much control and often requires quite a bit of time and money to perform. <mark style="background-color: #ffeb3b; font-weight: bold;">research</mark>ers strive to ensure that their tools for collecting data are both reliable (consistent and replicable) and valid (accurate). Surveys can be administered in a number of ways and make it possible to collect large amounts of data quickly. However, the depth of information that can be collected through surveys is somewhat limited compared to a clinical or case study. Archival <mark style="background-color: #ffeb3b; font-weight: bold;">research</mark> involves studying existing data sets to answer <mark style="background-color: #ffeb3b; font-weight: bold;">research</mark> questions. Longitudinal <mark style="background-color: #ffeb3b; font-weight: bold;">research</mark> has been incredibly helpful to <mark style="background-color: #ffeb3b; font-weight: bold;">research</mark>ers who need to collect data on how people change over time. Cross-sectional <mark style="background-color: #ffeb3b; font-weight: bold;">research</mark> compares multiple segments of a population at a single time. 2.3 Analyzing Findings A correlation is described with a correlation coefficient, r, which ranges from -1 to 1. The correlation coefficient tells us about the nature (positive or negative) and the strength of the relationship between two or more variables. Correlations do not tell us anything about causation—regardless of how strong the relationship is between variables. In fact, the only way to demonstrate causation is by conducting an experiment. People often make the mistake of claiming that correlations exist when they really do not. <mark style="background-color: #ffeb3b; font-weight: bold;">research</mark>ers can test cause-and-effect hypotheses by conducting experiments. Ideally, experimental participants are randomly selected from the population of interest. Then, the participants are randomly assigned to their respective groups. Sometimes, the <mark style="background-color: #ffeb3b; font-weight: bold;">research</mark>er and the participants are blind to group membership to prevent their expectations from influencing the results. In ideal experimental design, the only difference between the experimental and control groups is whether participants are exposed to the experimental manipulation. Each group goes through all phases of the experiment, but each group will experience a different level of the indepen
                 </div>
             </div>
             
@@ -374,14 +416,22 @@ for the collection of valid, true-to-life information from realistic situations.
                 <div class="stat-item">
                     <div class="stat-label">Sections Used</div>
                     <div class="stat-value">10</div>
+                    <div class="stat-factor">Factor: 1.00</div>
                 </div>
                 <div class="stat-item">
                     <div class="stat-label">Pages Referenced</div>
                     <div class="stat-value">11</div>
+                    <div class="stat-factor">Factor: 1.00</div>
                 </div>
                 <div class="stat-item">
-                    <div class="stat-label">Keywords Found</div>
-                    <div class="stat-value">4</div>
+                    <div class="stat-label">Answer Length</div>
+                    <div class="stat-value">967</div>
+                    <div class="stat-factor">Factor: 1.00</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Overall</div>
+                    <div class="stat-value">100%</div>
+                    <div class="stat-factor">HIGH</div>
                 </div>
             </div>
             

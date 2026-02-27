@@ -73,6 +73,45 @@
                 box-shadow: 0 2px 4px rgba(0,0,0,0.1);
             }
             
+            .confidence-meter {
+                background: #f0f0f0;
+                padding: 15px 30px;
+                border-bottom: 1px solid #e0e0e0;
+                display: flex;
+                align-items: center;
+                gap: 20px;
+                flex-wrap: wrap;
+            }
+            
+            .confidence-bar {
+                flex: 1;
+                height: 20px;
+                background: #e0e0e0;
+                border-radius: 10px;
+                overflow: hidden;
+            }
+            
+            .confidence-fill {
+                height: 100%;
+                border-radius: 10px;
+                transition: width 0.3s ease;
+            }
+            
+            .confidence-fill.high { background: linear-gradient(90deg, #4caf50, #8bc34a); }
+            .confidence-fill.medium { background: linear-gradient(90deg, #ff9800, #ffc107); }
+            .confidence-fill.low { background: linear-gradient(90deg, #f44336, #ff7043); }
+            
+            .confidence-text {
+                font-size: 18px;
+                font-weight: 600;
+                min-width: 100px;
+                text-align: center;
+            }
+            
+            .confidence-text.high { color: #4caf50; }
+            .confidence-text.medium { color: #ff9800; }
+            .confidence-text.low { color: #f44336; }
+            
             .answer-section {
                 padding: 30px;
                 background: #f8f9fa;
@@ -99,8 +138,6 @@
                 color: #444;
                 border-left: 4px solid #667eea;
             }
-            
-            /* NO mark styling for answer - it stays plain */
             
             .evidence-section {
                 padding: 30px;
@@ -153,17 +190,6 @@
                 border: 1px solid #e0e0e0;
             }
             
-            .term-badge {
-                display: inline-block;
-                background: #ffeb3b;
-                color: #333;
-                padding: 3px 10px;
-                border-radius: 15px;
-                font-size: 12px;
-                margin: 0 5px 5px 0;
-                font-weight: 500;
-            }
-            
             .evidence-text {
                 background: white;
                 padding: 15px;
@@ -213,19 +239,17 @@
             }
             
             .stats {
-                display: flex;
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
                 gap: 15px;
                 padding: 20px 30px;
                 background: white;
-                flex-wrap: wrap;
             }
             
             .stat-item {
                 background: #f8f9fa;
-                padding: 10px 20px;
+                padding: 15px;
                 border-radius: 10px;
-                flex: 1;
-                min-width: 120px;
                 text-align: center;
                 border: 1px solid #e0e0e0;
             }
@@ -242,6 +266,12 @@
                 color: #667eea;
             }
             
+            .stat-factor {
+                font-size: 11px;
+                color: #999;
+                margin-top: 5px;
+            }
+            
             .footer {
                 padding: 20px 30px;
                 background: #f0f0f0;
@@ -252,6 +282,10 @@
             }
             
             @media (max-width: 768px) {
+                .stats {
+                    grid-template-columns: repeat(2, 1fr);
+                }
+                
                 .header {
                     padding: 20px;
                 }
@@ -279,8 +313,16 @@
             </div>
             
             <div class="keywords-bar">
-                <div class="keywords-title">🔑 Extracted Keywords:</div>
+                <div class="keywords-title"><i class="fas fa-key"></i> Extracted Keywords:</div>
     <span class="keyword-badge">history</span><span class="keyword-badge">psychology</span>
+            </div>
+            
+            <div class="confidence-meter">
+                <i class="fas fa-bullseye"></i><span style="font-weight: 600;">Confidence:</span>
+                <div class="confidence-bar">
+                    <div class="confidence-fill high" style="width: 100.0%;"></div>
+                </div>
+                <div class="confidence-text high">HIGH (100%)</div>
             </div>
             
             <div class="answer-section">
@@ -298,7 +340,7 @@ Some of the key figures and perspectives in the history of psychology include:
 
 The history of psychology has also been influenced by the contributions of women and ethnic minorities, who have often been overlooked or undervalued. Examples include Margaret Floy Washburn, Mary Whiton Calkins, Mary Cover Jones, Martha Bernal, and Inez Beverly Prosser, who made significant contributions to the field despite facing obstacles and discrimination.
 
-Overall, the history of psychology is a rich and complex one, shaped by the contributions of many individuals and perspectives over time.  <!-- NO HIGHLIGHTING HERE -->
+Overall, the history of psychology is a rich and complex one, shaped by the contributions of many individuals and perspectives over time.
                 </div>
             </div>
             
@@ -312,7 +354,7 @@ Blann</span>
                     <span class="page-number">📄 Page 20</span>
                 </div>
                 <div class="evidence-text">
-                    including experimentation, rather than a method based only on forms of logical argument or previous authorities. It was not until the late 1800s that <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> became accepted as its own academic discipline. Before this time, the workings of the mind were considered under the auspices of philosophy  <!-- HIGHLIGHTING HERE ONLY -->
+                    including experimentation, rather than a method based only on forms of logical argument or previous authorities. It was not until the late 1800s that <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> became accepted as its own academic discipline. Before this time, the workings of the mind were considered under the auspices of philosophy
                 </div>
             </div>
     
@@ -322,7 +364,7 @@ Blann</span>
                     <span class="page-number">📄 Page 21</span>
                 </div>
                 <div class="evidence-text">
-                    including experimentation, rather than a method based only on forms of logical argument or previous authorities. It was not until the late 1800s that <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> became accepted as its own academic discipline. Before this time, the workings of the mind were considered under the auspices of philosophy  <!-- HIGHLIGHTING HERE ONLY -->
+                    including experimentation, rather than a method based only on forms of logical argument or previous authorities. It was not until the late 1800s that <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> became accepted as its own academic discipline. Before this time, the workings of the mind were considered under the auspices of philosophy
                 </div>
             </div>
     
@@ -334,7 +376,7 @@ By the end of this section</span>
                     <span class="page-number">📄 Page 23</span>
                 </div>
                 <div class="evidence-text">
-                    including experimentation, rather than a method based only on forms of logical argument or previous authorities. It was not until the late 1800s that <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> became accepted as its own academic discipline. Before this time, the workings of the mind were considered under the auspices of philosophy  <!-- HIGHLIGHTING HERE ONLY -->
+                    including experimentation, rather than a method based only on forms of logical argument or previous authorities. It was not until the late 1800s that <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> became accepted as its own academic discipline. Before this time, the workings of the mind were considered under the auspices of philosophy
                 </div>
             </div>
     
@@ -346,7 +388,7 @@ By the end of this section</span>
                     <span class="page-number">📄 Page 24</span>
                 </div>
                 <div class="evidence-text">
-                    including experimentation, rather than a method based only on forms of logical argument or previous authorities. It was not until the late 1800s that <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> became accepted as its own academic discipline. Before this time, the workings of the mind were considered under the auspices of philosophy  <!-- HIGHLIGHTING HERE ONLY -->
+                    including experimentation, rather than a method based only on forms of logical argument or previous authorities. It was not until the late 1800s that <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> became accepted as its own academic discipline. Before this time, the workings of the mind were considered under the auspices of philosophy
                 </div>
             </div>
     
@@ -357,7 +399,7 @@ Psychology is a diverse discipline that is made up of several major subdivisions
                     <span class="page-number">📄 Page 25</span>
                 </div>
                 <div class="evidence-text">
-                    including experimentation, rather than a method based only on forms of logical argument or previous authorities. It was not until the late 1800s that <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> became accepted as its own academic discipline. Before this time, the workings of the mind were considered under the auspices of philosophy  <!-- HIGHLIGHTING HERE ONLY -->
+                    including experimentation, rather than a method based only on forms of logical argument or previous authorities. It was not until the late 1800s that <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> became accepted as its own academic discipline. Before this time, the workings of the mind were considered under the auspices of philosophy
                 </div>
             </div>
     
@@ -378,7 +420,7 @@ LINK TO LEARNING Listen to a podcast about the influence of an African American'
 
 FIGURE 1.3 William James, shown here in a self-portrait, was the first American psychologist. Freud and Psychoanalytic Theory Perhaps one of the most influential and well-known figures in <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark>’s <mark style="background-color: #ffeb3b; font-weight: bold;">history</mark> was Sigmund Freud (Figure 1.4). Freud (1856–1939) was an Austrian neurologist who was fascinated by patients suffering from “hysteria” and neurosis. Hysteria was an ancient diagnosis for disorders, primarily of women with a wide variety of symptoms, including physical symptoms and emotional disturbances, none of which had an apparent physical cause. Freud theorized that many of his patients’ problems arose from the unconscious mind. In Freud’s view, the unconscious mind was a repository of feelings and urges of which we have no awareness. Gaining access to the unconscious, then, was crucial to the successful resolution of the patient’s problems. According to Freud, the unconscious mind could be accessed through dream analysis, by examinations of the first words that came to people’s minds, and through seemingly innocent slips of the tongue. Psychoanalytic theory focuses on the role of a person’s unconscious, as well as early childhood experiences, and this particular perspective dominated clinical <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> for several decades (Thorne & Henley, 2005). FIGURE 1.4 (a) Sigmund Freud was a highly influential figure in the <mark style="background-color: #ffeb3b; font-weight: bold;">history</mark> of <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark>. (b) One of his many books, A General Introduction to Psychoanalysis, shared his ideas about psychoanalytical therapy; it was published in 1922. Freud’s ideas were influential, and you will learn more about them when you study lifespan development, personality, and therapy. For instance, many therapists believe strongly in the unconscious and the impact of 1.2 • <mark style="background-color: #ffeb3b; font-weight: bold;">history</mark> of <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> 11
 
-scale. These factors along with the rise of behaviorism (described next) in the United States prevented principles of Gestalt <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> from being as influential in the United States as they had been in their native Germany (Thorne & Henley, 2005). Despite these issues, several Gestalt principles are still very influential today. Considering the human individual as a whole rather than as a sum of individually measured parts became an important foundation in humanistic theory late in the century. The ideas of  <!-- HIGHLIGHTING HERE ONLY -->
+scale. These factors along with the rise of behaviorism (described next) in the United States prevented principles of Gestalt <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> from being as influential in the United States as they had been in their native Germany (Thorne & Henley, 2005). Despite these issues, several Gestalt principles are still very influential today. Considering the human individual as a whole rather than as a sum of individually measured parts became an important foundation in humanistic theory late in the century. The ideas of
                 </div>
             </div>
             
@@ -386,14 +428,22 @@ scale. These factors along with the rise of behaviorism (described next) in the 
                 <div class="stat-item">
                     <div class="stat-label">Sections Used</div>
                     <div class="stat-value">9</div>
+                    <div class="stat-factor">Factor: 1.00</div>
                 </div>
                 <div class="stat-item">
                     <div class="stat-label">Pages Referenced</div>
                     <div class="stat-value">10</div>
+                    <div class="stat-factor">Factor: 1.00</div>
                 </div>
                 <div class="stat-item">
-                    <div class="stat-label">Keywords Found</div>
-                    <div class="stat-value">2</div>
+                    <div class="stat-label">Answer Length</div>
+                    <div class="stat-value">1636</div>
+                    <div class="stat-factor">Factor: 1.00</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Overall</div>
+                    <div class="stat-value">100%</div>
+                    <div class="stat-factor">HIGH</div>
                 </div>
             </div>
             

@@ -73,6 +73,45 @@
                 box-shadow: 0 2px 4px rgba(0,0,0,0.1);
             }
             
+            .confidence-meter {
+                background: #f0f0f0;
+                padding: 15px 30px;
+                border-bottom: 1px solid #e0e0e0;
+                display: flex;
+                align-items: center;
+                gap: 20px;
+                flex-wrap: wrap;
+            }
+            
+            .confidence-bar {
+                flex: 1;
+                height: 20px;
+                background: #e0e0e0;
+                border-radius: 10px;
+                overflow: hidden;
+            }
+            
+            .confidence-fill {
+                height: 100%;
+                border-radius: 10px;
+                transition: width 0.3s ease;
+            }
+            
+            .confidence-fill.high { background: linear-gradient(90deg, #4caf50, #8bc34a); }
+            .confidence-fill.medium { background: linear-gradient(90deg, #ff9800, #ffc107); }
+            .confidence-fill.low { background: linear-gradient(90deg, #f44336, #ff7043); }
+            
+            .confidence-text {
+                font-size: 18px;
+                font-weight: 600;
+                min-width: 100px;
+                text-align: center;
+            }
+            
+            .confidence-text.high { color: #4caf50; }
+            .confidence-text.medium { color: #ff9800; }
+            .confidence-text.low { color: #f44336; }
+            
             .answer-section {
                 padding: 30px;
                 background: #f8f9fa;
@@ -99,8 +138,6 @@
                 color: #444;
                 border-left: 4px solid #667eea;
             }
-            
-            /* NO mark styling for answer - it stays plain */
             
             .evidence-section {
                 padding: 30px;
@@ -153,17 +190,6 @@
                 border: 1px solid #e0e0e0;
             }
             
-            .term-badge {
-                display: inline-block;
-                background: #ffeb3b;
-                color: #333;
-                padding: 3px 10px;
-                border-radius: 15px;
-                font-size: 12px;
-                margin: 0 5px 5px 0;
-                font-weight: 500;
-            }
-            
             .evidence-text {
                 background: white;
                 padding: 15px;
@@ -213,19 +239,17 @@
             }
             
             .stats {
-                display: flex;
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
                 gap: 15px;
                 padding: 20px 30px;
                 background: white;
-                flex-wrap: wrap;
             }
             
             .stat-item {
                 background: #f8f9fa;
-                padding: 10px 20px;
+                padding: 15px;
                 border-radius: 10px;
-                flex: 1;
-                min-width: 120px;
                 text-align: center;
                 border: 1px solid #e0e0e0;
             }
@@ -242,6 +266,12 @@
                 color: #667eea;
             }
             
+            .stat-factor {
+                font-size: 11px;
+                color: #999;
+                margin-top: 5px;
+            }
+            
             .footer {
                 padding: 20px 30px;
                 background: #f0f0f0;
@@ -252,6 +282,10 @@
             }
             
             @media (max-width: 768px) {
+                .stats {
+                    grid-template-columns: repeat(2, 1fr);
+                }
+                
                 .header {
                     padding: 20px;
                 }
@@ -279,14 +313,22 @@
             </div>
             
             <div class="keywords-bar">
-                <div class="keywords-title">🔑 Extracted Keywords:</div>
+                <div class="keywords-title"><i class="fas fa-key"></i> Extracted Keywords:</div>
     <span class="keyword-badge">operant</span><span class="keyword-badge">conditioning</span>
+            </div>
+            
+            <div class="confidence-meter">
+                <i class="fas fa-bullseye"></i><span style="font-weight: 600;">Confidence:</span>
+                <div class="confidence-bar">
+                    <div class="confidence-fill high" style="width: 100.0%;"></div>
+                </div>
+                <div class="confidence-text high">HIGH (100%)</div>
             </div>
             
             <div class="answer-section">
                 <h3><i class="fas fa-robot"></i> Generated Answer</h3>
                 <div class="answer-content">
-                    According to the provided textbook context, operant conditioning is a type of learning in which behavior is motivated by its consequences, such as reinforcements or punishments. It is based on the law of effect, which states that behaviors that are followed by satisfying consequences are more likely to be repeated, while behaviors that are followed by unpleasant consequences are less likely to be repeated. In operant conditioning, the target behavior is followed by a stimulus, either reinforcement or punishment, which strengthens or weakens the behavior, making the learner more or less likely to exhibit the desired behavior in the future.  <!-- NO HIGHLIGHTING HERE -->
+                    According to the provided textbook context, operant conditioning is a type of learning in which behavior is motivated by its consequences, such as reinforcements or punishments. It is based on the law of effect, which states that behaviors that are followed by satisfying consequences are more likely to be repeated, while behaviors that are followed by unpleasant consequences are less likely to be repeated. In operant conditioning, the target behavior is followed by a stimulus, either reinforcement or punishment, which strengthens or weakens the behavior, making the learner more or less likely to exhibit the desired behavior in the future.
                 </div>
             </div>
             
@@ -299,7 +341,7 @@
                     <span class="page-number">📄 Page 194</span>
                 </div>
                 <div class="evidence-text">
-                    by the animal. FIGURE 6.10 (a) B. F. Skinner developed <mark style="background-color: #ffeb3b; font-weight: bold;">operant</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">conditioning</mark> for systematic study of how behaviors are strengthened or weakened according to their consequences. (b) In a Skinner box, a rat presses a lever in an <mark style="background-color: #ffeb3b; font-weight: bold;">operant</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">conditioning</mark> chamber to receive a food reward. (credit a: modifica  <!-- HIGHLIGHTING HERE ONLY -->
+                    by the animal. FIGURE 6.10 (a) B. F. Skinner developed <mark style="background-color: #ffeb3b; font-weight: bold;">operant</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">conditioning</mark> for systematic study of how behaviors are strengthened or weakened according to their consequences. (b) In a Skinner box, a rat presses a lever in an <mark style="background-color: #ffeb3b; font-weight: bold;">operant</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">conditioning</mark> chamber to receive a food reward. (credit a: modifica
                 </div>
             </div>
     
@@ -309,7 +351,7 @@
                     <span class="page-number">📄 Page 195</span>
                 </div>
                 <div class="evidence-text">
-                    by the animal. FIGURE 6.10 (a) B. F. Skinner developed <mark style="background-color: #ffeb3b; font-weight: bold;">operant</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">conditioning</mark> for systematic study of how behaviors are strengthened or weakened according to their consequences. (b) In a Skinner box, a rat presses a lever in an <mark style="background-color: #ffeb3b; font-weight: bold;">operant</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">conditioning</mark> chamber to receive a food reward. (credit a: modifica  <!-- HIGHLIGHTING HERE ONLY -->
+                    by the animal. FIGURE 6.10 (a) B. F. Skinner developed <mark style="background-color: #ffeb3b; font-weight: bold;">operant</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">conditioning</mark> for systematic study of how behaviors are strengthened or weakened according to their consequences. (b) In a Skinner box, a rat presses a lever in an <mark style="background-color: #ffeb3b; font-weight: bold;">operant</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">conditioning</mark> chamber to receive a food reward. (credit a: modifica
                 </div>
             </div>
     
@@ -320,7 +362,7 @@ Psychologist B</span>
                     <span class="page-number">📄 Page 197</span>
                 </div>
                 <div class="evidence-text">
-                    by the animal. FIGURE 6.10 (a) B. F. Skinner developed <mark style="background-color: #ffeb3b; font-weight: bold;">operant</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">conditioning</mark> for systematic study of how behaviors are strengthened or weakened according to their consequences. (b) In a Skinner box, a rat presses a lever in an <mark style="background-color: #ffeb3b; font-weight: bold;">operant</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">conditioning</mark> chamber to receive a food reward. (credit a: modifica  <!-- HIGHLIGHTING HERE ONLY -->
+                    by the animal. FIGURE 6.10 (a) B. F. Skinner developed <mark style="background-color: #ffeb3b; font-weight: bold;">operant</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">conditioning</mark> for systematic study of how behaviors are strengthened or weakened according to their consequences. (b) In a Skinner box, a rat presses a lever in an <mark style="background-color: #ffeb3b; font-weight: bold;">operant</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">conditioning</mark> chamber to receive a food reward. (credit a: modifica
                 </div>
             </div>
     
@@ -330,7 +372,7 @@ Psychologist B</span>
                     <span class="page-number">📄 Page 200</span>
                 </div>
                 <div class="evidence-text">
-                    by the animal. FIGURE 6.10 (a) B. F. Skinner developed <mark style="background-color: #ffeb3b; font-weight: bold;">operant</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">conditioning</mark> for systematic study of how behaviors are strengthened or weakened according to their consequences. (b) In a Skinner box, a rat presses a lever in an <mark style="background-color: #ffeb3b; font-weight: bold;">operant</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">conditioning</mark> chamber to receive a food reward. (credit a: modifica  <!-- HIGHLIGHTING HERE ONLY -->
+                    by the animal. FIGURE 6.10 (a) B. F. Skinner developed <mark style="background-color: #ffeb3b; font-weight: bold;">operant</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">conditioning</mark> for systematic study of how behaviors are strengthened or weakened according to their consequences. (b) In a Skinner box, a rat presses a lever in an <mark style="background-color: #ffeb3b; font-weight: bold;">operant</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">conditioning</mark> chamber to receive a food reward. (credit a: modifica
                 </div>
             </div>
     
@@ -341,7 +383,7 @@ levels of the hormone norepinephrine</span>
                     <span class="page-number">📄 Page 202</span>
                 </div>
                 <div class="evidence-text">
-                    by the animal. FIGURE 6.10 (a) B. F. Skinner developed <mark style="background-color: #ffeb3b; font-weight: bold;">operant</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">conditioning</mark> for systematic study of how behaviors are strengthened or weakened according to their consequences. (b) In a Skinner box, a rat presses a lever in an <mark style="background-color: #ffeb3b; font-weight: bold;">operant</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">conditioning</mark> chamber to receive a food reward. (credit a: modifica  <!-- HIGHLIGHTING HERE ONLY -->
+                    by the animal. FIGURE 6.10 (a) B. F. Skinner developed <mark style="background-color: #ffeb3b; font-weight: bold;">operant</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">conditioning</mark> for systematic study of how behaviors are strengthened or weakened according to their consequences. (b) In a Skinner box, a rat presses a lever in an <mark style="background-color: #ffeb3b; font-weight: bold;">operant</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">conditioning</mark> chamber to receive a food reward. (credit a: modifica
                 </div>
             </div>
     
@@ -360,7 +402,7 @@ FIGURE 15.13 Different regions of the brain may be associated with different psy
 
 tell Hodor to sit, and give him a treat when he does. After repeated experiences, Hodor begins to associate the act of sitting with receiving a treat. He learns that the consequence of sitting is that he gets a doggie biscuit (Figure 6.2). Conversely, if the dog is punished when exhibiting a behavior, it becomes conditioned to avoid that behavior (e.g., receiving a small shock when crossing the boundary of an invisible electric fence). FIGURE 6.2 In <mark style="background-color: #ffeb3b; font-weight: bold;">operant</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">conditioning</mark>, a response is associated with a consequence. This dog has learned that certain behaviors result in receiving a treat. (credit: Crystal Rolfe) Observational learning extends the effective range of both classical and <mark style="background-color: #ffeb3b; font-weight: bold;">operant</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">conditioning</mark>. In contrast to classical and <mark style="background-color: #ffeb3b; font-weight: bold;">operant</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">conditioning</mark>, in which learning occurs only through direct experience, observational learning is the process of watching others and then imitating what they do. A lot of learning among humans and other animals comes from observational learning. To get an idea of the extra effective range that observational learning brings, consider Ben and his son Julian from the introduction. How might observation help Julian learn to surf, as opposed to learning by trial and error alone? By watching his father, he can imitate the moves that bring success and avoid the moves that lead to failure. Can you think of something you have learned how to do after watching someone else? All of the approaches covered in this chapter are part of a particular tradition in psychology, called behaviorism, which we discuss in the next section. However, these approaches do not represent the entire study of learning. Separate traditions of learning have taken shape within different fields of psychology, such as memory and cognition, so you will find that other chapters will round out your understanding of the topic. Over time these traditions tend to converge. For example, in this chapter you will see how cognition has come to play a larger role in behaviorism, whose more extreme adherents once insisted that behaviors are triggered by the environment with no intervening thought. 6.2 Classical <mark style="background-color: #ffeb3b; font-weight: bold;">conditioning</mark> LEARNING OBJECTIVES By the end of this section, you will be able to: • Explain how classical <mark style="background-color: #ffeb3b; font-weight: bold;">conditioning</mark> occurs • Summarize the processes of acquisition, extinction, spontaneous recovery, generalization, and discrimination Does the name Ivan Pavlov ring a bell? Even if you are new to the study of psychology, chances are that you have heard of Pavlov
 
-General Processes in Classical <mark style="background-color: #ffeb3b; font-weight: bold;">conditioning</mark> Now that you know how classical <mark style="background-color: #ffeb3b; font-weight: bold;">conditioning</mark> works and have seen several examples, let’s take a look at some of the general processes involved. In classical <mark style="background-color: #ffeb3b; font-weight: bold;">conditioning</mark>, the initial period of learning is known as acquisition, when an organism learns to connect a neutral stimulus and an unconditioned stimulus. During acquisition, the neutral stimulus begins to elicit the conditioned response, and eventually the neutral stimulus becomes a conditioned stimulus capable of eliciting the conditioned response by itself. Timing is important for <mark style="background-color: #ffeb3b; font-weight: bold;">conditioning</mark> to occur. Typically, there should only be a brief interval between presentation of the conditioned stimulus and the unconditioned stimulus. Depending on what is being conditioned, sometimes this interval is as little as five seconds (Chance, 2009). However, with other types of <mark style="background-color: #ffeb3b; font-weight: bold;">conditioning</mark>, the interval can be up to several hours. Taste aversion is a type of <mark style="background-color: #ffeb3b; font-weight: bold;">conditioning</mark> in which an interval of several hours may pass between the conditioned stimulus (something ingested) and the unconditioned stimulus (nausea or illness). Here’s how it works. Between classes, you and a friend grab a quick lunch from a food cart on campus. You share a dish of chicken curry and head off to your next class. A few hours later, you feel nauseous and become ill. Although your friend is fine and you determine that you have intestinal flu (the food is not the culprit), you’ve developed a taste aversion; the next time you are at a restaurant and someone orders curry, you immediately feel ill. While the chicken dish is not what made you sick, you are experiencing taste aversion: you’ve been conditioned to be averse to a food after a single, bad experience. How does this occur—<mark style="background-color: #ffeb3b; font-weight: bold;">conditioning</mark> based on a single instance and involving an extended time lapse between the event and the negative stimulus? Research into taste aversion suggests that this response may be an evolutionary adaptation designed to help organisms quickly learn to avoid harmful foods (Garcia & Rusiniak, 1980; Garcia & Koelling, 1966). Not only may this contribute to species survival via natural selection, but it may also help us develop strategies for challen  <!-- HIGHLIGHTING HERE ONLY -->
+General Processes in Classical <mark style="background-color: #ffeb3b; font-weight: bold;">conditioning</mark> Now that you know how classical <mark style="background-color: #ffeb3b; font-weight: bold;">conditioning</mark> works and have seen several examples, let’s take a look at some of the general processes involved. In classical <mark style="background-color: #ffeb3b; font-weight: bold;">conditioning</mark>, the initial period of learning is known as acquisition, when an organism learns to connect a neutral stimulus and an unconditioned stimulus. During acquisition, the neutral stimulus begins to elicit the conditioned response, and eventually the neutral stimulus becomes a conditioned stimulus capable of eliciting the conditioned response by itself. Timing is important for <mark style="background-color: #ffeb3b; font-weight: bold;">conditioning</mark> to occur. Typically, there should only be a brief interval between presentation of the conditioned stimulus and the unconditioned stimulus. Depending on what is being conditioned, sometimes this interval is as little as five seconds (Chance, 2009). However, with other types of <mark style="background-color: #ffeb3b; font-weight: bold;">conditioning</mark>, the interval can be up to several hours. Taste aversion is a type of <mark style="background-color: #ffeb3b; font-weight: bold;">conditioning</mark> in which an interval of several hours may pass between the conditioned stimulus (something ingested) and the unconditioned stimulus (nausea or illness). Here’s how it works. Between classes, you and a friend grab a quick lunch from a food cart on campus. You share a dish of chicken curry and head off to your next class. A few hours later, you feel nauseous and become ill. Although your friend is fine and you determine that you have intestinal flu (the food is not the culprit), you’ve developed a taste aversion; the next time you are at a restaurant and someone orders curry, you immediately feel ill. While the chicken dish is not what made you sick, you are experiencing taste aversion: you’ve been conditioned to be averse to a food after a single, bad experience. How does this occur—<mark style="background-color: #ffeb3b; font-weight: bold;">conditioning</mark> based on a single instance and involving an extended time lapse between the event and the negative stimulus? Research into taste aversion suggests that this response may be an evolutionary adaptation designed to help organisms quickly learn to avoid harmful foods (Garcia & Rusiniak, 1980; Garcia & Koelling, 1966). Not only may this contribute to species survival via natural selection, but it may also help us develop strategies for challen
                 </div>
             </div>
             
@@ -368,14 +410,22 @@ General Processes in Classical <mark style="background-color: #ffeb3b; font-weig
                 <div class="stat-item">
                     <div class="stat-label">Sections Used</div>
                     <div class="stat-value">9</div>
+                    <div class="stat-factor">Factor: 1.00</div>
                 </div>
                 <div class="stat-item">
                     <div class="stat-label">Pages Referenced</div>
                     <div class="stat-value">9</div>
+                    <div class="stat-factor">Factor: 0.90</div>
                 </div>
                 <div class="stat-item">
-                    <div class="stat-label">Keywords Found</div>
-                    <div class="stat-value">2</div>
+                    <div class="stat-label">Answer Length</div>
+                    <div class="stat-value">646</div>
+                    <div class="stat-factor">Factor: 1.00</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Overall</div>
+                    <div class="stat-value">100%</div>
+                    <div class="stat-factor">HIGH</div>
                 </div>
             </div>
             

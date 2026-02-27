@@ -73,6 +73,45 @@
                 box-shadow: 0 2px 4px rgba(0,0,0,0.1);
             }
             
+            .confidence-meter {
+                background: #f0f0f0;
+                padding: 15px 30px;
+                border-bottom: 1px solid #e0e0e0;
+                display: flex;
+                align-items: center;
+                gap: 20px;
+                flex-wrap: wrap;
+            }
+            
+            .confidence-bar {
+                flex: 1;
+                height: 20px;
+                background: #e0e0e0;
+                border-radius: 10px;
+                overflow: hidden;
+            }
+            
+            .confidence-fill {
+                height: 100%;
+                border-radius: 10px;
+                transition: width 0.3s ease;
+            }
+            
+            .confidence-fill.high { background: linear-gradient(90deg, #4caf50, #8bc34a); }
+            .confidence-fill.medium { background: linear-gradient(90deg, #ff9800, #ffc107); }
+            .confidence-fill.low { background: linear-gradient(90deg, #f44336, #ff7043); }
+            
+            .confidence-text {
+                font-size: 18px;
+                font-weight: 600;
+                min-width: 100px;
+                text-align: center;
+            }
+            
+            .confidence-text.high { color: #4caf50; }
+            .confidence-text.medium { color: #ff9800; }
+            .confidence-text.low { color: #f44336; }
+            
             .answer-section {
                 padding: 30px;
                 background: #f8f9fa;
@@ -99,8 +138,6 @@
                 color: #444;
                 border-left: 4px solid #667eea;
             }
-            
-            /* NO mark styling for answer - it stays plain */
             
             .evidence-section {
                 padding: 30px;
@@ -153,17 +190,6 @@
                 border: 1px solid #e0e0e0;
             }
             
-            .term-badge {
-                display: inline-block;
-                background: #ffeb3b;
-                color: #333;
-                padding: 3px 10px;
-                border-radius: 15px;
-                font-size: 12px;
-                margin: 0 5px 5px 0;
-                font-weight: 500;
-            }
-            
             .evidence-text {
                 background: white;
                 padding: 15px;
@@ -213,19 +239,17 @@
             }
             
             .stats {
-                display: flex;
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
                 gap: 15px;
                 padding: 20px 30px;
                 background: white;
-                flex-wrap: wrap;
             }
             
             .stat-item {
                 background: #f8f9fa;
-                padding: 10px 20px;
+                padding: 15px;
                 border-radius: 10px;
-                flex: 1;
-                min-width: 120px;
                 text-align: center;
                 border: 1px solid #e0e0e0;
             }
@@ -242,6 +266,12 @@
                 color: #667eea;
             }
             
+            .stat-factor {
+                font-size: 11px;
+                color: #999;
+                margin-top: 5px;
+            }
+            
             .footer {
                 padding: 20px 30px;
                 background: #f0f0f0;
@@ -252,6 +282,10 @@
             }
             
             @media (max-width: 768px) {
+                .stats {
+                    grid-template-columns: repeat(2, 1fr);
+                }
+                
                 .header {
                     padding: 20px;
                 }
@@ -279,8 +313,16 @@
             </div>
             
             <div class="keywords-bar">
-                <div class="keywords-title">🔑 Extracted Keywords:</div>
+                <div class="keywords-title"><i class="fas fa-key"></i> Extracted Keywords:</div>
     <span class="keyword-badge">major</span><span class="keyword-badge">personality</span><span class="keyword-badge">traits</span><span class="keyword-badge">five</span><span class="keyword-badge">factor</span><span class="keyword-badge">model</span>
+            </div>
+            
+            <div class="confidence-meter">
+                <i class="fas fa-bullseye"></i><span style="font-weight: 600;">Confidence:</span>
+                <div class="confidence-bar">
+                    <div class="confidence-fill high" style="width: 100.0%;"></div>
+                </div>
+                <div class="confidence-text high">HIGH (100%)</div>
             </div>
             
             <div class="answer-section">
@@ -294,7 +336,7 @@
 4. Agreeableness
 5. Neuroticism
 
-These traits can be remembered using the mnemonic OCEAN.  <!-- NO HIGHLIGHTING HERE -->
+These traits can be remembered using the mnemonic OCEAN.
                 </div>
             </div>
             
@@ -308,7 +350,7 @@ from infancy to adulthood</span>
                     <span class="page-number">📄 Page 34</span>
                 </div>
                 <div class="evidence-text">
-                    FIGURE 11.13 The Eysencks described two <mark style="background-color: #ffeb3b; font-weight: bold;">factor</mark>s to account for variations in our personalities: extroversion/ introversion and emotional stability/instability. Later, the Eysencks added a third dimension: psychoticism versus superego control (Eysenck, Eysenck & Barrett, 1985). In this dimension, peo  <!-- HIGHLIGHTING HERE ONLY -->
+                    FIGURE 11.13 The Eysencks described two <mark style="background-color: #ffeb3b; font-weight: bold;">factor</mark>s to account for variations in our personalities: extroversion/ introversion and emotional stability/instability. Later, the Eysencks added a third dimension: psychoticism versus superego control (Eysenck, Eysenck & Barrett, 1985). In this dimension, peo
                 </div>
             </div>
     
@@ -318,7 +360,7 @@ from infancy to adulthood</span>
                     <span class="page-number">📄 Page 35</span>
                 </div>
                 <div class="evidence-text">
-                    FIGURE 11.13 The Eysencks described two <mark style="background-color: #ffeb3b; font-weight: bold;">factor</mark>s to account for variations in our personalities: extroversion/ introversion and emotional stability/instability. Later, the Eysencks added a third dimension: psychoticism versus superego control (Eysenck, Eysenck & Barrett, 1985). In this dimension, peo  <!-- HIGHLIGHTING HERE ONLY -->
+                    FIGURE 11.13 The Eysencks described two <mark style="background-color: #ffeb3b; font-weight: bold;">factor</mark>s to account for variations in our personalities: extroversion/ introversion and emotional stability/instability. Later, the Eysencks added a third dimension: psychoticism versus superego control (Eysenck, Eysenck & Barrett, 1985). In this dimension, peo
                 </div>
             </div>
     
@@ -328,7 +370,7 @@ from infancy to adulthood</span>
                     <span class="page-number">📄 Page 390</span>
                 </div>
                 <div class="evidence-text">
-                    FIGURE 11.13 The Eysencks described two <mark style="background-color: #ffeb3b; font-weight: bold;">factor</mark>s to account for variations in our personalities: extroversion/ introversion and emotional stability/instability. Later, the Eysencks added a third dimension: psychoticism versus superego control (Eysenck, Eysenck & Barrett, 1985). In this dimension, peo  <!-- HIGHLIGHTING HERE ONLY -->
+                    FIGURE 11.13 The Eysencks described two <mark style="background-color: #ffeb3b; font-weight: bold;">factor</mark>s to account for variations in our personalities: extroversion/ introversion and emotional stability/instability. Later, the Eysencks added a third dimension: psychoticism versus superego control (Eysenck, Eysenck & Barrett, 1985). In this dimension, peo
                 </div>
             </div>
     
@@ -338,7 +380,7 @@ from infancy to adulthood</span>
                     <span class="page-number">📄 Page 391</span>
                 </div>
                 <div class="evidence-text">
-                    FIGURE 11.13 The Eysencks described two <mark style="background-color: #ffeb3b; font-weight: bold;">factor</mark>s to account for variations in our personalities: extroversion/ introversion and emotional stability/instability. Later, the Eysencks added a third dimension: psychoticism versus superego control (Eysenck, Eysenck & Barrett, 1985). In this dimension, peo  <!-- HIGHLIGHTING HERE ONLY -->
+                    FIGURE 11.13 The Eysencks described two <mark style="background-color: #ffeb3b; font-weight: bold;">factor</mark>s to account for variations in our personalities: extroversion/ introversion and emotional stability/instability. Later, the Eysencks added a third dimension: psychoticism versus superego control (Eysenck, Eysenck & Barrett, 1985). In this dimension, peo
                 </div>
             </div>
     
@@ -350,7 +392,7 @@ Take this assessment based on Cattell</span>
                     <span class="page-number">📄 Page 392</span>
                 </div>
                 <div class="evidence-text">
-                    FIGURE 11.13 The Eysencks described two <mark style="background-color: #ffeb3b; font-weight: bold;">factor</mark>s to account for variations in our personalities: extroversion/ introversion and emotional stability/instability. Later, the Eysencks added a third dimension: psychoticism versus superego control (Eysenck, Eysenck & Barrett, 1985). In this dimension, peo  <!-- HIGHLIGHTING HERE ONLY -->
+                    FIGURE 11.13 The Eysencks described two <mark style="background-color: #ffeb3b; font-weight: bold;">factor</mark>s to account for variations in our personalities: extroversion/ introversion and emotional stability/instability. Later, the Eysencks added a third dimension: psychoticism versus superego control (Eysenck, Eysenck & Barrett, 1985). In this dimension, peo
                 </div>
             </div>
     
@@ -371,7 +413,7 @@ of the same <mark style="background-color: #ffeb3b; font-weight: bold;">traits</
 
 include dimensions of conscientiousness, agreeableness, neuroticism, openness, and extraversion (Figure 1.13). Each of these <mark style="background-color: #ffeb3b; font-weight: bold;">traits</mark> has been demonstrated to be relatively stable over the lifespan (e.g., Rantanen, Metsäpelto, Feldt, Pulkinnen, and Kokko, 2007; Soldz & Vaillant, 1999; McCrae & Costa, 2008) and is influenced by genetics (e.g., Jang, Livesly, and Vernon, 1996). 22 1 • Introduction to Psychology Access for free at openstax.org
 
-FIGURE 1.13 Each of the dimensions of the <mark style="background-color: #ffeb3b; font-weight: bold;">five</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">factor</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">model</mark> is shown in this figure. The provided description would describe someone who scored highly on that given dimension. Someone with a lower score on a given dimension could be described in opposite terms. Social Psychology Social psychology focuses on how we interact with and relate to others. Social psychologists conduct research on a wide variety of topics that include differences in how we explain our own behavior versus how we explain the behaviors of others, prejudice, and attraction, and how we resolve interpersonal conflicts. Social psychologists have also sought to determine how being among other people changes our own behavior and patterns of thinking. There are many interesting examples of social psychological research, and you will read about many of these in a later chapter of this textbook. Until then, you will be introduced to one of the most controversial psychological studies ever conducted. Stanley Milgram was an American social psychologist who is most famous for research that he conducted on obedience. After the holocaust, in 1961, a Nazi war criminal, Adolf Eichmann, who was accused of committing mass atrocities, was put on trial. Many people wondered how German soldiers were capable of torturing prisoners in concentration camps, and they were unsatisfied with the excuses given by soldiers that they were simply following orders. At the time, most psychologists agreed that few people would be willing to inflict such extraordinary pain and suffering, simply because they were obeying orders. Milgram decided to conduct research to determine whether or not this was true (Figure 1.14). As you will read later  <!-- HIGHLIGHTING HERE ONLY -->
+FIGURE 1.13 Each of the dimensions of the <mark style="background-color: #ffeb3b; font-weight: bold;">five</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">factor</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">model</mark> is shown in this figure. The provided description would describe someone who scored highly on that given dimension. Someone with a lower score on a given dimension could be described in opposite terms. Social Psychology Social psychology focuses on how we interact with and relate to others. Social psychologists conduct research on a wide variety of topics that include differences in how we explain our own behavior versus how we explain the behaviors of others, prejudice, and attraction, and how we resolve interpersonal conflicts. Social psychologists have also sought to determine how being among other people changes our own behavior and patterns of thinking. There are many interesting examples of social psychological research, and you will read about many of these in a later chapter of this textbook. Until then, you will be introduced to one of the most controversial psychological studies ever conducted. Stanley Milgram was an American social psychologist who is most famous for research that he conducted on obedience. After the holocaust, in 1961, a Nazi war criminal, Adolf Eichmann, who was accused of committing mass atrocities, was put on trial. Many people wondered how German soldiers were capable of torturing prisoners in concentration camps, and they were unsatisfied with the excuses given by soldiers that they were simply following orders. At the time, most psychologists agreed that few people would be willing to inflict such extraordinary pain and suffering, simply because they were obeying orders. Milgram decided to conduct research to determine whether or not this was true (Figure 1.14). As you will read later
                 </div>
             </div>
             
@@ -379,14 +421,22 @@ FIGURE 1.13 Each of the dimensions of the <mark style="background-color: #ffeb3b
                 <div class="stat-item">
                     <div class="stat-label">Sections Used</div>
                     <div class="stat-value">11</div>
+                    <div class="stat-factor">Factor: 1.00</div>
                 </div>
                 <div class="stat-item">
                     <div class="stat-label">Pages Referenced</div>
                     <div class="stat-value">11</div>
+                    <div class="stat-factor">Factor: 1.00</div>
                 </div>
                 <div class="stat-item">
-                    <div class="stat-label">Keywords Found</div>
-                    <div class="stat-value">6</div>
+                    <div class="stat-label">Answer Length</div>
+                    <div class="stat-value">330</div>
+                    <div class="stat-factor">Factor: 0.66</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Overall</div>
+                    <div class="stat-value">100%</div>
+                    <div class="stat-factor">HIGH</div>
                 </div>
             </div>
             

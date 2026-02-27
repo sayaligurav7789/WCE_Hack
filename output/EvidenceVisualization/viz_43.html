@@ -73,6 +73,45 @@
                 box-shadow: 0 2px 4px rgba(0,0,0,0.1);
             }
             
+            .confidence-meter {
+                background: #f0f0f0;
+                padding: 15px 30px;
+                border-bottom: 1px solid #e0e0e0;
+                display: flex;
+                align-items: center;
+                gap: 20px;
+                flex-wrap: wrap;
+            }
+            
+            .confidence-bar {
+                flex: 1;
+                height: 20px;
+                background: #e0e0e0;
+                border-radius: 10px;
+                overflow: hidden;
+            }
+            
+            .confidence-fill {
+                height: 100%;
+                border-radius: 10px;
+                transition: width 0.3s ease;
+            }
+            
+            .confidence-fill.high { background: linear-gradient(90deg, #4caf50, #8bc34a); }
+            .confidence-fill.medium { background: linear-gradient(90deg, #ff9800, #ffc107); }
+            .confidence-fill.low { background: linear-gradient(90deg, #f44336, #ff7043); }
+            
+            .confidence-text {
+                font-size: 18px;
+                font-weight: 600;
+                min-width: 100px;
+                text-align: center;
+            }
+            
+            .confidence-text.high { color: #4caf50; }
+            .confidence-text.medium { color: #ff9800; }
+            .confidence-text.low { color: #f44336; }
+            
             .answer-section {
                 padding: 30px;
                 background: #f8f9fa;
@@ -99,8 +138,6 @@
                 color: #444;
                 border-left: 4px solid #667eea;
             }
-            
-            /* NO mark styling for answer - it stays plain */
             
             .evidence-section {
                 padding: 30px;
@@ -153,17 +190,6 @@
                 border: 1px solid #e0e0e0;
             }
             
-            .term-badge {
-                display: inline-block;
-                background: #ffeb3b;
-                color: #333;
-                padding: 3px 10px;
-                border-radius: 15px;
-                font-size: 12px;
-                margin: 0 5px 5px 0;
-                font-weight: 500;
-            }
-            
             .evidence-text {
                 background: white;
                 padding: 15px;
@@ -213,19 +239,17 @@
             }
             
             .stats {
-                display: flex;
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
                 gap: 15px;
                 padding: 20px 30px;
                 background: white;
-                flex-wrap: wrap;
             }
             
             .stat-item {
                 background: #f8f9fa;
-                padding: 10px 20px;
+                padding: 15px;
                 border-radius: 10px;
-                flex: 1;
-                min-width: 120px;
                 text-align: center;
                 border: 1px solid #e0e0e0;
             }
@@ -242,6 +266,12 @@
                 color: #667eea;
             }
             
+            .stat-factor {
+                font-size: 11px;
+                color: #999;
+                margin-top: 5px;
+            }
+            
             .footer {
                 padding: 20px 30px;
                 background: #f0f0f0;
@@ -252,6 +282,10 @@
             }
             
             @media (max-width: 768px) {
+                .stats {
+                    grid-template-columns: repeat(2, 1fr);
+                }
+                
                 .header {
                     padding: 20px;
                 }
@@ -279,14 +313,22 @@
             </div>
             
             <div class="keywords-bar">
-                <div class="keywords-title">🔑 Extracted Keywords:</div>
+                <div class="keywords-title"><i class="fas fa-key"></i> Extracted Keywords:</div>
     <span class="keyword-badge">role</span><span class="keyword-badge">social</span><span class="keyword-badge">norms</span><span class="keyword-badge">behavior</span>
+            </div>
+            
+            <div class="confidence-meter">
+                <i class="fas fa-bullseye"></i><span style="font-weight: 600;">Confidence:</span>
+                <div class="confidence-bar">
+                    <div class="confidence-fill high" style="width: 100.0%;"></div>
+                </div>
+                <div class="confidence-text high">HIGH (100%)</div>
             </div>
             
             <div class="answer-section">
                 <h3><i class="fas fa-robot"></i> Generated Answer</h3>
                 <div class="answer-content">
-                    According to the textbook, social norms play a significant role in shaping human behavior. Social norms are "a group's expectation of what is appropriate and acceptable behavior for its members—how they are supposed to behave and think" (Deutsch & Gerard, 1955; Berkowitz, 2004). They dictate the behavior that is considered appropriate or inappropriate for each social role, and individuals are expected to conform to these norms in order to fit in and be accepted by the group. Social norms influence behavior by providing a shared cultural knowledge of what is expected of an individual in a specific role, and individuals use these norms as cues on how to behave in a given situation.  <!-- NO HIGHLIGHTING HERE -->
+                    According to the textbook, social norms play a significant role in shaping human behavior. Social norms are "a group's expectation of what is appropriate and acceptable behavior for its members—how they are supposed to behave and think" (Deutsch & Gerard, 1955; Berkowitz, 2004). They dictate the behavior that is considered appropriate or inappropriate for each social role, and individuals are expected to conform to these norms in order to fit in and be accepted by the group. Social norms influence behavior by providing a shared cultural knowledge of what is expected of an individual in a specific role, and individuals use these norms as cues on how to behave in a given situation.
                 </div>
             </div>
             
@@ -300,7 +342,7 @@ Geen</span>
                     <span class="page-number">📄 Page 412</span>
                 </div>
                 <div class="evidence-text">
-                    that were not available in the used car. 12.4 Conformity, Compliance, and Obedience LEARNING OBJECTIVES By the end of this section, you will be able to: • Explain the Asch effect • Define conformity and types of <mark style="background-color: #ffeb3b; font-weight: bold;">social</mark> influence • Describe Stanley Milgram’s experiment and its implications • Define g  <!-- HIGHLIGHTING HERE ONLY -->
+                    that were not available in the used car. 12.4 Conformity, Compliance, and Obedience LEARNING OBJECTIVES By the end of this section, you will be able to: • Explain the Asch effect • Define conformity and types of <mark style="background-color: #ffeb3b; font-weight: bold;">social</mark> influence • Describe Stanley Milgram’s experiment and its implications • Define g
                 </div>
             </div>
     
@@ -310,7 +352,7 @@ Geen</span>
                     <span class="page-number">📄 Page 418</span>
                 </div>
                 <div class="evidence-text">
-                    that were not available in the used car. 12.4 Conformity, Compliance, and Obedience LEARNING OBJECTIVES By the end of this section, you will be able to: • Explain the Asch effect • Define conformity and types of <mark style="background-color: #ffeb3b; font-weight: bold;">social</mark> influence • Describe Stanley Milgram’s experiment and its implications • Define g  <!-- HIGHLIGHTING HERE ONLY -->
+                    that were not available in the used car. 12.4 Conformity, Compliance, and Obedience LEARNING OBJECTIVES By the end of this section, you will be able to: • Explain the Asch effect • Define conformity and types of <mark style="background-color: #ffeb3b; font-weight: bold;">social</mark> influence • Describe Stanley Milgram’s experiment and its implications • Define g
                 </div>
             </div>
     
@@ -320,7 +362,7 @@ Geen</span>
                     <span class="page-number">📄 Page 419</span>
                 </div>
                 <div class="evidence-text">
-                    that were not available in the used car. 12.4 Conformity, Compliance, and Obedience LEARNING OBJECTIVES By the end of this section, you will be able to: • Explain the Asch effect • Define conformity and types of <mark style="background-color: #ffeb3b; font-weight: bold;">social</mark> influence • Describe Stanley Milgram’s experiment and its implications • Define g  <!-- HIGHLIGHTING HERE ONLY -->
+                    that were not available in the used car. 12.4 Conformity, Compliance, and Obedience LEARNING OBJECTIVES By the end of this section, you will be able to: • Explain the Asch effect • Define conformity and types of <mark style="background-color: #ffeb3b; font-weight: bold;">social</mark> influence • Describe Stanley Milgram’s experiment and its implications • Define g
                 </div>
             </div>
     
@@ -332,7 +374,7 @@ By the end of this section</span>
                     <span class="page-number">📄 Page 427</span>
                 </div>
                 <div class="evidence-text">
-                    that were not available in the used car. 12.4 Conformity, Compliance, and Obedience LEARNING OBJECTIVES By the end of this section, you will be able to: • Explain the Asch effect • Define conformity and types of <mark style="background-color: #ffeb3b; font-weight: bold;">social</mark> influence • Describe Stanley Milgram’s experiment and its implications • Define g  <!-- HIGHLIGHTING HERE ONLY -->
+                    that were not available in the used car. 12.4 Conformity, Compliance, and Obedience LEARNING OBJECTIVES By the end of this section, you will be able to: • Explain the Asch effect • Define conformity and types of <mark style="background-color: #ffeb3b; font-weight: bold;">social</mark> influence • Describe Stanley Milgram’s experiment and its implications • Define g
                 </div>
             </div>
     
@@ -343,7 +385,7 @@ males</span>
                     <span class="page-number">📄 Page 434</span>
                 </div>
                 <div class="evidence-text">
-                    that were not available in the used car. 12.4 Conformity, Compliance, and Obedience LEARNING OBJECTIVES By the end of this section, you will be able to: • Explain the Asch effect • Define conformity and types of <mark style="background-color: #ffeb3b; font-weight: bold;">social</mark> influence • Describe Stanley Milgram’s experiment and its implications • Define g  <!-- HIGHLIGHTING HERE ONLY -->
+                    that were not available in the used car. 12.4 Conformity, Compliance, and Obedience LEARNING OBJECTIVES By the end of this section, you will be able to: • Explain the Asch effect • Define conformity and types of <mark style="background-color: #ffeb3b; font-weight: bold;">social</mark> influence • Describe Stanley Milgram’s experiment and its implications • Define g
                 </div>
             </div>
     
@@ -362,7 +404,7 @@ Bartels, J. M., Milovich, M. M., & Moussier, S. (2016). Coverage of the Stanford
 
 12.2 Self-presentation LEARNING OBJECTIVES By the end of this section, you will be able to: • Describe <mark style="background-color: #ffeb3b; font-weight: bold;">social</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">role</mark>s and how they influence <mark style="background-color: #ffeb3b; font-weight: bold;">behavior</mark> • Explain what <mark style="background-color: #ffeb3b; font-weight: bold;">social</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">norms</mark> are and how they influence <mark style="background-color: #ffeb3b; font-weight: bold;">behavior</mark> • Define script • Describe the findings and criticisms of Zimbardo’s Stanford prison experiment As you’ve learned, <mark style="background-color: #ffeb3b; font-weight: bold;">social</mark> psychology is the study of how people affect one another’s thoughts, feelings, and <mark style="background-color: #ffeb3b; font-weight: bold;">behavior</mark>s. We have discussed situational perspectives and <mark style="background-color: #ffeb3b; font-weight: bold;">social</mark> psychology’s emphasis on the ways in which a person’s environment, including culture and other <mark style="background-color: #ffeb3b; font-weight: bold;">social</mark> influences, affect <mark style="background-color: #ffeb3b; font-weight: bold;">behavior</mark>. In this section, we examine situational forces that have a strong influence on human <mark style="background-color: #ffeb3b; font-weight: bold;">behavior</mark> including <mark style="background-color: #ffeb3b; font-weight: bold;">social</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">role</mark>s, <mark style="background-color: #ffeb3b; font-weight: bold;">social</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">norms</mark>, and scripts. We discuss how humans use the <mark style="background-color: #ffeb3b; font-weight: bold;">social</mark> environment as a source of information, or cues, on how to behave. Situational influences on our <mark style="background-color: #ffeb3b; font-weight: bold;">behavior</mark> have important consequences, such as whether we will help a stranger in an emergency or how we would behave in an unfamiliar environment. <mark style="background-color: #ffeb3b; font-weight: bold;">social</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">role</mark>s One major <mark style="background-color: #ffeb3b; font-weight: bold;">social</mark> determinant of human <mark style="background-color: #ffeb3b; font-weight: bold;">behavior</mark> is our <mark style="background-color: #ffeb3b; font-weight: bold;">social</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">role</mark>s. A <mark style="background-color: #ffeb3b; font-weight: bold;">social</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">role</mark> is a pattern of <mark style="background-color: #ffeb3b; font-weight: bold;">behavior</mark> that is expected of a person in a given setting or group (Hare, 2003). Each one of us has several <mark style="background-color: #ffeb3b; font-weight: bold;">social</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">role</mark>s. You may be, at the same time, a student, a parent, an aspiring teacher, a son or daughter, a spouse, and a lifeguard. How do these <mark style="background-color: #ffeb3b; font-weight: bold;">social</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">role</mark>s influence your <mark style="background-color: #ffeb3b; font-weight: bold;">behavior</mark>? <mark style="background-color: #ffeb3b; font-weight: bold;">social</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">role</mark>s are defined by culturally shared knowledge. That is, nearly everyone in a given culture knows what <mark style="background-color: #ffeb3b; font-weight: bold;">behavior</mark> is expected of a person in a given <mark style="background-color: #ffeb3b; font-weight: bold;">role</mark>. For example, what is the <mark style="background-color: #ffeb3b; font-weight: bold;">social</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">role</mark> for a student? If you look around a college classroom you will likely see students engaging in studious <mark style="background-color: #ffeb3b; font-weight: bold;">behavior</mark>, taking notes, listening to the professor, reading the textbook, and sitting quietly at their desks (Figure 12.8). Of course you may see students deviating from the expected studious <mark style="background-color: #ffeb3b; font-weight: bold;">behavior</mark> such as texting on their phones or using Facebook on their laptops, but in all cases, the students that you observe are attending class—a part of the <mark style="background-color: #ffeb3b; font-weight: bold;">social</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">role</mark> of students. FIGURE 12.8 Being a student is just one of the many <mark style="background-color: #ffeb3b; font-weight: bold;">social</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">role</mark>s you have. (credit: modification of work by “Rural Institute”/Flickr) <mark style="background-color: #ffeb3b; font-weight: bold;">social</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">role</mark>s, and our related <mark style="background-color: #ffeb3b; font-weight: bold;">behavior</mark>, can vary across different settings. How do you behave when you are engaging in the <mark style="background-color: #ffeb3b; font-weight: bold;">role</mark> of a child attending a family function?
 
-with the group, even in the face of inaccurate information. Conformity to group <mark style="background-color: #ffeb3b; font-weight: bold;">norms</mark> is driven by two motivations, the desire to fit in and be liked and the desire to be accurate and gain information from the group. Authority figures also have influence over our <mark style="background-color: #ffeb3b; font-weight: bold;">behavior</mark>s, and many people become obedient and follow orders even if the orders are contrary to their personal values. Conformity to group pressures can also result in groupthink, or the faulty decision- making process that results from cohesive group members trying to maintain group harmony. Group situations can improve human <mark style="background-color: #ffeb3b; font-weight: bold;">behavior</mark> through facilitating performance on easy tasks, but inhibiting performance on difficult tasks. The presence of others can also lead to <mark style="background-color: #ffeb3b; font-weight: bold;">social</mark> loafing when individual efforts cannot be evaluated. 12.5 Prejudice and Discrimination As diverse individuals, humans can experience conflict when interacting with people who are different from each other. Prejudice, or negative feelings and evaluations, is common when people are from a differe  <!-- HIGHLIGHTING HERE ONLY -->
+with the group, even in the face of inaccurate information. Conformity to group <mark style="background-color: #ffeb3b; font-weight: bold;">norms</mark> is driven by two motivations, the desire to fit in and be liked and the desire to be accurate and gain information from the group. Authority figures also have influence over our <mark style="background-color: #ffeb3b; font-weight: bold;">behavior</mark>s, and many people become obedient and follow orders even if the orders are contrary to their personal values. Conformity to group pressures can also result in groupthink, or the faulty decision- making process that results from cohesive group members trying to maintain group harmony. Group situations can improve human <mark style="background-color: #ffeb3b; font-weight: bold;">behavior</mark> through facilitating performance on easy tasks, but inhibiting performance on difficult tasks. The presence of others can also lead to <mark style="background-color: #ffeb3b; font-weight: bold;">social</mark> loafing when individual efforts cannot be evaluated. 12.5 Prejudice and Discrimination As diverse individuals, humans can experience conflict when interacting with people who are different from each other. Prejudice, or negative feelings and evaluations, is common when people are from a differe
                 </div>
             </div>
             
@@ -370,14 +412,22 @@ with the group, even in the face of inaccurate information. Conformity to group 
                 <div class="stat-item">
                     <div class="stat-label">Sections Used</div>
                     <div class="stat-value">8</div>
+                    <div class="stat-factor">Factor: 1.00</div>
                 </div>
                 <div class="stat-item">
                     <div class="stat-label">Pages Referenced</div>
                     <div class="stat-value">9</div>
+                    <div class="stat-factor">Factor: 0.90</div>
                 </div>
                 <div class="stat-item">
-                    <div class="stat-label">Keywords Found</div>
-                    <div class="stat-value">4</div>
+                    <div class="stat-label">Answer Length</div>
+                    <div class="stat-value">688</div>
+                    <div class="stat-factor">Factor: 1.00</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Overall</div>
+                    <div class="stat-value">100%</div>
+                    <div class="stat-factor">HIGH</div>
                 </div>
             </div>
             

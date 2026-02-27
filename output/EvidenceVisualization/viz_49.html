@@ -73,6 +73,45 @@
                 box-shadow: 0 2px 4px rgba(0,0,0,0.1);
             }
             
+            .confidence-meter {
+                background: #f0f0f0;
+                padding: 15px 30px;
+                border-bottom: 1px solid #e0e0e0;
+                display: flex;
+                align-items: center;
+                gap: 20px;
+                flex-wrap: wrap;
+            }
+            
+            .confidence-bar {
+                flex: 1;
+                height: 20px;
+                background: #e0e0e0;
+                border-radius: 10px;
+                overflow: hidden;
+            }
+            
+            .confidence-fill {
+                height: 100%;
+                border-radius: 10px;
+                transition: width 0.3s ease;
+            }
+            
+            .confidence-fill.high { background: linear-gradient(90deg, #4caf50, #8bc34a); }
+            .confidence-fill.medium { background: linear-gradient(90deg, #ff9800, #ffc107); }
+            .confidence-fill.low { background: linear-gradient(90deg, #f44336, #ff7043); }
+            
+            .confidence-text {
+                font-size: 18px;
+                font-weight: 600;
+                min-width: 100px;
+                text-align: center;
+            }
+            
+            .confidence-text.high { color: #4caf50; }
+            .confidence-text.medium { color: #ff9800; }
+            .confidence-text.low { color: #f44336; }
+            
             .answer-section {
                 padding: 30px;
                 background: #f8f9fa;
@@ -99,8 +138,6 @@
                 color: #444;
                 border-left: 4px solid #667eea;
             }
-            
-            /* NO mark styling for answer - it stays plain */
             
             .evidence-section {
                 padding: 30px;
@@ -153,17 +190,6 @@
                 border: 1px solid #e0e0e0;
             }
             
-            .term-badge {
-                display: inline-block;
-                background: #ffeb3b;
-                color: #333;
-                padding: 3px 10px;
-                border-radius: 15px;
-                font-size: 12px;
-                margin: 0 5px 5px 0;
-                font-weight: 500;
-            }
-            
             .evidence-text {
                 background: white;
                 padding: 15px;
@@ -213,19 +239,17 @@
             }
             
             .stats {
-                display: flex;
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
                 gap: 15px;
                 padding: 20px 30px;
                 background: white;
-                flex-wrap: wrap;
             }
             
             .stat-item {
                 background: #f8f9fa;
-                padding: 10px 20px;
+                padding: 15px;
                 border-radius: 10px;
-                flex: 1;
-                min-width: 120px;
                 text-align: center;
                 border: 1px solid #e0e0e0;
             }
@@ -242,6 +266,12 @@
                 color: #667eea;
             }
             
+            .stat-factor {
+                font-size: 11px;
+                color: #999;
+                margin-top: 5px;
+            }
+            
             .footer {
                 padding: 20px 30px;
                 background: #f0f0f0;
@@ -252,6 +282,10 @@
             }
             
             @media (max-width: 768px) {
+                .stats {
+                    grid-template-columns: repeat(2, 1fr);
+                }
+                
                 .header {
                     padding: 20px;
                 }
@@ -279,8 +313,16 @@
             </div>
             
             <div class="keywords-bar">
-                <div class="keywords-title">🔑 Extracted Keywords:</div>
+                <div class="keywords-title"><i class="fas fa-key"></i> Extracted Keywords:</div>
     <span class="keyword-badge">impact</span><span class="keyword-badge">cultural</span><span class="keyword-badge">diversity</span><span class="keyword-badge">psychological</span><span class="keyword-badge">research</span>
+            </div>
+            
+            <div class="confidence-meter">
+                <i class="fas fa-bullseye"></i><span style="font-weight: 600;">Confidence:</span>
+                <div class="confidence-bar">
+                    <div class="confidence-fill high" style="width: 100.0%;"></div>
+                </div>
+                <div class="confidence-text high">HIGH (100%)</div>
             </div>
             
             <div class="answer-section">
@@ -292,7 +334,7 @@ Moreover, cultural diversity highlights the importance of considering cultural c
 
 In addition, cultural diversity underscores the need for multicultural counseling and therapy, which recognizes the impact of cultural and social norms on behavior and mental health. Therapists must be trained to work with clients from diverse cultural backgrounds, taking into account their unique cultural values, beliefs, and experiences.
 
-Overall, cultural diversity is a critical factor in psychological research, and researchers must strive to incorporate cultural sensitivity and awareness into their work to ensure that their findings are relevant, applicable, and beneficial to diverse populations.  <!-- NO HIGHLIGHTING HERE -->
+Overall, cultural diversity is a critical factor in psychological research, and researchers must strive to incorporate cultural sensitivity and awareness into their work to ensure that their findings are relevant, applicable, and beneficial to diverse populations.
                 </div>
             </div>
             
@@ -306,7 +348,7 @@ Blann</span>
                     <span class="page-number">📄 Page 28</span>
                 </div>
                 <div class="evidence-text">
-                    by Arian Zwegers; credit b: modification of work by "conbon33"/Flickr; credit c: modification of work by Anja Disseldorp) Why do you think this is the case? Collectivistic cultures, which tend to be found in east Asian countries and in Latin American and African countries, focus on the group more th  <!-- HIGHLIGHTING HERE ONLY -->
+                    by Arian Zwegers; credit b: modification of work by "conbon33"/Flickr; credit c: modification of work by Anja Disseldorp) Why do you think this is the case? Collectivistic cultures, which tend to be found in east Asian countries and in Latin American and African countries, focus on the group more th
                 </div>
             </div>
     
@@ -317,7 +359,7 @@ Thompson</span>
                     <span class="page-number">📄 Page 398</span>
                 </div>
                 <div class="evidence-text">
-                    by Arian Zwegers; credit b: modification of work by "conbon33"/Flickr; credit c: modification of work by Anja Disseldorp) Why do you think this is the case? Collectivistic cultures, which tend to be found in east Asian countries and in Latin American and African countries, focus on the group more th  <!-- HIGHLIGHTING HERE ONLY -->
+                    by Arian Zwegers; credit b: modification of work by "conbon33"/Flickr; credit c: modification of work by Anja Disseldorp) Why do you think this is the case? Collectivistic cultures, which tend to be found in east Asian countries and in Latin American and African countries, focus on the group more th
                 </div>
             </div>
     
@@ -327,7 +369,7 @@ Thompson</span>
                     <span class="page-number">📄 Page 402</span>
                 </div>
                 <div class="evidence-text">
-                    by Arian Zwegers; credit b: modification of work by "conbon33"/Flickr; credit c: modification of work by Anja Disseldorp) Why do you think this is the case? Collectivistic cultures, which tend to be found in east Asian countries and in Latin American and African countries, focus on the group more th  <!-- HIGHLIGHTING HERE ONLY -->
+                    by Arian Zwegers; credit b: modification of work by "conbon33"/Flickr; credit c: modification of work by Anja Disseldorp) Why do you think this is the case? Collectivistic cultures, which tend to be found in east Asian countries and in Latin American and African countries, focus on the group more th
                 </div>
             </div>
     
@@ -337,7 +379,7 @@ Thompson</span>
                     <span class="page-number">📄 Page 405</span>
                 </div>
                 <div class="evidence-text">
-                    by Arian Zwegers; credit b: modification of work by "conbon33"/Flickr; credit c: modification of work by Anja Disseldorp) Why do you think this is the case? Collectivistic cultures, which tend to be found in east Asian countries and in Latin American and African countries, focus on the group more th  <!-- HIGHLIGHTING HERE ONLY -->
+                    by Arian Zwegers; credit b: modification of work by "conbon33"/Flickr; credit c: modification of work by Anja Disseldorp) Why do you think this is the case? Collectivistic cultures, which tend to be found in east Asian countries and in Latin American and African countries, focus on the group more th
                 </div>
             </div>
     
@@ -349,7 +391,7 @@ consequences outside of the organism</span>
                     <span class="page-number">📄 Page 414</span>
                 </div>
                 <div class="evidence-text">
-                    by Arian Zwegers; credit b: modification of work by "conbon33"/Flickr; credit c: modification of work by Anja Disseldorp) Why do you think this is the case? Collectivistic cultures, which tend to be found in east Asian countries and in Latin American and African countries, focus on the group more th  <!-- HIGHLIGHTING HERE ONLY -->
+                    by Arian Zwegers; credit b: modification of work by "conbon33"/Flickr; credit c: modification of work by Anja Disseldorp) Why do you think this is the case? Collectivistic cultures, which tend to be found in east Asian countries and in Latin American and African countries, focus on the group more th
                 </div>
             </div>
     
@@ -368,7 +410,7 @@ develop strategies to effectively address the needs of various populations for w
 
 Norenzayan, 2001). This focus on others provides a broader perspective that takes into account both situational and <mark style="background-color: #ffeb3b; font-weight: bold;">cultural</mark> influences on behavior; thus, a more nuanced explanation of the causes of others’ behavior becomes more likely. Table 12.1 summarizes compares individualistic and collectivist cultures. Characteristics of Individualistic and Collectivistic Cultures Individualistic Culture Collectivistic Culture Achievement oriented Relationship oriented Focus on autonomy Focus on group harmony Dispositional perspective Situational perspective Independent Interdependent Analytic thinking style Holistic thinking style TABLE 12.1 Masuda and Nisbett (2001) demonstrated that the kinds of information that people attend to when viewing visual stimuli (e.g., an aquarium scene) can differ significantly depending on whether the observer comes from a collectivistic versus an individualistic culture. Japanese participants were much more likely to recognize objects that were presented when they occurred in the same context in which they were originally viewed. Manipulating the context in which object recall occurred had no such <mark style="background-color: #ffeb3b; font-weight: bold;">impact</mark> on American participants. Other <mark style="background-color: #ffeb3b; font-weight: bold;">research</mark>ers have shown similar differences across cultures. For example, Zhang, Fung, Stanley, Isaacowitz, and Zhang (2014) demonstrated differences in the ways that holistic thinking might develop between Chinese and American participants, and Ramesh and Gelfand (2010) demonstrated that job turnover rates are more related to the fit between a person and the organization in which they work in an Indian sample, but the fit between the person and their specific job was more predictive of turnover in an American sample. Actor-Observer Bias Returning to our earlier example, Jamie was laid off, but an observer would not know. So a naïve observer would tend to attribute Jamie’s hostile behavior to Jamie’s disposition rather than to the true, situational cause. Why do you think we underestimate the influence of the situation on the behaviors of others? One reason is that we often don’t have all the information we need to make a situational explanation for another person’s behavior. The only information we might have is what is observable. Due to this lack of information we have a tendency to assume the behavior is due to a dispositional, or internal, factor. When it comes to explaining our own behaviors, however, we have much more information available to us. If you came home from school or work angry and yelled at your dog or a loved one, what would your explanation be? You might say you were very tired or feeling unwell and needed quiet time—a situational
 
-individualism (Oyserman, Coon, & Kemmelmier, 2002). People who live in collectivist cultures value social harmony, respectfulness, and group needs over individual needs. Individuals who live in countries in Asia, Africa, and South America score high on collectivism (Hofstede, 2001; Triandis, 1995). These values influence personality. For example, Yang (2006) found that people in individualist cultures displayed more personally oriented personality traits, whereas people in collectivist cultures displayed more socially oriented personality traits. Frewer and Bleus (1991) conducted a study of the Eysenk Personality Inventory in a collectivist culture using Papua New Guinean university students. They found that the results of the personality inventory were only relevant when analyzed within the context of a collectivist society. Similarly, Dana (1986) suggested that personality assessment services for Native Americans are often provided without a proper recognition of culture-specific responses and a tribe-specific frame of reference. Assessors need to have more than a general knowledge of history, tribal differences, contemporary culture on reservations, and levels of acculturation in order to interpret <mark style="background-color: #ffeb3b; font-weight: bold;">psychological</mark> test responses with a minimal bias. Approaches to Studying Personality in a <mark style="background-color: #ffeb3b; font-weight: bold;">cultural</mark> Context There are three approaches that can be used to study personality in a <mark style="background-color: #ffeb3b; font-weight: bold;">cultural</mark> context, the <mark style="background-color: #ffeb3b; font-weight: bold;">cultural</mark>- comparative approach; the indigenous approach; and the combined approach, which incorporates elements of both views. Since ideas about personality have a Western basis, the <mark style="background-color: #ffeb3b; font-weight: bold;">cultural</mark>-comparative approach seeks to test Western ideas about personality in other cultures to determine whether they can be generalized and if they have <mark style="background-color: #ffeb3b; font-weight: bold;">cultural</mark> validity (Cheung van de Vijver, & Leong, 2011). For example, recall from the previous section on the trait perspective that <mark style="background-color: #ffeb3b; font-weight: bold;">research</mark>ers used the <mark style="background-color: #ffeb3b; font-weight: bold;">cultural</mark>-comparative approach to test the universality of McCrae and Costa’s Five Factor Model. They found applicability in numerous cultures around the world, with the Big Five factors being stable in many cultures (McCrae & Costa, 1997; McCrae et al., 2005). The indigenous approach came about in reaction to the dominance of Western approaches to the study of personality in non- Western settings (Cheung et al., 2011). Because Western-based personality assessments cannot fully capture the personality constructs   <!-- HIGHLIGHTING HERE ONLY -->
+individualism (Oyserman, Coon, & Kemmelmier, 2002). People who live in collectivist cultures value social harmony, respectfulness, and group needs over individual needs. Individuals who live in countries in Asia, Africa, and South America score high on collectivism (Hofstede, 2001; Triandis, 1995). These values influence personality. For example, Yang (2006) found that people in individualist cultures displayed more personally oriented personality traits, whereas people in collectivist cultures displayed more socially oriented personality traits. Frewer and Bleus (1991) conducted a study of the Eysenk Personality Inventory in a collectivist culture using Papua New Guinean university students. They found that the results of the personality inventory were only relevant when analyzed within the context of a collectivist society. Similarly, Dana (1986) suggested that personality assessment services for Native Americans are often provided without a proper recognition of culture-specific responses and a tribe-specific frame of reference. Assessors need to have more than a general knowledge of history, tribal differences, contemporary culture on reservations, and levels of acculturation in order to interpret <mark style="background-color: #ffeb3b; font-weight: bold;">psychological</mark> test responses with a minimal bias. Approaches to Studying Personality in a <mark style="background-color: #ffeb3b; font-weight: bold;">cultural</mark> Context There are three approaches that can be used to study personality in a <mark style="background-color: #ffeb3b; font-weight: bold;">cultural</mark> context, the <mark style="background-color: #ffeb3b; font-weight: bold;">cultural</mark>- comparative approach; the indigenous approach; and the combined approach, which incorporates elements of both views. Since ideas about personality have a Western basis, the <mark style="background-color: #ffeb3b; font-weight: bold;">cultural</mark>-comparative approach seeks to test Western ideas about personality in other cultures to determine whether they can be generalized and if they have <mark style="background-color: #ffeb3b; font-weight: bold;">cultural</mark> validity (Cheung van de Vijver, & Leong, 2011). For example, recall from the previous section on the trait perspective that <mark style="background-color: #ffeb3b; font-weight: bold;">research</mark>ers used the <mark style="background-color: #ffeb3b; font-weight: bold;">cultural</mark>-comparative approach to test the universality of McCrae and Costa’s Five Factor Model. They found applicability in numerous cultures around the world, with the Big Five factors being stable in many cultures (McCrae & Costa, 1997; McCrae et al., 2005). The indigenous approach came about in reaction to the dominance of Western approaches to the study of personality in non- Western settings (Cheung et al., 2011). Because Western-based personality assessments cannot fully capture the personality constructs 
                 </div>
             </div>
             
@@ -376,14 +418,22 @@ individualism (Oyserman, Coon, & Kemmelmier, 2002). People who live in collectiv
                 <div class="stat-item">
                     <div class="stat-label">Sections Used</div>
                     <div class="stat-value">12</div>
+                    <div class="stat-factor">Factor: 1.00</div>
                 </div>
                 <div class="stat-item">
                     <div class="stat-label">Pages Referenced</div>
                     <div class="stat-value">12</div>
+                    <div class="stat-factor">Factor: 1.00</div>
                 </div>
                 <div class="stat-item">
-                    <div class="stat-label">Keywords Found</div>
-                    <div class="stat-value">5</div>
+                    <div class="stat-label">Answer Length</div>
+                    <div class="stat-value">1693</div>
+                    <div class="stat-factor">Factor: 1.00</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Overall</div>
+                    <div class="stat-value">100%</div>
+                    <div class="stat-factor">HIGH</div>
                 </div>
             </div>
             

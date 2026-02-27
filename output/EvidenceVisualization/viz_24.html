@@ -73,6 +73,45 @@
                 box-shadow: 0 2px 4px rgba(0,0,0,0.1);
             }
             
+            .confidence-meter {
+                background: #f0f0f0;
+                padding: 15px 30px;
+                border-bottom: 1px solid #e0e0e0;
+                display: flex;
+                align-items: center;
+                gap: 20px;
+                flex-wrap: wrap;
+            }
+            
+            .confidence-bar {
+                flex: 1;
+                height: 20px;
+                background: #e0e0e0;
+                border-radius: 10px;
+                overflow: hidden;
+            }
+            
+            .confidence-fill {
+                height: 100%;
+                border-radius: 10px;
+                transition: width 0.3s ease;
+            }
+            
+            .confidence-fill.high { background: linear-gradient(90deg, #4caf50, #8bc34a); }
+            .confidence-fill.medium { background: linear-gradient(90deg, #ff9800, #ffc107); }
+            .confidence-fill.low { background: linear-gradient(90deg, #f44336, #ff7043); }
+            
+            .confidence-text {
+                font-size: 18px;
+                font-weight: 600;
+                min-width: 100px;
+                text-align: center;
+            }
+            
+            .confidence-text.high { color: #4caf50; }
+            .confidence-text.medium { color: #ff9800; }
+            .confidence-text.low { color: #f44336; }
+            
             .answer-section {
                 padding: 30px;
                 background: #f8f9fa;
@@ -99,8 +138,6 @@
                 color: #444;
                 border-left: 4px solid #667eea;
             }
-            
-            /* NO mark styling for answer - it stays plain */
             
             .evidence-section {
                 padding: 30px;
@@ -153,17 +190,6 @@
                 border: 1px solid #e0e0e0;
             }
             
-            .term-badge {
-                display: inline-block;
-                background: #ffeb3b;
-                color: #333;
-                padding: 3px 10px;
-                border-radius: 15px;
-                font-size: 12px;
-                margin: 0 5px 5px 0;
-                font-weight: 500;
-            }
-            
             .evidence-text {
                 background: white;
                 padding: 15px;
@@ -213,19 +239,17 @@
             }
             
             .stats {
-                display: flex;
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
                 gap: 15px;
                 padding: 20px 30px;
                 background: white;
-                flex-wrap: wrap;
             }
             
             .stat-item {
                 background: #f8f9fa;
-                padding: 10px 20px;
+                padding: 15px;
                 border-radius: 10px;
-                flex: 1;
-                min-width: 120px;
                 text-align: center;
                 border: 1px solid #e0e0e0;
             }
@@ -242,6 +266,12 @@
                 color: #667eea;
             }
             
+            .stat-factor {
+                font-size: 11px;
+                color: #999;
+                margin-top: 5px;
+            }
+            
             .footer {
                 padding: 20px 30px;
                 background: #f0f0f0;
@@ -252,6 +282,10 @@
             }
             
             @media (max-width: 768px) {
+                .stats {
+                    grid-template-columns: repeat(2, 1fr);
+                }
+                
                 .header {
                     padding: 20px;
                 }
@@ -279,14 +313,22 @@
             </div>
             
             <div class="keywords-bar">
-                <div class="keywords-title">🔑 Extracted Keywords:</div>
+                <div class="keywords-title"><i class="fas fa-key"></i> Extracted Keywords:</div>
     <span class="keyword-badge">sensation</span><span class="keyword-badge">perception</span>
+            </div>
+            
+            <div class="confidence-meter">
+                <i class="fas fa-bullseye"></i><span style="font-weight: 600;">Confidence:</span>
+                <div class="confidence-bar">
+                    <div class="confidence-fill high" style="width: 100.0%;"></div>
+                </div>
+                <div class="confidence-text high">HIGH (100%)</div>
             </div>
             
             <div class="answer-section">
                 <h3><i class="fas fa-robot"></i> Generated Answer</h3>
                 <div class="answer-content">
-                    Sensation refers to the detection of sensory stimuli by specialized neurons called sensory receptors, which convert the energy from the stimuli into action potentials that are sent to the central nervous system. Perception, on the other hand, involves the organization, interpretation, and conscious experience of those sensations. In other words, sensation is the initial detection of sensory information, while perception is the process of making sense of that information and creating a meaningful experience. Not all sensations result in perception, as our brains can filter out or adapt to certain stimuli. Attention, motivation, and sensory adaptation can also play a role in determining what we perceive from the sensory information we receive.  <!-- NO HIGHLIGHTING HERE -->
+                    Sensation refers to the detection of sensory stimuli by specialized neurons called sensory receptors, which convert the energy from the stimuli into action potentials that are sent to the central nervous system. Perception, on the other hand, involves the organization, interpretation, and conscious experience of those sensations. In other words, sensation is the initial detection of sensory information, while perception is the process of making sense of that information and creating a meaningful experience. Not all sensations result in perception, as our brains can filter out or adapt to certain stimuli. Attention, motivation, and sensory adaptation can also play a role in determining what we perceive from the sensory information we receive.
                 </div>
             </div>
             
@@ -299,7 +341,7 @@
                     <span class="page-number">📄 Page 33</span>
                 </div>
                 <div class="evidence-text">
-                    5.1 <mark style="background-color: #ffeb3b; font-weight: bold;">sensation</mark> versus <mark style="background-color: #ffeb3b; font-weight: bold;">perception</mark> LEARNING OBJECTIVES By the end of this section, you will be able to: • Distinguish between <mark style="background-color: #ffeb3b; font-weight: bold;">sensation</mark> and <mark style="background-color: #ffeb3b; font-weight: bold;">perception</mark> • Describe the concepts of absolute threshold and difference threshold • Discuss the roles attention, motivation, and sensory adaptation play in percept  <!-- HIGHLIGHTING HERE ONLY -->
+                    5.1 <mark style="background-color: #ffeb3b; font-weight: bold;">sensation</mark> versus <mark style="background-color: #ffeb3b; font-weight: bold;">perception</mark> LEARNING OBJECTIVES By the end of this section, you will be able to: • Distinguish between <mark style="background-color: #ffeb3b; font-weight: bold;">sensation</mark> and <mark style="background-color: #ffeb3b; font-weight: bold;">perception</mark> • Describe the concepts of absolute threshold and difference threshold • Discuss the roles attention, motivation, and sensory adaptation play in percept
                 </div>
             </div>
     
@@ -309,7 +351,7 @@
                     <span class="page-number">📄 Page 102</span>
                 </div>
                 <div class="evidence-text">
-                    5.1 <mark style="background-color: #ffeb3b; font-weight: bold;">sensation</mark> versus <mark style="background-color: #ffeb3b; font-weight: bold;">perception</mark> LEARNING OBJECTIVES By the end of this section, you will be able to: • Distinguish between <mark style="background-color: #ffeb3b; font-weight: bold;">sensation</mark> and <mark style="background-color: #ffeb3b; font-weight: bold;">perception</mark> • Describe the concepts of absolute threshold and difference threshold • Discuss the roles attention, motivation, and sensory adaptation play in percept  <!-- HIGHLIGHTING HERE ONLY -->
+                    5.1 <mark style="background-color: #ffeb3b; font-weight: bold;">sensation</mark> versus <mark style="background-color: #ffeb3b; font-weight: bold;">perception</mark> LEARNING OBJECTIVES By the end of this section, you will be able to: • Distinguish between <mark style="background-color: #ffeb3b; font-weight: bold;">sensation</mark> and <mark style="background-color: #ffeb3b; font-weight: bold;">perception</mark> • Describe the concepts of absolute threshold and difference threshold • Discuss the roles attention, motivation, and sensory adaptation play in percept
                 </div>
             </div>
     
@@ -319,7 +361,7 @@
                     <span class="page-number">📄 Page 157</span>
                 </div>
                 <div class="evidence-text">
-                    5.1 <mark style="background-color: #ffeb3b; font-weight: bold;">sensation</mark> versus <mark style="background-color: #ffeb3b; font-weight: bold;">perception</mark> LEARNING OBJECTIVES By the end of this section, you will be able to: • Distinguish between <mark style="background-color: #ffeb3b; font-weight: bold;">sensation</mark> and <mark style="background-color: #ffeb3b; font-weight: bold;">perception</mark> • Describe the concepts of absolute threshold and difference threshold • Discuss the roles attention, motivation, and sensory adaptation play in percept  <!-- HIGHLIGHTING HERE ONLY -->
+                    5.1 <mark style="background-color: #ffeb3b; font-weight: bold;">sensation</mark> versus <mark style="background-color: #ffeb3b; font-weight: bold;">perception</mark> LEARNING OBJECTIVES By the end of this section, you will be able to: • Distinguish between <mark style="background-color: #ffeb3b; font-weight: bold;">sensation</mark> and <mark style="background-color: #ffeb3b; font-weight: bold;">perception</mark> • Describe the concepts of absolute threshold and difference threshold • Discuss the roles attention, motivation, and sensory adaptation play in percept
                 </div>
             </div>
     
@@ -331,7 +373,7 @@ By the end of this section</span>
                     <span class="page-number">📄 Page 158</span>
                 </div>
                 <div class="evidence-text">
-                    5.1 <mark style="background-color: #ffeb3b; font-weight: bold;">sensation</mark> versus <mark style="background-color: #ffeb3b; font-weight: bold;">perception</mark> LEARNING OBJECTIVES By the end of this section, you will be able to: • Distinguish between <mark style="background-color: #ffeb3b; font-weight: bold;">sensation</mark> and <mark style="background-color: #ffeb3b; font-weight: bold;">perception</mark> • Describe the concepts of absolute threshold and difference threshold • Discuss the roles attention, motivation, and sensory adaptation play in percept  <!-- HIGHLIGHTING HERE ONLY -->
+                    5.1 <mark style="background-color: #ffeb3b; font-weight: bold;">sensation</mark> versus <mark style="background-color: #ffeb3b; font-weight: bold;">perception</mark> LEARNING OBJECTIVES By the end of this section, you will be able to: • Distinguish between <mark style="background-color: #ffeb3b; font-weight: bold;">sensation</mark> and <mark style="background-color: #ffeb3b; font-weight: bold;">perception</mark> • Describe the concepts of absolute threshold and difference threshold • Discuss the roles attention, motivation, and sensory adaptation play in percept
                 </div>
             </div>
     
@@ -342,7 +384,7 @@ Sensation occurs when sensory receptors detect sensory stimuli</span>
                     <span class="page-number">📄 Page 159</span>
                 </div>
                 <div class="evidence-text">
-                    5.1 <mark style="background-color: #ffeb3b; font-weight: bold;">sensation</mark> versus <mark style="background-color: #ffeb3b; font-weight: bold;">perception</mark> LEARNING OBJECTIVES By the end of this section, you will be able to: • Distinguish between <mark style="background-color: #ffeb3b; font-weight: bold;">sensation</mark> and <mark style="background-color: #ffeb3b; font-weight: bold;">perception</mark> • Describe the concepts of absolute threshold and difference threshold • Discuss the roles attention, motivation, and sensory adaptation play in percept  <!-- HIGHLIGHTING HERE ONLY -->
+                    5.1 <mark style="background-color: #ffeb3b; font-weight: bold;">sensation</mark> versus <mark style="background-color: #ffeb3b; font-weight: bold;">perception</mark> LEARNING OBJECTIVES By the end of this section, you will be able to: • Distinguish between <mark style="background-color: #ffeb3b; font-weight: bold;">sensation</mark> and <mark style="background-color: #ffeb3b; font-weight: bold;">perception</mark> • Describe the concepts of absolute threshold and difference threshold • Discuss the roles attention, motivation, and sensory adaptation play in percept
                 </div>
             </div>
     
@@ -363,7 +405,7 @@ all factors of interest to someone working in the domain of <mark style="backgro
 
 There is another factor that affects <mark style="background-color: #ffeb3b; font-weight: bold;">sensation</mark> and <mark style="background-color: #ffeb3b; font-weight: bold;">perception</mark>: attention. Attention plays a significant role in determining what is sensed versus what is perceived. Imagine you are at a party full of music, chatter, and laughter. You get involved in an interesting conversation with a friend, and you tune out all the background noise. If someone interrupted you to ask what song had just finished playing, you would probably be unable to answer that question. LINK TO LEARNING See for yourself how inattentional blindness works by checking out this selective attention test (http://openstax.org/l/blindness) from Simons and Chabris (1999). One of the most interesting demonstrations of how important attention is in determining our <mark style="background-color: #ffeb3b; font-weight: bold;">perception</mark> of the environment occurred in a famous study conducted by Daniel Simons and Christopher Chabris (1999). In this study, participants watched a video of people dressed in black and white passing basketballs. Participants were asked to count the number of times the team dressed in white passed the ball. During the video, a person dressed in a black gorilla costume walks among the two teams. You would think that someone would notice the gorilla, right? Nearly half of the people who watched the video didn’t notice the gorilla at all, despite the fact that he was clearly visible for nine seconds. Because participants were so focused on the number of times the team dressed in white was passing the ball, they completely tuned out other visual information. Inattentional blindness is the failure to notice something that is completely visible because the person was actively attending to something else and did not pay attention to other things (Mack & Rock, 1998; Simons & Chabris, 1999). In a similar experiment, researchers tested inattentional blindness by asking participants to observe images moving across a computer screen. They were instructed to focus on either white or black objects, disregarding the other color. When a red cross passed across the screen, about one third of subjects did not notice it (Figure 5.3) (Most, Simons, Scholl, & Chabris, 2000). FIGURE 5.3 Nearly one third of participants in a study did not notice that a red cross passed on the screen because their attention was focused on the black or white figures. (credit: Cory Zanker) Motivation can also affect <mark style="background-color: #ffeb3b; font-weight: bold;">perception</mark>. Have you ever been expecting a really important phone call and, while taking a shower, you think you hear the phone ringing, only to
 
-umami taste for monosodium glutamate vertigo spinning <mark style="background-color: #ffeb3b; font-weight: bold;">sensation</mark> vestibular sense contributes to our ability to maintain balance and body posture visible spectrum portion of the electromagnetic spectrum that we can see wavelength length of a wave from one peak to the next peak Summary 5.1 <mark style="background-color: #ffeb3b; font-weight: bold;">sensation</mark> versus <mark style="background-color: #ffeb3b; font-weight: bold;">perception</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">sensation</mark> occurs when sensory receptors detect sensory stimuli. <mark style="background-color: #ffeb3b; font-weight: bold;">perception</mark> involves the organization, interpretation, and conscious experience of those <mark style="background-color: #ffeb3b; font-weight: bold;">sensation</mark>s. All sensory systems have both absolute an  <!-- HIGHLIGHTING HERE ONLY -->
+umami taste for monosodium glutamate vertigo spinning <mark style="background-color: #ffeb3b; font-weight: bold;">sensation</mark> vestibular sense contributes to our ability to maintain balance and body posture visible spectrum portion of the electromagnetic spectrum that we can see wavelength length of a wave from one peak to the next peak Summary 5.1 <mark style="background-color: #ffeb3b; font-weight: bold;">sensation</mark> versus <mark style="background-color: #ffeb3b; font-weight: bold;">perception</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">sensation</mark> occurs when sensory receptors detect sensory stimuli. <mark style="background-color: #ffeb3b; font-weight: bold;">perception</mark> involves the organization, interpretation, and conscious experience of those <mark style="background-color: #ffeb3b; font-weight: bold;">sensation</mark>s. All sensory systems have both absolute an
                 </div>
             </div>
             
@@ -371,14 +413,22 @@ umami taste for monosodium glutamate vertigo spinning <mark style="background-co
                 <div class="stat-item">
                     <div class="stat-label">Sections Used</div>
                     <div class="stat-value">12</div>
+                    <div class="stat-factor">Factor: 1.00</div>
                 </div>
                 <div class="stat-item">
                     <div class="stat-label">Pages Referenced</div>
                     <div class="stat-value">12</div>
+                    <div class="stat-factor">Factor: 1.00</div>
                 </div>
                 <div class="stat-item">
-                    <div class="stat-label">Keywords Found</div>
-                    <div class="stat-value">2</div>
+                    <div class="stat-label">Answer Length</div>
+                    <div class="stat-value">751</div>
+                    <div class="stat-factor">Factor: 1.00</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Overall</div>
+                    <div class="stat-value">100%</div>
+                    <div class="stat-factor">HIGH</div>
                 </div>
             </div>
             

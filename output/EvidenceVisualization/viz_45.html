@@ -73,6 +73,45 @@
                 box-shadow: 0 2px 4px rgba(0,0,0,0.1);
             }
             
+            .confidence-meter {
+                background: #f0f0f0;
+                padding: 15px 30px;
+                border-bottom: 1px solid #e0e0e0;
+                display: flex;
+                align-items: center;
+                gap: 20px;
+                flex-wrap: wrap;
+            }
+            
+            .confidence-bar {
+                flex: 1;
+                height: 20px;
+                background: #e0e0e0;
+                border-radius: 10px;
+                overflow: hidden;
+            }
+            
+            .confidence-fill {
+                height: 100%;
+                border-radius: 10px;
+                transition: width 0.3s ease;
+            }
+            
+            .confidence-fill.high { background: linear-gradient(90deg, #4caf50, #8bc34a); }
+            .confidence-fill.medium { background: linear-gradient(90deg, #ff9800, #ffc107); }
+            .confidence-fill.low { background: linear-gradient(90deg, #f44336, #ff7043); }
+            
+            .confidence-text {
+                font-size: 18px;
+                font-weight: 600;
+                min-width: 100px;
+                text-align: center;
+            }
+            
+            .confidence-text.high { color: #4caf50; }
+            .confidence-text.medium { color: #ff9800; }
+            .confidence-text.low { color: #f44336; }
+            
             .answer-section {
                 padding: 30px;
                 background: #f8f9fa;
@@ -99,8 +138,6 @@
                 color: #444;
                 border-left: 4px solid #667eea;
             }
-            
-            /* NO mark styling for answer - it stays plain */
             
             .evidence-section {
                 padding: 30px;
@@ -153,17 +190,6 @@
                 border: 1px solid #e0e0e0;
             }
             
-            .term-badge {
-                display: inline-block;
-                background: #ffeb3b;
-                color: #333;
-                padding: 3px 10px;
-                border-radius: 15px;
-                font-size: 12px;
-                margin: 0 5px 5px 0;
-                font-weight: 500;
-            }
-            
             .evidence-text {
                 background: white;
                 padding: 15px;
@@ -213,19 +239,17 @@
             }
             
             .stats {
-                display: flex;
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
                 gap: 15px;
                 padding: 20px 30px;
                 background: white;
-                flex-wrap: wrap;
             }
             
             .stat-item {
                 background: #f8f9fa;
-                padding: 10px 20px;
+                padding: 15px;
                 border-radius: 10px;
-                flex: 1;
-                min-width: 120px;
                 text-align: center;
                 border: 1px solid #e0e0e0;
             }
@@ -242,6 +266,12 @@
                 color: #667eea;
             }
             
+            .stat-factor {
+                font-size: 11px;
+                color: #999;
+                margin-top: 5px;
+            }
+            
             .footer {
                 padding: 20px 30px;
                 background: #f0f0f0;
@@ -252,6 +282,10 @@
             }
             
             @media (max-width: 768px) {
+                .stats {
+                    grid-template-columns: repeat(2, 1fr);
+                }
+                
                 .header {
                     padding: 20px;
                 }
@@ -279,8 +313,16 @@
             </div>
             
             <div class="keywords-bar">
-                <div class="keywords-title">🔑 Extracted Keywords:</div>
+                <div class="keywords-title"><i class="fas fa-key"></i> Extracted Keywords:</div>
     <span class="keyword-badge">key</span><span class="keyword-badge">takeaways</span><span class="keyword-badge">from</span><span class="keyword-badge">brown</span><span class="keyword-badge">board</span><span class="keyword-badge">education</span><span class="keyword-badge">research</span>
+            </div>
+            
+            <div class="confidence-meter">
+                <i class="fas fa-bullseye"></i><span style="font-weight: 600;">Confidence:</span>
+                <div class="confidence-bar">
+                    <div class="confidence-fill high" style="width: 100.0%;"></div>
+                </div>
+                <div class="confidence-text high">HIGH (100%)</div>
             </div>
             
             <div class="answer-section">
@@ -291,7 +333,7 @@
 1. African American children were more likely to choose a White doll over a Black doll, suggesting that they did not have a healthy concept of themselves.
 2. The research highlighted the harmful effects of segregation and provided support for the Browns and the NAACP in their lawsuit against the Board of Education.
 
-These findings played a significant role in the landmark Supreme Court decision in Brown v. Board of Education, which ultimately led to the desegregation of schools in the United States.  <!-- NO HIGHLIGHTING HERE -->
+These findings played a significant role in the landmark Supreme Court decision in Brown v. Board of Education, which ultimately led to the desegregation of schools in the United States.
                 </div>
             </div>
             
@@ -306,7 +348,7 @@ By the end of this section</span>
                     <span class="page-number">📄 Page 14</span>
                 </div>
                 <div class="evidence-text">
-                    example, if you think that the use of technology in the classroom has negative impacts on learning, then you have basically formulated a hypothesis—namely, that the use of technology in the classroom should be limited because it decreases learning. How might you have arrived at this particular hypot  <!-- HIGHLIGHTING HERE ONLY -->
+                    example, if you think that the use of technology in the classroom has negative impacts on learning, then you have basically formulated a hypothesis—namely, that the use of technology in the classroom should be limited because it decreases learning. How might you have arrived at this particular hypot
                 </div>
             </div>
     
@@ -316,7 +358,7 @@ By the end of this section</span>
                     <span class="page-number">📄 Page 29</span>
                 </div>
                 <div class="evidence-text">
-                    example, if you think that the use of technology in the classroom has negative impacts on learning, then you have basically formulated a hypothesis—namely, that the use of technology in the classroom should be limited because it decreases learning. How might you have arrived at this particular hypot  <!-- HIGHLIGHTING HERE ONLY -->
+                    example, if you think that the use of technology in the classroom has negative impacts on learning, then you have basically formulated a hypothesis—namely, that the use of technology in the classroom should be limited because it decreases learning. How might you have arrived at this particular hypot
                 </div>
             </div>
     
@@ -326,7 +368,7 @@ By the end of this section</span>
                     <span class="page-number">📄 Page 30</span>
                 </div>
                 <div class="evidence-text">
-                    example, if you think that the use of technology in the classroom has negative impacts on learning, then you have basically formulated a hypothesis—namely, that the use of technology in the classroom should be limited because it decreases learning. How might you have arrived at this particular hypot  <!-- HIGHLIGHTING HERE ONLY -->
+                    example, if you think that the use of technology in the classroom has negative impacts on learning, then you have basically formulated a hypothesis—namely, that the use of technology in the classroom should be limited because it decreases learning. How might you have arrived at this particular hypot
                 </div>
             </div>
     
@@ -336,7 +378,7 @@ By the end of this section</span>
                     <span class="page-number">📄 Page 49</span>
                 </div>
                 <div class="evidence-text">
-                    example, if you think that the use of technology in the classroom has negative impacts on learning, then you have basically formulated a hypothesis—namely, that the use of technology in the classroom should be limited because it decreases learning. How might you have arrived at this particular hypot  <!-- HIGHLIGHTING HERE ONLY -->
+                    example, if you think that the use of technology in the classroom has negative impacts on learning, then you have basically formulated a hypothesis—namely, that the use of technology in the classroom should be limited because it decreases learning. How might you have arrived at this particular hypot
                 </div>
             </div>
     
@@ -346,7 +388,7 @@ By the end of this section</span>
                     <span class="page-number">📄 Page 58</span>
                 </div>
                 <div class="evidence-text">
-                    example, if you think that the use of technology in the classroom has negative impacts on learning, then you have basically formulated a hypothesis—namely, that the use of technology in the classroom should be limited because it decreases learning. How might you have arrived at this particular hypot  <!-- HIGHLIGHTING HERE ONLY -->
+                    example, if you think that the use of technology in the classroom has negative impacts on learning, then you have basically formulated a hypothesis—namely, that the use of technology in the classroom should be limited because it decreases learning. How might you have arrived at this particular hypot
                 </div>
             </div>
     
@@ -367,7 +409,7 @@ across countries, such as participants <mark style="background-color: #ffeb3b; f
 
 intelligence are at the core of his conclusions. In a related story, parents of African American students filed a case against the State of California in 1979, because they believed that the testing method used to identify students with learning disabilities was culturally unfair as the tests were normed and standardized using White children (Larry P. v. Riles). The testing method used by the state disproportionately identified African American children as “mentally retarded," which resulted in many students being incorrectly classified. According to a summary of the case, Larry P. v. Riles: In violation of Title VI of the Civil Rights Act of 1964, the Rehabilitation Act of 1973, and the <mark style="background-color: #ffeb3b; font-weight: bold;">education</mark> for All Handicapped Children Act of 1975, defendants have utilized standardized intelligence tests that are racially and culturally biased, have a discriminatory impact against Black children, and have not been validated for the purpose of essentially permanent placements of Black children into <mark style="background-color: #ffeb3b; font-weight: bold;">education</mark>ally dead-end, isolated, and stigmatizing classes for the so-called educable mentally retarded. Further, these federal laws have been violated by defendants' general use of placement mechanisms that, taken together, have not been validated and result in a large over-representation of Black children in the special E.M.R. classes. (Larry P. v. Riles, par. 6) Once again, the limitations of intelligence testing were revealed. What are Learning Disabilities? Learning disabilities are cognitive disorders that affect different areas of cognition, particularly language or reading. It should be pointed out that learning disabilities are not the same thing as intellectual disabilities. Learning disabilities are considered specific neurological impairments rather than global intellectual or developmental disabilities. A person with a language disability has difficulty understanding or using spoken language, whereas someone with a reading disability, such as dyslexia, has difficulty processing what they are reading. Often, learning disabilities are not recognized until a child reaches school age. One confounding aspect of learning disabilities is that they most often affect children with average to above-average intelligence. In other words, the disability is specific to a particular area and not a measure of overall intellectual ability. At the same time, learning disabilities tend to exhibit comorbidity with other disorders, like attention-deficit hyperactivity disorder (ADHD). Anywhere between 30–70% of individuals with diagnosed cases of ADHD also have some sort of learning disability (Riccio, Gonzales, & Hynd, 1994). Let’s take a look at three examples of common learning disabilities: dysgraphia, dyslexia, and dyscalculia. Dysgraphia Children
 
-Interestingly, the periodic recalibrations have led to an interesting observation known as the Flynn effect. Named after James Flynn, who was among the first to describe this trend, the Flynn effect refers to  <!-- HIGHLIGHTING HERE ONLY -->
+Interestingly, the periodic recalibrations have led to an interesting observation known as the Flynn effect. Named after James Flynn, who was among the first to describe this trend, the Flynn effect refers to
                 </div>
             </div>
             
@@ -375,14 +417,22 @@ Interestingly, the periodic recalibrations have led to an interesting observatio
                 <div class="stat-item">
                     <div class="stat-label">Sections Used</div>
                     <div class="stat-value">12</div>
+                    <div class="stat-factor">Factor: 1.00</div>
                 </div>
                 <div class="stat-item">
                     <div class="stat-label">Pages Referenced</div>
                     <div class="stat-value">12</div>
+                    <div class="stat-factor">Factor: 1.00</div>
                 </div>
                 <div class="stat-item">
-                    <div class="stat-label">Keywords Found</div>
-                    <div class="stat-value">7</div>
+                    <div class="stat-label">Answer Length</div>
+                    <div class="stat-value">662</div>
+                    <div class="stat-factor">Factor: 1.00</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Overall</div>
+                    <div class="stat-value">100%</div>
+                    <div class="stat-factor">HIGH</div>
                 </div>
             </div>
             

@@ -73,6 +73,45 @@
                 box-shadow: 0 2px 4px rgba(0,0,0,0.1);
             }
             
+            .confidence-meter {
+                background: #f0f0f0;
+                padding: 15px 30px;
+                border-bottom: 1px solid #e0e0e0;
+                display: flex;
+                align-items: center;
+                gap: 20px;
+                flex-wrap: wrap;
+            }
+            
+            .confidence-bar {
+                flex: 1;
+                height: 20px;
+                background: #e0e0e0;
+                border-radius: 10px;
+                overflow: hidden;
+            }
+            
+            .confidence-fill {
+                height: 100%;
+                border-radius: 10px;
+                transition: width 0.3s ease;
+            }
+            
+            .confidence-fill.high { background: linear-gradient(90deg, #4caf50, #8bc34a); }
+            .confidence-fill.medium { background: linear-gradient(90deg, #ff9800, #ffc107); }
+            .confidence-fill.low { background: linear-gradient(90deg, #f44336, #ff7043); }
+            
+            .confidence-text {
+                font-size: 18px;
+                font-weight: 600;
+                min-width: 100px;
+                text-align: center;
+            }
+            
+            .confidence-text.high { color: #4caf50; }
+            .confidence-text.medium { color: #ff9800; }
+            .confidence-text.low { color: #f44336; }
+            
             .answer-section {
                 padding: 30px;
                 background: #f8f9fa;
@@ -99,8 +138,6 @@
                 color: #444;
                 border-left: 4px solid #667eea;
             }
-            
-            /* NO mark styling for answer - it stays plain */
             
             .evidence-section {
                 padding: 30px;
@@ -153,17 +190,6 @@
                 border: 1px solid #e0e0e0;
             }
             
-            .term-badge {
-                display: inline-block;
-                background: #ffeb3b;
-                color: #333;
-                padding: 3px 10px;
-                border-radius: 15px;
-                font-size: 12px;
-                margin: 0 5px 5px 0;
-                font-weight: 500;
-            }
-            
             .evidence-text {
                 background: white;
                 padding: 15px;
@@ -213,19 +239,17 @@
             }
             
             .stats {
-                display: flex;
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
                 gap: 15px;
                 padding: 20px 30px;
                 background: white;
-                flex-wrap: wrap;
             }
             
             .stat-item {
                 background: #f8f9fa;
-                padding: 10px 20px;
+                padding: 15px;
                 border-radius: 10px;
-                flex: 1;
-                min-width: 120px;
                 text-align: center;
                 border: 1px solid #e0e0e0;
             }
@@ -242,6 +266,12 @@
                 color: #667eea;
             }
             
+            .stat-factor {
+                font-size: 11px;
+                color: #999;
+                margin-top: 5px;
+            }
+            
             .footer {
                 padding: 20px 30px;
                 background: #f0f0f0;
@@ -252,6 +282,10 @@
             }
             
             @media (max-width: 768px) {
+                .stats {
+                    grid-template-columns: repeat(2, 1fr);
+                }
+                
                 .header {
                     padding: 20px;
                 }
@@ -279,14 +313,22 @@
             </div>
             
             <div class="keywords-bar">
-                <div class="keywords-title">🔑 Extracted Keywords:</div>
+                <div class="keywords-title"><i class="fas fa-key"></i> Extracted Keywords:</div>
     <span class="keyword-badge">dsm</span>
+            </div>
+            
+            <div class="confidence-meter">
+                <i class="fas fa-bullseye"></i><span style="font-weight: 600;">Confidence:</span>
+                <div class="confidence-bar">
+                    <div class="confidence-fill high" style="width: 100.0%;"></div>
+                </div>
+                <div class="confidence-text high">HIGH (100%)</div>
             </div>
             
             <div class="answer-section">
                 <h3><i class="fas fa-robot"></i> Generated Answer</h3>
                 <div class="answer-content">
-                    The DSM-5 is the 5th and most recent edition of the Diagnostic and Statistical Manual of Mental Disorders, a classification system used by most U.S. professionals to diagnose and classify psychological disorders. It was published in 2013 and includes a total of 237 specific diagnosable disorders, each described in detail, including its symptoms, prevalence, risk factors, and comorbidity.  <!-- NO HIGHLIGHTING HERE -->
+                    The DSM-5 is the 5th and most recent edition of the Diagnostic and Statistical Manual of Mental Disorders, a classification system used by most U.S. professionals to diagnose and classify psychological disorders. It was published in 2013 and includes a total of 237 specific diagnosable disorders, each described in detail, including its symptoms, prevalence, risk factors, and comorbidity.
                 </div>
             </div>
             
@@ -299,7 +341,7 @@
                     <span class="page-number">📄 Page 554</span>
                 </div>
                 <div class="evidence-text">
-                    The diagnosis and classification of psychological disorders is essential in studying and treating psychopathology. The classification system used by most U.S. professionals is the <mark style="background-color: #ffeb3b; font-weight: bold;">dsm</mark>-5. The first edition of the <mark style="background-color: #ffeb3b; font-weight: bold;">dsm</mark> was published in 1952, and has undergone numerous revisions. The 5th and most recent  <!-- HIGHLIGHTING HERE ONLY -->
+                    The diagnosis and classification of psychological disorders is essential in studying and treating psychopathology. The classification system used by most U.S. professionals is the <mark style="background-color: #ffeb3b; font-weight: bold;">dsm</mark>-5. The first edition of the <mark style="background-color: #ffeb3b; font-weight: bold;">dsm</mark> was published in 1952, and has undergone numerous revisions. The 5th and most recent
                 </div>
             </div>
     
@@ -311,7 +353,7 @@ By the end of this section</span>
                     <span class="page-number">📄 Page 555</span>
                 </div>
                 <div class="evidence-text">
-                    The diagnosis and classification of psychological disorders is essential in studying and treating psychopathology. The classification system used by most U.S. professionals is the <mark style="background-color: #ffeb3b; font-weight: bold;">dsm</mark>-5. The first edition of the <mark style="background-color: #ffeb3b; font-weight: bold;">dsm</mark> was published in 1952, and has undergone numerous revisions. The 5th and most recent  <!-- HIGHLIGHTING HERE ONLY -->
+                    The diagnosis and classification of psychological disorders is essential in studying and treating psychopathology. The classification system used by most U.S. professionals is the <mark style="background-color: #ffeb3b; font-weight: bold;">dsm</mark>-5. The first edition of the <mark style="background-color: #ffeb3b; font-weight: bold;">dsm</mark> was published in 1952, and has undergone numerous revisions. The 5th and most recent
                 </div>
             </div>
     
@@ -323,7 +365,7 @@ By the end of this section</span>
                     <span class="page-number">📄 Page 556</span>
                 </div>
                 <div class="evidence-text">
-                    The diagnosis and classification of psychological disorders is essential in studying and treating psychopathology. The classification system used by most U.S. professionals is the <mark style="background-color: #ffeb3b; font-weight: bold;">dsm</mark>-5. The first edition of the <mark style="background-color: #ffeb3b; font-weight: bold;">dsm</mark> was published in 1952, and has undergone numerous revisions. The 5th and most recent  <!-- HIGHLIGHTING HERE ONLY -->
+                    The diagnosis and classification of psychological disorders is essential in studying and treating psychopathology. The classification system used by most U.S. professionals is the <mark style="background-color: #ffeb3b; font-weight: bold;">dsm</mark>-5. The first edition of the <mark style="background-color: #ffeb3b; font-weight: bold;">dsm</mark> was published in 1952, and has undergone numerous revisions. The 5th and most recent
                 </div>
             </div>
     
@@ -333,7 +375,7 @@ By the end of this section</span>
                     <span class="page-number">📄 Page 557</span>
                 </div>
                 <div class="evidence-text">
-                    The diagnosis and classification of psychological disorders is essential in studying and treating psychopathology. The classification system used by most U.S. professionals is the <mark style="background-color: #ffeb3b; font-weight: bold;">dsm</mark>-5. The first edition of the <mark style="background-color: #ffeb3b; font-weight: bold;">dsm</mark> was published in 1952, and has undergone numerous revisions. The 5th and most recent  <!-- HIGHLIGHTING HERE ONLY -->
+                    The diagnosis and classification of psychological disorders is essential in studying and treating psychopathology. The classification system used by most U.S. professionals is the <mark style="background-color: #ffeb3b; font-weight: bold;">dsm</mark>-5. The first edition of the <mark style="background-color: #ffeb3b; font-weight: bold;">dsm</mark> was published in 1952, and has undergone numerous revisions. The 5th and most recent
                 </div>
             </div>
     
@@ -344,7 +386,7 @@ Slightly over</span>
                     <span class="page-number">📄 Page 573</span>
                 </div>
                 <div class="evidence-text">
-                    The diagnosis and classification of psychological disorders is essential in studying and treating psychopathology. The classification system used by most U.S. professionals is the <mark style="background-color: #ffeb3b; font-weight: bold;">dsm</mark>-5. The first edition of the <mark style="background-color: #ffeb3b; font-weight: bold;">dsm</mark> was published in 1952, and has undergone numerous revisions. The 5th and most recent  <!-- HIGHLIGHTING HERE ONLY -->
+                    The diagnosis and classification of psychological disorders is essential in studying and treating psychopathology. The classification system used by most U.S. professionals is the <mark style="background-color: #ffeb3b; font-weight: bold;">dsm</mark>-5. The first edition of the <mark style="background-color: #ffeb3b; font-weight: bold;">dsm</mark> was published in 1952, and has undergone numerous revisions. The 5th and most recent
                 </div>
             </div>
     
@@ -367,7 +409,7 @@ highly emotional, and erratic. Cluster C disorders include avoidant personality 
 
 edition (ICD-10); however, efforts are now underway to develop a new edition (ICD-11) that, in conjunction with the changes in <mark style="background-color: #ffeb3b; font-weight: bold;">dsm</mark>-5, will help harmonize the two classification systems as much as possible (APA, 2013). A study that compared the use of the two classification systems found that worldwide the ICD is more frequently used for clinical diagnosis, whereas the <mark style="background-color: #ffeb3b; font-weight: bold;">dsm</mark> is more valued for research (Mezzich, 2002). Most research findings concerning the etiology and treatment of psychological disorders are based on criteria set forth in the <mark style="background-color: #ffeb3b; font-weight: bold;">dsm</mark> (Oltmanns & Castonguay, 2013). The <mark style="background-color: #ffeb3b; font-weight: bold;">dsm</mark> also includes more explicit disorder criteria, along with an extensive and helpful explanatory text (Regier et al., 2012). The <mark style="background-color: #ffeb3b; font-weight: bold;">dsm</mark> is the classification system of choice among U.S. mental health professionals, and this chapter is based on the <mark style="background-color: #ffeb3b; font-weight: bold;">dsm</mark> paradigm. The Compassionate View of Psychological Disorders As these disorders are outlined, please bear two things in mind. First, remember that psychological disorders represent extremes of inner experience and behavior. If, while reading about these disorders, you feel that these descriptions begin to personally characterize you, do not worry—this moment of enlightenment probably means nothing more than you have had a range of experiences and emotions. Each of us experiences episodes of sadness, anxiety, and preoccupation with certain thoughts—times when we do not quite feel ourselves. These episodes should not be considered problematic unless the accompanying thoughts and behaviors become extreme and have a disruptive effect on one’s life. Second, understand that people with psychological disorders are far more than just embodiments of their disorders. We do not use terms such as schizophrenics, depressives, or phobics because they are labels that objectify people who have these conditions, thus promoting biased and disparaging assumptions about them. It is important to remember that a psychological disorder is not what a person is; it is something that a person has—through no fault of their own. As is the case with cancer or diabetes, those with psychological disorders suffer debilitating, often painful conditions that are not of their own choosing. These individuals deserve to be viewed and treated with compassion, understanding, and dignity. 15.3 Perspectives on Psychological Disorders LEARNING OBJECTIVES By the end of this section, you will be able to: • Discuss supernatural perspectives on the origin of psychological disorders, in their historical context • Describe modern biological and psychological perspectives on the origin of psychological disorders • Identify which disorders
 
-widowed (Hasin et al., 2011). Comorbid disorders include anxiety disorders and substance abuse disorders (Kessler & Wang, 2009). Subtypes of Depression The <mark style="background-color: #ffeb3b; font-weight: bold;">dsm</mark>-5 lists several diffe  <!-- HIGHLIGHTING HERE ONLY -->
+widowed (Hasin et al., 2011). Comorbid disorders include anxiety disorders and substance abuse disorders (Kessler & Wang, 2009). Subtypes of Depression The <mark style="background-color: #ffeb3b; font-weight: bold;">dsm</mark>-5 lists several diffe
                 </div>
             </div>
             
@@ -375,14 +417,22 @@ widowed (Hasin et al., 2011). Comorbid disorders include anxiety disorders and s
                 <div class="stat-item">
                     <div class="stat-label">Sections Used</div>
                     <div class="stat-value">9</div>
+                    <div class="stat-factor">Factor: 1.00</div>
                 </div>
                 <div class="stat-item">
                     <div class="stat-label">Pages Referenced</div>
                     <div class="stat-value">12</div>
+                    <div class="stat-factor">Factor: 1.00</div>
                 </div>
                 <div class="stat-item">
-                    <div class="stat-label">Keywords Found</div>
-                    <div class="stat-value">1</div>
+                    <div class="stat-label">Answer Length</div>
+                    <div class="stat-value">390</div>
+                    <div class="stat-factor">Factor: 0.78</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Overall</div>
+                    <div class="stat-value">100%</div>
+                    <div class="stat-factor">HIGH</div>
                 </div>
             </div>
             

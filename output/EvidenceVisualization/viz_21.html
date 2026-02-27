@@ -73,6 +73,45 @@
                 box-shadow: 0 2px 4px rgba(0,0,0,0.1);
             }
             
+            .confidence-meter {
+                background: #f0f0f0;
+                padding: 15px 30px;
+                border-bottom: 1px solid #e0e0e0;
+                display: flex;
+                align-items: center;
+                gap: 20px;
+                flex-wrap: wrap;
+            }
+            
+            .confidence-bar {
+                flex: 1;
+                height: 20px;
+                background: #e0e0e0;
+                border-radius: 10px;
+                overflow: hidden;
+            }
+            
+            .confidence-fill {
+                height: 100%;
+                border-radius: 10px;
+                transition: width 0.3s ease;
+            }
+            
+            .confidence-fill.high { background: linear-gradient(90deg, #4caf50, #8bc34a); }
+            .confidence-fill.medium { background: linear-gradient(90deg, #ff9800, #ffc107); }
+            .confidence-fill.low { background: linear-gradient(90deg, #f44336, #ff7043); }
+            
+            .confidence-text {
+                font-size: 18px;
+                font-weight: 600;
+                min-width: 100px;
+                text-align: center;
+            }
+            
+            .confidence-text.high { color: #4caf50; }
+            .confidence-text.medium { color: #ff9800; }
+            .confidence-text.low { color: #f44336; }
+            
             .answer-section {
                 padding: 30px;
                 background: #f8f9fa;
@@ -99,8 +138,6 @@
                 color: #444;
                 border-left: 4px solid #667eea;
             }
-            
-            /* NO mark styling for answer - it stays plain */
             
             .evidence-section {
                 padding: 30px;
@@ -153,17 +190,6 @@
                 border: 1px solid #e0e0e0;
             }
             
-            .term-badge {
-                display: inline-block;
-                background: #ffeb3b;
-                color: #333;
-                padding: 3px 10px;
-                border-radius: 15px;
-                font-size: 12px;
-                margin: 0 5px 5px 0;
-                font-weight: 500;
-            }
-            
             .evidence-text {
                 background: white;
                 padding: 15px;
@@ -213,19 +239,17 @@
             }
             
             .stats {
-                display: flex;
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
                 gap: 15px;
                 padding: 20px 30px;
                 background: white;
-                flex-wrap: wrap;
             }
             
             .stat-item {
                 background: #f8f9fa;
-                padding: 10px 20px;
+                padding: 15px;
                 border-radius: 10px;
-                flex: 1;
-                min-width: 120px;
                 text-align: center;
                 border: 1px solid #e0e0e0;
             }
@@ -242,6 +266,12 @@
                 color: #667eea;
             }
             
+            .stat-factor {
+                font-size: 11px;
+                color: #999;
+                margin-top: 5px;
+            }
+            
             .footer {
                 padding: 20px 30px;
                 background: #f0f0f0;
@@ -252,6 +282,10 @@
             }
             
             @media (max-width: 768px) {
+                .stats {
+                    grid-template-columns: repeat(2, 1fr);
+                }
+                
                 .header {
                     padding: 20px;
                 }
@@ -279,14 +313,22 @@
             </div>
             
             <div class="keywords-bar">
-                <div class="keywords-title">🔑 Extracted Keywords:</div>
+                <div class="keywords-title"><i class="fas fa-key"></i> Extracted Keywords:</div>
     <span class="keyword-badge">developmental</span><span class="keyword-badge">psychology</span>
+            </div>
+            
+            <div class="confidence-meter">
+                <i class="fas fa-bullseye"></i><span style="font-weight: 600;">Confidence:</span>
+                <div class="confidence-bar">
+                    <div class="confidence-fill high" style="width: 100.0%;"></div>
+                </div>
+                <div class="confidence-text high">HIGH (100%)</div>
             </div>
             
             <div class="answer-section">
                 <h3><i class="fas fa-robot"></i> Generated Answer</h3>
                 <div class="answer-content">
-                    Developmental psychology explores how we change and grow from conception to death. This field of psychology focuses on how people change, and it addresses questions of change, such as whether the change is smooth or uneven, whether there is one course of development or many, and how genetics and environment interact to influence development.  <!-- NO HIGHLIGHTING HERE -->
+                    Developmental psychology explores how we change and grow from conception to death. This field of psychology focuses on how people change, and it addresses questions of change, such as whether the change is smooth or uneven, whether there is one course of development or many, and how genetics and environment interact to influence development.
                 </div>
             </div>
             
@@ -299,7 +341,7 @@
                     <span class="page-number">📄 Page 20</span>
                 </div>
                 <div class="evidence-text">
-                    have very little control over the types and/or frequencies of displayed behavior. In a case study, <mark style="background-color: #ffeb3b; font-weight: bold;">developmental</mark> psychologists collect a great deal of information from one individual in order to better understand physical and psychological changes over the lifespan. This particular approach is an ex  <!-- HIGHLIGHTING HERE ONLY -->
+                    have very little control over the types and/or frequencies of displayed behavior. In a case study, <mark style="background-color: #ffeb3b; font-weight: bold;">developmental</mark> psychologists collect a great deal of information from one individual in order to better understand physical and psychological changes over the lifespan. This particular approach is an ex
                 </div>
             </div>
     
@@ -310,7 +352,7 @@ behavior</span>
                     <span class="page-number">📄 Page 32</span>
                 </div>
                 <div class="evidence-text">
-                    have very little control over the types and/or frequencies of displayed behavior. In a case study, <mark style="background-color: #ffeb3b; font-weight: bold;">developmental</mark> psychologists collect a great deal of information from one individual in order to better understand physical and psychological changes over the lifespan. This particular approach is an ex  <!-- HIGHLIGHTING HERE ONLY -->
+                    have very little control over the types and/or frequencies of displayed behavior. In a case study, <mark style="background-color: #ffeb3b; font-weight: bold;">developmental</mark> psychologists collect a great deal of information from one individual in order to better understand physical and psychological changes over the lifespan. This particular approach is an ex
                 </div>
             </div>
     
@@ -321,7 +363,7 @@ Roediger</span>
                     <span class="page-number">📄 Page 292</span>
                 </div>
                 <div class="evidence-text">
-                    have very little control over the types and/or frequencies of displayed behavior. In a case study, <mark style="background-color: #ffeb3b; font-weight: bold;">developmental</mark> psychologists collect a great deal of information from one individual in order to better understand physical and psychological changes over the lifespan. This particular approach is an ex  <!-- HIGHLIGHTING HERE ONLY -->
+                    have very little control over the types and/or frequencies of displayed behavior. In a case study, <mark style="background-color: #ffeb3b; font-weight: bold;">developmental</mark> psychologists collect a great deal of information from one individual in order to better understand physical and psychological changes over the lifespan. This particular approach is an ex
                 </div>
             </div>
     
@@ -331,7 +373,7 @@ Roediger</span>
                     <span class="page-number">📄 Page 294</span>
                 </div>
                 <div class="evidence-text">
-                    have very little control over the types and/or frequencies of displayed behavior. In a case study, <mark style="background-color: #ffeb3b; font-weight: bold;">developmental</mark> psychologists collect a great deal of information from one individual in order to better understand physical and psychological changes over the lifespan. This particular approach is an ex  <!-- HIGHLIGHTING HERE ONLY -->
+                    have very little control over the types and/or frequencies of displayed behavior. In a case study, <mark style="background-color: #ffeb3b; font-weight: bold;">developmental</mark> psychologists collect a great deal of information from one individual in order to better understand physical and psychological changes over the lifespan. This particular approach is an ex
                 </div>
             </div>
     
@@ -343,7 +385,7 @@ Jean Piaget</span>
                     <span class="page-number">📄 Page 296</span>
                 </div>
                 <div class="evidence-text">
-                    have very little control over the types and/or frequencies of displayed behavior. In a case study, <mark style="background-color: #ffeb3b; font-weight: bold;">developmental</mark> psychologists collect a great deal of information from one individual in order to better understand physical and psychological changes over the lifespan. This particular approach is an ex  <!-- HIGHLIGHTING HERE ONLY -->
+                    have very little control over the types and/or frequencies of displayed behavior. In a case study, <mark style="background-color: #ffeb3b; font-weight: bold;">developmental</mark> psychologists collect a great deal of information from one individual in order to better understand physical and psychological changes over the lifespan. This particular approach is an ex
                 </div>
             </div>
     
@@ -366,7 +408,7 @@ solutions. In adolescence, a renewed egocentrism occurs. For example, a 15-year-
 
 SOCIOCULTURAL THEORY OF DEVELOPMENT Lev Vygotsky was a Russian psychologist who proposed a sociocultural theory of development. He suggested that human development is rooted in one’s culture. A child’s social world, for example, forms the basis for the formation of language and thought. The language one speaks and the ways a person thinks about things is dependent on one’s cultural background. Vygotsky also considered historical influences as key to one’s development. He was interested in the process of development and the individual’s interactions with their environment (John-Steiner & Mahn, 1996). Moral Theory Of Development A major task beginning in childhood and continuing into adolescence is discerning right from wrong. Psychologist Lawrence Kohlberg (1927–1987) extended upon the foundation that Piaget built regarding cognitive development. Kohlberg believed that moral development, like cognitive development, follows a series of stages. To develop this theory, Kohlberg posed moral dilemmas to people of all ages, and then he analyzed their answers to find evidence of their particular stage of moral development. Before reading about the stages, take a minute to consider how you would answer one of Kohlberg's best-known moral dilemmas, commonly known as the Heinz dilemma: In Europe, a woman was near death from a special kind of cancer. There was one drug that the doctors thought might save her. It was a form of radium that a druggist in the same town had recently discovered. The drug was expensive to make, but the druggist was charging ten times what the drug cost him to make. He paid $200 for the radium and charged $2,000 for a small dose of the drug. The sick woman's husband, Heinz, went to everyone he knew to borrow the money, but he could only get together about $1,000, which is half of what it cost. He told the druggist that his wife was dying and asked him to sell it cheaper or let him pay later. But the druggist said: “No, I discovered the drug and I'm going to make money from it.” So Heinz got desperate and broke into the man's store to steal the drug for his wife. Should the husband have done that? (Kohlberg, 1969, p. 379) How would you answer this dilemma? Kohlberg was not interested in whether you answer yes or no to the dilemma: Instead, he was interested in the reasoning behind your answer. After presenting people with this and various other moral
 
-motor skills ability to move our body and manipulate objects nature genes and biology newborn reflexes inborn automatic response to a particular form of stimulation that all healthy babies are born with normative approach study of development using norms, or average ages, when most children reach specific <mark style="background-color: #ffeb3b; font-weight: bold;">developmental</mark> milestones nurture environment and culture object permanence idea that even if something is out of sight, it still exists permissive parenting style parents make few demands and rarely use punishment physical development domain of lifespan development that examines growth and changes in the  <!-- HIGHLIGHTING HERE ONLY -->
+motor skills ability to move our body and manipulate objects nature genes and biology newborn reflexes inborn automatic response to a particular form of stimulation that all healthy babies are born with normative approach study of development using norms, or average ages, when most children reach specific <mark style="background-color: #ffeb3b; font-weight: bold;">developmental</mark> milestones nurture environment and culture object permanence idea that even if something is out of sight, it still exists permissive parenting style parents make few demands and rarely use punishment physical development domain of lifespan development that examines growth and changes in the
                 </div>
             </div>
             
@@ -374,14 +416,22 @@ motor skills ability to move our body and manipulate objects nature genes and bi
                 <div class="stat-item">
                     <div class="stat-label">Sections Used</div>
                     <div class="stat-value">9</div>
+                    <div class="stat-factor">Factor: 1.00</div>
                 </div>
                 <div class="stat-item">
                     <div class="stat-label">Pages Referenced</div>
                     <div class="stat-value">11</div>
+                    <div class="stat-factor">Factor: 1.00</div>
                 </div>
                 <div class="stat-item">
-                    <div class="stat-label">Keywords Found</div>
-                    <div class="stat-value">2</div>
+                    <div class="stat-label">Answer Length</div>
+                    <div class="stat-value">343</div>
+                    <div class="stat-factor">Factor: 0.69</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Overall</div>
+                    <div class="stat-value">100%</div>
+                    <div class="stat-factor">HIGH</div>
                 </div>
             </div>
             

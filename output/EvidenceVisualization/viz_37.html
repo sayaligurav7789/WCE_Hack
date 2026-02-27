@@ -73,6 +73,45 @@
                 box-shadow: 0 2px 4px rgba(0,0,0,0.1);
             }
             
+            .confidence-meter {
+                background: #f0f0f0;
+                padding: 15px 30px;
+                border-bottom: 1px solid #e0e0e0;
+                display: flex;
+                align-items: center;
+                gap: 20px;
+                flex-wrap: wrap;
+            }
+            
+            .confidence-bar {
+                flex: 1;
+                height: 20px;
+                background: #e0e0e0;
+                border-radius: 10px;
+                overflow: hidden;
+            }
+            
+            .confidence-fill {
+                height: 100%;
+                border-radius: 10px;
+                transition: width 0.3s ease;
+            }
+            
+            .confidence-fill.high { background: linear-gradient(90deg, #4caf50, #8bc34a); }
+            .confidence-fill.medium { background: linear-gradient(90deg, #ff9800, #ffc107); }
+            .confidence-fill.low { background: linear-gradient(90deg, #f44336, #ff7043); }
+            
+            .confidence-text {
+                font-size: 18px;
+                font-weight: 600;
+                min-width: 100px;
+                text-align: center;
+            }
+            
+            .confidence-text.high { color: #4caf50; }
+            .confidence-text.medium { color: #ff9800; }
+            .confidence-text.low { color: #f44336; }
+            
             .answer-section {
                 padding: 30px;
                 background: #f8f9fa;
@@ -99,8 +138,6 @@
                 color: #444;
                 border-left: 4px solid #667eea;
             }
-            
-            /* NO mark styling for answer - it stays plain */
             
             .evidence-section {
                 padding: 30px;
@@ -153,17 +190,6 @@
                 border: 1px solid #e0e0e0;
             }
             
-            .term-badge {
-                display: inline-block;
-                background: #ffeb3b;
-                color: #333;
-                padding: 3px 10px;
-                border-radius: 15px;
-                font-size: 12px;
-                margin: 0 5px 5px 0;
-                font-weight: 500;
-            }
-            
             .evidence-text {
                 background: white;
                 padding: 15px;
@@ -213,19 +239,17 @@
             }
             
             .stats {
-                display: flex;
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
                 gap: 15px;
                 padding: 20px 30px;
                 background: white;
-                flex-wrap: wrap;
             }
             
             .stat-item {
                 background: #f8f9fa;
-                padding: 10px 20px;
+                padding: 15px;
                 border-radius: 10px;
-                flex: 1;
-                min-width: 120px;
                 text-align: center;
                 border: 1px solid #e0e0e0;
             }
@@ -242,6 +266,12 @@
                 color: #667eea;
             }
             
+            .stat-factor {
+                font-size: 11px;
+                color: #999;
+                margin-top: 5px;
+            }
+            
             .footer {
                 padding: 20px 30px;
                 background: #f0f0f0;
@@ -252,6 +282,10 @@
             }
             
             @media (max-width: 768px) {
+                .stats {
+                    grid-template-columns: repeat(2, 1fr);
+                }
+                
                 .header {
                     padding: 20px;
                 }
@@ -279,14 +313,22 @@
             </div>
             
             <div class="keywords-bar">
-                <div class="keywords-title">🔑 Extracted Keywords:</div>
+                <div class="keywords-title"><i class="fas fa-key"></i> Extracted Keywords:</div>
     <span class="keyword-badge">stress</span><span class="keyword-badge">psychology</span>
+            </div>
+            
+            <div class="confidence-meter">
+                <i class="fas fa-bullseye"></i><span style="font-weight: 600;">Confidence:</span>
+                <div class="confidence-bar">
+                    <div class="confidence-fill high" style="width: 100.0%;"></div>
+                </div>
+                <div class="confidence-text high">HIGH (100%)</div>
             </div>
             
             <div class="answer-section">
                 <h3><i class="fas fa-robot"></i> Generated Answer</h3>
                 <div class="answer-content">
-                    According to the provided textbook context, stress in psychology can be defined as a process whereby an individual perceives and responds to events that they appraise as overwhelming or threatening to their well-being (Lazarus & Folkman, 1984). This definition emphasizes the importance of how we appraise, or judge, demanding or threatening events (often referred to as stressors), which in turn influence our reactions to such events.  <!-- NO HIGHLIGHTING HERE -->
+                    According to the provided textbook context, stress in psychology can be defined as a process whereby an individual perceives and responds to events that they appraise as overwhelming or threatening to their well-being (Lazarus & Folkman, 1984). This definition emphasizes the importance of how we appraise, or judge, demanding or threatening events (often referred to as stressors), which in turn influence our reactions to such events.
                 </div>
             </div>
             
@@ -299,7 +341,7 @@
                     <span class="page-number">📄 Page 37</span>
                 </div>
                 <div class="evidence-text">
-                    FIGURE 14.5 Nearly half of U.S. adults indicated that their <mark style="background-color: #ffeb3b; font-weight: bold;">stress</mark> levels have increased over the last five years (Neelakantan, 2013). <mark style="background-color: #ffeb3b; font-weight: bold;">stress</mark> is an experience that evokes a variety of responses, including those that are physiological (e.g., accelerated heart rate, headaches, or gastrointestinal prob  <!-- HIGHLIGHTING HERE ONLY -->
+                    FIGURE 14.5 Nearly half of U.S. adults indicated that their <mark style="background-color: #ffeb3b; font-weight: bold;">stress</mark> levels have increased over the last five years (Neelakantan, 2013). <mark style="background-color: #ffeb3b; font-weight: bold;">stress</mark> is an experience that evokes a variety of responses, including those that are physiological (e.g., accelerated heart rate, headaches, or gastrointestinal prob
                 </div>
             </div>
     
@@ -309,7 +351,7 @@
                     <span class="page-number">📄 Page 498</span>
                 </div>
                 <div class="evidence-text">
-                    FIGURE 14.5 Nearly half of U.S. adults indicated that their <mark style="background-color: #ffeb3b; font-weight: bold;">stress</mark> levels have increased over the last five years (Neelakantan, 2013). <mark style="background-color: #ffeb3b; font-weight: bold;">stress</mark> is an experience that evokes a variety of responses, including those that are physiological (e.g., accelerated heart rate, headaches, or gastrointestinal prob  <!-- HIGHLIGHTING HERE ONLY -->
+                    FIGURE 14.5 Nearly half of U.S. adults indicated that their <mark style="background-color: #ffeb3b; font-weight: bold;">stress</mark> levels have increased over the last five years (Neelakantan, 2013). <mark style="background-color: #ffeb3b; font-weight: bold;">stress</mark> is an experience that evokes a variety of responses, including those that are physiological (e.g., accelerated heart rate, headaches, or gastrointestinal prob
                 </div>
             </div>
     
@@ -321,7 +363,7 @@ By the end of this section</span>
                     <span class="page-number">📄 Page 501</span>
                 </div>
                 <div class="evidence-text">
-                    FIGURE 14.5 Nearly half of U.S. adults indicated that their <mark style="background-color: #ffeb3b; font-weight: bold;">stress</mark> levels have increased over the last five years (Neelakantan, 2013). <mark style="background-color: #ffeb3b; font-weight: bold;">stress</mark> is an experience that evokes a variety of responses, including those that are physiological (e.g., accelerated heart rate, headaches, or gastrointestinal prob  <!-- HIGHLIGHTING HERE ONLY -->
+                    FIGURE 14.5 Nearly half of U.S. adults indicated that their <mark style="background-color: #ffeb3b; font-weight: bold;">stress</mark> levels have increased over the last five years (Neelakantan, 2013). <mark style="background-color: #ffeb3b; font-weight: bold;">stress</mark> is an experience that evokes a variety of responses, including those that are physiological (e.g., accelerated heart rate, headaches, or gastrointestinal prob
                 </div>
             </div>
     
@@ -331,7 +373,7 @@ By the end of this section</span>
                     <span class="page-number">📄 Page 502</span>
                 </div>
                 <div class="evidence-text">
-                    FIGURE 14.5 Nearly half of U.S. adults indicated that their <mark style="background-color: #ffeb3b; font-weight: bold;">stress</mark> levels have increased over the last five years (Neelakantan, 2013). <mark style="background-color: #ffeb3b; font-weight: bold;">stress</mark> is an experience that evokes a variety of responses, including those that are physiological (e.g., accelerated heart rate, headaches, or gastrointestinal prob  <!-- HIGHLIGHTING HERE ONLY -->
+                    FIGURE 14.5 Nearly half of U.S. adults indicated that their <mark style="background-color: #ffeb3b; font-weight: bold;">stress</mark> levels have increased over the last five years (Neelakantan, 2013). <mark style="background-color: #ffeb3b; font-weight: bold;">stress</mark> is an experience that evokes a variety of responses, including those that are physiological (e.g., accelerated heart rate, headaches, or gastrointestinal prob
                 </div>
             </div>
     
@@ -343,7 +385,7 @@ By the end of this section</span>
                     <span class="page-number">📄 Page 503</span>
                 </div>
                 <div class="evidence-text">
-                    FIGURE 14.5 Nearly half of U.S. adults indicated that their <mark style="background-color: #ffeb3b; font-weight: bold;">stress</mark> levels have increased over the last five years (Neelakantan, 2013). <mark style="background-color: #ffeb3b; font-weight: bold;">stress</mark> is an experience that evokes a variety of responses, including those that are physiological (e.g., accelerated heart rate, headaches, or gastrointestinal prob  <!-- HIGHLIGHTING HERE ONLY -->
+                    FIGURE 14.5 Nearly half of U.S. adults indicated that their <mark style="background-color: #ffeb3b; font-weight: bold;">stress</mark> levels have increased over the last five years (Neelakantan, 2013). <mark style="background-color: #ffeb3b; font-weight: bold;">stress</mark> is an experience that evokes a variety of responses, including those that are physiological (e.g., accelerated heart rate, headaches, or gastrointestinal prob
                 </div>
             </div>
     
@@ -364,7 +406,7 @@ can sometimes be a positive, motivating force that can improve the quality of ou
 
 that most people would not consider to be genuinely <mark style="background-color: #ffeb3b; font-weight: bold;">stress</mark>ful, such as receiving unanticipated good news: an unexpected promotion or raise. A useful way to conceptualize <mark style="background-color: #ffeb3b; font-weight: bold;">stress</mark> is to view it as a process whereby an individual perceives and responds to events that they appraise as overwhelming or threatening to their well-being (Lazarus & Folkman, 1984). A critical element of this definition is that it emphasizes the importance of how we appraise—that is, judge—demanding or threatening events (often referred to as <mark style="background-color: #ffeb3b; font-weight: bold;">stress</mark>ors); these appraisals, in turn, influence our reactions to such events. Two kinds of appraisals of a <mark style="background-color: #ffeb3b; font-weight: bold;">stress</mark>or are especially important in this regard: primary and secondary appraisals. A primary appraisal involves judgment about the degree of potential harm or threat to well-being that a <mark style="background-color: #ffeb3b; font-weight: bold;">stress</mark>or might entail. A <mark style="background-color: #ffeb3b; font-weight: bold;">stress</mark>or would likely be appraised as a threat if one anticipates that it could lead to some kind of harm, loss, or other negative consequence; conversely, a <mark style="background-color: #ffeb3b; font-weight: bold;">stress</mark>or would likely be appraised as a challenge if one believes that it carries the potential for gain or personal growth. For example, an employee who is promoted to a leadership position would likely perceive the promotion as a much greater threat if they believed the promotion would lead to excessive work demands than if they viewed it as an opportunity to gain new skills and grow professionally. Similarly, a college student on the cusp of graduation may face the change as a threat or a challenge (Figure 14.2). 486 14 • <mark style="background-color: #ffeb3b; font-weight: bold;">stress</mark>, Lifestyle, and Health Access for free at openstax.org
 
-Neuroscientists Robert Sapolsky and Carol Shively have conducted extensive research on <mark style="background-color: #ffeb3b; font-weight: bold;">stress</mark> in non-human primates for over 30 years. Both have shown that position in the social hierarchy predicts <mark style="background-color: #ffeb3b; font-weight: bold;">stress</mark>, mental health status, and disease. Their research sheds light on how <mark style="background-color: #ffeb3b; font-weight: bold;">stress</mark> may lead to negative health outcomes for stigmatized or ostracized people. Here are two videos featuring Dr. Sapolsky: one is regarding killer <mark style="background-color: #ffeb3b; font-weight: bold;">stress</mark> (http://openstax.org/l/sapolsky1) and the other is an excellent in-depth documentary (http://openstax.org/l/ sapolsky2) from National Geographic. Physical disorders or diseases whose symptoms are brought about or worsened by <mark style="background-color: #ffeb3b; font-weight: bold;">stress</mark> and emotional factors are called psychophysiological disorders. The physical symptoms of psychophysiological disorders are real and they can be produced or exacerbated by psychological facto  <!-- HIGHLIGHTING HERE ONLY -->
+Neuroscientists Robert Sapolsky and Carol Shively have conducted extensive research on <mark style="background-color: #ffeb3b; font-weight: bold;">stress</mark> in non-human primates for over 30 years. Both have shown that position in the social hierarchy predicts <mark style="background-color: #ffeb3b; font-weight: bold;">stress</mark>, mental health status, and disease. Their research sheds light on how <mark style="background-color: #ffeb3b; font-weight: bold;">stress</mark> may lead to negative health outcomes for stigmatized or ostracized people. Here are two videos featuring Dr. Sapolsky: one is regarding killer <mark style="background-color: #ffeb3b; font-weight: bold;">stress</mark> (http://openstax.org/l/sapolsky1) and the other is an excellent in-depth documentary (http://openstax.org/l/ sapolsky2) from National Geographic. Physical disorders or diseases whose symptoms are brought about or worsened by <mark style="background-color: #ffeb3b; font-weight: bold;">stress</mark> and emotional factors are called psychophysiological disorders. The physical symptoms of psychophysiological disorders are real and they can be produced or exacerbated by psychological facto
                 </div>
             </div>
             
@@ -372,14 +414,22 @@ Neuroscientists Robert Sapolsky and Carol Shively have conducted extensive resea
                 <div class="stat-item">
                     <div class="stat-label">Sections Used</div>
                     <div class="stat-value">8</div>
+                    <div class="stat-factor">Factor: 1.00</div>
                 </div>
                 <div class="stat-item">
                     <div class="stat-label">Pages Referenced</div>
                     <div class="stat-value">9</div>
+                    <div class="stat-factor">Factor: 0.90</div>
                 </div>
                 <div class="stat-item">
-                    <div class="stat-label">Keywords Found</div>
-                    <div class="stat-value">2</div>
+                    <div class="stat-label">Answer Length</div>
+                    <div class="stat-value">436</div>
+                    <div class="stat-factor">Factor: 0.87</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Overall</div>
+                    <div class="stat-value">100%</div>
+                    <div class="stat-factor">HIGH</div>
                 </div>
             </div>
             

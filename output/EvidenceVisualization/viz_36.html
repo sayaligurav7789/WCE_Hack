@@ -73,6 +73,45 @@
                 box-shadow: 0 2px 4px rgba(0,0,0,0.1);
             }
             
+            .confidence-meter {
+                background: #f0f0f0;
+                padding: 15px 30px;
+                border-bottom: 1px solid #e0e0e0;
+                display: flex;
+                align-items: center;
+                gap: 20px;
+                flex-wrap: wrap;
+            }
+            
+            .confidence-bar {
+                flex: 1;
+                height: 20px;
+                background: #e0e0e0;
+                border-radius: 10px;
+                overflow: hidden;
+            }
+            
+            .confidence-fill {
+                height: 100%;
+                border-radius: 10px;
+                transition: width 0.3s ease;
+            }
+            
+            .confidence-fill.high { background: linear-gradient(90deg, #4caf50, #8bc34a); }
+            .confidence-fill.medium { background: linear-gradient(90deg, #ff9800, #ffc107); }
+            .confidence-fill.low { background: linear-gradient(90deg, #f44336, #ff7043); }
+            
+            .confidence-text {
+                font-size: 18px;
+                font-weight: 600;
+                min-width: 100px;
+                text-align: center;
+            }
+            
+            .confidence-text.high { color: #4caf50; }
+            .confidence-text.medium { color: #ff9800; }
+            .confidence-text.low { color: #f44336; }
+            
             .answer-section {
                 padding: 30px;
                 background: #f8f9fa;
@@ -99,8 +138,6 @@
                 color: #444;
                 border-left: 4px solid #667eea;
             }
-            
-            /* NO mark styling for answer - it stays plain */
             
             .evidence-section {
                 padding: 30px;
@@ -153,17 +190,6 @@
                 border: 1px solid #e0e0e0;
             }
             
-            .term-badge {
-                display: inline-block;
-                background: #ffeb3b;
-                color: #333;
-                padding: 3px 10px;
-                border-radius: 15px;
-                font-size: 12px;
-                margin: 0 5px 5px 0;
-                font-weight: 500;
-            }
-            
             .evidence-text {
                 background: white;
                 padding: 15px;
@@ -213,19 +239,17 @@
             }
             
             .stats {
-                display: flex;
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
                 gap: 15px;
                 padding: 20px 30px;
                 background: white;
-                flex-wrap: wrap;
             }
             
             .stat-item {
                 background: #f8f9fa;
-                padding: 10px 20px;
+                padding: 15px;
                 border-radius: 10px;
-                flex: 1;
-                min-width: 120px;
                 text-align: center;
                 border: 1px solid #e0e0e0;
             }
@@ -242,6 +266,12 @@
                 color: #667eea;
             }
             
+            .stat-factor {
+                font-size: 11px;
+                color: #999;
+                margin-top: 5px;
+            }
+            
             .footer {
                 padding: 20px 30px;
                 background: #f0f0f0;
@@ -252,6 +282,10 @@
             }
             
             @media (max-width: 768px) {
+                .stats {
+                    grid-template-columns: repeat(2, 1fr);
+                }
+                
                 .header {
                     padding: 20px;
                 }
@@ -279,14 +313,22 @@
             </div>
             
             <div class="keywords-bar">
-                <div class="keywords-title">🔑 Extracted Keywords:</div>
+                <div class="keywords-title"><i class="fas fa-key"></i> Extracted Keywords:</div>
     <span class="keyword-badge">challenges</span><span class="keyword-badge">cross</span><span class="keyword-badge">cultural</span><span class="keyword-badge">psychology</span>
+            </div>
+            
+            <div class="confidence-meter">
+                <i class="fas fa-bullseye"></i><span style="font-weight: 600;">Confidence:</span>
+                <div class="confidence-bar">
+                    <div class="confidence-fill high" style="width: 100.0%;"></div>
+                </div>
+                <div class="confidence-text high">HIGH (100%)</div>
             </div>
             
             <div class="answer-section">
                 <h3><i class="fas fa-robot"></i> Generated Answer</h3>
                 <div class="answer-content">
-                    The challenges of cross-cultural psychology include the limitations of Eurocentric therapies, which may not be applicable to other cultures. For example, a counselor whose treatment focuses on individual decision making may be ineffective at helping a Chinese client with a collectivist approach to problem solving. Additionally, cultural differences in values, beliefs, and norms can affect the assessment, diagnosis, and treatment of mental health issues. Furthermore, cultural biases and stereotypes can influence the development of psychological theories and interventions, leading to a lack of cultural competence. To address these challenges, multicultural counseling and therapy aim to offer a helping role and process that uses modalities and defines goals consistent with the life experiences and cultural values of clients.  <!-- NO HIGHLIGHTING HERE -->
+                    The challenges of cross-cultural psychology include the limitations of Eurocentric therapies, which may not be applicable to other cultures. For example, a counselor whose treatment focuses on individual decision making may be ineffective at helping a Chinese client with a collectivist approach to problem solving. Additionally, cultural differences in values, beliefs, and norms can affect the assessment, diagnosis, and treatment of mental health issues. Furthermore, cultural biases and stereotypes can influence the development of psychological theories and interventions, leading to a lack of cultural competence. To address these challenges, multicultural counseling and therapy aim to offer a helping role and process that uses modalities and defines goals consistent with the life experiences and cultural values of clients.
                 </div>
             </div>
             
@@ -302,7 +344,7 @@ Thompson</span>
                 <div class="evidence-text">
                     of <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> and therefore influencing its development. They also suffered from the attitudes of White male psychologists who were not immune to the nonscientific attitudes prevalent in the society in which they DIG DEEPER 16 1 • Introduction to <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> Access for free at openstax.org
 
-by Arian   <!-- HIGHLIGHTING HERE ONLY -->
+by Arian 
                 </div>
             </div>
     
@@ -314,7 +356,7 @@ by Arian   <!-- HIGHLIGHTING HERE ONLY -->
                 <div class="evidence-text">
                     of <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> and therefore influencing its development. They also suffered from the attitudes of White male psychologists who were not immune to the nonscientific attitudes prevalent in the society in which they DIG DEEPER 16 1 • Introduction to <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> Access for free at openstax.org
 
-by Arian   <!-- HIGHLIGHTING HERE ONLY -->
+by Arian 
                 </div>
             </div>
     
@@ -326,7 +368,7 @@ by Arian   <!-- HIGHLIGHTING HERE ONLY -->
                 <div class="evidence-text">
                     of <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> and therefore influencing its development. They also suffered from the attitudes of White male psychologists who were not immune to the nonscientific attitudes prevalent in the society in which they DIG DEEPER 16 1 • Introduction to <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> Access for free at openstax.org
 
-by Arian   <!-- HIGHLIGHTING HERE ONLY -->
+by Arian 
                 </div>
             </div>
     
@@ -340,7 +382,7 @@ consequences outside of the organism</span>
                 <div class="evidence-text">
                     of <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> and therefore influencing its development. They also suffered from the attitudes of White male psychologists who were not immune to the nonscientific attitudes prevalent in the society in which they DIG DEEPER 16 1 • Introduction to <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> Access for free at openstax.org
 
-by Arian   <!-- HIGHLIGHTING HERE ONLY -->
+by Arian 
                 </div>
             </div>
     
@@ -354,7 +396,7 @@ By the end of this section</span>
                 <div class="evidence-text">
                     of <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> and therefore influencing its development. They also suffered from the attitudes of White male psychologists who were not immune to the nonscientific attitudes prevalent in the society in which they DIG DEEPER 16 1 • Introduction to <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> Access for free at openstax.org
 
-by Arian   <!-- HIGHLIGHTING HERE ONLY -->
+by Arian 
                 </div>
             </div>
     
@@ -379,7 +421,7 @@ Norenzayan, 2001). This focus on others provides a broader perspective that take
 
 a continuum. 11.8 <mark style="background-color: #ffeb3b; font-weight: bold;">cultural</mark> Understandings of Personality The culture in which you live is one of the most important environmental factors that shapes your personality. Western ideas about personality may not be applicable to other cultures. In fact, there is evidence that the strength of personality traits varies a<mark style="background-color: #ffeb3b; font-weight: bold;">cross</mark> cultures. Individualist cultures and collectivist cultures place emphasis on different basic values. People who live in individualist cultures tend to believe that independence, competition, and personal achievement are important. People who live in collectivist cultures value social harmony, respectfulness, and group needs over individual needs. There are three approaches that can be used to study personality in a <mark style="background-color: #ffeb3b; font-weight: bold;">cultural</mark> context: the <mark style="background-color: #ffeb3b; font-weight: bold;">cultural</mark>-comparative approach, the indigenous approach, and the combined approach, which incorporates both elements of both views. 11.9 Personality Assessment Personality tests are techniques designed to measure one’s personality. They are used to diagnose psychological problems as well as to screen candidates for college and employment. There are two types of personality tests: self-report inventories and projective tests. The MMPI is one of the most common self-report 11 • Summary 393
 
-FIGURE 16.20 How do your <mark style="background-color: #ffeb3b; font-weight: bold;">cultural</mark> and religious beliefs affect your attitude toward mental health treatment? (credit “top-left”: modification of work by Staffan Scherz; credit “top-left-middle”: modification of work by Alejandra Quintero Sinisterra; credit “top-right-middle”: modification of work by Pedro Ribeiro Simões; credit “top-right”: modification of work by Agustin Ruiz; credit “bottom-left”: modification of work by Czech Provincial Reconstruction Team; credit “bottom-left-middle”: modificati  <!-- HIGHLIGHTING HERE ONLY -->
+FIGURE 16.20 How do your <mark style="background-color: #ffeb3b; font-weight: bold;">cultural</mark> and religious beliefs affect your attitude toward mental health treatment? (credit “top-left”: modification of work by Staffan Scherz; credit “top-left-middle”: modification of work by Alejandra Quintero Sinisterra; credit “top-right-middle”: modification of work by Pedro Ribeiro Simões; credit “top-right”: modification of work by Agustin Ruiz; credit “bottom-left”: modification of work by Czech Provincial Reconstruction Team; credit “bottom-left-middle”: modificati
                 </div>
             </div>
             
@@ -387,14 +429,22 @@ FIGURE 16.20 How do your <mark style="background-color: #ffeb3b; font-weight: bo
                 <div class="stat-item">
                     <div class="stat-label">Sections Used</div>
                     <div class="stat-value">12</div>
+                    <div class="stat-factor">Factor: 1.00</div>
                 </div>
                 <div class="stat-item">
                     <div class="stat-label">Pages Referenced</div>
                     <div class="stat-value">12</div>
+                    <div class="stat-factor">Factor: 1.00</div>
                 </div>
                 <div class="stat-item">
-                    <div class="stat-label">Keywords Found</div>
-                    <div class="stat-value">4</div>
+                    <div class="stat-label">Answer Length</div>
+                    <div class="stat-value">833</div>
+                    <div class="stat-factor">Factor: 1.00</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Overall</div>
+                    <div class="stat-value">100%</div>
+                    <div class="stat-factor">HIGH</div>
                 </div>
             </div>
             

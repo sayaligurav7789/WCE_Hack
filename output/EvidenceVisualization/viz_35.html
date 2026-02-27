@@ -73,6 +73,45 @@
                 box-shadow: 0 2px 4px rgba(0,0,0,0.1);
             }
             
+            .confidence-meter {
+                background: #f0f0f0;
+                padding: 15px 30px;
+                border-bottom: 1px solid #e0e0e0;
+                display: flex;
+                align-items: center;
+                gap: 20px;
+                flex-wrap: wrap;
+            }
+            
+            .confidence-bar {
+                flex: 1;
+                height: 20px;
+                background: #e0e0e0;
+                border-radius: 10px;
+                overflow: hidden;
+            }
+            
+            .confidence-fill {
+                height: 100%;
+                border-radius: 10px;
+                transition: width 0.3s ease;
+            }
+            
+            .confidence-fill.high { background: linear-gradient(90deg, #4caf50, #8bc34a); }
+            .confidence-fill.medium { background: linear-gradient(90deg, #ff9800, #ffc107); }
+            .confidence-fill.low { background: linear-gradient(90deg, #f44336, #ff7043); }
+            
+            .confidence-text {
+                font-size: 18px;
+                font-weight: 600;
+                min-width: 100px;
+                text-align: center;
+            }
+            
+            .confidence-text.high { color: #4caf50; }
+            .confidence-text.medium { color: #ff9800; }
+            .confidence-text.low { color: #f44336; }
+            
             .answer-section {
                 padding: 30px;
                 background: #f8f9fa;
@@ -99,8 +138,6 @@
                 color: #444;
                 border-left: 4px solid #667eea;
             }
-            
-            /* NO mark styling for answer - it stays plain */
             
             .evidence-section {
                 padding: 30px;
@@ -153,17 +190,6 @@
                 border: 1px solid #e0e0e0;
             }
             
-            .term-badge {
-                display: inline-block;
-                background: #ffeb3b;
-                color: #333;
-                padding: 3px 10px;
-                border-radius: 15px;
-                font-size: 12px;
-                margin: 0 5px 5px 0;
-                font-weight: 500;
-            }
-            
             .evidence-text {
                 background: white;
                 padding: 15px;
@@ -213,19 +239,17 @@
             }
             
             .stats {
-                display: flex;
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
                 gap: 15px;
                 padding: 20px 30px;
                 background: white;
-                flex-wrap: wrap;
             }
             
             .stat-item {
                 background: #f8f9fa;
-                padding: 10px 20px;
+                padding: 15px;
                 border-radius: 10px;
-                flex: 1;
-                min-width: 120px;
                 text-align: center;
                 border: 1px solid #e0e0e0;
             }
@@ -242,6 +266,12 @@
                 color: #667eea;
             }
             
+            .stat-factor {
+                font-size: 11px;
+                color: #999;
+                margin-top: 5px;
+            }
+            
             .footer {
                 padding: 20px 30px;
                 background: #f0f0f0;
@@ -252,6 +282,10 @@
             }
             
             @media (max-width: 768px) {
+                .stats {
+                    grid-template-columns: repeat(2, 1fr);
+                }
+                
                 .header {
                     padding: 20px;
                 }
@@ -279,14 +313,22 @@
             </div>
             
             <div class="keywords-bar">
-                <div class="keywords-title">🔑 Extracted Keywords:</div>
+                <div class="keywords-title"><i class="fas fa-key"></i> Extracted Keywords:</div>
     <span class="keyword-badge">multicultural</span><span class="keyword-badge">psychology</span>
+            </div>
+            
+            <div class="confidence-meter">
+                <i class="fas fa-bullseye"></i><span style="font-weight: 600;">Confidence:</span>
+                <div class="confidence-bar">
+                    <div class="confidence-fill high" style="width: 100.0%;"></div>
+                </div>
+                <div class="confidence-text high">HIGH (100%)</div>
             </div>
             
             <div class="answer-section">
                 <h3><i class="fas fa-robot"></i> Generated Answer</h3>
                 <div class="answer-content">
-                    Multicultural psychology aims to develop strategies to effectively address the needs of various populations for which Eurocentric therapies have limited application. It offers a helping role and process that uses modalities and defines goals consistent with the life experiences and cultural values of clients. It strives to recognize client identities to include individual, group, and universal dimensions, advocate the use of universal and culture-specific strategies and roles in the healing process, and balances the importance of individualism and collectivism in the assessment, diagnosis, and treatment of client and client systems.  <!-- NO HIGHLIGHTING HERE -->
+                    Multicultural psychology aims to develop strategies to effectively address the needs of various populations for which Eurocentric therapies have limited application. It offers a helping role and process that uses modalities and defines goals consistent with the life experiences and cultural values of clients. It strives to recognize client identities to include individual, group, and universal dimensions, advocate the use of universal and culture-specific strategies and roles in the healing process, and balances the importance of individualism and collectivism in the assessment, diagnosis, and treatment of client and client systems.
                 </div>
             </div>
             
@@ -299,7 +341,7 @@
                     <span class="page-number">📄 Page 20</span>
                 </div>
                 <div class="evidence-text">
-                    dependence: A meta-analysis of randomized controlled trials. Alcohol and Alcoholism, 36(6), 544–552. Sue, D. W. (2001). Multidimensional facets of cultural competence. Counseling Psychologist, 29(6), 790–821. Sue, D. W. (2004). <mark style="background-color: #ffeb3b; font-weight: bold;">multicultural</mark> counseling and therapy (MCT). In J. A. Banks and C. Banks   <!-- HIGHLIGHTING HERE ONLY -->
+                    dependence: A meta-analysis of randomized controlled trials. Alcohol and Alcoholism, 36(6), 544–552. Sue, D. W. (2001). Multidimensional facets of cultural competence. Counseling Psychologist, 29(6), 790–821. Sue, D. W. (2004). <mark style="background-color: #ffeb3b; font-weight: bold;">multicultural</mark> counseling and therapy (MCT). In J. A. Banks and C. Banks 
                 </div>
             </div>
     
@@ -310,7 +352,7 @@ Thompson</span>
                     <span class="page-number">📄 Page 28</span>
                 </div>
                 <div class="evidence-text">
-                    dependence: A meta-analysis of randomized controlled trials. Alcohol and Alcoholism, 36(6), 544–552. Sue, D. W. (2001). Multidimensional facets of cultural competence. Counseling Psychologist, 29(6), 790–821. Sue, D. W. (2004). <mark style="background-color: #ffeb3b; font-weight: bold;">multicultural</mark> counseling and therapy (MCT). In J. A. Banks and C. Banks   <!-- HIGHLIGHTING HERE ONLY -->
+                    dependence: A meta-analysis of randomized controlled trials. Alcohol and Alcoholism, 36(6), 544–552. Sue, D. W. (2001). Multidimensional facets of cultural competence. Counseling Psychologist, 29(6), 790–821. Sue, D. W. (2004). <mark style="background-color: #ffeb3b; font-weight: bold;">multicultural</mark> counseling and therapy (MCT). In J. A. Banks and C. Banks 
                 </div>
             </div>
     
@@ -322,7 +364,7 @@ By the end of this section</span>
                     <span class="page-number">📄 Page 30</span>
                 </div>
                 <div class="evidence-text">
-                    dependence: A meta-analysis of randomized controlled trials. Alcohol and Alcoholism, 36(6), 544–552. Sue, D. W. (2001). Multidimensional facets of cultural competence. Counseling Psychologist, 29(6), 790–821. Sue, D. W. (2004). <mark style="background-color: #ffeb3b; font-weight: bold;">multicultural</mark> counseling and therapy (MCT). In J. A. Banks and C. Banks   <!-- HIGHLIGHTING HERE ONLY -->
+                    dependence: A meta-analysis of randomized controlled trials. Alcohol and Alcoholism, 36(6), 544–552. Sue, D. W. (2001). Multidimensional facets of cultural competence. Counseling Psychologist, 29(6), 790–821. Sue, D. W. (2004). <mark style="background-color: #ffeb3b; font-weight: bold;">multicultural</mark> counseling and therapy (MCT). In J. A. Banks and C. Banks 
                 </div>
             </div>
     
@@ -332,7 +374,7 @@ By the end of this section</span>
                     <span class="page-number">📄 Page 317</span>
                 </div>
                 <div class="evidence-text">
-                    dependence: A meta-analysis of randomized controlled trials. Alcohol and Alcoholism, 36(6), 544–552. Sue, D. W. (2001). Multidimensional facets of cultural competence. Counseling Psychologist, 29(6), 790–821. Sue, D. W. (2004). <mark style="background-color: #ffeb3b; font-weight: bold;">multicultural</mark> counseling and therapy (MCT). In J. A. Banks and C. Banks   <!-- HIGHLIGHTING HERE ONLY -->
+                    dependence: A meta-analysis of randomized controlled trials. Alcohol and Alcoholism, 36(6), 544–552. Sue, D. W. (2001). Multidimensional facets of cultural competence. Counseling Psychologist, 29(6), 790–821. Sue, D. W. (2004). <mark style="background-color: #ffeb3b; font-weight: bold;">multicultural</mark> counseling and therapy (MCT). In J. A. Banks and C. Banks 
                 </div>
             </div>
     
@@ -342,7 +384,7 @@ By the end of this section</span>
                     <span class="page-number">📄 Page 398</span>
                 </div>
                 <div class="evidence-text">
-                    dependence: A meta-analysis of randomized controlled trials. Alcohol and Alcoholism, 36(6), 544–552. Sue, D. W. (2001). Multidimensional facets of cultural competence. Counseling Psychologist, 29(6), 790–821. Sue, D. W. (2004). <mark style="background-color: #ffeb3b; font-weight: bold;">multicultural</mark> counseling and therapy (MCT). In J. A. Banks and C. Banks   <!-- HIGHLIGHTING HERE ONLY -->
+                    dependence: A meta-analysis of randomized controlled trials. Alcohol and Alcoholism, 36(6), 544–552. Sue, D. W. (2001). Multidimensional facets of cultural competence. Counseling Psychologist, 29(6), 790–821. Sue, D. W. (2004). <mark style="background-color: #ffeb3b; font-weight: bold;">multicultural</mark> counseling and therapy (MCT). In J. A. Banks and C. Banks 
                 </div>
             </div>
     
@@ -367,7 +409,7 @@ Endler, J. A. (1986). Natural Selection in the Wild. Princeton University Press.
 
 LINK TO LEARNING Listen to a podcast about the influence of an African American's <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> research on the historic Brown v. Board of Education civil rights case (http://openstax.org/l/crogers2) to learn more. The American Psychological Association has several ethnically based organizations for professional psychologists that facilitate interactions among members. Since psychologists belonging to specific ethnic groups or cultures have the most interest in studying the <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> of their communities, these organizations provide an opportunity for the growth of research on the interplay between culture and <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark>. WOMEN IN <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> Although rarely given credit, women have been contributing to <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> since its inception as a field of study. In 1894, Margaret Floy Washburn was the first woman awarded the doctoral degree in <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark>. She wrote The Animal Mind: A Textbook of Comparative <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark>, and it was the standard in the field for over 20 years. In the mid 1890s, Mary Whiton Calkins completed all requirements toward the PhD in <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark>, but Harvard University refused to award her that degree because she was a woman. She had been taught and mentored by William James, who tried and failed to convince Harvard to award her the doctoral degree. Her memory research studied primacy and recency (Madigan & O’Hara, 1992), and she also wrote about how structuralism and functionalism both explained self-<mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> (Calkins, 1906). Another influential woman, Mary Cover Jones, conducted a study she considered to be a sequel to John B. Watson’s study of Little Albert (you’ll learn about this study in the chapter on Learning). Jones unconditioned fear in Little Peter, who had been afraid of rabbits (Jones, 1924). Ethnic minority women contributing to the field of <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> include Martha Bernal and Inez Beverly Prosser; their studies were related to education. Bernal, the first Latina to earn her doctoral degree in <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> (1962) conducted much of her research with Mexican American children. Prosser was the first African American woman awarded the PhD in 1933 at the University of Cincinnati (Benjamin, Henry, & McMahon, 2005). 1.3 Contemporary <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> LEARNING OBJECTIVES By the end of this section, you will be able to: • Appreciate the diversity of interests and foci within <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> • Understand basic interests and applications in each of the described areas of <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> • Demonstrate familiarity with some of the major concepts or important figures in each of the described areas of <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> Contemporary <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> is a diverse field that is influenced
 
-2002). Nash was the subject of the 2001 movie  <!-- HIGHLIGHTING HERE ONLY -->
+2002). Nash was the subject of the 2001 movie
                 </div>
             </div>
             
@@ -375,14 +417,22 @@ LINK TO LEARNING Listen to a podcast about the influence of an African American'
                 <div class="stat-item">
                     <div class="stat-label">Sections Used</div>
                     <div class="stat-value">11</div>
+                    <div class="stat-factor">Factor: 1.00</div>
                 </div>
                 <div class="stat-item">
                     <div class="stat-label">Pages Referenced</div>
                     <div class="stat-value">12</div>
+                    <div class="stat-factor">Factor: 1.00</div>
                 </div>
                 <div class="stat-item">
-                    <div class="stat-label">Keywords Found</div>
-                    <div class="stat-value">2</div>
+                    <div class="stat-label">Answer Length</div>
+                    <div class="stat-value">640</div>
+                    <div class="stat-factor">Factor: 1.00</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Overall</div>
+                    <div class="stat-value">100%</div>
+                    <div class="stat-factor">HIGH</div>
                 </div>
             </div>
             

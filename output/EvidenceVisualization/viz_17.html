@@ -73,6 +73,45 @@
                 box-shadow: 0 2px 4px rgba(0,0,0,0.1);
             }
             
+            .confidence-meter {
+                background: #f0f0f0;
+                padding: 15px 30px;
+                border-bottom: 1px solid #e0e0e0;
+                display: flex;
+                align-items: center;
+                gap: 20px;
+                flex-wrap: wrap;
+            }
+            
+            .confidence-bar {
+                flex: 1;
+                height: 20px;
+                background: #e0e0e0;
+                border-radius: 10px;
+                overflow: hidden;
+            }
+            
+            .confidence-fill {
+                height: 100%;
+                border-radius: 10px;
+                transition: width 0.3s ease;
+            }
+            
+            .confidence-fill.high { background: linear-gradient(90deg, #4caf50, #8bc34a); }
+            .confidence-fill.medium { background: linear-gradient(90deg, #ff9800, #ffc107); }
+            .confidence-fill.low { background: linear-gradient(90deg, #f44336, #ff7043); }
+            
+            .confidence-text {
+                font-size: 18px;
+                font-weight: 600;
+                min-width: 100px;
+                text-align: center;
+            }
+            
+            .confidence-text.high { color: #4caf50; }
+            .confidence-text.medium { color: #ff9800; }
+            .confidence-text.low { color: #f44336; }
+            
             .answer-section {
                 padding: 30px;
                 background: #f8f9fa;
@@ -99,8 +138,6 @@
                 color: #444;
                 border-left: 4px solid #667eea;
             }
-            
-            /* NO mark styling for answer - it stays plain */
             
             .evidence-section {
                 padding: 30px;
@@ -153,17 +190,6 @@
                 border: 1px solid #e0e0e0;
             }
             
-            .term-badge {
-                display: inline-block;
-                background: #ffeb3b;
-                color: #333;
-                padding: 3px 10px;
-                border-radius: 15px;
-                font-size: 12px;
-                margin: 0 5px 5px 0;
-                font-weight: 500;
-            }
-            
             .evidence-text {
                 background: white;
                 padding: 15px;
@@ -213,19 +239,17 @@
             }
             
             .stats {
-                display: flex;
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
                 gap: 15px;
                 padding: 20px 30px;
                 background: white;
-                flex-wrap: wrap;
             }
             
             .stat-item {
                 background: #f8f9fa;
-                padding: 10px 20px;
+                padding: 15px;
                 border-radius: 10px;
-                flex: 1;
-                min-width: 120px;
                 text-align: center;
                 border: 1px solid #e0e0e0;
             }
@@ -242,6 +266,12 @@
                 color: #667eea;
             }
             
+            .stat-factor {
+                font-size: 11px;
+                color: #999;
+                margin-top: 5px;
+            }
+            
             .footer {
                 padding: 20px 30px;
                 background: #f0f0f0;
@@ -252,6 +282,10 @@
             }
             
             @media (max-width: 768px) {
+                .stats {
+                    grid-template-columns: repeat(2, 1fr);
+                }
+                
                 .header {
                     padding: 20px;
                 }
@@ -279,8 +313,16 @@
             </div>
             
             <div class="keywords-bar">
-                <div class="keywords-title">🔑 Extracted Keywords:</div>
+                <div class="keywords-title"><i class="fas fa-key"></i> Extracted Keywords:</div>
     <span class="keyword-badge">skinner</span><span class="keyword-badge">contributions</span><span class="keyword-badge">behaviorism</span>
+            </div>
+            
+            <div class="confidence-meter">
+                <i class="fas fa-bullseye"></i><span style="font-weight: 600;">Confidence:</span>
+                <div class="confidence-bar">
+                    <div class="confidence-fill high" style="width: 100.0%;"></div>
+                </div>
+                <div class="confidence-text high">HIGH (100%)</div>
             </div>
             
             <div class="answer-section">
@@ -295,7 +337,7 @@
 5. Inventing the teaching machine, which uses operant conditioning principles to influence students' behavior and learning.
 6. Conducting experiments that demonstrated the power of variable-ratio reinforcement schedules in maintaining behavior, even during long periods without reinforcement.
 
-Overall, Skinner's work had a significant influence on the development of behaviorism and continues to be relevant in fields such as education and psychology.  <!-- NO HIGHLIGHTING HERE -->
+Overall, Skinner's work had a significant influence on the development of behaviorism and continues to be relevant in fields such as education and psychology.
                 </div>
             </div>
             
@@ -308,7 +350,7 @@ Overall, Skinner's work had a significant influence on the development of behavi
                     <span class="page-number">📄 Page 25</span>
                 </div>
                 <div class="evidence-text">
-                    The <mark style="background-color: #ffeb3b; font-weight: bold;">skinner</mark> box is a chamber that isolates the subject from the external environment and has a behavior indicator such as a lever or a button. When the animal pushes the button or lever, the box is able to deliver a positive reinforcement of the behavior (such as food) or a punishment (such as a noi  <!-- HIGHLIGHTING HERE ONLY -->
+                    The <mark style="background-color: #ffeb3b; font-weight: bold;">skinner</mark> box is a chamber that isolates the subject from the external environment and has a behavior indicator such as a lever or a button. When the animal pushes the button or lever, the box is able to deliver a positive reinforcement of the behavior (such as food) or a punishment (such as a noi
                 </div>
             </div>
     
@@ -318,7 +360,7 @@ Overall, Skinner's work had a significant influence on the development of behavi
                     <span class="page-number">📄 Page 26</span>
                 </div>
                 <div class="evidence-text">
-                    The <mark style="background-color: #ffeb3b; font-weight: bold;">skinner</mark> box is a chamber that isolates the subject from the external environment and has a behavior indicator such as a lever or a button. When the animal pushes the button or lever, the box is able to deliver a positive reinforcement of the behavior (such as food) or a punishment (such as a noi  <!-- HIGHLIGHTING HERE ONLY -->
+                    The <mark style="background-color: #ffeb3b; font-weight: bold;">skinner</mark> box is a chamber that isolates the subject from the external environment and has a behavior indicator such as a lever or a button. When the animal pushes the button or lever, the box is able to deliver a positive reinforcement of the behavior (such as food) or a punishment (such as a noi
                 </div>
             </div>
     
@@ -330,7 +372,7 @@ consequences outside of the organism</span>
                     <span class="page-number">📄 Page 202</span>
                 </div>
                 <div class="evidence-text">
-                    The <mark style="background-color: #ffeb3b; font-weight: bold;">skinner</mark> box is a chamber that isolates the subject from the external environment and has a behavior indicator such as a lever or a button. When the animal pushes the button or lever, the box is able to deliver a positive reinforcement of the behavior (such as food) or a punishment (such as a noi  <!-- HIGHLIGHTING HERE ONLY -->
+                    The <mark style="background-color: #ffeb3b; font-weight: bold;">skinner</mark> box is a chamber that isolates the subject from the external environment and has a behavior indicator such as a lever or a button. When the animal pushes the button or lever, the box is able to deliver a positive reinforcement of the behavior (such as food) or a punishment (such as a noi
                 </div>
             </div>
     
@@ -341,7 +383,7 @@ Psychologist B</span>
                     <span class="page-number">📄 Page 205</span>
                 </div>
                 <div class="evidence-text">
-                    The <mark style="background-color: #ffeb3b; font-weight: bold;">skinner</mark> box is a chamber that isolates the subject from the external environment and has a behavior indicator such as a lever or a button. When the animal pushes the button or lever, the box is able to deliver a positive reinforcement of the behavior (such as food) or a punishment (such as a noi  <!-- HIGHLIGHTING HERE ONLY -->
+                    The <mark style="background-color: #ffeb3b; font-weight: bold;">skinner</mark> box is a chamber that isolates the subject from the external environment and has a behavior indicator such as a lever or a button. When the animal pushes the button or lever, the box is able to deliver a positive reinforcement of the behavior (such as food) or a punishment (such as a noi
                 </div>
             </div>
     
@@ -351,7 +393,7 @@ Psychologist B</span>
                     <span class="page-number">📄 Page 206</span>
                 </div>
                 <div class="evidence-text">
-                    The <mark style="background-color: #ffeb3b; font-weight: bold;">skinner</mark> box is a chamber that isolates the subject from the external environment and has a behavior indicator such as a lever or a button. When the animal pushes the button or lever, the box is able to deliver a positive reinforcement of the behavior (such as food) or a punishment (such as a noi  <!-- HIGHLIGHTING HERE ONLY -->
+                    The <mark style="background-color: #ffeb3b; font-weight: bold;">skinner</mark> box is a chamber that isolates the subject from the external environment and has a behavior indicator such as a lever or a button. When the animal pushes the button or lever, the box is able to deliver a positive reinforcement of the behavior (such as food) or a punishment (such as a noi
                 </div>
             </div>
     
@@ -376,7 +418,7 @@ oncologist. <mark style="background-color: #ffeb3b; font-weight: bold;">behavior
 
 patient). Gambling and the Brain <mark style="background-color: #ffeb3b; font-weight: bold;">skinner</mark> (1953) stated, “If the gambling establishment cannot persuade a patron to turn over money with no return, it may achieve the same effect by returning part of the patron's money on a variable-ratio schedule” (p. 397). <mark style="background-color: #ffeb3b; font-weight: bold;">skinner</mark> uses gambling as an example of the power of the variable-ratio reinforcement schedule for maintaining behavior even during long periods without any reinforcement. In fact, <mark style="background-color: #ffeb3b; font-weight: bold;">skinner</mark> was so confident in his knowledge of gambling addiction that he even claimed he could turn a pigeon into a pathological gambler (“<mark style="background-color: #ffeb3b; font-weight: bold;">skinner</mark>’s Utopia,” 1971). It is indeed true that variable-ratio schedules keep behavior quite persistent—just imagine the frequency of a child’s tantrums if a parent gives in even once to the behavior. The occasional reward makes it almost impossible to stop the behavior. Recent research in rats has failed to support <mark style="background-color: #ffeb3b; font-weight: bold;">skinner</mark>’s idea that training on variable-ratio schedules alone causes CONNECT THE CONCEPTS 200 6 • Learning Access for free at openstax.org
 
-during the early 20th century at Johns Hopkins University (Figure 1.5). While Wundt and James were concerned with understanding conscious experience, Watson thought that the study of consciousness was flawed. Because he believed that objective analysis of the mind was impossible, Watson preferred to focus directly on observable behavior and try to bring that behavior under control. Watson was a major proponent of shifting the focus of psychology from the mind to behavior, and this approach of observing and controlling behavior came to be known as <mark style="background-color: #ffeb3b; font-weight: bold;">behaviorism</mark>. A major object of study by behaviorists was learned behavior and its interaction with inborn qualities of t  <!-- HIGHLIGHTING HERE ONLY -->
+during the early 20th century at Johns Hopkins University (Figure 1.5). While Wundt and James were concerned with understanding conscious experience, Watson thought that the study of consciousness was flawed. Because he believed that objective analysis of the mind was impossible, Watson preferred to focus directly on observable behavior and try to bring that behavior under control. Watson was a major proponent of shifting the focus of psychology from the mind to behavior, and this approach of observing and controlling behavior came to be known as <mark style="background-color: #ffeb3b; font-weight: bold;">behaviorism</mark>. A major object of study by behaviorists was learned behavior and its interaction with inborn qualities of t
                 </div>
             </div>
             
@@ -384,14 +426,22 @@ during the early 20th century at Johns Hopkins University (Figure 1.5). While Wu
                 <div class="stat-item">
                     <div class="stat-label">Sections Used</div>
                     <div class="stat-value">8</div>
+                    <div class="stat-factor">Factor: 1.00</div>
                 </div>
                 <div class="stat-item">
                     <div class="stat-label">Pages Referenced</div>
                     <div class="stat-value">10</div>
+                    <div class="stat-factor">Factor: 1.00</div>
                 </div>
                 <div class="stat-item">
-                    <div class="stat-label">Keywords Found</div>
-                    <div class="stat-value">3</div>
+                    <div class="stat-label">Answer Length</div>
+                    <div class="stat-value">1146</div>
+                    <div class="stat-factor">Factor: 1.00</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Overall</div>
+                    <div class="stat-value">100%</div>
+                    <div class="stat-factor">HIGH</div>
                 </div>
             </div>
             

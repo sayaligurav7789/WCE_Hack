@@ -73,6 +73,45 @@
                 box-shadow: 0 2px 4px rgba(0,0,0,0.1);
             }
             
+            .confidence-meter {
+                background: #f0f0f0;
+                padding: 15px 30px;
+                border-bottom: 1px solid #e0e0e0;
+                display: flex;
+                align-items: center;
+                gap: 20px;
+                flex-wrap: wrap;
+            }
+            
+            .confidence-bar {
+                flex: 1;
+                height: 20px;
+                background: #e0e0e0;
+                border-radius: 10px;
+                overflow: hidden;
+            }
+            
+            .confidence-fill {
+                height: 100%;
+                border-radius: 10px;
+                transition: width 0.3s ease;
+            }
+            
+            .confidence-fill.high { background: linear-gradient(90deg, #4caf50, #8bc34a); }
+            .confidence-fill.medium { background: linear-gradient(90deg, #ff9800, #ffc107); }
+            .confidence-fill.low { background: linear-gradient(90deg, #f44336, #ff7043); }
+            
+            .confidence-text {
+                font-size: 18px;
+                font-weight: 600;
+                min-width: 100px;
+                text-align: center;
+            }
+            
+            .confidence-text.high { color: #4caf50; }
+            .confidence-text.medium { color: #ff9800; }
+            .confidence-text.low { color: #f44336; }
+            
             .answer-section {
                 padding: 30px;
                 background: #f8f9fa;
@@ -99,8 +138,6 @@
                 color: #444;
                 border-left: 4px solid #667eea;
             }
-            
-            /* NO mark styling for answer - it stays plain */
             
             .evidence-section {
                 padding: 30px;
@@ -153,17 +190,6 @@
                 border: 1px solid #e0e0e0;
             }
             
-            .term-badge {
-                display: inline-block;
-                background: #ffeb3b;
-                color: #333;
-                padding: 3px 10px;
-                border-radius: 15px;
-                font-size: 12px;
-                margin: 0 5px 5px 0;
-                font-weight: 500;
-            }
-            
             .evidence-text {
                 background: white;
                 padding: 15px;
@@ -213,19 +239,17 @@
             }
             
             .stats {
-                display: flex;
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
                 gap: 15px;
                 padding: 20px 30px;
                 background: white;
-                flex-wrap: wrap;
             }
             
             .stat-item {
                 background: #f8f9fa;
-                padding: 10px 20px;
+                padding: 15px;
                 border-radius: 10px;
-                flex: 1;
-                min-width: 120px;
                 text-align: center;
                 border: 1px solid #e0e0e0;
             }
@@ -242,6 +266,12 @@
                 color: #667eea;
             }
             
+            .stat-factor {
+                font-size: 11px;
+                color: #999;
+                margin-top: 5px;
+            }
+            
             .footer {
                 padding: 20px 30px;
                 background: #f0f0f0;
@@ -252,6 +282,10 @@
             }
             
             @media (max-width: 768px) {
+                .stats {
+                    grid-template-columns: repeat(2, 1fr);
+                }
+                
                 .header {
                     padding: 20px;
                 }
@@ -279,14 +313,22 @@
             </div>
             
             <div class="keywords-bar">
-                <div class="keywords-title">🔑 Extracted Keywords:</div>
+                <div class="keywords-title"><i class="fas fa-key"></i> Extracted Keywords:</div>
     <span class="keyword-badge">cognitive</span><span class="keyword-badge">revolution</span><span class="keyword-badge">psychology</span>
+            </div>
+            
+            <div class="confidence-meter">
+                <i class="fas fa-bullseye"></i><span style="font-weight: 600;">Confidence:</span>
+                <div class="confidence-bar">
+                    <div class="confidence-fill high" style="width: 100.0%;"></div>
+                </div>
+                <div class="confidence-text high">HIGH (100%)</div>
             </div>
             
             <div class="answer-section">
                 <h3><i class="fas fa-robot"></i> Generated Answer</h3>
                 <div class="answer-content">
-                    The cognitive revolution in psychology refers to a shift in focus from behaviorism to the study of mental processes, such as thoughts, perceptions, and consciousness. This movement, which began in the 1950s, was influenced by new disciplinary perspectives in linguistics, neuroscience, and computer science. It redirected attention to the individual human as a whole, and as a conscious and self-aware being. The cognitive revolution helped reestablish lines of communication between European psychologists and their American counterparts, and it led to an interdisciplinary approach often referred to as the cognitive sciences. This perspective has had a significant impact on modern-day psychology, with cognitive psychologists studying topics such as attention, problem-solving, language, and memory.  <!-- NO HIGHLIGHTING HERE -->
+                    The cognitive revolution in psychology refers to a shift in focus from behaviorism to the study of mental processes, such as thoughts, perceptions, and consciousness. This movement, which began in the 1950s, was influenced by new disciplinary perspectives in linguistics, neuroscience, and computer science. It redirected attention to the individual human as a whole, and as a conscious and self-aware being. The cognitive revolution helped reestablish lines of communication between European psychologists and their American counterparts, and it led to an interdisciplinary approach often referred to as the cognitive sciences. This perspective has had a significant impact on modern-day psychology, with cognitive psychologists studying topics such as attention, problem-solving, language, and memory.
                 </div>
             </div>
             
@@ -299,7 +341,7 @@
                     <span class="page-number">📄 Page 20</span>
                 </div>
                 <div class="evidence-text">
-                    LINK TO LEARNING View a brief video of Carl Rogers describing his therapeutic approach (http://openstax.org/l/crogers1) to learn more. The <mark style="background-color: #ffeb3b; font-weight: bold;">cognitive</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">revolution</mark> Behaviorism’s emphasis on objectivity and focus on external behavior had pulled psychologists’ attention away from the mind for a prolonged   <!-- HIGHLIGHTING HERE ONLY -->
+                    LINK TO LEARNING View a brief video of Carl Rogers describing his therapeutic approach (http://openstax.org/l/crogers1) to learn more. The <mark style="background-color: #ffeb3b; font-weight: bold;">cognitive</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">revolution</mark> Behaviorism’s emphasis on objectivity and focus on external behavior had pulled psychologists’ attention away from the mind for a prolonged 
                 </div>
             </div>
     
@@ -309,7 +351,7 @@
                     <span class="page-number">📄 Page 28</span>
                 </div>
                 <div class="evidence-text">
-                    LINK TO LEARNING View a brief video of Carl Rogers describing his therapeutic approach (http://openstax.org/l/crogers1) to learn more. The <mark style="background-color: #ffeb3b; font-weight: bold;">cognitive</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">revolution</mark> Behaviorism’s emphasis on objectivity and focus on external behavior had pulled psychologists’ attention away from the mind for a prolonged   <!-- HIGHLIGHTING HERE ONLY -->
+                    LINK TO LEARNING View a brief video of Carl Rogers describing his therapeutic approach (http://openstax.org/l/crogers1) to learn more. The <mark style="background-color: #ffeb3b; font-weight: bold;">cognitive</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">revolution</mark> Behaviorism’s emphasis on objectivity and focus on external behavior had pulled psychologists’ attention away from the mind for a prolonged 
                 </div>
             </div>
     
@@ -319,7 +361,7 @@
                     <span class="page-number">📄 Page 33</span>
                 </div>
                 <div class="evidence-text">
-                    LINK TO LEARNING View a brief video of Carl Rogers describing his therapeutic approach (http://openstax.org/l/crogers1) to learn more. The <mark style="background-color: #ffeb3b; font-weight: bold;">cognitive</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">revolution</mark> Behaviorism’s emphasis on objectivity and focus on external behavior had pulled psychologists’ attention away from the mind for a prolonged   <!-- HIGHLIGHTING HERE ONLY -->
+                    LINK TO LEARNING View a brief video of Carl Rogers describing his therapeutic approach (http://openstax.org/l/crogers1) to learn more. The <mark style="background-color: #ffeb3b; font-weight: bold;">cognitive</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">revolution</mark> Behaviorism’s emphasis on objectivity and focus on external behavior had pulled psychologists’ attention away from the mind for a prolonged 
                 </div>
             </div>
     
@@ -329,7 +371,7 @@
                     <span class="page-number">📄 Page 225</span>
                 </div>
                 <div class="evidence-text">
-                    LINK TO LEARNING View a brief video of Carl Rogers describing his therapeutic approach (http://openstax.org/l/crogers1) to learn more. The <mark style="background-color: #ffeb3b; font-weight: bold;">cognitive</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">revolution</mark> Behaviorism’s emphasis on objectivity and focus on external behavior had pulled psychologists’ attention away from the mind for a prolonged   <!-- HIGHLIGHTING HERE ONLY -->
+                    LINK TO LEARNING View a brief video of Carl Rogers describing his therapeutic approach (http://openstax.org/l/crogers1) to learn more. The <mark style="background-color: #ffeb3b; font-weight: bold;">cognitive</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">revolution</mark> Behaviorism’s emphasis on objectivity and focus on external behavior had pulled psychologists’ attention away from the mind for a prolonged 
                 </div>
             </div>
     
@@ -340,7 +382,7 @@ itself</span>
                     <span class="page-number">📄 Page 227</span>
                 </div>
                 <div class="evidence-text">
-                    LINK TO LEARNING View a brief video of Carl Rogers describing his therapeutic approach (http://openstax.org/l/crogers1) to learn more. The <mark style="background-color: #ffeb3b; font-weight: bold;">cognitive</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">revolution</mark> Behaviorism’s emphasis on objectivity and focus on external behavior had pulled psychologists’ attention away from the mind for a prolonged   <!-- HIGHLIGHTING HERE ONLY -->
+                    LINK TO LEARNING View a brief video of Carl Rogers describing his therapeutic approach (http://openstax.org/l/crogers1) to learn more. The <mark style="background-color: #ffeb3b; font-weight: bold;">cognitive</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">revolution</mark> Behaviorism’s emphasis on objectivity and focus on external behavior had pulled psychologists’ attention away from the mind for a prolonged 
                 </div>
             </div>
     
@@ -359,7 +401,7 @@ Vol. 1 Personality theories and models. Sage. Michalski, D., Kohout, J., Wichers
 
 solutions. In adolescence, a renewed egocentrism occurs. For example, a 15-year-old with a very small pimple on her face might think it is huge and incredibly visible, under the mistaken impression that others must share her perceptions. Beyond Formal Operational Thought As with other major contributors of theories of development, several of Piaget’s ideas have come under criticism based on the results of further research. For example, several contemporary studies support a model of development that is more continuous than Piaget’s discrete stages (Courage & Howe, 2002; Siegler, 2005, 2006). Many others suggest that children reach <mark style="background-color: #ffeb3b; font-weight: bold;">cognitive</mark> milestones earlier than Piaget describes (Baillargeon, 2004; de Hevia & Spelke, 2010). According to Piaget, the highest level of <mark style="background-color: #ffeb3b; font-weight: bold;">cognitive</mark> development is formal operational thought, which develops between 11 and 20 years old. However, many developmental psychologists disagree with Piaget, suggesting a fifth stage of <mark style="background-color: #ffeb3b; font-weight: bold;">cognitive</mark> development, known as the postformal stage (Basseches, 1984; Commons & Bresette, 2006; Sinnott, 1998). In postformal thinking, decisions are made based on situations and circumstances, and logic is integrated with emotion as adults develop principles that depend on contexts. One way that we can see the difference between an adult in postformal thought and an adolescent in formal operations is in terms of how they handle emotionally charged issues. It seems that once we reach adulthood our problem solving abilities change: As we attempt to solve problems, we tend to think more deeply about many areas of our lives, such as relationships, work, and politics (Labouvie-Vief & Diehl, 1999). Because of this, postformal thinkers are able to draw on past experiences to help them solve new problems. Problem-solving strategies using postformal thought vary, depending on the situation. What does this mean? Adults can recognize, for example, that what seems to be an ideal solution to a problem at work involving a disagreement with a colleague may not be the best solution to a disagreement with a significant other. Neuroconstructivism The genetic environmental correlation you’ve learned about concerning the bidirectional influence of genes and the environment has been explored in more recent theories (Newcombe, 2011). One such theory, neuroconstructivism, suggests that neural brain development influences <mark style="background-color: #ffeb3b; font-weight: bold;">cognitive</mark> development. Experiences that a child encounters can impact or change the way that neural pathways develop in response to the environment. An individual’s behavior is based on how one understands the world. There is interaction between neural and <mark style="background-color: #ffeb3b; font-weight: bold;">cognitive</mark> networks at and
 
-your judgment representative sample subset of the population that accurately represents the general population role schema set of expectations that define the behaviors of a person occupying a particular role schema (plural = schemata) mental construct consisting of a cluster or collection of related concepts semantics process by which we derive meaning from morphemes and words standard deviation measure of variability that describes the difference between a set of scores and their mean standardization method of testing in which administration, scoring, and interpretation of results are consistent syntax manner by which words are organized into sentences trial and error problem-solving strategy in which multiple solutions are attempted until the correct one is found triarchic theory of intelligence Sternberg’s theory of intelligence; three facets of intelligence: practical, creative, and analytical working backwards heuristic in which you begin to solve a problem by focus  <!-- HIGHLIGHTING HERE ONLY -->
+your judgment representative sample subset of the population that accurately represents the general population role schema set of expectations that define the behaviors of a person occupying a particular role schema (plural = schemata) mental construct consisting of a cluster or collection of related concepts semantics process by which we derive meaning from morphemes and words standard deviation measure of variability that describes the difference between a set of scores and their mean standardization method of testing in which administration, scoring, and interpretation of results are consistent syntax manner by which words are organized into sentences trial and error problem-solving strategy in which multiple solutions are attempted until the correct one is found triarchic theory of intelligence Sternberg’s theory of intelligence; three facets of intelligence: practical, creative, and analytical working backwards heuristic in which you begin to solve a problem by focus
                 </div>
             </div>
             
@@ -367,14 +409,22 @@ your judgment representative sample subset of the population that accurately rep
                 <div class="stat-item">
                     <div class="stat-label">Sections Used</div>
                     <div class="stat-value">11</div>
+                    <div class="stat-factor">Factor: 1.00</div>
                 </div>
                 <div class="stat-item">
                     <div class="stat-label">Pages Referenced</div>
                     <div class="stat-value">12</div>
+                    <div class="stat-factor">Factor: 1.00</div>
                 </div>
                 <div class="stat-item">
-                    <div class="stat-label">Keywords Found</div>
-                    <div class="stat-value">3</div>
+                    <div class="stat-label">Answer Length</div>
+                    <div class="stat-value">803</div>
+                    <div class="stat-factor">Factor: 1.00</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Overall</div>
+                    <div class="stat-value">100%</div>
+                    <div class="stat-factor">HIGH</div>
                 </div>
             </div>
             

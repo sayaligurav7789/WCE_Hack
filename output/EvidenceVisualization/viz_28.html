@@ -73,6 +73,45 @@
                 box-shadow: 0 2px 4px rgba(0,0,0,0.1);
             }
             
+            .confidence-meter {
+                background: #f0f0f0;
+                padding: 15px 30px;
+                border-bottom: 1px solid #e0e0e0;
+                display: flex;
+                align-items: center;
+                gap: 20px;
+                flex-wrap: wrap;
+            }
+            
+            .confidence-bar {
+                flex: 1;
+                height: 20px;
+                background: #e0e0e0;
+                border-radius: 10px;
+                overflow: hidden;
+            }
+            
+            .confidence-fill {
+                height: 100%;
+                border-radius: 10px;
+                transition: width 0.3s ease;
+            }
+            
+            .confidence-fill.high { background: linear-gradient(90deg, #4caf50, #8bc34a); }
+            .confidence-fill.medium { background: linear-gradient(90deg, #ff9800, #ffc107); }
+            .confidence-fill.low { background: linear-gradient(90deg, #f44336, #ff7043); }
+            
+            .confidence-text {
+                font-size: 18px;
+                font-weight: 600;
+                min-width: 100px;
+                text-align: center;
+            }
+            
+            .confidence-text.high { color: #4caf50; }
+            .confidence-text.medium { color: #ff9800; }
+            .confidence-text.low { color: #f44336; }
+            
             .answer-section {
                 padding: 30px;
                 background: #f8f9fa;
@@ -99,8 +138,6 @@
                 color: #444;
                 border-left: 4px solid #667eea;
             }
-            
-            /* NO mark styling for answer - it stays plain */
             
             .evidence-section {
                 padding: 30px;
@@ -153,17 +190,6 @@
                 border: 1px solid #e0e0e0;
             }
             
-            .term-badge {
-                display: inline-block;
-                background: #ffeb3b;
-                color: #333;
-                padding: 3px 10px;
-                border-radius: 15px;
-                font-size: 12px;
-                margin: 0 5px 5px 0;
-                font-weight: 500;
-            }
-            
             .evidence-text {
                 background: white;
                 padding: 15px;
@@ -213,19 +239,17 @@
             }
             
             .stats {
-                display: flex;
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
                 gap: 15px;
                 padding: 20px 30px;
                 background: white;
-                flex-wrap: wrap;
             }
             
             .stat-item {
                 background: #f8f9fa;
-                padding: 10px 20px;
+                padding: 15px;
                 border-radius: 10px;
-                flex: 1;
-                min-width: 120px;
                 text-align: center;
                 border: 1px solid #e0e0e0;
             }
@@ -242,6 +266,12 @@
                 color: #667eea;
             }
             
+            .stat-factor {
+                font-size: 11px;
+                color: #999;
+                margin-top: 5px;
+            }
+            
             .footer {
                 padding: 20px 30px;
                 background: #f0f0f0;
@@ -252,6 +282,10 @@
             }
             
             @media (max-width: 768px) {
+                .stats {
+                    grid-template-columns: repeat(2, 1fr);
+                }
+                
                 .header {
                     padding: 20px;
                 }
@@ -279,8 +313,16 @@
             </div>
             
             <div class="keywords-bar">
-                <div class="keywords-title">🔑 Extracted Keywords:</div>
+                <div class="keywords-title"><i class="fas fa-key"></i> Extracted Keywords:</div>
     <span class="keyword-badge">role</span><span class="keyword-badge">neurotransmitters</span><span class="keyword-badge">psychology</span>
+            </div>
+            
+            <div class="confidence-meter">
+                <i class="fas fa-bullseye"></i><span style="font-weight: 600;">Confidence:</span>
+                <div class="confidence-bar">
+                    <div class="confidence-fill high" style="width: 100.0%;"></div>
+                </div>
+                <div class="confidence-text high">HIGH (100%)</div>
             </div>
             
             <div class="answer-section">
@@ -296,7 +338,7 @@
 * Norepinephrine: heart, intestines, alertness, increased arousal, and suppressed appetite
 * Serotonin: mood, sleep, modulated mood, and suppressed appetite
 
-Imbalances in one or more neurotransmitter systems are associated with psychological disorders such as depression and schizophrenia. Psychotropic medications can help improve the symptoms associated with these disorders by restoring neurotransmitter balance.  <!-- NO HIGHLIGHTING HERE -->
+Imbalances in one or more neurotransmitter systems are associated with psychological disorders such as depression and schizophrenia. Psychotropic medications can help improve the symptoms associated with these disorders by restoring neurotransmitter balance.
                 </div>
             </div>
             
@@ -309,7 +351,7 @@ Imbalances in one or more neurotransmitter systems are associated with psycholog
                     <span class="page-number">📄 Page 90</span>
                 </div>
                 <div class="evidence-text">
-                    <mark style="background-color: #ffeb3b; font-weight: bold;">neurotransmitters</mark> and Drugs There are several different types of <mark style="background-color: #ffeb3b; font-weight: bold;">neurotransmitters</mark> released by different neurons, and we can speak in broad terms about the kinds of functions associated with different <mark style="background-color: #ffeb3b; font-weight: bold;">neurotransmitters</mark> (Table 3.1). Much of what psychologists know about the functions of neurotransmit  <!-- HIGHLIGHTING HERE ONLY -->
+                    <mark style="background-color: #ffeb3b; font-weight: bold;">neurotransmitters</mark> and Drugs There are several different types of <mark style="background-color: #ffeb3b; font-weight: bold;">neurotransmitters</mark> released by different neurons, and we can speak in broad terms about the kinds of functions associated with different <mark style="background-color: #ffeb3b; font-weight: bold;">neurotransmitters</mark> (Table 3.1). Much of what psychologists know about the functions of neurotransmit
                 </div>
             </div>
     
@@ -320,7 +362,7 @@ neural synapse</span>
                     <span class="page-number">📄 Page 91</span>
                 </div>
                 <div class="evidence-text">
-                    <mark style="background-color: #ffeb3b; font-weight: bold;">neurotransmitters</mark> and Drugs There are several different types of <mark style="background-color: #ffeb3b; font-weight: bold;">neurotransmitters</mark> released by different neurons, and we can speak in broad terms about the kinds of functions associated with different <mark style="background-color: #ffeb3b; font-weight: bold;">neurotransmitters</mark> (Table 3.1). Much of what psychologists know about the functions of neurotransmit  <!-- HIGHLIGHTING HERE ONLY -->
+                    <mark style="background-color: #ffeb3b; font-weight: bold;">neurotransmitters</mark> and Drugs There are several different types of <mark style="background-color: #ffeb3b; font-weight: bold;">neurotransmitters</mark> released by different neurons, and we can speak in broad terms about the kinds of functions associated with different <mark style="background-color: #ffeb3b; font-weight: bold;">neurotransmitters</mark> (Table 3.1). Much of what psychologists know about the functions of neurotransmit
                 </div>
             </div>
     
@@ -331,7 +373,7 @@ Psychoactive drugs can act as agonists or antagonists for a given neurotransmitt
                     <span class="page-number">📄 Page 92</span>
                 </div>
                 <div class="evidence-text">
-                    <mark style="background-color: #ffeb3b; font-weight: bold;">neurotransmitters</mark> and Drugs There are several different types of <mark style="background-color: #ffeb3b; font-weight: bold;">neurotransmitters</mark> released by different neurons, and we can speak in broad terms about the kinds of functions associated with different <mark style="background-color: #ffeb3b; font-weight: bold;">neurotransmitters</mark> (Table 3.1). Much of what psychologists know about the functions of neurotransmit  <!-- HIGHLIGHTING HERE ONLY -->
+                    <mark style="background-color: #ffeb3b; font-weight: bold;">neurotransmitters</mark> and Drugs There are several different types of <mark style="background-color: #ffeb3b; font-weight: bold;">neurotransmitters</mark> released by different neurons, and we can speak in broad terms about the kinds of functions associated with different <mark style="background-color: #ffeb3b; font-weight: bold;">neurotransmitters</mark> (Table 3.1). Much of what psychologists know about the functions of neurotransmit
                 </div>
             </div>
     
@@ -342,7 +384,7 @@ Genes are sequences of DNA that code for a particular trait</span>
                     <span class="page-number">📄 Page 94</span>
                 </div>
                 <div class="evidence-text">
-                    <mark style="background-color: #ffeb3b; font-weight: bold;">neurotransmitters</mark> and Drugs There are several different types of <mark style="background-color: #ffeb3b; font-weight: bold;">neurotransmitters</mark> released by different neurons, and we can speak in broad terms about the kinds of functions associated with different <mark style="background-color: #ffeb3b; font-weight: bold;">neurotransmitters</mark> (Table 3.1). Much of what psychologists know about the functions of neurotransmit  <!-- HIGHLIGHTING HERE ONLY -->
+                    <mark style="background-color: #ffeb3b; font-weight: bold;">neurotransmitters</mark> and Drugs There are several different types of <mark style="background-color: #ffeb3b; font-weight: bold;">neurotransmitters</mark> released by different neurons, and we can speak in broad terms about the kinds of functions associated with different <mark style="background-color: #ffeb3b; font-weight: bold;">neurotransmitters</mark> (Table 3.1). Much of what psychologists know about the functions of neurotransmit
                 </div>
             </div>
     
@@ -353,7 +395,7 @@ which it was released</span>
                     <span class="page-number">📄 Page 95</span>
                 </div>
                 <div class="evidence-text">
-                    <mark style="background-color: #ffeb3b; font-weight: bold;">neurotransmitters</mark> and Drugs There are several different types of <mark style="background-color: #ffeb3b; font-weight: bold;">neurotransmitters</mark> released by different neurons, and we can speak in broad terms about the kinds of functions associated with different <mark style="background-color: #ffeb3b; font-weight: bold;">neurotransmitters</mark> (Table 3.1). Much of what psychologists know about the functions of neurotransmit  <!-- HIGHLIGHTING HERE ONLY -->
+                    <mark style="background-color: #ffeb3b; font-weight: bold;">neurotransmitters</mark> and Drugs There are several different types of <mark style="background-color: #ffeb3b; font-weight: bold;">neurotransmitters</mark> released by different neurons, and we can speak in broad terms about the kinds of functions associated with different <mark style="background-color: #ffeb3b; font-weight: bold;">neurotransmitters</mark> (Table 3.1). Much of what psychologists know about the functions of neurotransmit
                 </div>
             </div>
     
@@ -376,7 +418,7 @@ response. The Biology of Emotions Earlier, you learned about the limbic system, 
 
 specialized structures. The soma contains the cell nucleus, and the dendrites extend from the soma in tree-like branches. The axon is another major extension of the cell body; axons are often covered by a myelin sheath, which increases the speed of transmission of neural impulses. At the end of the axon are terminal buttons that contain synaptic vesicles filled with <mark style="background-color: #ffeb3b; font-weight: bold;">neurotransmitters</mark>. Neuronal communication is an electrochemical event. The dendrites contain receptors for <mark style="background-color: #ffeb3b; font-weight: bold;">neurotransmitters</mark> released by nearby neurons. If the signals received from other neurons are sufficiently strong, an action potential will travel down the length of the axon to the terminal buttons, resulting in the release of <mark style="background-color: #ffeb3b; font-weight: bold;">neurotransmitters</mark> into the synaptic cleft. Action potentials operate on the all-or-none principle and involve 102 3 • Summary Access for free at openstax.org
 
-psychoactive drugs have significant negative side effects. Furthermore, individuals vary dramatically in how they respond to the drugs. To improve chances for success, it is not uncommon for people receiving pharmacotherapy to undergo psychological and/or behavioral therapies as well. Some research suggests that combining drug therapy with other forms of therapy tends to be more effective than any one treatment alone (for one such example, see March et al., 2007). 3.3 Parts of the Nervous System LEARNING OBJECTIVES By the end of this section, you will be able to: • Describe the difference between the central and peripheral nervous systems • Explain the difference between the somatic and autonomic nervous systems • Differentiate between the sympathetic and parasympathetic divisions  <!-- HIGHLIGHTING HERE ONLY -->
+psychoactive drugs have significant negative side effects. Furthermore, individuals vary dramatically in how they respond to the drugs. To improve chances for success, it is not uncommon for people receiving pharmacotherapy to undergo psychological and/or behavioral therapies as well. Some research suggests that combining drug therapy with other forms of therapy tends to be more effective than any one treatment alone (for one such example, see March et al., 2007). 3.3 Parts of the Nervous System LEARNING OBJECTIVES By the end of this section, you will be able to: • Describe the difference between the central and peripheral nervous systems • Explain the difference between the somatic and autonomic nervous systems • Differentiate between the sympathetic and parasympathetic divisions
                 </div>
             </div>
             
@@ -384,14 +426,22 @@ psychoactive drugs have significant negative side effects. Furthermore, individu
                 <div class="stat-item">
                     <div class="stat-label">Sections Used</div>
                     <div class="stat-value">9</div>
+                    <div class="stat-factor">Factor: 1.00</div>
                 </div>
                 <div class="stat-item">
                     <div class="stat-label">Pages Referenced</div>
                     <div class="stat-value">10</div>
+                    <div class="stat-factor">Factor: 1.00</div>
                 </div>
                 <div class="stat-item">
-                    <div class="stat-label">Keywords Found</div>
-                    <div class="stat-value">3</div>
+                    <div class="stat-label">Answer Length</div>
+                    <div class="stat-value">1064</div>
+                    <div class="stat-factor">Factor: 1.00</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Overall</div>
+                    <div class="stat-value">100%</div>
+                    <div class="stat-factor">HIGH</div>
                 </div>
             </div>
             
