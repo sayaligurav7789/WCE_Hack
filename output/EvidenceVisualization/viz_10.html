@@ -1,430 +1,395 @@
 <!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Evidence Visualization - Question 10</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            padding: 20px;
-        }
-        
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            overflow: hidden;
-        }
-        
-        .header {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            padding: 30px;
-        }
-        
-        .header h1 {
-            font-size: 24px;
-            margin-bottom: 10px;
-        }
-        
-        .header .question {
-            font-size: 18px;
-            opacity: 0.9;
-            background: rgba(255, 255, 255, 0.2);
-            padding: 15px;
-            border-radius: 10px;
-            margin-top: 10px;
-            line-height: 1.5;
-        }
-        
-        .keywords-bar {
-            background: #f0f0f0;
-            padding: 15px 30px;
-            border-bottom: 1px solid #e0e0e0;
-        }
-        
-        .keywords-title {
-            font-size: 14px;
-            color: #666;
-            margin-bottom: 10px;
-            font-weight: 600;
-        }
-        
-        .keyword-badge {
-            display: inline-block;
-            background: #ffeb3b;
-            color: #333;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 13px;
-            margin: 0 5px 5px 0;
-            font-weight: 500;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-        
-        .answer-section {
-            padding: 30px;
-            background: #f8f9fa;
-            border-bottom: 1px solid #e0e0e0;
-        }
-        
-        .answer-section h3 {
-            color: #333;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .answer-section h3 i {
-            color: #667eea;
-        }
-        
-        .answer-content {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            line-height: 1.8;
-            color: #444;
-            border-left: 4px solid #667eea;
-        }
-        
-        .answer-content mark {
-            background-color: #ffeb3b;
-            padding: 2px 0;
-            font-weight: 500;
-        }
-        
-        .evidence-section {
-            padding: 30px;
-        }
-        
-        .evidence-section h3 {
-            color: #333;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .evidence-section h3 i {
-            color: #667eea;
-        }
-        
-        .evidence-card {
-            background: #f8f9fa;
-            border-radius: 10px;
-            padding: 20px;
-            margin-bottom: 20px;
-            border-left: 4px solid #667eea;
-        }
-        
-        .evidence-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-        
-        .section-name {
-            font-weight: 600;
-            color: #333;
-            background: #e8eaf6;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 14px;
-        }
-        
-        .page-number {
-            color: #666;
-            background: white;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 14px;
-            border: 1px solid #e0e0e0;
-        }
-        
-        .relevance {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 14px;
-        }
-        
-        .term-badge {
-            display: inline-block;
-            background: #ffeb3b;
-            color: #333;
-            padding: 3px 10px;
-            border-radius: 15px;
-            font-size: 12px;
-            margin: 0 5px 5px 0;
-            font-weight: 500;
-        }
-        
-        .evidence-text {
-            background: white;
-            padding: 15px;
-            border-radius: 8px;
-            color: #555;
-            line-height: 1.6;
-            margin: 15px 0 0 0;
-            border: 1px solid #e0e0e0;
-        }
-        
-        .evidence-text mark {
-            background-color: #ffeb3b;
-            padding: 2px 0;
-            font-weight: 500;
-        }
-        
-        .highlighted-context {
-            padding: 30px;
-            background: #f8f9fa;
-            border-top: 1px solid #e0e0e0;
-            border-bottom: 1px solid #e0e0e0;
-        }
-        
-        .highlighted-context h3 {
-            color: #333;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .context-box {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            max-height: 400px;
-            overflow-y: auto;
-            border: 1px solid #e0e0e0;
-            line-height: 1.8;
-            font-size: 14px;
-        }
-        
-        .context-box mark {
-            background-color: #ffeb3b;
-            padding: 2px 0;
-            font-weight: 500;
-        }
-        
-        .stats {
-            display: flex;
-            gap: 15px;
-            padding: 20px 30px;
-            background: white;
-            flex-wrap: wrap;
-        }
-        
-        .stat-item {
-            background: #f8f9fa;
-            padding: 10px 20px;
-            border-radius: 10px;
-            flex: 1;
-            min-width: 120px;
-            text-align: center;
-            border: 1px solid #e0e0e0;
-        }
-        
-        .stat-label {
-            font-size: 12px;
-            color: #666;
-            margin-bottom: 5px;
-        }
-        
-        .stat-value {
-            font-size: 24px;
-            font-weight: 600;
-            color: #667eea;
-        }
-        
-        .footer {
-            padding: 20px 30px;
-            background: #f0f0f0;
-            text-align: center;
-            color: #666;
-            font-size: 14px;
-            border-top: 1px solid #e0e0e0;
-        }
-        
-        @media (max-width: 768px) {
-            .header {
+    <html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Evidence Visualization - Question 10</title>
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+            
+            body {
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                min-height: 100vh;
                 padding: 20px;
             }
             
-            .answer-section,
-            .evidence-section,
-            .highlighted-context {
+            .container {
+                max-width: 1000px;
+                margin: 0 auto;
+                background: white;
+                border-radius: 20px;
+                box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+                overflow: hidden;
+            }
+            
+            .header {
+                background: linear-gradient(135deg, #667eea, #764ba2);
+                color: white;
+                padding: 30px;
+            }
+            
+            .header h1 {
+                font-size: 24px;
+                margin-bottom: 10px;
+            }
+            
+            .header .question {
+                font-size: 18px;
+                opacity: 0.9;
+                background: rgba(255, 255, 255, 0.2);
+                padding: 15px;
+                border-radius: 10px;
+                margin-top: 10px;
+                line-height: 1.5;
+            }
+            
+            .keywords-bar {
+                background: #f0f0f0;
+                padding: 15px 30px;
+                border-bottom: 1px solid #e0e0e0;
+            }
+            
+            .keywords-title {
+                font-size: 14px;
+                color: #666;
+                margin-bottom: 10px;
+                font-weight: 600;
+            }
+            
+            .keyword-badge {
+                display: inline-block;
+                background: #ffeb3b;
+                color: #333;
+                padding: 5px 12px;
+                border-radius: 20px;
+                font-size: 13px;
+                margin: 0 5px 5px 0;
+                font-weight: 500;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            }
+            
+            .answer-section {
+                padding: 30px;
+                background: #f8f9fa;
+                border-bottom: 1px solid #e0e0e0;
+            }
+            
+            .answer-section h3 {
+                color: #333;
+                margin-bottom: 15px;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+            
+            .answer-section h3 i {
+                color: #667eea;
+            }
+            
+            .answer-content {
+                background: white;
                 padding: 20px;
+                border-radius: 10px;
+                line-height: 1.8;
+                color: #444;
+                border-left: 4px solid #667eea;
+            }
+            
+            /* NO mark styling for answer - it stays plain */
+            
+            .evidence-section {
+                padding: 30px;
+            }
+            
+            .evidence-section h3 {
+                color: #333;
+                margin-bottom: 20px;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+            
+            .evidence-section h3 i {
+                color: #667eea;
+            }
+            
+            .evidence-card {
+                background: #f8f9fa;
+                border-radius: 10px;
+                padding: 20px;
+                margin-bottom: 20px;
+                border-left: 4px solid #667eea;
             }
             
             .evidence-header {
-                flex-direction: column;
-                align-items: flex-start;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 15px;
+                flex-wrap: wrap;
+                gap: 10px;
             }
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <div class="header">
-            <h1>📚 Evidence Visualization</h1>
-            <div class="question">
-                <strong>Question 10:</strong> 
+            
+            .section-name {
+                font-weight: 600;
+                color: #333;
+                background: #e8eaf6;
+                padding: 5px 12px;
+                border-radius: 20px;
+                font-size: 14px;
+            }
+            
+            .page-number {
+                color: #666;
+                background: white;
+                padding: 5px 12px;
+                border-radius: 20px;
+                font-size: 14px;
+                border: 1px solid #e0e0e0;
+            }
+            
+            .term-badge {
+                display: inline-block;
+                background: #ffeb3b;
+                color: #333;
+                padding: 3px 10px;
+                border-radius: 15px;
+                font-size: 12px;
+                margin: 0 5px 5px 0;
+                font-weight: 500;
+            }
+            
+            .evidence-text {
+                background: white;
+                padding: 15px;
+                border-radius: 8px;
+                color: #555;
+                line-height: 1.6;
+                margin: 15px 0 0 0;
+                border: 1px solid #e0e0e0;
+            }
+            
+            .evidence-text mark {
+                background-color: #ffeb3b;
+                padding: 2px 0;
+                font-weight: 500;
+            }
+            
+            .highlighted-context {
+                padding: 30px;
+                background: #f8f9fa;
+                border-top: 1px solid #e0e0e0;
+                border-bottom: 1px solid #e0e0e0;
+            }
+            
+            .highlighted-context h3 {
+                color: #333;
+                margin-bottom: 15px;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+            
+            .context-box {
+                background: white;
+                padding: 20px;
+                border-radius: 10px;
+                max-height: 400px;
+                overflow-y: auto;
+                border: 1px solid #e0e0e0;
+                line-height: 1.8;
+                font-size: 14px;
+            }
+            
+            .context-box mark {
+                background-color: #ffeb3b;
+                padding: 2px 0;
+                font-weight: 500;
+            }
+            
+            .stats {
+                display: flex;
+                gap: 15px;
+                padding: 20px 30px;
+                background: white;
+                flex-wrap: wrap;
+            }
+            
+            .stat-item {
+                background: #f8f9fa;
+                padding: 10px 20px;
+                border-radius: 10px;
+                flex: 1;
+                min-width: 120px;
+                text-align: center;
+                border: 1px solid #e0e0e0;
+            }
+            
+            .stat-label {
+                font-size: 12px;
+                color: #666;
+                margin-bottom: 5px;
+            }
+            
+            .stat-value {
+                font-size: 24px;
+                font-weight: 600;
+                color: #667eea;
+            }
+            
+            .footer {
+                padding: 20px 30px;
+                background: #f0f0f0;
+                text-align: center;
+                color: #666;
+                font-size: 14px;
+                border-top: 1px solid #e0e0e0;
+            }
+            
+            @media (max-width: 768px) {
+                .header {
+                    padding: 20px;
+                }
+                
+                .answer-section,
+                .evidence-section,
+                .highlighted-context {
+                    padding: 20px;
+                }
+                
+                .evidence-header {
+                    flex-direction: column;
+                    align-items: flex-start;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="header">
+                <h1>📚 Evidence Visualization</h1>
+                <div class="question">
+                    <strong>Question 10:</strong> What is the sociocultural model in therapy?
+                </div>
             </div>
-        </div>
-        
-        <div class="keywords-bar">
-            <div class="keywords-title">🔑 Extracted Keywords:</div>
-
-        </div>
-        
-        <div class="answer-section">
-            <h3><i class="fas fa-robot"></i> Generated Answer</h3>
-            <div class="answer-content">
-                According to the provided textbook context, the sociocultural model in therapy is a perspective that looks at an individual, their behaviors, and their symptoms in the context of their culture and background. Clinicians using this approach integrate cultural and religious beliefs into the therapeutic process. This model strives to recognize client identities to include individual, group, and universal dimensions, advocate the use of universal and culture-specific strategies and roles in the healing process, and balances the importance of individualism and collectivism in the assessment, diagnosis, and treatment of clients and client systems.
+            
+            <div class="keywords-bar">
+                <div class="keywords-title">🔑 Extracted Keywords:</div>
+    <span class="keyword-badge">sociocultural</span><span class="keyword-badge">model</span><span class="keyword-badge">therapy</span>
             </div>
-        </div>
-        
-        <div class="evidence-section">
-            <h3><i class="fas fa-book"></i> Evidence by Section</h3>
-
+            
+            <div class="answer-section">
+                <h3><i class="fas fa-robot"></i> Generated Answer</h3>
+                <div class="answer-content">
+                    According to the provided textbook context, the sociocultural model in therapy is a perspective that looks at an individual, their behaviors, and their symptoms in the context of their culture and background. Clinicians using this approach integrate cultural and religious beliefs into the therapeutic process. This model strives to recognize client identities to include individual, group, and universal dimensions, advocate the use of universal and culture-specific strategies and roles in the healing process, and balances the importance of individualism and collectivism in the assessment, diagnosis, and treatment of clients and client systems.  <!-- NO HIGHLIGHTING HERE -->
+                </div>
+            </div>
+            
+            <div class="evidence-section">
+                <h3><i class="fas fa-book"></i> Evidence by Section</h3>
+    
             <div class="evidence-card">
                 <div class="evidence-header">
                     <span class="section-name">📖 1.1344935
 Thompson</span>
                     <span class="page-number">📄 Page 611</span>
-                    <span class="relevance">⭐ Relevance: 0.7</span>
-                </div>
-                <div>
-
                 </div>
                 <div class="evidence-text">
-                    This section discusses 1.1344935
-thompson. The content here is relevant to your question about ...
+                    develop strategies to effectively address the needs of various populations for which Eurocentric therapies have limited application (Sue, 2004). For example, a counselor whose treatment focuses on individual decision making may be ineffective at helping a Chinese client with a collectivist approach   <!-- HIGHLIGHTING HERE ONLY -->
                 </div>
             </div>
-
+    
             <div class="evidence-card">
                 <div class="evidence-header">
                     <span class="section-name">📖 16.1 Many forms of therapy have been developed to treat a wide array of problems</span>
                     <span class="page-number">📄 Page 624</span>
-                    <span class="relevance">⭐ Relevance: 0.75</span>
-                </div>
-                <div>
-
                 </div>
                 <div class="evidence-text">
-                    This section discusses 16.1 many forms of therapy have been developed to treat a wide array of problems. The content here is relevant to your question about ...
+                    develop strategies to effectively address the needs of various populations for which Eurocentric therapies have limited application (Sue, 2004). For example, a counselor whose treatment focuses on individual decision making may be ineffective at helping a Chinese client with a collectivist approach   <!-- HIGHLIGHTING HERE ONLY -->
                 </div>
             </div>
-
+    
             <div class="evidence-card">
                 <div class="evidence-header">
                     <span class="section-name">📖 16.1 Mental Health Treatment: Past and Present
 It was once believed that people with psychological disorders</span>
                     <span class="page-number">📄 Page 626</span>
-                    <span class="relevance">⭐ Relevance: 0.8</span>
-                </div>
-                <div>
-
                 </div>
                 <div class="evidence-text">
-                    This section discusses 16.1 mental health treatment: past and present
-it was once believed that people with psychological disorders. The content here is relevant to your question about ...
+                    develop strategies to effectively address the needs of various populations for which Eurocentric therapies have limited application (Sue, 2004). For example, a counselor whose treatment focuses on individual decision making may be ineffective at helping a Chinese client with a collectivist approach   <!-- HIGHLIGHTING HERE ONLY -->
                 </div>
             </div>
-
+    
             <div class="evidence-card">
                 <div class="evidence-header">
                     <span class="section-name">📖 16.13 Your emotional reactions are the result of your thoughts about the situation rather than the situation
 itself</span>
                     <span class="page-number">📄 Page 630</span>
-                    <span class="relevance">⭐ Relevance: 0.85</span>
-                </div>
-                <div>
-
                 </div>
                 <div class="evidence-text">
-                    This section discusses 16.13 your emotional reactions are the result of your thoughts about the situation rather than the situation
-itself. The content here is relevant to your question about ...
+                    develop strategies to effectively address the needs of various populations for which Eurocentric therapies have limited application (Sue, 2004). For example, a counselor whose treatment focuses on individual decision making may be ineffective at helping a Chinese client with a collectivist approach   <!-- HIGHLIGHTING HERE ONLY -->
                 </div>
             </div>
-
+    
             <div class="evidence-card">
                 <div class="evidence-header">
                     <span class="section-name">📖 16.14 Therapy may occur</span>
                     <span class="page-number">📄 Page 633</span>
-                    <span class="relevance">⭐ Relevance: 0.9</span>
-                </div>
-                <div>
-
                 </div>
                 <div class="evidence-text">
-                    This section discusses 16.14 therapy may occur. The content here is relevant to your question about ...
+                    develop strategies to effectively address the needs of various populations for which Eurocentric therapies have limited application (Sue, 2004). For example, a counselor whose treatment focuses on individual decision making may be ineffective at helping a Chinese client with a collectivist approach   <!-- HIGHLIGHTING HERE ONLY -->
                 </div>
             </div>
-
-        </div>
-        
-        <div class="highlighted-context">
-            <h3><i class="fas fa-highlighter"></i> Highlighted Context</h3>
-            <div class="context-box">
-                develop strategies to effectively address the needs of various populations for which Eurocentric therapies have limited application (Sue, 2004). For example, a counselor whose treatment focuses on individual decision making may be ineffective at helping a Chinese client with a collectivist approach to problem solving (Sue, 2004). Multicultural counseling and therapy aims to offer both a helping role and process that uses modalities and defines goals consistent with the life experiences and cultural values of clients. It strives to recognize client identities to include individual, group, and universal dimensions, advocate the use of universal and culture- specific strategies and roles in the healing process, and balances the importance of individualism and collectivism in the assessment, diagnosis, and treatment of client and client systems (Sue, 2001). This therapeutic perspective integrates the impact of cultural and social norms, starting at the beginning of treatment. Therapists who use this perspective work with clients to obtain and integrate information about their cultural patterns into a unique treatment approach based on their particular situation (Stewart, Simmons, & Habibpour, 2012). Sociocultural therapy can include individual, group, family, and couples treatment modalities. 16.5 • The Sociocultural Model and Therapy Utilization 623
-
-group setting. Treatment may also include medication. Sometimes a person has comorbid disorders, which usually means that they have a substance-related disorder diagnosis and another psychiatric diagnosis, such as depression, bipolar disorder, or schizophrenia. The best treatment would address both problems simultaneously. 16.5 The Sociocultural Model and Therapy Utilization The sociocultural perspective looks at you, your behaviors, and your symptoms in the context of your culture and background. Clinicians using this approach integrate cultural and religious beliefs into the therapeutic process. Research has shown that ethnic minorities are less likely to access mental health services than their White middle-class American counterparts. Barriers to treatment include lack of insurance, transportation, and time; cultural views that mental illness is a stigma; fears about treatment; and language barriers. Supporting mental health treatment involves speaking and listening openly about mental health, avoiding assumptions, being conscious about language, and encouraging others to get help when needed. 16 • Summary 629
-
-FIGURE 16.1 Many forms of therapy have been developed to treat a wide array of problems. These marines who served in Iraq and Afghanistan, together with community mental health volunteers, are part of the Ocean Therapy program at Camp Pendleton, a program in which learning to surf is combined with group discussions. The program helps vets recover, especially vets who suffer from post-traumatic stress disorder (PTSD). INTRODUCTION CHAPTER OUTLINE 16.1 Mental Health Treatment: Past and Present 16.2 Types of Treatment 16.3 Treatment Modalities 16.4 Substance-Related and Addictive Disorders: A Special Case 16.5 The Sociocultural Model and Therapy Utilization What comes to mind when you think about therapy for mental health issues? You might picture someone lying on a couch talking about his childhood while the therapist sits and takes notes, à la Sigmund Freud. But can you envision a therapy session in which someone is wearing virtual reality headgear to conquer a fear of snakes? In this chapter, you will see that approaches to therapy include both psychological and biological interventions, all with the goal of alleviating distress. Because psychological problems can originate from various sources—biology, genetics, childhood experiences, conditioning, and sociocultural influences—psychologists have developed many different therapeutic techniques and approaches. The Ocean Therapy program shown in Figure 16.1 uses multiple approaches to support the mental health of veterans in the group. There are many misconceptions and assumptions about therapy and treatment. In the same way that mental 16 Therapy and Treatment
-
-M. (1999). Vulnerability to psychopathology: A biosocial model. American Psychological Association. Therapy and Treatment Abbass, A., Kisely, S., & Kroenke, K. (2006). Short-term psychodynamic psychotherapy for somatic disorders: Systematic review and meta-analysis of clinical trials. Psychotherapy and Psychosomatics, 78, 265–274. Ahmed, S., Wilson, K. B., Henriksen, R. C., & Jones, J. W. (2011). What does it mean to be a culturally competent counselor? Journal for Social Action in Counseling and Psychology, 3(1), 17–28. Alavi, A., Sharifi, B., Ghanizadeh, A., & Dehbozorgi, G. (2013). Effectiveness of cognitive-behavioral therapy in decreasing suicidal ideation and hopelessness of the adolescents with previous suicidal attempts. Iranian 726 References Access for free at openstax.org
-
-hospitalized. A person suffering symptoms could speak with a primary care physician, who most likely would refer him to someone who specializes in therapy. The person can receive outpatient mental health services from a variety of sources, including psychologists, psychiatrists, marriage and family therapists, school counselors, clinical social workers, and religious personnel. These therapy sessions would be covered through insurance, government funds, or private (self) pay. 16.2 Types of Treatment Psychoanalysis was developed by Sigmund Freud. Freud’s theory is that a person’s psychological problems are the result of repressed impulses or childhood trauma. The goal of the therapist is to help a person uncover buried feelings by using techniques such as free association and dream analysis. Play therapy is a psychodynamic therapy technique often used with children. The idea is that children play out their hopes, fantasies, and traumas, using dolls, stuffed animals, and sandbox figurines. In behavior therapy, a therapist employs principles of learning from classical and operant conditioning to help clients change undesirable behaviors. Counterconditioning is a commonly used therapeutic technique in 628 16 • Summary Access for free at openstax.org
-
-rational emotive therapy (RET) form of cognitive-behavioral therapy relapse repeated drug use and/or alcohol use after a period of improvement from substance abuse Rogerian (client-centered therapy) non-directive form of humanistic psychotherapy developed by Carl Rogers that emphasizes unconditional positive regard and self-acceptance strategic family therapy therapist guides the therapy sessions and develops treatment plans for each family member for specific problems that can addressed in a short amount of time structural family therapy therapist examines and discusses with the family the boundaries and structure of the family: who makes the rules, who sleeps in the bed with whom, how decisions are made, and what are the boundaries within the family systematic desensitization form of exposure therapy used to treat phobias and anxiety disorders by exposing a person to the feared object or situation through a stimulus hierarchy token economy controlled setting where individuals are reinforced for desirable behaviors with tokens (e.g., poker chip) that be exchanged for items or privileges transference process in psychoanalysis in which the patient transfers all of the positive or negative emotions associated with the patient’s other relationships to the psychoanalyst unconditional positive regard fundamental acceptance of a person regardless of what they say or do; term associated with humanistic psychology virtual reality exposure therapy uses a simulation rather than the actual feared object or situation to help people conquer their fears voluntary treatment therapy that a person chooses to attend in order to obtain relief from her symptoms Summary 16.1 Mental Health Treatment: Past and Present It was once believed that people with psychological disorders, or those exhibiting strange behavior, were possessed by demons. These people were forced to take part in exorcisms, were imprisoned, or executed. Later, asylums were built to house the mentally ill, but the patients received little to no treatment, and many of the methods used were cruel. Philippe Pinel and Dorothea Dix argued for more humane treatment of people with psychological disorders. In the mid-1960s, the deinstitutionalization movement gained support and asylums were closed, enabling people with mental illness to return home and receive treatment in their own communities. Some did go to their family homes, but many became homeless due to a lack of resources and support mechanisms. Today, instead of asylums, there are psychiatric hospitals run by state governments and local community hospitals, with the emphasis on short-term stays. However, most people who have mental illness are not
-
-examines and discusses the boundaries and structure of the family: who makes the rules, who sleeps in the bed with whom, how decisions are made, and what are the boundaries within the family. In some families, the parents do not work together to make rules, or one parent may undermine the other, leading the children to act out. The therapist helps them resolve these issues and learn to communicate more effectively. LINK TO LEARNING Watch this video of a structural family session (http://openstax.org/l/Sfamily) to learn more. In strategic family therapy, the goal is to address specific problems within the family that can be dealt with in a relatively short amount of time. Typically, the therapist would guide what happens in the therapy session and design a detailed approach to resolving each member’s problem (Madanes, 1991). 16.4 Substance-Related and Addictive Disorders: A Special Case LEARNING OBJECTIVES By the end of this section, you will be able to: • Recognize the goal of substance-related and addictive disorders treatment • Discuss what makes for effective treatment • Describe how comorbid disorders are treated Addiction is often viewed as a chronic disease (Figure 16.18). The choice to use a substance is initially voluntary; however, because chronic substance use can permanently alter the neural structure in the prefrontal cortex, an area of the brain associated with decision-making and judgment, a person becomes driven to use drugs and/or alcohol (Muñoz-Cuevas, Athilingam, Piscopo, & Wilbrecht, 2013). This helps explain why relapse rates tend to be high. About 40%–60% of individuals relapse, which means they return to abusing drugs and/or alcohol after a period of improvement (National Institute on Drug Abuse [NIDA], 2008). FIGURE 16.18 The National Survey on Drug Use and Health shows trends in prevalence of various drugs for ages 12–17, 18–25, and 26 or older. The goal of substance-related treatment is to help a person with an addiction stop compulsive drug-seeking behaviors (NIDA, 2012). This means a person with addiction will need long-term treatment, similar to a person battling a chronic physical disease such as hypertension or diabetes. Treatment usually includes behavioral therapy and/or medication, depending on the individual (NIDA, 2012). Specialized therapies have also been 16.4 • Substance-Related and Addictive Disorders: A Special Case 621
-
-FIGURE 16.14 Therapy may occur (a) one-on-one between a therapist and client, or (b) in a group setting. (credit a: modification of work by Connor Ashleigh, AusAID/Department of Foreign Affairs and Trade) Individual Therapy In individual therapy, also known as individual psychotherapy or individual counseling, the client and clinician meet one-on-one (usually from 45 minutes to 1 hour). These meetings typically occur weekly or every other week, and sessions are conducted in a confidential and caring environment (Figure 16.15). The clinician will work with clients to help them explore their feelings, work through life challenges, identify aspects of themselves and their lives that they wish 
-            </div>
-        </div>
-        
-        <div class="stats">
-            <div class="stat-item">
-                <div class="stat-label">Sections Used</div>
-                <div class="stat-value">8</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-label">Pages Referenced</div>
-                <div class="stat-value">10</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-label">Keywords Found</div>
-                <div class="stat-value">0</div>
-            </div>
-        </div>
-        
-        <div class="footer">
-            Generated from Psychology 2e Textbook • Question 10 • 2026-02-26
-        </div>
-    </div>
     
-    <!-- Font Awesome for icons -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
-</body>
-</html>
+            </div>
+            
+            <div class="highlighted-context">
+                <h3><i class="fas fa-highlighter"></i> Highlighted Context</h3>
+                <div class="context-box">
+                    develop strategies to effectively address the needs of various populations for which Eurocentric therapies have limited application (Sue, 2004). For example, a counselor whose treatment focuses on individual decision making may be ineffective at helping a Chinese client with a collectivist approach to problem solving (Sue, 2004). Multicultural counseling and <mark style="background-color: #ffeb3b; font-weight: bold;">therapy</mark> aims to offer both a helping role and process that uses modalities and defines goals consistent with the life experiences and cultural values of clients. It strives to recognize client identities to include individual, group, and universal dimensions, advocate the use of universal and culture- specific strategies and roles in the healing process, and balances the importance of individualism and collectivism in the assessment, diagnosis, and treatment of client and client systems (Sue, 2001). This therapeutic perspective integrates the impact of cultural and social norms, starting at the beginning of treatment. Therapists who use this perspective work with clients to obtain and integrate information about their cultural patterns into a unique treatment approach based on their particular situation (Stewart, Simmons, & Habibpour, 2012). <mark style="background-color: #ffeb3b; font-weight: bold;">sociocultural</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">therapy</mark> can include individual, group, family, and couples treatment modalities. 16.5 • The <mark style="background-color: #ffeb3b; font-weight: bold;">sociocultural</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">model</mark> and <mark style="background-color: #ffeb3b; font-weight: bold;">therapy</mark> Utilization 623
+
+group setting. Treatment may also include medication. Sometimes a person has comorbid disorders, which usually means that they have a substance-related disorder diagnosis and another psychiatric diagnosis, such as depression, bipolar disorder, or schizophrenia. The best treatment would address both problems simultaneously. 16.5 The <mark style="background-color: #ffeb3b; font-weight: bold;">sociocultural</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">model</mark> and <mark style="background-color: #ffeb3b; font-weight: bold;">therapy</mark> Utilization The <mark style="background-color: #ffeb3b; font-weight: bold;">sociocultural</mark> perspective looks at you, your behaviors, and your symptoms in the context of your culture and background. Clinicians using this approach integrate cultural and religious beliefs into the therapeutic process. Research has shown that ethnic minorities are less likely to access mental health services than their White middle-class American counterparts. Barriers to treatment include lack of insurance, transportation, and time; cultural views that mental illness is a stigma; fears about treatment; and language barriers. Supporting mental health treatment involves speaking and listening openly about mental health, avoiding assumptions, being conscious about language, and encouraging others to get help when needed. 16 • Summary 629
+
+FIGURE 16.1 Many forms of <mark style="background-color: #ffeb3b; font-weight: bold;">therapy</mark> have been developed to treat a wide array of problems. These marines who served in Iraq and Afghanistan, together with community mental health volunteers, are part of the Ocean <mark style="background-color: #ffeb3b; font-weight: bold;">therapy</mark> program at Camp Pendleton, a program in which learning to surf is combined with group discussions. The program helps vets recover, especially vets who suffer from post-traumatic stress disorder (PTSD). INTRODUCTION CHAPTER OUTLINE 16.1 Mental Health Treatment: Past and Present 16.2 Types of Treatment 16.3 Treatment Modalities 16.4 Substance-Related and Addictive Disorders: A Special Case 16.5 The <mark style="background-color: #ffeb3b; font-weight: bold;">sociocultural</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">model</mark> and <mark style="background-color: #ffeb3b; font-weight: bold;">therapy</mark> Utilization What comes to mind when you think about <mark style="background-color: #ffeb3b; font-weight: bold;">therapy</mark> for mental health issues? You might picture someone lying on a couch talking about his childhood while the therapist sits and takes notes, à la Sigmund Freud. But can you envision a <mark style="background-color: #ffeb3b; font-weight: bold;">therapy</mark> session in which someone is wearing virtual reality headgear to conquer a fear of snakes? In this chapter, you will see that approaches to <mark style="background-color: #ffeb3b; font-weight: bold;">therapy</mark> include both psychological and biological interventions, all with the goal of alleviating distress. Because psychological problems can originate from various sources—biology, genetics, childhood experiences, conditioning, and <mark style="background-color: #ffeb3b; font-weight: bold;">sociocultural</mark> influences—psychologists have developed many different therapeutic techniques and approaches. The Ocean <mark style="background-color: #ffeb3b; font-weight: bold;">therapy</mark> program shown in Figure 16.1 uses multiple approaches to support the mental health of veterans in the group. There are many misconceptions and assumptions about <mark style="background-color: #ffeb3b; font-weight: bold;">therapy</mark> and treatment. In the same way that mental 16 <mark style="background-color: #ffeb3b; font-weight: bold;">therapy</mark> and Treatment
+
+M. (1999). Vulnerability to psychopathology: A biosocial <mark style="background-color: #ffeb3b; font-weight: bold;">model</mark>. American Psychological Association. <mark style="background-color: #ffeb3b; font-weight: bold;">therapy</mark> and Treatment Abbass, A., Kisely, S., & Kroenke, K. (2006). Short-term psychodynamic psycho<mark style="background-color: #ffeb3b; font-weight: bold;">therapy</mark> for somatic disorders: Systematic review and meta-analysis of clinical trials. Psycho<mark style="background-color: #ffeb3b; font-weight: bold;">therapy</mark> and Psychosomatics, 78, 265–274. Ahmed, S., Wilson, K. B., Henriksen, R. C., & Jones, J. W. (2011). What does it mean to be a culturally competent counselor? Journal for Social Action in Counseling and Psychology, 3(1), 17–28. Alavi, A., Sharifi, B., Ghanizadeh, A., & Dehbozorgi, G. (2013). Effectiveness of cognitive-behavioral <mark style="background-color: #ffeb3b; font-weight: bold;">therapy</mark> in decreasing suicidal ideation and hopelessness of the adolescents with previous suicidal attempts. Iranian 726 References Access for free at openstax.org
+
+hospitalized. A person suffering symptoms could speak with a primary care physician, who most likely would refer him to someone who specializes in <mark style="background-color: #ffeb3b; font-weight: bold;">therapy</mark>. The person can receive outpatient mental health services from a variety of sources, including psychologists, psychiatrists, marriage and family therapists, school counselors, clinical social workers, and religious personnel. These <mark style="background-color: #ffeb3b; font-weight: bold;">therapy</mark> sessions would be covered through insurance, government funds, or private (self) pay. 16.2 Types of Treatment Psychoanalysis was developed by Sigmund Freud. Freud’s theory is that a person’s psychological problems are the result of repressed impulses or childhood trauma. The goal of the therapist is to help a person uncover buried feelings by using techniques such as free association and dream analysis. Play <mark style="background-color: #ffeb3b; font-weight: bold;">therapy</mark> is a psychodynamic <mark style="background-color: #ffeb3b; font-weight: bold;">therapy</mark> technique often used with children. The idea is that children play out their hopes, fantasies, and traumas, using dolls, stuffed animals, and sandbox figurines. In behavior <mark style="background-color: #ffeb3b; font-weight: bold;">therapy</mark>, a therapist employs principles of learning from classical and operant conditioning to help clients change undesirable behaviors. Counterconditioning is a commonly used therapeutic technique in 628 16 • Summary Access for free at openstax.org
+
+rational emotive <mark style="background-color: #ffeb3b; font-weight: bold;">therapy</mark> (RET) form of cognitive-behavioral <mark style="background-color: #ffeb3b; font-weight: bold;">therapy</mark> relapse repeated drug use and/or alcohol use after a period of improvement from substance abuse Rogerian (client-centered <mark style="background-color: #ffeb3b; font-weight: bold;">therapy</mark>) non-directive form of humanistic psycho<mark style="background-color: #ffeb3b; font-weight: bold;">therapy</mark> developed by Carl Rogers that emphasizes unconditional positive regard and self-acceptance strategic family <mark style="background-color: #ffeb3b; font-weight: bold;">therapy</mark> therapist guides the <mark style="background-color: #ffeb3b; font-weight: bold;">therapy</mark> sessions and develops treatment plans for each family member for specific problems that can addressed in a short amount of time structural family <mark style="background-color: #ffeb3b; font-weight: bold;">therapy</mark> therapist examines and discusses with the family the boundaries and structure of the family: who makes the rules, who sleeps in the bed with whom, how decisions are made, and what are the boundaries within the family systematic desensitization form of exposure <mark style="background-color: #ffeb3b; font-weight: bold;">therapy</mark> used to treat phobias and anxiety disorders by exposing a person to the feared object or situation through a stimulus hierarchy token economy controlled setting where individuals are reinforced for desirable behaviors with tokens (e.g., poker chip) that be exchanged for items or privileges transference process in psychoanalysis in which the patient transfers all of the positive or negative emotions associated with the patient’s other relationships to the psychoanalyst unconditional positive regard fundamental acceptance of a person regardless of what they say or do; term associated with humanistic psychology virtual reality exposure <mark style="background-color: #ffeb3b; font-weight: bold;">therapy</mark> uses a simulation rather than the actual feared object or situation to help people conquer their fears voluntary treatment <mark style="background-color: #ffeb3b; font-weight: bold;">therapy</mark> that a person chooses to attend in order to obtain relief from her symptoms Summary 16.1 Mental Health Treatment: Past and Present It was once believed that people with psychological disorders, or those exhibiting strange behavior, were possessed by demons. These people were forced to take part in exorcisms, were imprisoned, or executed. Later, asylums were built to house the mentally ill, but the patients received little to no treatment, and many of the methods used were cruel. Philippe Pinel and Dorothea Dix argued for more humane treatment of people with psychological disorders. In the mid-1960s, the deinstitutionalization movement gained support and asylums were closed, enabling people with mental illness to return home and receive treatment in their own communities. Some did go to their family homes, but many became homeless due to a lack of resources and support mechanisms. Today, instead of asylums, there are psychiatric hospitals run by state governments and local community hospitals, with the emphasis on short-term stays. However, most people who have mental illness are not
+
+examines and discusses the boundaries and structure of the family: who makes the rules, who sleeps in the bed with whom, how decisions are made, and what are the boundaries within the family. In some families, the parents do not work together to make rules, or one parent may undermine the other, leading the children to act out. The therapist helps them resolve these issues and learn to communicate more effectively. LINK TO LEARNING Watch this video of a structural family session (http://openstax.org/l/Sfamily) to learn more. In strategic family <mark style="background-color: #ffeb3b; font-weight: bold;">therapy</mark>, the goal is to address specific problems within the family that can be dealt with in a relatively short amount of time. Typically, the therapist would guide what happens in the <mark style="background-color: #ffeb3b; font-weight: bold;">therapy</mark> session and design a detailed approach to resolving each member’s problem (Madanes, 1991). 16.4 Substance-Related and Addictive Disorders: A Special Case LEARNING OBJECTIVES By the end of this section, you will be able to: • Recognize the goal of substance-related and addictive disorders treatment • Discuss what makes for effective treatment • Describe how comorbid disorders are treated Addiction is often viewed as a chronic disease (Figure 16.18). The choice to use a substance is initially voluntary; however, because chronic substance use can permanently alter the neural structure in the prefrontal cortex, an area of the brain associated with decision-making and judgment, a person becomes driven to use drugs and/or alcohol (Muñoz-Cuevas, Athilingam, Piscopo, & Wilbrecht, 2013). This helps explain why relapse rates tend to be high. About 40%–60% of individuals relapse, which means they return to abusing drugs and/or alcohol after a period of improvement (National Institute on Drug Abuse [NIDA], 2008). FIGURE 16.18 The National Survey on Drug Use and Health shows trends in prevalence of various drugs for ages 12–17, 18–25, and 26 or older. The goal of substance-related treatment is to help a person with an addiction stop compulsive drug-seeking behaviors (NIDA, 2012). This means a person with addiction will need long-term treatment, similar to a person battling a chronic physical disease such as hypertension or diabetes. Treatment usually includes behavioral <mark style="background-color: #ffeb3b; font-weight: bold;">therapy</mark> and/or medication, depending on the individual (NIDA, 2012). Specialized therapies have also been 16.4 • Substance-Related and Addictive Disorders: A Special Case 621
+
+FIGURE 16.14 <mark style="background-color: #ffeb3b; font-weight: bold;">therapy</mark> may occur (a) one-on-one between a therapist and client, or (b) in a group setting. (credit a: modification of work by Connor Ashleigh, AusAID/Department of Foreign Affairs and Trade) Individual <mark style="background-color: #ffeb3b; font-weight: bold;">therapy</mark> In individual <mark style="background-color: #ffeb3b; font-weight: bold;">therapy</mark>, also known as individual psycho<mark style="background-color: #ffeb3b; font-weight: bold;">therapy</mark> or individual counseling, the client and clinician meet one-on-one (usually from 45 minutes to 1 hour). These meetings typically occur weekly or every other week, and sessions are conducted in a confidential and caring environment (Figure 16.15). The clinician will work with clients to help them explore their feelings, work through life challenges, identify aspects of themselves and their lives that they wish   <!-- HIGHLIGHTING HERE ONLY -->
+                </div>
+            </div>
+            
+            <div class="stats">
+                <div class="stat-item">
+                    <div class="stat-label">Sections Used</div>
+                    <div class="stat-value">8</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Pages Referenced</div>
+                    <div class="stat-value">10</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Keywords Found</div>
+                    <div class="stat-value">3</div>
+                </div>
+            </div>
+            
+            <div class="footer">
+                Generated from Psychology 2e Textbook • Question 10 • 2026-02-27
+            </div>
+        </div>
+        
+        <!-- Font Awesome for icons -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
+    </body>
+    </html>

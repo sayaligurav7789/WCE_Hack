@@ -1,426 +1,391 @@
 <!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Evidence Visualization - Question 50</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            padding: 20px;
-        }
-        
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            overflow: hidden;
-        }
-        
-        .header {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            padding: 30px;
-        }
-        
-        .header h1 {
-            font-size: 24px;
-            margin-bottom: 10px;
-        }
-        
-        .header .question {
-            font-size: 18px;
-            opacity: 0.9;
-            background: rgba(255, 255, 255, 0.2);
-            padding: 15px;
-            border-radius: 10px;
-            margin-top: 10px;
-            line-height: 1.5;
-        }
-        
-        .keywords-bar {
-            background: #f0f0f0;
-            padding: 15px 30px;
-            border-bottom: 1px solid #e0e0e0;
-        }
-        
-        .keywords-title {
-            font-size: 14px;
-            color: #666;
-            margin-bottom: 10px;
-            font-weight: 600;
-        }
-        
-        .keyword-badge {
-            display: inline-block;
-            background: #ffeb3b;
-            color: #333;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 13px;
-            margin: 0 5px 5px 0;
-            font-weight: 500;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-        
-        .answer-section {
-            padding: 30px;
-            background: #f8f9fa;
-            border-bottom: 1px solid #e0e0e0;
-        }
-        
-        .answer-section h3 {
-            color: #333;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .answer-section h3 i {
-            color: #667eea;
-        }
-        
-        .answer-content {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            line-height: 1.8;
-            color: #444;
-            border-left: 4px solid #667eea;
-        }
-        
-        .answer-content mark {
-            background-color: #ffeb3b;
-            padding: 2px 0;
-            font-weight: 500;
-        }
-        
-        .evidence-section {
-            padding: 30px;
-        }
-        
-        .evidence-section h3 {
-            color: #333;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .evidence-section h3 i {
-            color: #667eea;
-        }
-        
-        .evidence-card {
-            background: #f8f9fa;
-            border-radius: 10px;
-            padding: 20px;
-            margin-bottom: 20px;
-            border-left: 4px solid #667eea;
-        }
-        
-        .evidence-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-        
-        .section-name {
-            font-weight: 600;
-            color: #333;
-            background: #e8eaf6;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 14px;
-        }
-        
-        .page-number {
-            color: #666;
-            background: white;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 14px;
-            border: 1px solid #e0e0e0;
-        }
-        
-        .relevance {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 14px;
-        }
-        
-        .term-badge {
-            display: inline-block;
-            background: #ffeb3b;
-            color: #333;
-            padding: 3px 10px;
-            border-radius: 15px;
-            font-size: 12px;
-            margin: 0 5px 5px 0;
-            font-weight: 500;
-        }
-        
-        .evidence-text {
-            background: white;
-            padding: 15px;
-            border-radius: 8px;
-            color: #555;
-            line-height: 1.6;
-            margin: 15px 0 0 0;
-            border: 1px solid #e0e0e0;
-        }
-        
-        .evidence-text mark {
-            background-color: #ffeb3b;
-            padding: 2px 0;
-            font-weight: 500;
-        }
-        
-        .highlighted-context {
-            padding: 30px;
-            background: #f8f9fa;
-            border-top: 1px solid #e0e0e0;
-            border-bottom: 1px solid #e0e0e0;
-        }
-        
-        .highlighted-context h3 {
-            color: #333;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .context-box {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            max-height: 400px;
-            overflow-y: auto;
-            border: 1px solid #e0e0e0;
-            line-height: 1.8;
-            font-size: 14px;
-        }
-        
-        .context-box mark {
-            background-color: #ffeb3b;
-            padding: 2px 0;
-            font-weight: 500;
-        }
-        
-        .stats {
-            display: flex;
-            gap: 15px;
-            padding: 20px 30px;
-            background: white;
-            flex-wrap: wrap;
-        }
-        
-        .stat-item {
-            background: #f8f9fa;
-            padding: 10px 20px;
-            border-radius: 10px;
-            flex: 1;
-            min-width: 120px;
-            text-align: center;
-            border: 1px solid #e0e0e0;
-        }
-        
-        .stat-label {
-            font-size: 12px;
-            color: #666;
-            margin-bottom: 5px;
-        }
-        
-        .stat-value {
-            font-size: 24px;
-            font-weight: 600;
-            color: #667eea;
-        }
-        
-        .footer {
-            padding: 20px 30px;
-            background: #f0f0f0;
-            text-align: center;
-            color: #666;
-            font-size: 14px;
-            border-top: 1px solid #e0e0e0;
-        }
-        
-        @media (max-width: 768px) {
-            .header {
+    <html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Evidence Visualization - Question 50</title>
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+            
+            body {
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                min-height: 100vh;
                 padding: 20px;
             }
             
-            .answer-section,
-            .evidence-section,
-            .highlighted-context {
+            .container {
+                max-width: 1000px;
+                margin: 0 auto;
+                background: white;
+                border-radius: 20px;
+                box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+                overflow: hidden;
+            }
+            
+            .header {
+                background: linear-gradient(135deg, #667eea, #764ba2);
+                color: white;
+                padding: 30px;
+            }
+            
+            .header h1 {
+                font-size: 24px;
+                margin-bottom: 10px;
+            }
+            
+            .header .question {
+                font-size: 18px;
+                opacity: 0.9;
+                background: rgba(255, 255, 255, 0.2);
+                padding: 15px;
+                border-radius: 10px;
+                margin-top: 10px;
+                line-height: 1.5;
+            }
+            
+            .keywords-bar {
+                background: #f0f0f0;
+                padding: 15px 30px;
+                border-bottom: 1px solid #e0e0e0;
+            }
+            
+            .keywords-title {
+                font-size: 14px;
+                color: #666;
+                margin-bottom: 10px;
+                font-weight: 600;
+            }
+            
+            .keyword-badge {
+                display: inline-block;
+                background: #ffeb3b;
+                color: #333;
+                padding: 5px 12px;
+                border-radius: 20px;
+                font-size: 13px;
+                margin: 0 5px 5px 0;
+                font-weight: 500;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            }
+            
+            .answer-section {
+                padding: 30px;
+                background: #f8f9fa;
+                border-bottom: 1px solid #e0e0e0;
+            }
+            
+            .answer-section h3 {
+                color: #333;
+                margin-bottom: 15px;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+            
+            .answer-section h3 i {
+                color: #667eea;
+            }
+            
+            .answer-content {
+                background: white;
                 padding: 20px;
+                border-radius: 10px;
+                line-height: 1.8;
+                color: #444;
+                border-left: 4px solid #667eea;
+            }
+            
+            /* NO mark styling for answer - it stays plain */
+            
+            .evidence-section {
+                padding: 30px;
+            }
+            
+            .evidence-section h3 {
+                color: #333;
+                margin-bottom: 20px;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+            
+            .evidence-section h3 i {
+                color: #667eea;
+            }
+            
+            .evidence-card {
+                background: #f8f9fa;
+                border-radius: 10px;
+                padding: 20px;
+                margin-bottom: 20px;
+                border-left: 4px solid #667eea;
             }
             
             .evidence-header {
-                flex-direction: column;
-                align-items: flex-start;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 15px;
+                flex-wrap: wrap;
+                gap: 10px;
             }
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <div class="header">
-            <h1>📚 Evidence Visualization</h1>
-            <div class="question">
-                <strong>Question 50:</strong> 
+            
+            .section-name {
+                font-weight: 600;
+                color: #333;
+                background: #e8eaf6;
+                padding: 5px 12px;
+                border-radius: 20px;
+                font-size: 14px;
+            }
+            
+            .page-number {
+                color: #666;
+                background: white;
+                padding: 5px 12px;
+                border-radius: 20px;
+                font-size: 14px;
+                border: 1px solid #e0e0e0;
+            }
+            
+            .term-badge {
+                display: inline-block;
+                background: #ffeb3b;
+                color: #333;
+                padding: 3px 10px;
+                border-radius: 15px;
+                font-size: 12px;
+                margin: 0 5px 5px 0;
+                font-weight: 500;
+            }
+            
+            .evidence-text {
+                background: white;
+                padding: 15px;
+                border-radius: 8px;
+                color: #555;
+                line-height: 1.6;
+                margin: 15px 0 0 0;
+                border: 1px solid #e0e0e0;
+            }
+            
+            .evidence-text mark {
+                background-color: #ffeb3b;
+                padding: 2px 0;
+                font-weight: 500;
+            }
+            
+            .highlighted-context {
+                padding: 30px;
+                background: #f8f9fa;
+                border-top: 1px solid #e0e0e0;
+                border-bottom: 1px solid #e0e0e0;
+            }
+            
+            .highlighted-context h3 {
+                color: #333;
+                margin-bottom: 15px;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+            
+            .context-box {
+                background: white;
+                padding: 20px;
+                border-radius: 10px;
+                max-height: 400px;
+                overflow-y: auto;
+                border: 1px solid #e0e0e0;
+                line-height: 1.8;
+                font-size: 14px;
+            }
+            
+            .context-box mark {
+                background-color: #ffeb3b;
+                padding: 2px 0;
+                font-weight: 500;
+            }
+            
+            .stats {
+                display: flex;
+                gap: 15px;
+                padding: 20px 30px;
+                background: white;
+                flex-wrap: wrap;
+            }
+            
+            .stat-item {
+                background: #f8f9fa;
+                padding: 10px 20px;
+                border-radius: 10px;
+                flex: 1;
+                min-width: 120px;
+                text-align: center;
+                border: 1px solid #e0e0e0;
+            }
+            
+            .stat-label {
+                font-size: 12px;
+                color: #666;
+                margin-bottom: 5px;
+            }
+            
+            .stat-value {
+                font-size: 24px;
+                font-weight: 600;
+                color: #667eea;
+            }
+            
+            .footer {
+                padding: 20px 30px;
+                background: #f0f0f0;
+                text-align: center;
+                color: #666;
+                font-size: 14px;
+                border-top: 1px solid #e0e0e0;
+            }
+            
+            @media (max-width: 768px) {
+                .header {
+                    padding: 20px;
+                }
+                
+                .answer-section,
+                .evidence-section,
+                .highlighted-context {
+                    padding: 20px;
+                }
+                
+                .evidence-header {
+                    flex-direction: column;
+                    align-items: flex-start;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="header">
+                <h1>📚 Evidence Visualization</h1>
+                <div class="question">
+                    <strong>Question 50:</strong> What is the role of critical thinking in psychology?
+                </div>
             </div>
-        </div>
-        
-        <div class="keywords-bar">
-            <div class="keywords-title">🔑 Extracted Keywords:</div>
-
-        </div>
-        
-        <div class="answer-section">
-            <h3><i class="fas fa-robot"></i> Generated Answer</h3>
-            <div class="answer-content">
-                According to the provided textbook context, critical thinking plays a crucial role in psychology as it involves the active application of a set of skills to information for understanding and evaluation. Critical thinking skills include maintaining an attitude of skepticism, recognizing internal biases, using logical thinking, asking appropriate questions, and making observations. These skills are essential in psychology as they help students to critically evaluate the various sources of information they encounter, increase their scientific literacy, and prepare them to think scientifically. Additionally, critical thinking skills are valuable in a world full of competing "facts," many of which are designed to be misleading.
+            
+            <div class="keywords-bar">
+                <div class="keywords-title">🔑 Extracted Keywords:</div>
+    <span class="keyword-badge">role</span><span class="keyword-badge">critical</span><span class="keyword-badge">thinking</span><span class="keyword-badge">psychology</span>
             </div>
-        </div>
-        
-        <div class="evidence-section">
-            <h3><i class="fas fa-book"></i> Evidence by Section</h3>
-
+            
+            <div class="answer-section">
+                <h3><i class="fas fa-robot"></i> Generated Answer</h3>
+                <div class="answer-content">
+                    According to the provided textbook context, critical thinking plays a crucial role in psychology as it involves the active application of a set of skills to information for understanding and evaluation. Critical thinking skills include maintaining an attitude of skepticism, recognizing internal biases, using logical thinking, asking appropriate questions, and making observations. These skills are essential in psychology as they help students to critically evaluate the various sources of information they encounter, increase their scientific literacy, and prepare them to think scientifically. Additionally, critical thinking skills are valuable in a world full of competing "facts," many of which are designed to be misleading.  <!-- NO HIGHLIGHTING HERE -->
+                </div>
+            </div>
+            
+            <div class="evidence-section">
+                <h3><i class="fas fa-book"></i> Evidence by Section</h3>
+    
             <div class="evidence-card">
                 <div class="evidence-header">
                     <span class="section-name">📖 1.1 What Is Psychology</span>
                     <span class="page-number">📄 Page 20</span>
-                    <span class="relevance">⭐ Relevance: 0.7</span>
-                </div>
-                <div>
-
                 </div>
                 <div class="evidence-text">
-                    This section discusses 1.1 what is psychology. The content here is relevant to your question about ...
+                    An education in <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> is valuable for a number of reasons. <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> students hone <mark style="background-color: #ffeb3b; font-weight: bold;">critical</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">thinking</mark> skills and are trained in the use of the scientific method. <mark style="background-color: #ffeb3b; font-weight: bold;">critical</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">thinking</mark> is the active application of a set of skills to information for the understanding and evaluation of that informatio  <!-- HIGHLIGHTING HERE ONLY -->
                 </div>
             </div>
-
+    
             <div class="evidence-card">
                 <div class="evidence-header">
                     <span class="section-name">📖 1.11 When you look at this image</span>
                     <span class="page-number">📄 Page 21</span>
-                    <span class="relevance">⭐ Relevance: 0.75</span>
-                </div>
-                <div>
-
                 </div>
                 <div class="evidence-text">
-                    This section discusses 1.11 when you look at this image. The content here is relevant to your question about ...
+                    An education in <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> is valuable for a number of reasons. <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> students hone <mark style="background-color: #ffeb3b; font-weight: bold;">critical</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">thinking</mark> skills and are trained in the use of the scientific method. <mark style="background-color: #ffeb3b; font-weight: bold;">critical</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">thinking</mark> is the active application of a set of skills to information for the understanding and evaluation of that informatio  <!-- HIGHLIGHTING HERE ONLY -->
                 </div>
             </div>
-
+    
             <div class="evidence-card">
                 <div class="evidence-header">
                     <span class="section-name">📖 1.2 History of Psychology
 LEARNING OBJECTIVES
 By the end of this section</span>
                     <span class="page-number">📄 Page 28</span>
-                    <span class="relevance">⭐ Relevance: 0.8</span>
-                </div>
-                <div>
-
                 </div>
                 <div class="evidence-text">
-                    This section discusses 1.2 history of psychology
-learning objectives
-by the end of this section. The content here is relevant to your question about ...
+                    An education in <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> is valuable for a number of reasons. <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> students hone <mark style="background-color: #ffeb3b; font-weight: bold;">critical</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">thinking</mark> skills and are trained in the use of the scientific method. <mark style="background-color: #ffeb3b; font-weight: bold;">critical</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">thinking</mark> is the active application of a set of skills to information for the understanding and evaluation of that informatio  <!-- HIGHLIGHTING HERE ONLY -->
                 </div>
             </div>
-
+    
             <div class="evidence-card">
                 <div class="evidence-header">
                     <span class="section-name">📖 1.9 Noam Chomsky was very influential in beginning the cognitive revolution</span>
                     <span class="page-number">📄 Page 33</span>
-                    <span class="relevance">⭐ Relevance: 0.85</span>
-                </div>
-                <div>
-
                 </div>
                 <div class="evidence-text">
-                    This section discusses 1.9 noam chomsky was very influential in beginning the cognitive revolution. The content here is relevant to your question about ...
+                    An education in <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> is valuable for a number of reasons. <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> students hone <mark style="background-color: #ffeb3b; font-weight: bold;">critical</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">thinking</mark> skills and are trained in the use of the scientific method. <mark style="background-color: #ffeb3b; font-weight: bold;">critical</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">thinking</mark> is the active application of a set of skills to information for the understanding and evaluation of that informatio  <!-- HIGHLIGHTING HERE ONLY -->
                 </div>
             </div>
-
+    
             <div class="evidence-card">
                 <div class="evidence-header">
                     <span class="section-name">📖 4.539
 Gershoff</span>
                     <span class="page-number">📄 Page 225</span>
-                    <span class="relevance">⭐ Relevance: 0.9</span>
-                </div>
-                <div>
-
                 </div>
                 <div class="evidence-text">
-                    This section discusses 4.539
-gershoff. The content here is relevant to your question about ...
+                    An education in <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> is valuable for a number of reasons. <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> students hone <mark style="background-color: #ffeb3b; font-weight: bold;">critical</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">thinking</mark> skills and are trained in the use of the scientific method. <mark style="background-color: #ffeb3b; font-weight: bold;">critical</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">thinking</mark> is the active application of a set of skills to information for the understanding and evaluation of that informatio  <!-- HIGHLIGHTING HERE ONLY -->
                 </div>
             </div>
-
-        </div>
-        
-        <div class="highlighted-context">
-            <h3><i class="fas fa-highlighter"></i> Highlighted Context</h3>
-            <div class="context-box">
-                An education in psychology is valuable for a number of reasons. Psychology students hone critical thinking skills and are trained in the use of the scientific method. Critical thinking is the active application of a set of skills to information for the understanding and evaluation of that information. The evaluation of information—assessing its reliability and usefulness— is an important skill in a world full of competing “facts,” many of which are designed to be misleading. For example, critical thinking involves maintaining an attitude of skepticism, recognizing internal biases, making use of logical thinking, asking appropriate questions, and making observations. Psychology students also can develop better communication skills during the course of their undergraduate coursework (American Psychological Association, 2011). Together, these factors increase students’ scientific literacy and prepare students to critically evaluate the various sources of information they encounter. In addition to these broad-based skills, psychology students come to understand the complex factors that shape one’s behavior. They appreciate the interaction of our biology, our environment, and our experiences in determining who we are and how we will behave. They learn about basic principles that guide how we think and behave, and they come to recognize the tremendous diversity that exists across individuals and across cultural boundaries (American Psychological Association, 2011). LINK TO LEARNING Watch a brief video about some questions to consider before deciding to major in psychology (http://openstax.org/l/psycmajor) to learn more. 1.2 History of Psychology LEARNING OBJECTIVES By the end of this section, you will be able to: • Understand the importance of Wundt and James in the development of psychology • Appreciate Freud’s influence on psychology • Understand the basic tenets of Gestalt psychology • Appreciate the important role that behaviorism played in psychology’s history • Understand basic tenets of humanism • Understand how the cognitive revolution shifted psychology’s focus back to the mind Psychology is a relatively young science with its experimental roots in the 19th century, compared, for example, to human physiology, which dates much earlier. As mentioned, anyone interested in exploring issues related to the mind generally did so in a philosophical context prior to the 19th century. Two 19th century scholars, Wilhelm Wundt and William James, are generally credited as being the founders of psychology as a science and academic discipline that was distinct from philosophy. This section will provide an overview of the shifts in paradigms that have influenced psychology from Wundt and
-
-2002). Nash was the subject of the 2001 movie A Beautiful Mind. Why did these people have these experiences? How does the human brain work? And what is the connection between the brain’s internal processes and people’s external behaviors? This textbook will introduce you to various ways that the field of psychology has explored these questions. 1.1 What Is Psychology? LEARNING OBJECTIVES By the end of this section, you will be able to: • Define psychology • Understand the merits of an education in psychology What is creativity? What are prejudice and discrimination? What is consciousness? The field of psychology explores questions like these. Psychology refers to the scientific study of the mind and behavior. Psychologists use the scientific method to acquire knowledge. To apply the scientific method, a researcher with a question about how or why something happens will propose a tentative explanation, called a hypothesis, to explain the phenomenon. A hypothesis should fit into the context of a scientific theory, which is a broad explanation or group of explanations for some aspect of the natural world that is consistently supported by evidence over time. A theory is the best understanding we have of that part of the natural world. The researcher then makes observations or carries out an experiment to test the validity of the hypothesis. Those results are then published or presented at research conferences so that others can replicate or build on the results. Scientists test that which is perceivable and measurable. For example, the hypothesis that a bird sings because it is happy is not a hypothesis that can be tested since we have no way to measure the happiness of a bird. We must ask a different question, perhaps about the brain state of the bird, since this can be measured. However, we can ask individuals about whether they sing because they are happy since they are able to tell us. Thus, psychological science is empirical, based on measurable data. In general, science deals only with matter and energy, that is, those things that can be measured, and it cannot arrive at knowledge about values and morality. This is one reason why our scientific understanding of the mind is so limited, since thoughts, at least as we experience them, are neither matter nor energy. The scientific method is also a form of empiricism. An empirical method for acquiring knowledge is one based on observation,
-
-FIGURE 7.1 Thinking is an important part of our human experience, and one that has captivated people for centuries. Today, it is one area of psychological study. The 19th-century Girl with a Book by José Ferraz de Almeida Júnior, the 20th-century sculpture The Thinker by August Rodin, and Shi Ke’s 10th-century painting Huike Thinking all reflect the fascination with the process of human thought. (credit “middle”: modification of work by Jason Rogers; credit “right”: modification of work by Tang Zu-Ming) INTRODUCTION CHAPTER OUTLINE 7.1 What Is Cognition? 7.2 Language 7.3 Problem Solving 7.4 What Are Intelligence and Creativity? 7.5 Measures of Intelligence 7.6 The Source of Intelligence What is the best way to solve a problem? How does a person who has never seen or touched snow in real life develop an understanding of the concept of snow? How do young children acquire the ability to learn language with no formal instruction? Psychologists who study thinking explore questions like these and are called cognitive psychologists. Cognitive psychologists also study intelligence. What is intelligence, and how does it vary from person to person? Are “street smarts” a kind of intelligence, and if so, how do they relate to other types of intelligence? What does an IQ test really measure? These questions and more will be explored in this chapter as you study thinking and intelligence. In other chapters, we discussed the cognitive processes of perception, learning, and memory. In this chapter, we will focus on high-level cognitive processes. As a part of this discussion, we will consider thinking and briefly explore the development and use of language. We will also discuss problem solving and creativity before ending with a discussion of how intelligence is measured and how our biology and environments interact to affect intelligence. After finishing this chapter, you will have a greater appreciation of the higher- level cognitive processes that contribute to our distinctiveness as a species. 7 Thinking and Intelligence
-
-translating it into nervous impulses that are transmitted to the brain. The brain then processes this information and uses the relevant pieces to create thoughts, which can then be expressed through language or stored in memory for future use. To make this process more complex, the brain does not gather information from external environments only. When thoughts are formed, the mind synthesizes information from emotions and memories (Figure 7.2). Emotion and memory are powerful influences on both our thoughts and behaviors. 214 7 • Thinking and Intelligence Access for free at openstax.org
-
-your judgment representative sample subset of the population that accurately represents the general population role schema set of expectations that define the behaviors of a person occupying a particular role schema (plural = schemata) mental construct consisting of a cluster or collection of related concepts semantics process by which we derive meaning from morphemes and words standard deviation measure of variability that describes the difference between a set of scores and their mean standardization method of testing in which administration, scoring, and interpretation of results are consistent syntax manner by which words are organized into sentences trial and error problem-solving strategy in which multiple solutions are attempted until the correct one is found triarchic theory of intelligence Sternberg’s theory of intelligence; three facets of intelligence: practical, creative, and analytical working backwards heuristic in which you begin to solve a problem by focusing on the end result Summary 7.1 What Is Cognition? In this section, you were introduced to cognitive psychology, which is the study of cognition, or the brain’s ability to think, perceive, plan, analyze, and remember. Concepts and their corresponding prototypes help us quickly organize our thinking by creating categories into which we can sort new information. We also develop schemata, which are clusters of related concepts. Some schemata involve routines of thought and behavior, and these help us function properly in various situations without having to “think twice” about them. Schemata show up in social situations and routines of daily behavior. 7.2 Language Language is a communication system that has both a lexicon and a system of grammar. Language acquisition occurs naturally and effortlessly during the early stages of life, and this acquisition occurs in a predictable sequence for individuals around the world. Language has a strong influence on thought, and the concept of how language may influence cognition remains an area of study and debate in psychology. 7.3 Problem Solving Many different strategies exist for solving problems. Typical strategies include trial and error, applying algorithms, and using heuristics. To solve a large, complicated problem, it often helps to break the problem into smaller steps that can be accomplished individually, leading to an overall solution. Roadblocks to problem solving include a mental set, functional fixedness, and various biases that can cloud decision making skills. 7.4 What Are Intelligence and Creativity? Intelligence is a complex characteristic of cognition. Many theories have been developed to explain what intelligence is and
-
-Guilford, J. P. (1967). The nature of human intelligence. McGraw Hill. Heaton, S. (2004). Making the switch: Unlocking the mystery of the WISC-IV. Case Conference. University of Florida. Jensen, J. (2011). Phoneme acquisition: Infants and second language learners. The Language Teacher, 35(6), 24–28. Johnson, J. S., & Newport, E. L. (1989). Critical period effects in second language learning: The influence of maturational state on the acquisition of English as a second language. Cognitive Psychology, 21, 60–99. Kahneman, D. (2011). Thinking, fast and slow. Farrar, Straus, and Giroux. Kishyama, M. M., Boyce, W. T., Jimenez, A. M., Perry, L. M., & Knight, R. T. (2009). Socioeconomic disparities affect prefrontal function in children. Journal of Cognitive Neuroscience, 21(6), 1106–1115. Ko, L. (2016). Unwanted sterilization and eugenics programs in the United States. Independent Lens. http://www.pbs.org/independentlens/blog/unwanted-sterilization-and-eugenics-programs-in-the-united- states/ Larry P v. Riles, C-71-2270 RFP. (1979). Lenneberg, E. (1967). Biological foundations of language. Wiley. Liptak, A. (2008, January 19). Lawyer reveals secret, toppling death sentence. New York Times. http://www.nytimes.com/2008/01/19/us/19death.html?_r=0 Locke, E. A. (2005, April 14). Why emotional intelligence is an invalid concept. Journal of Organizational Behavior, 26, 425–431. Mayer, J. D., Salovey, P., & Caruso, D. (2004). Emotional intelligence: Theory, findings, and implications, Psychologic
-            </div>
-        </div>
-        
-        <div class="stats">
-            <div class="stat-item">
-                <div class="stat-label">Sections Used</div>
-                <div class="stat-value">9</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-label">Pages Referenced</div>
-                <div class="stat-value">11</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-label">Keywords Found</div>
-                <div class="stat-value">0</div>
-            </div>
-        </div>
-        
-        <div class="footer">
-            Generated from Psychology 2e Textbook • Question 50 • 2026-02-26
-        </div>
-    </div>
     
-    <!-- Font Awesome for icons -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
-</body>
-</html>
+            </div>
+            
+            <div class="highlighted-context">
+                <h3><i class="fas fa-highlighter"></i> Highlighted Context</h3>
+                <div class="context-box">
+                    An education in <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> is valuable for a number of reasons. <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> students hone <mark style="background-color: #ffeb3b; font-weight: bold;">critical</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">thinking</mark> skills and are trained in the use of the scientific method. <mark style="background-color: #ffeb3b; font-weight: bold;">critical</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">thinking</mark> is the active application of a set of skills to information for the understanding and evaluation of that information. The evaluation of information—assessing its reliability and usefulness— is an important skill in a world full of competing “facts,” many of which are designed to be misleading. For example, <mark style="background-color: #ffeb3b; font-weight: bold;">critical</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">thinking</mark> involves maintaining an attitude of skepticism, recognizing internal biases, making use of logical <mark style="background-color: #ffeb3b; font-weight: bold;">thinking</mark>, asking appropriate questions, and making observations. <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> students also can develop better communication skills during the course of their undergraduate coursework (American Psychological Association, 2011). Together, these factors increase students’ scientific literacy and prepare students to <mark style="background-color: #ffeb3b; font-weight: bold;">critical</mark>ly evaluate the various sources of information they encounter. In addition to these broad-based skills, <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> students come to understand the complex factors that shape one’s behavior. They appreciate the interaction of our biology, our environment, and our experiences in determining who we are and how we will behave. They learn about basic principles that guide how we think and behave, and they come to recognize the tremendous diversity that exists across individuals and across cultural boundaries (American Psychological Association, 2011). LINK TO LEARNING Watch a brief video about some questions to consider before deciding to major in <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> (http://openstax.org/l/psycmajor) to learn more. 1.2 History of <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> LEARNING OBJECTIVES By the end of this section, you will be able to: • Understand the importance of Wundt and James in the development of <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> • Appreciate Freud’s influence on <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> • Understand the basic tenets of Gestalt <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> • Appreciate the important <mark style="background-color: #ffeb3b; font-weight: bold;">role</mark> that behaviorism played in <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark>’s history • Understand basic tenets of humanism • Understand how the cognitive revolution shifted <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark>’s focus back to the mind <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> is a relatively young science with its experimental roots in the 19th century, compared, for example, to human physiology, which dates much earlier. As mentioned, anyone interested in exploring issues related to the mind generally did so in a philosophical context prior to the 19th century. Two 19th century scholars, Wilhelm Wundt and William James, are generally credited as being the founders of <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> as a science and academic discipline that was distinct from philosophy. This section will provide an overview of the shifts in paradigms that have influenced <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> from Wundt and
+
+2002). Nash was the subject of the 2001 movie A Beautiful Mind. Why did these people have these experiences? How does the human brain work? And what is the connection between the brain’s internal processes and people’s external behaviors? This textbook will introduce you to various ways that the field of <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> has explored these questions. 1.1 What Is <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark>? LEARNING OBJECTIVES By the end of this section, you will be able to: • Define <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> • Understand the merits of an education in <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> What is creativity? What are prejudice and discrimination? What is consciousness? The field of <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> explores questions like these. <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> refers to the scientific study of the mind and behavior. Psychologists use the scientific method to acquire knowledge. To apply the scientific method, a researcher with a question about how or why something happens will propose a tentative explanation, called a hypothesis, to explain the phenomenon. A hypothesis should fit into the context of a scientific theory, which is a broad explanation or group of explanations for some aspect of the natural world that is consistently supported by evidence over time. A theory is the best understanding we have of that part of the natural world. The researcher then makes observations or carries out an experiment to test the validity of the hypothesis. Those results are then published or presented at research conferences so that others can replicate or build on the results. Scientists test that which is perceivable and measurable. For example, the hypothesis that a bird sings because it is happy is not a hypothesis that can be tested since we have no way to measure the happiness of a bird. We must ask a different question, perhaps about the brain state of the bird, since this can be measured. However, we can ask individuals about whether they sing because they are happy since they are able to tell us. Thus, psychological science is empirical, based on measurable data. In general, science deals only with matter and energy, that is, those things that can be measured, and it cannot arrive at knowledge about values and morality. This is one reason why our scientific understanding of the mind is so limited, since thoughts, at least as we experience them, are neither matter nor energy. The scientific method is also a form of empiricism. An empirical method for acquiring knowledge is one based on observation,
+
+FIGURE 7.1 <mark style="background-color: #ffeb3b; font-weight: bold;">thinking</mark> is an important part of our human experience, and one that has captivated people for centuries. Today, it is one area of psychological study. The 19th-century Girl with a Book by José Ferraz de Almeida Júnior, the 20th-century sculpture The Thinker by August Rodin, and Shi Ke’s 10th-century painting Huike <mark style="background-color: #ffeb3b; font-weight: bold;">thinking</mark> all reflect the fascination with the process of human thought. (credit “middle”: modification of work by Jason Rogers; credit “right”: modification of work by Tang Zu-Ming) INTRODUCTION CHAPTER OUTLINE 7.1 What Is Cognition? 7.2 Language 7.3 Problem Solving 7.4 What Are Intelligence and Creativity? 7.5 Measures of Intelligence 7.6 The Source of Intelligence What is the best way to solve a problem? How does a person who has never seen or touched snow in real life develop an understanding of the concept of snow? How do young children acquire the ability to learn language with no formal instruction? Psychologists who study <mark style="background-color: #ffeb3b; font-weight: bold;">thinking</mark> explore questions like these and are called cognitive psychologists. Cognitive psychologists also study intelligence. What is intelligence, and how does it vary from person to person? Are “street smarts” a kind of intelligence, and if so, how do they relate to other types of intelligence? What does an IQ test really measure? These questions and more will be explored in this chapter as you study <mark style="background-color: #ffeb3b; font-weight: bold;">thinking</mark> and intelligence. In other chapters, we discussed the cognitive processes of perception, learning, and memory. In this chapter, we will focus on high-level cognitive processes. As a part of this discussion, we will consider <mark style="background-color: #ffeb3b; font-weight: bold;">thinking</mark> and briefly explore the development and use of language. We will also discuss problem solving and creativity before ending with a discussion of how intelligence is measured and how our biology and environments interact to affect intelligence. After finishing this chapter, you will have a greater appreciation of the higher- level cognitive processes that contribute to our distinctiveness as a species. 7 <mark style="background-color: #ffeb3b; font-weight: bold;">thinking</mark> and Intelligence
+
+translating it into nervous impulses that are transmitted to the brain. The brain then processes this information and uses the relevant pieces to create thoughts, which can then be expressed through language or stored in memory for future use. To make this process more complex, the brain does not gather information from external environments only. When thoughts are formed, the mind synthesizes information from emotions and memories (Figure 7.2). Emotion and memory are powerful influences on both our thoughts and behaviors. 214 7 • <mark style="background-color: #ffeb3b; font-weight: bold;">thinking</mark> and Intelligence Access for free at openstax.org
+
+your judgment representative sample subset of the population that accurately represents the general population <mark style="background-color: #ffeb3b; font-weight: bold;">role</mark> schema set of expectations that define the behaviors of a person occupying a particular <mark style="background-color: #ffeb3b; font-weight: bold;">role</mark> schema (plural = schemata) mental construct consisting of a cluster or collection of related concepts semantics process by which we derive meaning from morphemes and words standard deviation measure of variability that describes the difference between a set of scores and their mean standardization method of testing in which administration, scoring, and interpretation of results are consistent syntax manner by which words are organized into sentences trial and error problem-solving strategy in which multiple solutions are attempted until the correct one is found triarchic theory of intelligence Sternberg’s theory of intelligence; three facets of intelligence: practical, creative, and analytical working backwards heuristic in which you begin to solve a problem by focusing on the end result Summary 7.1 What Is Cognition? In this section, you were introduced to cognitive <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark>, which is the study of cognition, or the brain’s ability to think, perceive, plan, analyze, and remember. Concepts and their corresponding prototypes help us quickly organize our <mark style="background-color: #ffeb3b; font-weight: bold;">thinking</mark> by creating categories into which we can sort new information. We also develop schemata, which are clusters of related concepts. Some schemata involve routines of thought and behavior, and these help us function properly in various situations without having to “think twice” about them. Schemata show up in social situations and routines of daily behavior. 7.2 Language Language is a communication system that has both a lexicon and a system of grammar. Language acquisition occurs naturally and effortlessly during the early stages of life, and this acquisition occurs in a predictable sequence for individuals around the world. Language has a strong influence on thought, and the concept of how language may influence cognition remains an area of study and debate in <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark>. 7.3 Problem Solving Many different strategies exist for solving problems. Typical strategies include trial and error, applying algorithms, and using heuristics. To solve a large, complicated problem, it often helps to break the problem into smaller steps that can be accomplished individually, leading to an overall solution. Roadblocks to problem solving include a mental set, functional fixedness, and various biases that can cloud decision making skills. 7.4 What Are Intelligence and Creativity? Intelligence is a complex characteristic of cognition. Many theories have been developed to explain what intelligence is and
+
+Guilford, J. P. (1967). The nature of human intelligence. McGraw Hill. Heaton, S. (2004). Making the switch: Unlocking the mystery of the WISC-IV. Case Conference. University of Florida. Jensen, J. (2011). Phoneme acquisition: Infants and second language learners. The Language Teacher, 35(6), 24–28. Johnson, J. S., & Newport, E. L. (1989). <mark style="background-color: #ffeb3b; font-weight: bold;">critical</mark> period effects in second language learning: The influence of maturational state on the acquisition of English as a second language. Cognitive <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark>, 21, 60–99. Kahneman, D. (2011). <mark style="background-color: #ffeb3b; font-weight: bold;">thinking</mark>, fast and slow. Farrar, Straus, and Giroux. Kishyama, M. M., Boyce, W. T., Jimenez, A. M., Perry, L. M., & Knight, R. T. (2009). Socioeconomic disparities affect prefrontal function in children. Journal of Cognitive Neuroscience, 21(6), 1106–1115. Ko, L. (2016). Unwanted sterilization and eugenics programs in the United States. Independent Lens. http://www.pbs.org/independentlens/blog/unwanted-sterilization-and-eugenics-programs-in-the-united- states/ Larry P v. Riles, C-71-2270 RFP. (1979). Lenneberg, E. (1967). Biological foundations of language. Wiley. Liptak, A. (2008, January 19). Lawyer reveals secret, toppling death sentence. New York Times. http://www.nytimes.com/2008/01/19/us/19death.html?_r=0 Locke, E. A. (2005, April 14). Why emotional intelligence is an invalid concept. Journal of Organizational Behavior, 26, 425–431. Mayer, J. D., Salovey, P., & Caruso, D. (2004). Emotional intelligence: Theory, findings, and implications, Psychologic  <!-- HIGHLIGHTING HERE ONLY -->
+                </div>
+            </div>
+            
+            <div class="stats">
+                <div class="stat-item">
+                    <div class="stat-label">Sections Used</div>
+                    <div class="stat-value">9</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Pages Referenced</div>
+                    <div class="stat-value">11</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Keywords Found</div>
+                    <div class="stat-value">4</div>
+                </div>
+            </div>
+            
+            <div class="footer">
+                Generated from Psychology 2e Textbook • Question 50 • 2026-02-27
+            </div>
+        </div>
+        
+        <!-- Font Awesome for icons -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
+    </body>
+    </html>

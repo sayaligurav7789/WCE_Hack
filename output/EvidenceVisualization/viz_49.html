@@ -1,434 +1,398 @@
 <!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Evidence Visualization - Question 49</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            padding: 20px;
-        }
-        
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            overflow: hidden;
-        }
-        
-        .header {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            padding: 30px;
-        }
-        
-        .header h1 {
-            font-size: 24px;
-            margin-bottom: 10px;
-        }
-        
-        .header .question {
-            font-size: 18px;
-            opacity: 0.9;
-            background: rgba(255, 255, 255, 0.2);
-            padding: 15px;
-            border-radius: 10px;
-            margin-top: 10px;
-            line-height: 1.5;
-        }
-        
-        .keywords-bar {
-            background: #f0f0f0;
-            padding: 15px 30px;
-            border-bottom: 1px solid #e0e0e0;
-        }
-        
-        .keywords-title {
-            font-size: 14px;
-            color: #666;
-            margin-bottom: 10px;
-            font-weight: 600;
-        }
-        
-        .keyword-badge {
-            display: inline-block;
-            background: #ffeb3b;
-            color: #333;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 13px;
-            margin: 0 5px 5px 0;
-            font-weight: 500;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-        
-        .answer-section {
-            padding: 30px;
-            background: #f8f9fa;
-            border-bottom: 1px solid #e0e0e0;
-        }
-        
-        .answer-section h3 {
-            color: #333;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .answer-section h3 i {
-            color: #667eea;
-        }
-        
-        .answer-content {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            line-height: 1.8;
-            color: #444;
-            border-left: 4px solid #667eea;
-        }
-        
-        .answer-content mark {
-            background-color: #ffeb3b;
-            padding: 2px 0;
-            font-weight: 500;
-        }
-        
-        .evidence-section {
-            padding: 30px;
-        }
-        
-        .evidence-section h3 {
-            color: #333;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .evidence-section h3 i {
-            color: #667eea;
-        }
-        
-        .evidence-card {
-            background: #f8f9fa;
-            border-radius: 10px;
-            padding: 20px;
-            margin-bottom: 20px;
-            border-left: 4px solid #667eea;
-        }
-        
-        .evidence-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-        
-        .section-name {
-            font-weight: 600;
-            color: #333;
-            background: #e8eaf6;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 14px;
-        }
-        
-        .page-number {
-            color: #666;
-            background: white;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 14px;
-            border: 1px solid #e0e0e0;
-        }
-        
-        .relevance {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 14px;
-        }
-        
-        .term-badge {
-            display: inline-block;
-            background: #ffeb3b;
-            color: #333;
-            padding: 3px 10px;
-            border-radius: 15px;
-            font-size: 12px;
-            margin: 0 5px 5px 0;
-            font-weight: 500;
-        }
-        
-        .evidence-text {
-            background: white;
-            padding: 15px;
-            border-radius: 8px;
-            color: #555;
-            line-height: 1.6;
-            margin: 15px 0 0 0;
-            border: 1px solid #e0e0e0;
-        }
-        
-        .evidence-text mark {
-            background-color: #ffeb3b;
-            padding: 2px 0;
-            font-weight: 500;
-        }
-        
-        .highlighted-context {
-            padding: 30px;
-            background: #f8f9fa;
-            border-top: 1px solid #e0e0e0;
-            border-bottom: 1px solid #e0e0e0;
-        }
-        
-        .highlighted-context h3 {
-            color: #333;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .context-box {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            max-height: 400px;
-            overflow-y: auto;
-            border: 1px solid #e0e0e0;
-            line-height: 1.8;
-            font-size: 14px;
-        }
-        
-        .context-box mark {
-            background-color: #ffeb3b;
-            padding: 2px 0;
-            font-weight: 500;
-        }
-        
-        .stats {
-            display: flex;
-            gap: 15px;
-            padding: 20px 30px;
-            background: white;
-            flex-wrap: wrap;
-        }
-        
-        .stat-item {
-            background: #f8f9fa;
-            padding: 10px 20px;
-            border-radius: 10px;
-            flex: 1;
-            min-width: 120px;
-            text-align: center;
-            border: 1px solid #e0e0e0;
-        }
-        
-        .stat-label {
-            font-size: 12px;
-            color: #666;
-            margin-bottom: 5px;
-        }
-        
-        .stat-value {
-            font-size: 24px;
-            font-weight: 600;
-            color: #667eea;
-        }
-        
-        .footer {
-            padding: 20px 30px;
-            background: #f0f0f0;
-            text-align: center;
-            color: #666;
-            font-size: 14px;
-            border-top: 1px solid #e0e0e0;
-        }
-        
-        @media (max-width: 768px) {
-            .header {
+    <html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Evidence Visualization - Question 49</title>
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+            
+            body {
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                min-height: 100vh;
                 padding: 20px;
             }
             
-            .answer-section,
-            .evidence-section,
-            .highlighted-context {
+            .container {
+                max-width: 1000px;
+                margin: 0 auto;
+                background: white;
+                border-radius: 20px;
+                box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+                overflow: hidden;
+            }
+            
+            .header {
+                background: linear-gradient(135deg, #667eea, #764ba2);
+                color: white;
+                padding: 30px;
+            }
+            
+            .header h1 {
+                font-size: 24px;
+                margin-bottom: 10px;
+            }
+            
+            .header .question {
+                font-size: 18px;
+                opacity: 0.9;
+                background: rgba(255, 255, 255, 0.2);
+                padding: 15px;
+                border-radius: 10px;
+                margin-top: 10px;
+                line-height: 1.5;
+            }
+            
+            .keywords-bar {
+                background: #f0f0f0;
+                padding: 15px 30px;
+                border-bottom: 1px solid #e0e0e0;
+            }
+            
+            .keywords-title {
+                font-size: 14px;
+                color: #666;
+                margin-bottom: 10px;
+                font-weight: 600;
+            }
+            
+            .keyword-badge {
+                display: inline-block;
+                background: #ffeb3b;
+                color: #333;
+                padding: 5px 12px;
+                border-radius: 20px;
+                font-size: 13px;
+                margin: 0 5px 5px 0;
+                font-weight: 500;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            }
+            
+            .answer-section {
+                padding: 30px;
+                background: #f8f9fa;
+                border-bottom: 1px solid #e0e0e0;
+            }
+            
+            .answer-section h3 {
+                color: #333;
+                margin-bottom: 15px;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+            
+            .answer-section h3 i {
+                color: #667eea;
+            }
+            
+            .answer-content {
+                background: white;
                 padding: 20px;
+                border-radius: 10px;
+                line-height: 1.8;
+                color: #444;
+                border-left: 4px solid #667eea;
+            }
+            
+            /* NO mark styling for answer - it stays plain */
+            
+            .evidence-section {
+                padding: 30px;
+            }
+            
+            .evidence-section h3 {
+                color: #333;
+                margin-bottom: 20px;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+            
+            .evidence-section h3 i {
+                color: #667eea;
+            }
+            
+            .evidence-card {
+                background: #f8f9fa;
+                border-radius: 10px;
+                padding: 20px;
+                margin-bottom: 20px;
+                border-left: 4px solid #667eea;
             }
             
             .evidence-header {
-                flex-direction: column;
-                align-items: flex-start;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 15px;
+                flex-wrap: wrap;
+                gap: 10px;
             }
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <div class="header">
-            <h1>📚 Evidence Visualization</h1>
-            <div class="question">
-                <strong>Question 49:</strong> 
+            
+            .section-name {
+                font-weight: 600;
+                color: #333;
+                background: #e8eaf6;
+                padding: 5px 12px;
+                border-radius: 20px;
+                font-size: 14px;
+            }
+            
+            .page-number {
+                color: #666;
+                background: white;
+                padding: 5px 12px;
+                border-radius: 20px;
+                font-size: 14px;
+                border: 1px solid #e0e0e0;
+            }
+            
+            .term-badge {
+                display: inline-block;
+                background: #ffeb3b;
+                color: #333;
+                padding: 3px 10px;
+                border-radius: 15px;
+                font-size: 12px;
+                margin: 0 5px 5px 0;
+                font-weight: 500;
+            }
+            
+            .evidence-text {
+                background: white;
+                padding: 15px;
+                border-radius: 8px;
+                color: #555;
+                line-height: 1.6;
+                margin: 15px 0 0 0;
+                border: 1px solid #e0e0e0;
+            }
+            
+            .evidence-text mark {
+                background-color: #ffeb3b;
+                padding: 2px 0;
+                font-weight: 500;
+            }
+            
+            .highlighted-context {
+                padding: 30px;
+                background: #f8f9fa;
+                border-top: 1px solid #e0e0e0;
+                border-bottom: 1px solid #e0e0e0;
+            }
+            
+            .highlighted-context h3 {
+                color: #333;
+                margin-bottom: 15px;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+            
+            .context-box {
+                background: white;
+                padding: 20px;
+                border-radius: 10px;
+                max-height: 400px;
+                overflow-y: auto;
+                border: 1px solid #e0e0e0;
+                line-height: 1.8;
+                font-size: 14px;
+            }
+            
+            .context-box mark {
+                background-color: #ffeb3b;
+                padding: 2px 0;
+                font-weight: 500;
+            }
+            
+            .stats {
+                display: flex;
+                gap: 15px;
+                padding: 20px 30px;
+                background: white;
+                flex-wrap: wrap;
+            }
+            
+            .stat-item {
+                background: #f8f9fa;
+                padding: 10px 20px;
+                border-radius: 10px;
+                flex: 1;
+                min-width: 120px;
+                text-align: center;
+                border: 1px solid #e0e0e0;
+            }
+            
+            .stat-label {
+                font-size: 12px;
+                color: #666;
+                margin-bottom: 5px;
+            }
+            
+            .stat-value {
+                font-size: 24px;
+                font-weight: 600;
+                color: #667eea;
+            }
+            
+            .footer {
+                padding: 20px 30px;
+                background: #f0f0f0;
+                text-align: center;
+                color: #666;
+                font-size: 14px;
+                border-top: 1px solid #e0e0e0;
+            }
+            
+            @media (max-width: 768px) {
+                .header {
+                    padding: 20px;
+                }
+                
+                .answer-section,
+                .evidence-section,
+                .highlighted-context {
+                    padding: 20px;
+                }
+                
+                .evidence-header {
+                    flex-direction: column;
+                    align-items: flex-start;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="header">
+                <h1>📚 Evidence Visualization</h1>
+                <div class="question">
+                    <strong>Question 49:</strong> What is the impact of cultural diversity on psychological research?
+                </div>
             </div>
-        </div>
-        
-        <div class="keywords-bar">
-            <div class="keywords-title">🔑 Extracted Keywords:</div>
-
-        </div>
-        
-        <div class="answer-section">
-            <h3><i class="fas fa-robot"></i> Generated Answer</h3>
-            <div class="answer-content">
-                The impact of cultural diversity on psychological research is significant. Cultural diversity affects the way people think, behave, and respond to different situations, which in turn affects the results of psychological research. For instance, individualistic cultures, typically found in Western countries, focus on individual autonomy and achievement, whereas collectivist cultures, commonly found in East Asian, Latin American, and African countries, prioritize group harmony and social relationships. This cultural difference influences the way people perceive and respond to various stimuli, including visual information, job turnover rates, and even personality traits.
+            
+            <div class="keywords-bar">
+                <div class="keywords-title">🔑 Extracted Keywords:</div>
+    <span class="keyword-badge">impact</span><span class="keyword-badge">cultural</span><span class="keyword-badge">diversity</span><span class="keyword-badge">psychological</span><span class="keyword-badge">research</span>
+            </div>
+            
+            <div class="answer-section">
+                <h3><i class="fas fa-robot"></i> Generated Answer</h3>
+                <div class="answer-content">
+                    The impact of cultural diversity on psychological research is significant. Cultural diversity affects the way people think, behave, and respond to different situations, which in turn affects the results of psychological research. For instance, individualistic cultures, typically found in Western countries, focus on individual autonomy and achievement, whereas collectivist cultures, commonly found in East Asian, Latin American, and African countries, prioritize group harmony and social relationships. This cultural difference influences the way people perceive and respond to various stimuli, including visual information, job turnover rates, and even personality traits.
 
 Moreover, cultural diversity highlights the importance of considering cultural context in psychological research. Researchers must be aware of the cultural biases and limitations of their theories, methods, and instruments to ensure that their findings are culturally valid and applicable. This awareness is crucial in developing culturally sensitive and effective interventions, therapies, and assessments.
 
 In addition, cultural diversity underscores the need for multicultural counseling and therapy, which recognizes the impact of cultural and social norms on behavior and mental health. Therapists must be trained to work with clients from diverse cultural backgrounds, taking into account their unique cultural values, beliefs, and experiences.
 
-Overall, cultural diversity is a critical factor in psychological research, and researchers must strive to incorporate cultural sensitivity and awareness into their work to ensure that their findings are relevant, applicable, and beneficial to diverse populations.
+Overall, cultural diversity is a critical factor in psychological research, and researchers must strive to incorporate cultural sensitivity and awareness into their work to ensure that their findings are relevant, applicable, and beneficial to diverse populations.  <!-- NO HIGHLIGHTING HERE -->
+                </div>
             </div>
-        </div>
-        
-        <div class="evidence-section">
-            <h3><i class="fas fa-book"></i> Evidence by Section</h3>
-
+            
+            <div class="evidence-section">
+                <h3><i class="fas fa-book"></i> Evidence by Section</h3>
+    
             <div class="evidence-card">
                 <div class="evidence-header">
                     <span class="section-name">📖 06.003
 Blann</span>
                     <span class="page-number">📄 Page 28</span>
-                    <span class="relevance">⭐ Relevance: 0.7</span>
-                </div>
-                <div>
-
                 </div>
                 <div class="evidence-text">
-                    This section discusses 06.003
-blann. The content here is relevant to your question about ...
+                    by Arian Zwegers; credit b: modification of work by "conbon33"/Flickr; credit c: modification of work by Anja Disseldorp) Why do you think this is the case? Collectivistic cultures, which tend to be found in east Asian countries and in Latin American and African countries, focus on the group more th  <!-- HIGHLIGHTING HERE ONLY -->
                 </div>
             </div>
-
+    
             <div class="evidence-card">
                 <div class="evidence-header">
                     <span class="section-name">📖 1.1344935
 Thompson</span>
                     <span class="page-number">📄 Page 398</span>
-                    <span class="relevance">⭐ Relevance: 0.75</span>
-                </div>
-                <div>
-
                 </div>
                 <div class="evidence-text">
-                    This section discusses 1.1344935
-thompson. The content here is relevant to your question about ...
+                    by Arian Zwegers; credit b: modification of work by "conbon33"/Flickr; credit c: modification of work by Anja Disseldorp) Why do you think this is the case? Collectivistic cultures, which tend to be found in east Asian countries and in Latin American and African countries, focus on the group more th  <!-- HIGHLIGHTING HERE ONLY -->
                 </div>
             </div>
-
+    
             <div class="evidence-card">
                 <div class="evidence-header">
                     <span class="section-name">📖 1.9 Noam Chomsky was very influential in beginning the cognitive revolution</span>
                     <span class="page-number">📄 Page 402</span>
-                    <span class="relevance">⭐ Relevance: 0.8</span>
-                </div>
-                <div>
-
                 </div>
                 <div class="evidence-text">
-                    This section discusses 1.9 noam chomsky was very influential in beginning the cognitive revolution. The content here is relevant to your question about ...
+                    by Arian Zwegers; credit b: modification of work by "conbon33"/Flickr; credit c: modification of work by Anja Disseldorp) Why do you think this is the case? Collectivistic cultures, which tend to be found in east Asian countries and in Latin American and African countries, focus on the group more th  <!-- HIGHLIGHTING HERE ONLY -->
                 </div>
             </div>
-
+    
             <div class="evidence-card">
                 <div class="evidence-header">
                     <span class="section-name">📖 11.18 This image from the Thematic Apperception Tests</span>
                     <span class="page-number">📄 Page 405</span>
-                    <span class="relevance">⭐ Relevance: 0.85</span>
-                </div>
-                <div>
-
                 </div>
                 <div class="evidence-text">
-                    This section discusses 11.18 this image from the thematic apperception tests. The content here is relevant to your question about ...
+                    by Arian Zwegers; credit b: modification of work by "conbon33"/Flickr; credit c: modification of work by Anja Disseldorp) Why do you think this is the case? Collectivistic cultures, which tend to be found in east Asian countries and in Latin American and African countries, focus on the group more th  <!-- HIGHLIGHTING HERE ONLY -->
                 </div>
             </div>
-
+    
             <div class="evidence-card">
                 <div class="evidence-header">
                     <span class="section-name">📖 11.4 Learning Approaches
 Behavioral theorists view personality as significantly shaped and impacted by the reinforcements and
 consequences outside of the organism</span>
                     <span class="page-number">📄 Page 414</span>
-                    <span class="relevance">⭐ Relevance: 0.9</span>
-                </div>
-                <div>
-
                 </div>
                 <div class="evidence-text">
-                    This section discusses 11.4 learning approaches
-behavioral theorists view personality as significantly shaped and impacted by the reinforcements and
-consequences outside of the organism. The content here is relevant to your question about ...
+                    by Arian Zwegers; credit b: modification of work by "conbon33"/Flickr; credit c: modification of work by Anja Disseldorp) Why do you think this is the case? Collectivistic cultures, which tend to be found in east Asian countries and in Latin American and African countries, focus on the group more th  <!-- HIGHLIGHTING HERE ONLY -->
                 </div>
             </div>
-
-        </div>
-        
-        <div class="highlighted-context">
-            <h3><i class="fas fa-highlighter"></i> Highlighted Context</h3>
-            <div class="context-box">
-                by Arian Zwegers; credit b: modification of work by "conbon33"/Flickr; credit c: modification of work by Anja Disseldorp) Why do you think this is the case? Collectivistic cultures, which tend to be found in east Asian countries and in Latin American and African countries, focus on the group more than on the individual (Nisbett, Peng, Choi, & 402 12 • Social Psychology Access for free at openstax.org
-
-dependence: A meta-analysis of randomized controlled trials. Alcohol and Alcoholism, 36(6), 544–552. Sue, D. W. (2001). Multidimensional facets of cultural competence. Counseling Psychologist, 29(6), 790–821. Sue, D. W. (2004). Multicultural counseling and therapy (MCT). In J. A. Banks and C. Banks (Eds.), Handbook of research on multicultural education (2nd ed., pp. 813–827). Jossey-Bass. Sue, D. W., & Sue, D. (2007). Counseling the culturally different: Theory and practice (5th ed.). Wiley. Sussman, L. K., Robins, L. N., & Earls, F. (1987). Treatment–seeking for depression by Black and White Americans. Social Science & Medicine, 24, 187–196. Szasz, T. S. (1960). The Myth of Mental Illness. American Psychologist, 15, 113–118. Thomas, K. C., & Snowden, L. R. (2002). Minority response to health insurance coverage for mental health services. Journal of Mental Health Policy and Economics, 4, 35–41. Tiffany, F. (2012/1891). Life of Dorothea Lynde Dix (7th ed.). Houghton, Mifflin. Torrey, E. F. (1997). Out of the shadows: Confronting America's mental illness crisis. Wiley. Torrey, E. F., Zdanowicz, M. T., Kennard, A. D., Lamb, H. R., Eslinger, D. F., Biasotti, M. C., & Fuller, D. A. (2014, April 8). The treatment of persons with mental illness in prisons and jails: A state survey. Treatment Advocacy Center. http://tacreports.org/storage/documents/treatment-behind-bars/treatment-behind- bars.pdf Townes D. L., Cunningham N. J., & Chavez-Korell, S. (2009). Reexaming the relationships between racial identity, cultural mistrust, help-seeking attitudes, and preference for a Black counselor. Journal of Counseling Psychology, 56(2), 330–336. U.S. Department of Agriculture. (2013, December 10). USDA announces support for mental health facilities in rural areas [Press release No. 0234.13]. http://www.usda.gov/wps/portal/usda/usdahome?contentid=2013/ 12/0234.xml U.S. Department of Health and Human Services. (1999). Mental health: A report of the Surgeon General. Rockville, MD: U.S. Department of Health and Human Services, Substance Abuse and Mental Health Services Administration, Center for Mental Health Services, National Institutes of Health, National Institute of Mental Health. U.S. Department of Health and Human Services, Health Resources and Services Administration, Office of Rural Health Policy. (2005). Mental health and rural America: 1984-2005. ftp://ftp.hrsa.gov/ruralhealth/ RuralMentalHealth.pdf U.S. Department of Health and Human Services, Substance Abuse and Mental Health Services Administration, Center for Behavioral Health Statistics and Quality. (2017). Results from the 2016 National Survey on Drug Use and Health: Mental Health Findings. https://www.samhsa.gov/data/sites/default/files/NSDUH- DetTabs-2016/NSDUH-DetTabs-2016.pdf U.S. Department of Health and Human Services, Substance Abuse and Mental Health Services Administration, Center for Behavioral Health Statistics and Quality. (2011, September). Results from the 2010 National Survey on Drug
-
-their own subculture within the organization’s culture. Ostroff, Kinicki, and Tamkins (2003) identify three layers in organizational culture: observable artifacts, espoused values, and basic assumptions. Observable artifacts are the symbols, language (jargon, slang, and humor), narratives (stories and legends), and practices (rituals) that represent the underlying cultural assumptions. Espoused values are concepts or beliefs that the management or the entire organization endorses. They are the rules that allow employees to know which actions they should take in different situations and which information they should adhere to. These basic assumptions generally are unobservable and unquestioned. Researchers have developed survey instruments to measure organizational culture. With the workforce being a global marketplace, your company may have a supplier in Korea and another in Honduras and have employees in the United States, China, and South Africa. You may have coworkers of different religious, ethnic, or racial backgrounds than yourself. Your coworkers may be from different places around the globe. Many workplaces offer diversity training to help everyone involved bridge and understand cultural differences. Diversity training educates participants about cultural differences with the goal of improving teamwork. There is always the potential for prejudice between members of two groups, but the evidence suggests that simply working together, particularly if the conditions of work are set carefully that such prejudice can be reduced or eliminated. Pettigrew and Tropp (2006) conducted a meta-analysis to examine the question of whether contact between groups reduced prejudice between those groups. They found that there was a moderate but significant effect. They also found that, as previously theorized, the effect was enhanced when the two groups met under conditions in which they have equal standing, common goals, cooperation between the groups, and especially support on the part of the institution or authorities for the contact. 474 13 • Industrial-Organizational Psychology Access for free at openstax.org
-
-develop strategies to effectively address the needs of various populations for which Eurocentric therapies have limited application (Sue, 2004). For example, a counselor whose treatment focuses on individual decision making may be ineffective at helping a Chinese client with a collectivist approach to problem solving (Sue, 2004). Multicultural counseling and therapy aims to offer both a helping role and process that uses modalities and defines goals consistent with the life experiences and cultural values of clients. It strives to recognize client identities to include individual, group, and universal dimensions, advocate the use of universal and culture- specific strategies and roles in the healing process, and balances the importance of individualism and collectivism in the assessment, diagnosis, and treatment of client and client systems (Sue, 2001). This therapeutic perspective integrates the impact of cultural and social norms, starting at the beginning of treatment. Therapists who use this perspective work with clients to obtain and integrate information about their cultural patterns into a unique treatment approach based on their particular situation (Stewart, Simmons, & Habibpour, 2012). Sociocultural therapy can include individual, group, family, and couples treatment modalities. 16.5 • The Sociocultural Model and Therapy Utilization 623
-
-Norenzayan, 2001). This focus on others provides a broader perspective that takes into account both situational and cultural influences on behavior; thus, a more nuanced explanation of the causes of others’ behavior becomes more likely. Table 12.1 summarizes compares individualistic and collectivist cultures. Characteristics of Individualistic and Collectivistic Cultures Individualistic Culture Collectivistic Culture Achievement oriented Relationship oriented Focus on autonomy Focus on group harmony Dispositional perspective Situational perspective Independent Interdependent Analytic thinking style Holistic thinking style TABLE 12.1 Masuda and Nisbett (2001) demonstrated that the kinds of information that people attend to when viewing visual stimuli (e.g., an aquarium scene) can differ significantly depending on whether the observer comes from a collectivistic versus an individualistic culture. Japanese participants were much more likely to recognize objects that were presented when they occurred in the same context in which they were originally viewed. Manipulating the context in which object recall occurred had no such impact on American participants. Other researchers have shown similar differences across cultures. For example, Zhang, Fung, Stanley, Isaacowitz, and Zhang (2014) demonstrated differences in the ways that holistic thinking might develop between Chinese and American participants, and Ramesh and Gelfand (2010) demonstrated that job turnover rates are more related to the fit between a person and the organization in which they work in an Indian sample, but the fit between the person and their specific job was more predictive of turnover in an American sample. Actor-Observer Bias Returning to our earlier example, Jamie was laid off, but an observer would not know. So a naïve observer would tend to attribute Jamie’s hostile behavior to Jamie’s disposition rather than to the true, situational cause. Why do you think we underestimate the influence of the situation on the behaviors of others? One reason is that we often don’t have all the information we need to make a situational explanation for another person’s behavior. The only information we might have is what is observable. Due to this lack of information we have a tendency to assume the behavior is due to a dispositional, or internal, factor. When it comes to explaining our own behaviors, however, we have much more information available to us. If you came home from school or work angry and yelled at your dog or a loved one, what would your explanation be? You might say you were very tired or feeling unwell and needed quiet time—a situational
-
-individualism (Oyserman, Coon, & Kemmelmier, 2002). People who live in collectivist cultures value social harmony, respectfulness, and group needs over individual needs. Individuals who live in countries in Asia, Africa, and South America score high on collectivism (Hofstede, 2001; Triandis, 1995). These values influence personality. For example, Yang (2006) found that people in individualist cultures displayed more personally oriented personality traits, whereas people in collectivist cultures displayed more socially oriented personality traits. Frewer and Bleus (1991) conducted a study of the Eysenk Personality Inventory in a collectivist culture using Papua New Guinean university students. They found that the results of the personality inventory were only relevant when analyzed within the context of a collectivist society. Similarly, Dana (1986) suggested that personality assessment services for Native Americans are often provided without a proper recognition of culture-specific responses and a tribe-specific frame of reference. Assessors need to have more than a general knowledge of history, tribal differences, contemporary culture on reservations, and levels of acculturation in order to interpret psychological test responses with a minimal bias. Approaches to Studying Personality in a Cultural Context There are three approaches that can be used to study personality in a cultural context, the cultural- comparative approach; the indigenous approach; and the combined approach, which incorporates elements of both views. Since ideas about personality have a Western basis, the cultural-comparative approach seeks to test Western ideas about personality in other cultures to determine whether they can be generalized and if they have cultural validity (Cheung van de Vijver, & Leong, 2011). For example, recall from the previous section on the trait perspective that researchers used the cultural-comparative approach to test the universality of McCrae and Costa’s Five Factor Model. They found applicability in numerous cultures around the world, with the Big Five factors being stable in many cultures (McCrae & Costa, 1997; McCrae et al., 2005). The indigenous approach came about in reaction to the dominance of Western approaches to the study of personality in non- Western settings (Cheung et al., 2011). Because Western-based personality assessments cannot fully capture the personality constructs 
-            </div>
-        </div>
-        
-        <div class="stats">
-            <div class="stat-item">
-                <div class="stat-label">Sections Used</div>
-                <div class="stat-value">12</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-label">Pages Referenced</div>
-                <div class="stat-value">12</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-label">Keywords Found</div>
-                <div class="stat-value">0</div>
-            </div>
-        </div>
-        
-        <div class="footer">
-            Generated from Psychology 2e Textbook • Question 49 • 2026-02-26
-        </div>
-    </div>
     
-    <!-- Font Awesome for icons -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
-</body>
-</html>
+            </div>
+            
+            <div class="highlighted-context">
+                <h3><i class="fas fa-highlighter"></i> Highlighted Context</h3>
+                <div class="context-box">
+                    by Arian Zwegers; credit b: modification of work by "conbon33"/Flickr; credit c: modification of work by Anja Disseldorp) Why do you think this is the case? Collectivistic cultures, which tend to be found in east Asian countries and in Latin American and African countries, focus on the group more than on the individual (Nisbett, Peng, Choi, & 402 12 • Social Psychology Access for free at openstax.org
+
+dependence: A meta-analysis of randomized controlled trials. Alcohol and Alcoholism, 36(6), 544–552. Sue, D. W. (2001). Multidimensional facets of <mark style="background-color: #ffeb3b; font-weight: bold;">cultural</mark> competence. Counseling Psychologist, 29(6), 790–821. Sue, D. W. (2004). Multi<mark style="background-color: #ffeb3b; font-weight: bold;">cultural</mark> counseling and therapy (MCT). In J. A. Banks and C. Banks (Eds.), Handbook of <mark style="background-color: #ffeb3b; font-weight: bold;">research</mark> on multi<mark style="background-color: #ffeb3b; font-weight: bold;">cultural</mark> education (2nd ed., pp. 813–827). Jossey-Bass. Sue, D. W., & Sue, D. (2007). Counseling the <mark style="background-color: #ffeb3b; font-weight: bold;">cultural</mark>ly different: Theory and practice (5th ed.). Wiley. Sussman, L. K., Robins, L. N., & Earls, F. (1987). Treatment–seeking for depression by Black and White Americans. Social Science & Medicine, 24, 187–196. Szasz, T. S. (1960). The Myth of Mental Illness. American Psychologist, 15, 113–118. Thomas, K. C., & Snowden, L. R. (2002). Minority response to health insurance coverage for mental health services. Journal of Mental Health Policy and Economics, 4, 35–41. Tiffany, F. (2012/1891). Life of Dorothea Lynde Dix (7th ed.). Houghton, Mifflin. Torrey, E. F. (1997). Out of the shadows: Confronting America's mental illness crisis. Wiley. Torrey, E. F., Zdanowicz, M. T., Kennard, A. D., Lamb, H. R., Eslinger, D. F., Biasotti, M. C., & Fuller, D. A. (2014, April 8). The treatment of persons with mental illness in prisons and jails: A state survey. Treatment Advocacy Center. http://tacreports.org/storage/documents/treatment-behind-bars/treatment-behind- bars.pdf Townes D. L., Cunningham N. J., & Chavez-Korell, S. (2009). Reexaming the relationships between racial identity, <mark style="background-color: #ffeb3b; font-weight: bold;">cultural</mark> mistrust, help-seeking attitudes, and preference for a Black counselor. Journal of Counseling Psychology, 56(2), 330–336. U.S. Department of Agriculture. (2013, December 10). USDA announces support for mental health facilities in rural areas [Press release No. 0234.13]. http://www.usda.gov/wps/portal/usda/usdahome?contentid=2013/ 12/0234.xml U.S. Department of Health and Human Services. (1999). Mental health: A report of the Surgeon General. Rockville, MD: U.S. Department of Health and Human Services, Substance Abuse and Mental Health Services Administration, Center for Mental Health Services, National Institutes of Health, National Institute of Mental Health. U.S. Department of Health and Human Services, Health Resources and Services Administration, Office of Rural Health Policy. (2005). Mental health and rural America: 1984-2005. ftp://ftp.hrsa.gov/ruralhealth/ RuralMentalHealth.pdf U.S. Department of Health and Human Services, Substance Abuse and Mental Health Services Administration, Center for Behavioral Health Statistics and Quality. (2017). Results from the 2016 National Survey on Drug Use and Health: Mental Health Findings. https://www.samhsa.gov/data/sites/default/files/NSDUH- DetTabs-2016/NSDUH-DetTabs-2016.pdf U.S. Department of Health and Human Services, Substance Abuse and Mental Health Services Administration, Center for Behavioral Health Statistics and Quality. (2011, September). Results from the 2010 National Survey on Drug
+
+their own subculture within the organization’s culture. Ostroff, Kinicki, and Tamkins (2003) identify three layers in organizational culture: observable artifacts, espoused values, and basic assumptions. Observable artifacts are the symbols, language (jargon, slang, and humor), narratives (stories and legends), and practices (rituals) that represent the underlying <mark style="background-color: #ffeb3b; font-weight: bold;">cultural</mark> assumptions. Espoused values are concepts or beliefs that the management or the entire organization endorses. They are the rules that allow employees to know which actions they should take in different situations and which information they should adhere to. These basic assumptions generally are unobservable and unquestioned. <mark style="background-color: #ffeb3b; font-weight: bold;">research</mark>ers have developed survey instruments to measure organizational culture. With the workforce being a global marketplace, your company may have a supplier in Korea and another in Honduras and have employees in the United States, China, and South Africa. You may have coworkers of different religious, ethnic, or racial backgrounds than yourself. Your coworkers may be from different places around the globe. Many workplaces offer <mark style="background-color: #ffeb3b; font-weight: bold;">diversity</mark> training to help everyone involved bridge and understand <mark style="background-color: #ffeb3b; font-weight: bold;">cultural</mark> differences. <mark style="background-color: #ffeb3b; font-weight: bold;">diversity</mark> training educates participants about <mark style="background-color: #ffeb3b; font-weight: bold;">cultural</mark> differences with the goal of improving teamwork. There is always the potential for prejudice between members of two groups, but the evidence suggests that simply working together, particularly if the conditions of work are set carefully that such prejudice can be reduced or eliminated. Pettigrew and Tropp (2006) conducted a meta-analysis to examine the question of whether contact between groups reduced prejudice between those groups. They found that there was a moderate but significant effect. They also found that, as previously theorized, the effect was enhanced when the two groups met under conditions in which they have equal standing, common goals, cooperation between the groups, and especially support on the part of the institution or authorities for the contact. 474 13 • Industrial-Organizational Psychology Access for free at openstax.org
+
+develop strategies to effectively address the needs of various populations for which Eurocentric therapies have limited application (Sue, 2004). For example, a counselor whose treatment focuses on individual decision making may be ineffective at helping a Chinese client with a collectivist approach to problem solving (Sue, 2004). Multi<mark style="background-color: #ffeb3b; font-weight: bold;">cultural</mark> counseling and therapy aims to offer both a helping role and process that uses modalities and defines goals consistent with the life experiences and <mark style="background-color: #ffeb3b; font-weight: bold;">cultural</mark> values of clients. It strives to recognize client identities to include individual, group, and universal dimensions, advocate the use of universal and culture- specific strategies and roles in the healing process, and balances the importance of individualism and collectivism in the assessment, diagnosis, and treatment of client and client systems (Sue, 2001). This therapeutic perspective integrates the <mark style="background-color: #ffeb3b; font-weight: bold;">impact</mark> of <mark style="background-color: #ffeb3b; font-weight: bold;">cultural</mark> and social norms, starting at the beginning of treatment. Therapists who use this perspective work with clients to obtain and integrate information about their <mark style="background-color: #ffeb3b; font-weight: bold;">cultural</mark> patterns into a unique treatment approach based on their particular situation (Stewart, Simmons, & Habibpour, 2012). Socio<mark style="background-color: #ffeb3b; font-weight: bold;">cultural</mark> therapy can include individual, group, family, and couples treatment modalities. 16.5 • The Socio<mark style="background-color: #ffeb3b; font-weight: bold;">cultural</mark> Model and Therapy Utilization 623
+
+Norenzayan, 2001). This focus on others provides a broader perspective that takes into account both situational and <mark style="background-color: #ffeb3b; font-weight: bold;">cultural</mark> influences on behavior; thus, a more nuanced explanation of the causes of others’ behavior becomes more likely. Table 12.1 summarizes compares individualistic and collectivist cultures. Characteristics of Individualistic and Collectivistic Cultures Individualistic Culture Collectivistic Culture Achievement oriented Relationship oriented Focus on autonomy Focus on group harmony Dispositional perspective Situational perspective Independent Interdependent Analytic thinking style Holistic thinking style TABLE 12.1 Masuda and Nisbett (2001) demonstrated that the kinds of information that people attend to when viewing visual stimuli (e.g., an aquarium scene) can differ significantly depending on whether the observer comes from a collectivistic versus an individualistic culture. Japanese participants were much more likely to recognize objects that were presented when they occurred in the same context in which they were originally viewed. Manipulating the context in which object recall occurred had no such <mark style="background-color: #ffeb3b; font-weight: bold;">impact</mark> on American participants. Other <mark style="background-color: #ffeb3b; font-weight: bold;">research</mark>ers have shown similar differences across cultures. For example, Zhang, Fung, Stanley, Isaacowitz, and Zhang (2014) demonstrated differences in the ways that holistic thinking might develop between Chinese and American participants, and Ramesh and Gelfand (2010) demonstrated that job turnover rates are more related to the fit between a person and the organization in which they work in an Indian sample, but the fit between the person and their specific job was more predictive of turnover in an American sample. Actor-Observer Bias Returning to our earlier example, Jamie was laid off, but an observer would not know. So a naïve observer would tend to attribute Jamie’s hostile behavior to Jamie’s disposition rather than to the true, situational cause. Why do you think we underestimate the influence of the situation on the behaviors of others? One reason is that we often don’t have all the information we need to make a situational explanation for another person’s behavior. The only information we might have is what is observable. Due to this lack of information we have a tendency to assume the behavior is due to a dispositional, or internal, factor. When it comes to explaining our own behaviors, however, we have much more information available to us. If you came home from school or work angry and yelled at your dog or a loved one, what would your explanation be? You might say you were very tired or feeling unwell and needed quiet time—a situational
+
+individualism (Oyserman, Coon, & Kemmelmier, 2002). People who live in collectivist cultures value social harmony, respectfulness, and group needs over individual needs. Individuals who live in countries in Asia, Africa, and South America score high on collectivism (Hofstede, 2001; Triandis, 1995). These values influence personality. For example, Yang (2006) found that people in individualist cultures displayed more personally oriented personality traits, whereas people in collectivist cultures displayed more socially oriented personality traits. Frewer and Bleus (1991) conducted a study of the Eysenk Personality Inventory in a collectivist culture using Papua New Guinean university students. They found that the results of the personality inventory were only relevant when analyzed within the context of a collectivist society. Similarly, Dana (1986) suggested that personality assessment services for Native Americans are often provided without a proper recognition of culture-specific responses and a tribe-specific frame of reference. Assessors need to have more than a general knowledge of history, tribal differences, contemporary culture on reservations, and levels of acculturation in order to interpret <mark style="background-color: #ffeb3b; font-weight: bold;">psychological</mark> test responses with a minimal bias. Approaches to Studying Personality in a <mark style="background-color: #ffeb3b; font-weight: bold;">cultural</mark> Context There are three approaches that can be used to study personality in a <mark style="background-color: #ffeb3b; font-weight: bold;">cultural</mark> context, the <mark style="background-color: #ffeb3b; font-weight: bold;">cultural</mark>- comparative approach; the indigenous approach; and the combined approach, which incorporates elements of both views. Since ideas about personality have a Western basis, the <mark style="background-color: #ffeb3b; font-weight: bold;">cultural</mark>-comparative approach seeks to test Western ideas about personality in other cultures to determine whether they can be generalized and if they have <mark style="background-color: #ffeb3b; font-weight: bold;">cultural</mark> validity (Cheung van de Vijver, & Leong, 2011). For example, recall from the previous section on the trait perspective that <mark style="background-color: #ffeb3b; font-weight: bold;">research</mark>ers used the <mark style="background-color: #ffeb3b; font-weight: bold;">cultural</mark>-comparative approach to test the universality of McCrae and Costa’s Five Factor Model. They found applicability in numerous cultures around the world, with the Big Five factors being stable in many cultures (McCrae & Costa, 1997; McCrae et al., 2005). The indigenous approach came about in reaction to the dominance of Western approaches to the study of personality in non- Western settings (Cheung et al., 2011). Because Western-based personality assessments cannot fully capture the personality constructs   <!-- HIGHLIGHTING HERE ONLY -->
+                </div>
+            </div>
+            
+            <div class="stats">
+                <div class="stat-item">
+                    <div class="stat-label">Sections Used</div>
+                    <div class="stat-value">12</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Pages Referenced</div>
+                    <div class="stat-value">12</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Keywords Found</div>
+                    <div class="stat-value">5</div>
+                </div>
+            </div>
+            
+            <div class="footer">
+                Generated from Psychology 2e Textbook • Question 49 • 2026-02-27
+            </div>
+        </div>
+        
+        <!-- Font Awesome for icons -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
+    </body>
+    </html>

@@ -1,436 +1,399 @@
 <!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Evidence Visualization - Question 15</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            padding: 20px;
-        }
-        
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            overflow: hidden;
-        }
-        
-        .header {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            padding: 30px;
-        }
-        
-        .header h1 {
-            font-size: 24px;
-            margin-bottom: 10px;
-        }
-        
-        .header .question {
-            font-size: 18px;
-            opacity: 0.9;
-            background: rgba(255, 255, 255, 0.2);
-            padding: 15px;
-            border-radius: 10px;
-            margin-top: 10px;
-            line-height: 1.5;
-        }
-        
-        .keywords-bar {
-            background: #f0f0f0;
-            padding: 15px 30px;
-            border-bottom: 1px solid #e0e0e0;
-        }
-        
-        .keywords-title {
-            font-size: 14px;
-            color: #666;
-            margin-bottom: 10px;
-            font-weight: 600;
-        }
-        
-        .keyword-badge {
-            display: inline-block;
-            background: #ffeb3b;
-            color: #333;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 13px;
-            margin: 0 5px 5px 0;
-            font-weight: 500;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-        
-        .answer-section {
-            padding: 30px;
-            background: #f8f9fa;
-            border-bottom: 1px solid #e0e0e0;
-        }
-        
-        .answer-section h3 {
-            color: #333;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .answer-section h3 i {
-            color: #667eea;
-        }
-        
-        .answer-content {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            line-height: 1.8;
-            color: #444;
-            border-left: 4px solid #667eea;
-        }
-        
-        .answer-content mark {
-            background-color: #ffeb3b;
-            padding: 2px 0;
-            font-weight: 500;
-        }
-        
-        .evidence-section {
-            padding: 30px;
-        }
-        
-        .evidence-section h3 {
-            color: #333;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .evidence-section h3 i {
-            color: #667eea;
-        }
-        
-        .evidence-card {
-            background: #f8f9fa;
-            border-radius: 10px;
-            padding: 20px;
-            margin-bottom: 20px;
-            border-left: 4px solid #667eea;
-        }
-        
-        .evidence-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-        
-        .section-name {
-            font-weight: 600;
-            color: #333;
-            background: #e8eaf6;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 14px;
-        }
-        
-        .page-number {
-            color: #666;
-            background: white;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 14px;
-            border: 1px solid #e0e0e0;
-        }
-        
-        .relevance {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 14px;
-        }
-        
-        .term-badge {
-            display: inline-block;
-            background: #ffeb3b;
-            color: #333;
-            padding: 3px 10px;
-            border-radius: 15px;
-            font-size: 12px;
-            margin: 0 5px 5px 0;
-            font-weight: 500;
-        }
-        
-        .evidence-text {
-            background: white;
-            padding: 15px;
-            border-radius: 8px;
-            color: #555;
-            line-height: 1.6;
-            margin: 15px 0 0 0;
-            border: 1px solid #e0e0e0;
-        }
-        
-        .evidence-text mark {
-            background-color: #ffeb3b;
-            padding: 2px 0;
-            font-weight: 500;
-        }
-        
-        .highlighted-context {
-            padding: 30px;
-            background: #f8f9fa;
-            border-top: 1px solid #e0e0e0;
-            border-bottom: 1px solid #e0e0e0;
-        }
-        
-        .highlighted-context h3 {
-            color: #333;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .context-box {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            max-height: 400px;
-            overflow-y: auto;
-            border: 1px solid #e0e0e0;
-            line-height: 1.8;
-            font-size: 14px;
-        }
-        
-        .context-box mark {
-            background-color: #ffeb3b;
-            padding: 2px 0;
-            font-weight: 500;
-        }
-        
-        .stats {
-            display: flex;
-            gap: 15px;
-            padding: 20px 30px;
-            background: white;
-            flex-wrap: wrap;
-        }
-        
-        .stat-item {
-            background: #f8f9fa;
-            padding: 10px 20px;
-            border-radius: 10px;
-            flex: 1;
-            min-width: 120px;
-            text-align: center;
-            border: 1px solid #e0e0e0;
-        }
-        
-        .stat-label {
-            font-size: 12px;
-            color: #666;
-            margin-bottom: 5px;
-        }
-        
-        .stat-value {
-            font-size: 24px;
-            font-weight: 600;
-            color: #667eea;
-        }
-        
-        .footer {
-            padding: 20px 30px;
-            background: #f0f0f0;
-            text-align: center;
-            color: #666;
-            font-size: 14px;
-            border-top: 1px solid #e0e0e0;
-        }
-        
-        @media (max-width: 768px) {
-            .header {
+    <html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Evidence Visualization - Question 15</title>
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+            
+            body {
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                min-height: 100vh;
                 padding: 20px;
             }
             
-            .answer-section,
-            .evidence-section,
-            .highlighted-context {
+            .container {
+                max-width: 1000px;
+                margin: 0 auto;
+                background: white;
+                border-radius: 20px;
+                box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+                overflow: hidden;
+            }
+            
+            .header {
+                background: linear-gradient(135deg, #667eea, #764ba2);
+                color: white;
+                padding: 30px;
+            }
+            
+            .header h1 {
+                font-size: 24px;
+                margin-bottom: 10px;
+            }
+            
+            .header .question {
+                font-size: 18px;
+                opacity: 0.9;
+                background: rgba(255, 255, 255, 0.2);
+                padding: 15px;
+                border-radius: 10px;
+                margin-top: 10px;
+                line-height: 1.5;
+            }
+            
+            .keywords-bar {
+                background: #f0f0f0;
+                padding: 15px 30px;
+                border-bottom: 1px solid #e0e0e0;
+            }
+            
+            .keywords-title {
+                font-size: 14px;
+                color: #666;
+                margin-bottom: 10px;
+                font-weight: 600;
+            }
+            
+            .keyword-badge {
+                display: inline-block;
+                background: #ffeb3b;
+                color: #333;
+                padding: 5px 12px;
+                border-radius: 20px;
+                font-size: 13px;
+                margin: 0 5px 5px 0;
+                font-weight: 500;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            }
+            
+            .answer-section {
+                padding: 30px;
+                background: #f8f9fa;
+                border-bottom: 1px solid #e0e0e0;
+            }
+            
+            .answer-section h3 {
+                color: #333;
+                margin-bottom: 15px;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+            
+            .answer-section h3 i {
+                color: #667eea;
+            }
+            
+            .answer-content {
+                background: white;
                 padding: 20px;
+                border-radius: 10px;
+                line-height: 1.8;
+                color: #444;
+                border-left: 4px solid #667eea;
+            }
+            
+            /* NO mark styling for answer - it stays plain */
+            
+            .evidence-section {
+                padding: 30px;
+            }
+            
+            .evidence-section h3 {
+                color: #333;
+                margin-bottom: 20px;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+            
+            .evidence-section h3 i {
+                color: #667eea;
+            }
+            
+            .evidence-card {
+                background: #f8f9fa;
+                border-radius: 10px;
+                padding: 20px;
+                margin-bottom: 20px;
+                border-left: 4px solid #667eea;
             }
             
             .evidence-header {
-                flex-direction: column;
-                align-items: flex-start;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 15px;
+                flex-wrap: wrap;
+                gap: 10px;
             }
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <div class="header">
-            <h1>📚 Evidence Visualization</h1>
-            <div class="question">
-                <strong>Question 15:</strong> 
+            
+            .section-name {
+                font-weight: 600;
+                color: #333;
+                background: #e8eaf6;
+                padding: 5px 12px;
+                border-radius: 20px;
+                font-size: 14px;
+            }
+            
+            .page-number {
+                color: #666;
+                background: white;
+                padding: 5px 12px;
+                border-radius: 20px;
+                font-size: 14px;
+                border: 1px solid #e0e0e0;
+            }
+            
+            .term-badge {
+                display: inline-block;
+                background: #ffeb3b;
+                color: #333;
+                padding: 3px 10px;
+                border-radius: 15px;
+                font-size: 12px;
+                margin: 0 5px 5px 0;
+                font-weight: 500;
+            }
+            
+            .evidence-text {
+                background: white;
+                padding: 15px;
+                border-radius: 8px;
+                color: #555;
+                line-height: 1.6;
+                margin: 15px 0 0 0;
+                border: 1px solid #e0e0e0;
+            }
+            
+            .evidence-text mark {
+                background-color: #ffeb3b;
+                padding: 2px 0;
+                font-weight: 500;
+            }
+            
+            .highlighted-context {
+                padding: 30px;
+                background: #f8f9fa;
+                border-top: 1px solid #e0e0e0;
+                border-bottom: 1px solid #e0e0e0;
+            }
+            
+            .highlighted-context h3 {
+                color: #333;
+                margin-bottom: 15px;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+            
+            .context-box {
+                background: white;
+                padding: 20px;
+                border-radius: 10px;
+                max-height: 400px;
+                overflow-y: auto;
+                border: 1px solid #e0e0e0;
+                line-height: 1.8;
+                font-size: 14px;
+            }
+            
+            .context-box mark {
+                background-color: #ffeb3b;
+                padding: 2px 0;
+                font-weight: 500;
+            }
+            
+            .stats {
+                display: flex;
+                gap: 15px;
+                padding: 20px 30px;
+                background: white;
+                flex-wrap: wrap;
+            }
+            
+            .stat-item {
+                background: #f8f9fa;
+                padding: 10px 20px;
+                border-radius: 10px;
+                flex: 1;
+                min-width: 120px;
+                text-align: center;
+                border: 1px solid #e0e0e0;
+            }
+            
+            .stat-label {
+                font-size: 12px;
+                color: #666;
+                margin-bottom: 5px;
+            }
+            
+            .stat-value {
+                font-size: 24px;
+                font-weight: 600;
+                color: #667eea;
+            }
+            
+            .footer {
+                padding: 20px 30px;
+                background: #f0f0f0;
+                text-align: center;
+                color: #666;
+                font-size: 14px;
+                border-top: 1px solid #e0e0e0;
+            }
+            
+            @media (max-width: 768px) {
+                .header {
+                    padding: 20px;
+                }
+                
+                .answer-section,
+                .evidence-section,
+                .highlighted-context {
+                    padding: 20px;
+                }
+                
+                .evidence-header {
+                    flex-direction: column;
+                    align-items: flex-start;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="header">
+                <h1>📚 Evidence Visualization</h1>
+                <div class="question">
+                    <strong>Question 15:</strong> What are Gestalt principles?
+                </div>
             </div>
-        </div>
-        
-        <div class="keywords-bar">
-            <div class="keywords-title">🔑 Extracted Keywords:</div>
-
-        </div>
-        
-        <div class="answer-section">
-            <h3><i class="fas fa-robot"></i> Generated Answer</h3>
-            <div class="answer-content">
-                According to the textbook, Gestalt principles are a set of principles that describe how we organize sensory stimuli into meaningful perceptions. Some of the key Gestalt principles mentioned in the textbook include:
+            
+            <div class="keywords-bar">
+                <div class="keywords-title">🔑 Extracted Keywords:</div>
+    <span class="keyword-badge">gestalt</span><span class="keyword-badge">principles</span>
+            </div>
+            
+            <div class="answer-section">
+                <h3><i class="fas fa-robot"></i> Generated Answer</h3>
+                <div class="answer-content">
+                    According to the textbook, Gestalt principles are a set of principles that describe how we organize sensory stimuli into meaningful perceptions. Some of the key Gestalt principles mentioned in the textbook include:
 
 1. Figure-ground relationship: We tend to segment our visual world into figure (the object or person that is the focus of the visual field) and ground (the background).
 2. Proximity: Things that are close to one another tend to be grouped together.
 3. Similarity: Things that are alike tend to be grouped together.
 
-These principles help us understand how we perceive and interpret sensory information, and how our perceptions can be influenced by various factors such as our personalities, experiences, and expectations.
+These principles help us understand how we perceive and interpret sensory information, and how our perceptions can be influenced by various factors such as our personalities, experiences, and expectations.  <!-- NO HIGHLIGHTING HERE -->
+                </div>
             </div>
-        </div>
-        
-        <div class="evidence-section">
-            <h3><i class="fas fa-book"></i> Evidence by Section</h3>
-
+            
+            <div class="evidence-section">
+                <h3><i class="fas fa-book"></i> Evidence by Section</h3>
+    
             <div class="evidence-card">
                 <div class="evidence-header">
                     <span class="section-name">📖 1.3 Contemporary Psychology
 Psychology is a diverse discipline that is made up of several major subdivisions with unique perspectives</span>
                     <span class="page-number">📄 Page 24</span>
-                    <span class="relevance">⭐ Relevance: 0.7</span>
-                </div>
-                <div>
-
                 </div>
                 <div class="evidence-text">
-                    This section discusses 1.3 contemporary psychology
-psychology is a diverse discipline that is made up of several major subdivisions with unique perspectives. The content here is relevant to your question about ...
+                    scale. These factors along with the rise of behaviorism (described next) in the United States prevented <mark style="background-color: #ffeb3b; font-weight: bold;">principles</mark> of <mark style="background-color: #ffeb3b; font-weight: bold;">gestalt</mark> psychology from being as influential in the United States as they had been in their native Germany (Thorne & Henley, 2005). Despite these issues, several <mark style="background-color: #ffeb3b; font-weight: bold;">gestalt</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">principles</mark> a  <!-- HIGHLIGHTING HERE ONLY -->
                 </div>
             </div>
-
+    
             <div class="evidence-card">
                 <div class="evidence-header">
                     <span class="section-name">📖 1.3 William James</span>
                     <span class="page-number">📄 Page 43</span>
-                    <span class="relevance">⭐ Relevance: 0.75</span>
-                </div>
-                <div>
-
                 </div>
                 <div class="evidence-text">
-                    This section discusses 1.3 william james. The content here is relevant to your question about ...
+                    scale. These factors along with the rise of behaviorism (described next) in the United States prevented <mark style="background-color: #ffeb3b; font-weight: bold;">principles</mark> of <mark style="background-color: #ffeb3b; font-weight: bold;">gestalt</mark> psychology from being as influential in the United States as they had been in their native Germany (Thorne & Henley, 2005). Despite these issues, several <mark style="background-color: #ffeb3b; font-weight: bold;">gestalt</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">principles</mark> a  <!-- HIGHLIGHTING HERE ONLY -->
                 </div>
             </div>
-
+    
             <div class="evidence-card">
                 <div class="evidence-header">
                     <span class="section-name">📖 10.8 Maslow</span>
                     <span class="page-number">📄 Page 181</span>
-                    <span class="relevance">⭐ Relevance: 0.8</span>
-                </div>
-                <div>
-
                 </div>
                 <div class="evidence-text">
-                    This section discusses 10.8 maslow. The content here is relevant to your question about ...
+                    scale. These factors along with the rise of behaviorism (described next) in the United States prevented <mark style="background-color: #ffeb3b; font-weight: bold;">principles</mark> of <mark style="background-color: #ffeb3b; font-weight: bold;">gestalt</mark> psychology from being as influential in the United States as they had been in their native Germany (Thorne & Henley, 2005). Despite these issues, several <mark style="background-color: #ffeb3b; font-weight: bold;">gestalt</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">principles</mark> a  <!-- HIGHLIGHTING HERE ONLY -->
                 </div>
             </div>
-
+    
             <div class="evidence-card">
                 <div class="evidence-header">
                     <span class="section-name">📖 11.4 Learning Approaches
 Behavioral theorists view personality as significantly shaped and impacted by the reinforcements and
 consequences outside of the organism</span>
                     <span class="page-number">📄 Page 183</span>
-                    <span class="relevance">⭐ Relevance: 0.85</span>
-                </div>
-                <div>
-
                 </div>
                 <div class="evidence-text">
-                    This section discusses 11.4 learning approaches
-behavioral theorists view personality as significantly shaped and impacted by the reinforcements and
-consequences outside of the organism. The content here is relevant to your question about ...
+                    scale. These factors along with the rise of behaviorism (described next) in the United States prevented <mark style="background-color: #ffeb3b; font-weight: bold;">principles</mark> of <mark style="background-color: #ffeb3b; font-weight: bold;">gestalt</mark> psychology from being as influential in the United States as they had been in their native Germany (Thorne & Henley, 2005). Despite these issues, several <mark style="background-color: #ffeb3b; font-weight: bold;">gestalt</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">principles</mark> a  <!-- HIGHLIGHTING HERE ONLY -->
                 </div>
             </div>
-
+    
             <div class="evidence-card">
                 <div class="evidence-header">
                     <span class="section-name">📖 11.5 Humanistic Approaches
 LEARNING OBJECTIVES
 By the end of this section</span>
                     <span class="page-number">📄 Page 254</span>
-                    <span class="relevance">⭐ Relevance: 0.9</span>
-                </div>
-                <div>
-
                 </div>
                 <div class="evidence-text">
-                    This section discusses 11.5 humanistic approaches
-learning objectives
-by the end of this section. The content here is relevant to your question about ...
+                    scale. These factors along with the rise of behaviorism (described next) in the United States prevented <mark style="background-color: #ffeb3b; font-weight: bold;">principles</mark> of <mark style="background-color: #ffeb3b; font-weight: bold;">gestalt</mark> psychology from being as influential in the United States as they had been in their native Germany (Thorne & Henley, 2005). Despite these issues, several <mark style="background-color: #ffeb3b; font-weight: bold;">gestalt</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">principles</mark> a  <!-- HIGHLIGHTING HERE ONLY -->
                 </div>
             </div>
+    
+            </div>
+            
+            <div class="highlighted-context">
+                <h3><i class="fas fa-highlighter"></i> Highlighted Context</h3>
+                <div class="context-box">
+                    scale. These factors along with the rise of behaviorism (described next) in the United States prevented <mark style="background-color: #ffeb3b; font-weight: bold;">principles</mark> of <mark style="background-color: #ffeb3b; font-weight: bold;">gestalt</mark> psychology from being as influential in the United States as they had been in their native Germany (Thorne & Henley, 2005). Despite these issues, several <mark style="background-color: #ffeb3b; font-weight: bold;">gestalt</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">principles</mark> are still very influential today. Considering the human individual as a whole rather than as a sum of individually measured parts became an important foundation in humanistic theory late in the century. The ideas of <mark style="background-color: #ffeb3b; font-weight: bold;">gestalt</mark> have continued to influence research on sensation and perception. Structuralism, Freud, and the <mark style="background-color: #ffeb3b; font-weight: bold;">gestalt</mark> psychologists were all concerned in one way or another with describing and understanding inner experience. But other researchers had concerns that inner experience could be a legitimate subject of scientific inquiry and chose instead to exclusively study behavior, the objectively observable outcome of mental processes. Pavlov, Watson, Skinner, and Behaviorism Early work in the field of behavior was conducted by the Russian physiologist Ivan Pavlov (1849–1936). Pavlov studied a form of learning behavior called a conditioned reflex, in which an animal or human produced a reflex (unconscious) response to a stimulus and, over time, was conditioned to produce the response to a different stimulus that the experimenter associated with the original stimulus. The reflex Pavlov worked with was salivation in response to the presence of food. The salivation reflex could be elicited using a second stimulus, such as a specific sound, that was presented in association with the initial food stimulus several times. Once the response to the second stimulus was “learned,” the food stimulus could be omitted. Pavlov’s “classical conditioning” is only one form of learning behavior studied by behaviorists. John B. Watson (1878–1958) was an influential American psychologist whose most famous work occurred 12 1 • Introduction to Psychology Access for free at openstax.org
 
-        </div>
-        
-        <div class="highlighted-context">
-            <h3><i class="fas fa-highlighter"></i> Highlighted Context</h3>
-            <div class="context-box">
-                scale. These factors along with the rise of behaviorism (described next) in the United States prevented principles of Gestalt psychology from being as influential in the United States as they had been in their native Germany (Thorne & Henley, 2005). Despite these issues, several Gestalt principles are still very influential today. Considering the human individual as a whole rather than as a sum of individually measured parts became an important foundation in humanistic theory late in the century. The ideas of Gestalt have continued to influence research on sensation and perception. Structuralism, Freud, and the Gestalt psychologists were all concerned in one way or another with describing and understanding inner experience. But other researchers had concerns that inner experience could be a legitimate subject of scientific inquiry and chose instead to exclusively study behavior, the objectively observable outcome of mental processes. Pavlov, Watson, Skinner, and Behaviorism Early work in the field of behavior was conducted by the Russian physiologist Ivan Pavlov (1849–1936). Pavlov studied a form of learning behavior called a conditioned reflex, in which an animal or human produced a reflex (unconscious) response to a stimulus and, over time, was conditioned to produce the response to a different stimulus that the experimenter associated with the original stimulus. The reflex Pavlov worked with was salivation in response to the presence of food. The salivation reflex could be elicited using a second stimulus, such as a specific sound, that was presented in association with the initial food stimulus several times. Once the response to the second stimulus was “learned,” the food stimulus could be omitted. Pavlov’s “classical conditioning” is only one form of learning behavior studied by behaviorists. John B. Watson (1878–1958) was an influential American psychologist whose most famous work occurred 12 1 • Introduction to Psychology Access for free at openstax.org
+William James was the first American psychologist, and he was a proponent of functionalism. This particular perspective focused on how mental activities served as adaptive responses to an organism’s environment. Like Wundt, James also relied on introspection; however, his research approach also incorporated more objective measures as well. Sigmund Freud believed that understanding the unconscious mind was absolutely critical to understand conscious behavior. This was especially true for individuals that he saw who suffered from various hysterias and neuroses. Freud relied on dream analysis, slips of the tongue, and free association as means to access the unconscious. Psychoanalytic theory remained a dominant force in clinical psychology for several decades. <mark style="background-color: #ffeb3b; font-weight: bold;">gestalt</mark> psychology was very influential in Europe. <mark style="background-color: #ffeb3b; font-weight: bold;">gestalt</mark> psychology takes a holistic view of an individual and his experiences. As the Nazis came to power in Germany, Wertheimer, Koffka, and Köhler immigrated to the United States. Although they left their laboratories and their research behind, they did introduce America to <mark style="background-color: #ffeb3b; font-weight: bold;">gestalt</mark> ideas. Some of the <mark style="background-color: #ffeb3b; font-weight: bold;">principles</mark> of <mark style="background-color: #ffeb3b; font-weight: bold;">gestalt</mark> psychology are still very influential in the study of sensation and perception. One of the most influential schools of thought within psychology’s history was behaviorism. Behaviorism focused on making psychology an objective science by studying overt behavior and deemphasizing the importance of unobservable mental processes. John Watson is often considered the father of behaviorism, and B. F. Skinner’s contributions to our understanding of <mark style="background-color: #ffeb3b; font-weight: bold;">principles</mark> of operant conditioning cannot be underestimated. As behaviorism and psychoanalytic theory took hold of so many aspects of psychology, some began to become dissatisfied with psychology’s picture of human nature. Thus, a humanistic movement within psychology began to take hold. Humanism focuses on the potential of all people for good. Both Maslow and Rogers were influential in shaping humanistic psychology. During the 1950s, the landscape of psychology began to change. A science of behavior began to shift back to its roots of focus on mental processes. The emergence of neuroscience and computer science aided this transition. Ultimately, the cognitive revolution took hold, and people came to realize that cognition was crucial to a true appreciation and understanding of behavior. 1.3 Contemporary Psychology Psychology is a diverse discipline that is made up of several major subdivisions with unique perspectives. Biological psychology involves the study of the biological bases of behavior. Sensation and perception refer to the area of psychology that is focused on how information from our sensory modalities is
 
-William James was the first American psychologist, and he was a proponent of functionalism. This particular perspective focused on how mental activities served as adaptive responses to an organism’s environment. Like Wundt, James also relied on introspection; however, his research approach also incorporated more objective measures as well. Sigmund Freud believed that understanding the unconscious mind was absolutely critical to understand conscious behavior. This was especially true for individuals that he saw who suffered from various hysterias and neuroses. Freud relied on dream analysis, slips of the tongue, and free association as means to access the unconscious. Psychoanalytic theory remained a dominant force in clinical psychology for several decades. Gestalt psychology was very influential in Europe. Gestalt psychology takes a holistic view of an individual and his experiences. As the Nazis came to power in Germany, Wertheimer, Koffka, and Köhler immigrated to the United States. Although they left their laboratories and their research behind, they did introduce America to Gestalt ideas. Some of the principles of Gestalt psychology are still very influential in the study of sensation and perception. One of the most influential schools of thought within psychology’s history was behaviorism. Behaviorism focused on making psychology an objective science by studying overt behavior and deemphasizing the importance of unobservable mental processes. John Watson is often considered the father of behaviorism, and B. F. Skinner’s contributions to our understanding of principles of operant conditioning cannot be underestimated. As behaviorism and psychoanalytic theory took hold of so many aspects of psychology, some began to become dissatisfied with psychology’s picture of human nature. Thus, a humanistic movement within psychology began to take hold. Humanism focuses on the potential of all people for good. Both Maslow and Rogers were influential in shaping humanistic psychology. During the 1950s, the landscape of psychology began to change. A science of behavior began to shift back to its roots of focus on mental processes. The emergence of neuroscience and computer science aided this transition. Ultimately, the cognitive revolution took hold, and people came to realize that cognition was crucial to a true appreciation and understanding of behavior. 1.3 Contemporary Psychology Psychology is a diverse discipline that is made up of several major subdivisions with unique perspectives. Biological psychology involves the study of the biological bases of behavior. Sensation and perception refer to the area of psychology that is focused on how information from our sensory modalities is
+and perception (Rock & Palmer, 1990). One <mark style="background-color: #ffeb3b; font-weight: bold;">gestalt</mark> principle is the figure-ground relationship. According to this principle, we tend to segment our visual world into figure and ground. Figure is the object or person that is the focus of the visual field, while the ground is the background. As Figure 5.25 shows, our perception can vary tremendously, depending on what is perceived as figure and what is perceived as ground. Presumably, our ability to interpret sensory information depends on what we label as figure and what we label as ground in any particular case, although this assumption has been called into question (Peterson & Gibson, 1994; Vecera & O’Reilly, 1998). FIGURE 5.25 The concept of figure-ground relationship explains why this image can be perceived either as a vase or as a pair of faces. Another <mark style="background-color: #ffeb3b; font-weight: bold;">gestalt</mark> principle for organizing sensory stimuli into meaningful perception is proximity. This principle asserts that things that are close to one another tend to be grouped together, as Figure 5.26 illustrates. FIGURE 5.26 The <mark style="background-color: #ffeb3b; font-weight: bold;">gestalt</mark> principle of proximity suggests that you see (a) one block of dots on the left side and (b) three columns on the right side. How we read something provides another illustration of the proximity concept. For example, we read this sentence like this, notl iket hiso rt hat. We group the letters of a given word together because there are no spaces between the letters, and we perceive words because there are spaces between each word. Here are some more examples: Cany oum akes enseo ft hiss entence? What doth es e wor dsmea n? We might also use the principle of similarity to group things in our visual fields. According to this principle, things that are alike tend to be grouped together (Figure 5.27). For example, when watching a football game, we tend to group individuals based on the colors of their uniforms. When watching an offensive drive, we can get a 5.6 • <mark style="background-color: #ffeb3b; font-weight: bold;">gestalt</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">principles</mark> of Perception 169
 
-and perception (Rock & Palmer, 1990). One Gestalt principle is the figure-ground relationship. According to this principle, we tend to segment our visual world into figure and ground. Figure is the object or person that is the focus of the visual field, while the ground is the background. As Figure 5.25 shows, our perception can vary tremendously, depending on what is perceived as figure and what is perceived as ground. Presumably, our ability to interpret sensory information depends on what we label as figure and what we label as ground in any particular case, although this assumption has been called into question (Peterson & Gibson, 1994; Vecera & O’Reilly, 1998). FIGURE 5.25 The concept of figure-ground relationship explains why this image can be perceived either as a vase or as a pair of faces. Another Gestalt principle for organizing sensory stimuli into meaningful perception is proximity. This principle asserts that things that are close to one another tend to be grouped together, as Figure 5.26 illustrates. FIGURE 5.26 The Gestalt principle of proximity suggests that you see (a) one block of dots on the left side and (b) three columns on the right side. How we read something provides another illustration of the proximity concept. For example, we read this sentence like this, notl iket hiso rt hat. We group the letters of a given word together because there are no spaces between the letters, and we perceive words because there are spaces between each word. Here are some more examples: Cany oum akes enseo ft hiss entence? What doth es e wor dsmea n? We might also use the principle of similarity to group things in our visual fields. According to this principle, things that are alike tend to be grouped together (Figure 5.27). For example, when watching a football game, we tend to group individuals based on the colors of their uniforms. When watching an offensive drive, we can get a 5.6 • Gestalt Principles of Perception 169
-
-LINK TO LEARNING Watch this video showing real world examples of Gestalt principles (http://openstax.org/l/gestalt) to learn more. According to Gestalt theorists, pattern perception, or our ability to discriminate among different figures and shapes, occurs by following the principles described above. You probably feel fairly certain that your perception accurately matches the real world, but this is not always the case. Our perceptions are based on perceptual hypotheses: educated guesses that we make while interpreting sensory information. These hypotheses are informed by a number of factors, including our personalities, experiences, and expectations. We use these hypotheses to generate our perceptual set. For instance, research has demonstrated that those who are given verbal priming produce a biased interpretation of complex ambiguous figures (Goolkasian & Woodbury, 2010). The Depths of Perception: Bias, Prejudice, and Cultural Factors In this chapter, you have learned that perception is a complex process. Built from sensations, but influenced by our own experiences, biases, prejudices, and cultures, perceptions can be very different from person to person. Research suggests that implicit racial prejudice and stereotypes affect perception. For instance, several studies have demonstrated that non-Black participants identify weapons faster and are more likely to identify non- weapons as weapons when the image of the weapon is paired with the image of a Black person (Payne, 2001; Payne, Shimizu, & Jacoby, 2005). Furthermore, White individuals’ decisions to shoot an armed target in a video game is made more quickly when the target is Black (Correll, Park, Judd, & Wittenbrink, 2002; Correll, Urland, & Ito, 2006). This research is important, considering the number of very high-profile cases in the last few decades in which Black people were killed by people who claimed to believe that the unarmed individuals were armed and/or represented some threat to their personal safety. DIG DEEPER 5.6 • Gestalt Principles of Perception 171
+LINK TO LEARNING Watch this video showing real world examples of <mark style="background-color: #ffeb3b; font-weight: bold;">gestalt</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">principles</mark> (http://openstax.org/l/<mark style="background-color: #ffeb3b; font-weight: bold;">gestalt</mark>) to learn more. According to <mark style="background-color: #ffeb3b; font-weight: bold;">gestalt</mark> theorists, pattern perception, or our ability to discriminate among different figures and shapes, occurs by following the <mark style="background-color: #ffeb3b; font-weight: bold;">principles</mark> described above. You probably feel fairly certain that your perception accurately matches the real world, but this is not always the case. Our perceptions are based on perceptual hypotheses: educated guesses that we make while interpreting sensory information. These hypotheses are informed by a number of factors, including our personalities, experiences, and expectations. We use these hypotheses to generate our perceptual set. For instance, research has demonstrated that those who are given verbal priming produce a biased interpretation of complex ambiguous figures (Goolkasian & Woodbury, 2010). The Depths of Perception: Bias, Prejudice, and Cultural Factors In this chapter, you have learned that perception is a complex process. Built from sensations, but influenced by our own experiences, biases, prejudices, and cultures, perceptions can be very different from person to person. Research suggests that implicit racial prejudice and stereotypes affect perception. For instance, several studies have demonstrated that non-Black participants identify weapons faster and are more likely to identify non- weapons as weapons when the image of the weapon is paired with the image of a Black person (Payne, 2001; Payne, Shimizu, & Jacoby, 2005). Furthermore, White individuals’ decisions to shoot an armed target in a video game is made more quickly when the target is Black (Correll, Park, Judd, & Wittenbrink, 2002; Correll, Urland, & Ito, 2006). This research is important, considering the number of very high-profile cases in the last few decades in which Black people were killed by people who claimed to believe that the unarmed individuals were armed and/or represented some threat to their personal safety. DIG DEEPER 5.6 • <mark style="background-color: #ffeb3b; font-weight: bold;">gestalt</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">principles</mark> of Perception 171
 
 session. Groups can be organized in various ways: some have an overarching theme or purpose, some are time-limited, some have open membership that allows people to come and go, and some are closed. Some groups are structured with planned activities and goals, while others are unstructured: There is no specific plan, and group members themselves decide how the group will spend its time and on what goals it will focus. This can become a complex and emotionally charged process, but it is also an opportunity for personal growth (Page & Berkow, 1994). 16.3 • Treatment Modalities 619
 
-Quan, 2018) and measures of achievement in adolescence. However, researchers also found that the associations were not as strong as those reported during Mischel's initial experiment and were quite sensitive to situational factors such as early measures of cognitive capacity, family background, and home environment. This research suggests that consideration of situational factors is important to better understand behavior. LINK TO LEARNING Watch Joachim de Posada's TEDTalk about the marshmallow test (http://openstax.org/l/TEDPosada) to learn more and to see the test given to children in Colombia. Today, the debate is mostly resolved, and most psychologists consider both the situation and personal factors in understanding behavior. For Mischel (1993), people are situation processors. The children in the marshmallow test each processed, or interpreted, the rewards structure of that situation in their own way. Mischel’s approach to personality stresses the importance of both the situation and the way the person perceives the situation. Instead of behavior being determined by the situation, people use cognitive processes to interpret the situation and then behave in accordance with that interpretation. 11.5 Humanistic Approaches LEARNING OBJECTIVES By the end of this section, you will be able to: • Discuss the contributions of Abraham Maslow and Carl Rogers to personality development As the “third force” in psychology, humanism is touted as a reaction both to the pessimistic determinism of psychoanalysis, with its emphasis on psychological disturbance, and to the behaviorists’ view of humans passively reacting to the environment, which has been criticized as making people out to be personality-less robots. It does not suggest that psychoanalytic, behaviorist, and other points of view are incorrect but argues that these perspectives do not recognize the depth and meaning of human experience, and fail to recognize the innate capacity for self-directed change and transforming personal experiences. This perspective focuses on how healthy people develop. One pioneering humanist, Abraham Maslow, studied people who he considered to be healthy, creative, and productive, including Albert Einstein, Eleanor Roosevelt, Thomas Jefferson, Abraham Lincoln, and others. Maslow (1950, 1970) found that such people share similar characteristics, such as being open, creative, loving, spontaneous, compassionate, concerned for others, and accepting of themselves. When you studied motivation, you learned about one of the best-known humanistic theories, Maslow's hierarchy of needs theory, in which Maslow proposes that human beings have certain needs 
+Quan, 2018) and measures of achievement in adolescence. However, researchers also found that the associations were not as strong as those reported during Mischel's initial experiment and were quite sensitive to situational factors such as early measures of cognitive capacity, family background, and home environment. This research suggests that consideration of situational factors is important to better understand behavior. LINK TO LEARNING Watch Joachim de Posada's TEDTalk about the marshmallow test (http://openstax.org/l/TEDPosada) to learn more and to see the test given to children in Colombia. Today, the debate is mostly resolved, and most psychologists consider both the situation and personal factors in understanding behavior. For Mischel (1993), people are situation processors. The children in the marshmallow test each processed, or interpreted, the rewards structure of that situation in their own way. Mischel’s approach to personality stresses the importance of both the situation and the way the person perceives the situation. Instead of behavior being determined by the situation, people use cognitive processes to interpret the situation and then behave in accordance with that interpretation. 11.5 Humanistic Approaches LEARNING OBJECTIVES By the end of this section, you will be able to: • Discuss the contributions of Abraham Maslow and Carl Rogers to personality development As the “third force” in psychology, humanism is touted as a reaction both to the pessimistic determinism of psychoanalysis, with its emphasis on psychological disturbance, and to the behaviorists’ view of humans passively reacting to the environment, which has been criticized as making people out to be personality-less robots. It does not suggest that psychoanalytic, behaviorist, and other points of view are incorrect but argues that these perspectives do not recognize the depth and meaning of human experience, and fail to recognize the innate capacity for self-directed change and transforming personal experiences. This perspective focuses on how healthy people develop. One pioneering humanist, Abraham Maslow, studied people who he considered to be healthy, creative, and productive, including Albert Einstein, Eleanor Roosevelt, Thomas Jefferson, Abraham Lincoln, and others. Maslow (1950, 1970) found that such people share similar characteristics, such as being open, creative, loving, spontaneous, compassionate, concerned for others, and accepting of themselves. When you studied motivation, you learned about one of the best-known humanistic theories, Maslow's hierarchy of needs theory, in which Maslow proposes that human beings have certain needs   <!-- HIGHLIGHTING HERE ONLY -->
+                </div>
+            </div>
+            
+            <div class="stats">
+                <div class="stat-item">
+                    <div class="stat-label">Sections Used</div>
+                    <div class="stat-value">12</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Pages Referenced</div>
+                    <div class="stat-value">12</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Keywords Found</div>
+                    <div class="stat-value">2</div>
+                </div>
+            </div>
+            
+            <div class="footer">
+                Generated from Psychology 2e Textbook • Question 15 • 2026-02-27
             </div>
         </div>
         
-        <div class="stats">
-            <div class="stat-item">
-                <div class="stat-label">Sections Used</div>
-                <div class="stat-value">12</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-label">Pages Referenced</div>
-                <div class="stat-value">12</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-label">Keywords Found</div>
-                <div class="stat-value">0</div>
-            </div>
-        </div>
-        
-        <div class="footer">
-            Generated from Psychology 2e Textbook • Question 15 • 2026-02-26
-        </div>
-    </div>
-    
-    <!-- Font Awesome for icons -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
-</body>
-</html>
+        <!-- Font Awesome for icons -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
+    </body>
+    </html>

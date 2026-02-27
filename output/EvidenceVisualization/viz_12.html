@@ -1,428 +1,393 @@
 <!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Evidence Visualization - Question 12</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            padding: 20px;
-        }
-        
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            overflow: hidden;
-        }
-        
-        .header {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            padding: 30px;
-        }
-        
-        .header h1 {
-            font-size: 24px;
-            margin-bottom: 10px;
-        }
-        
-        .header .question {
-            font-size: 18px;
-            opacity: 0.9;
-            background: rgba(255, 255, 255, 0.2);
-            padding: 15px;
-            border-radius: 10px;
-            margin-top: 10px;
-            line-height: 1.5;
-        }
-        
-        .keywords-bar {
-            background: #f0f0f0;
-            padding: 15px 30px;
-            border-bottom: 1px solid #e0e0e0;
-        }
-        
-        .keywords-title {
-            font-size: 14px;
-            color: #666;
-            margin-bottom: 10px;
-            font-weight: 600;
-        }
-        
-        .keyword-badge {
-            display: inline-block;
-            background: #ffeb3b;
-            color: #333;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 13px;
-            margin: 0 5px 5px 0;
-            font-weight: 500;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-        
-        .answer-section {
-            padding: 30px;
-            background: #f8f9fa;
-            border-bottom: 1px solid #e0e0e0;
-        }
-        
-        .answer-section h3 {
-            color: #333;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .answer-section h3 i {
-            color: #667eea;
-        }
-        
-        .answer-content {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            line-height: 1.8;
-            color: #444;
-            border-left: 4px solid #667eea;
-        }
-        
-        .answer-content mark {
-            background-color: #ffeb3b;
-            padding: 2px 0;
-            font-weight: 500;
-        }
-        
-        .evidence-section {
-            padding: 30px;
-        }
-        
-        .evidence-section h3 {
-            color: #333;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .evidence-section h3 i {
-            color: #667eea;
-        }
-        
-        .evidence-card {
-            background: #f8f9fa;
-            border-radius: 10px;
-            padding: 20px;
-            margin-bottom: 20px;
-            border-left: 4px solid #667eea;
-        }
-        
-        .evidence-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-        
-        .section-name {
-            font-weight: 600;
-            color: #333;
-            background: #e8eaf6;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 14px;
-        }
-        
-        .page-number {
-            color: #666;
-            background: white;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 14px;
-            border: 1px solid #e0e0e0;
-        }
-        
-        .relevance {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 14px;
-        }
-        
-        .term-badge {
-            display: inline-block;
-            background: #ffeb3b;
-            color: #333;
-            padding: 3px 10px;
-            border-radius: 15px;
-            font-size: 12px;
-            margin: 0 5px 5px 0;
-            font-weight: 500;
-        }
-        
-        .evidence-text {
-            background: white;
-            padding: 15px;
-            border-radius: 8px;
-            color: #555;
-            line-height: 1.6;
-            margin: 15px 0 0 0;
-            border: 1px solid #e0e0e0;
-        }
-        
-        .evidence-text mark {
-            background-color: #ffeb3b;
-            padding: 2px 0;
-            font-weight: 500;
-        }
-        
-        .highlighted-context {
-            padding: 30px;
-            background: #f8f9fa;
-            border-top: 1px solid #e0e0e0;
-            border-bottom: 1px solid #e0e0e0;
-        }
-        
-        .highlighted-context h3 {
-            color: #333;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .context-box {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            max-height: 400px;
-            overflow-y: auto;
-            border: 1px solid #e0e0e0;
-            line-height: 1.8;
-            font-size: 14px;
-        }
-        
-        .context-box mark {
-            background-color: #ffeb3b;
-            padding: 2px 0;
-            font-weight: 500;
-        }
-        
-        .stats {
-            display: flex;
-            gap: 15px;
-            padding: 20px 30px;
-            background: white;
-            flex-wrap: wrap;
-        }
-        
-        .stat-item {
-            background: #f8f9fa;
-            padding: 10px 20px;
-            border-radius: 10px;
-            flex: 1;
-            min-width: 120px;
-            text-align: center;
-            border: 1px solid #e0e0e0;
-        }
-        
-        .stat-label {
-            font-size: 12px;
-            color: #666;
-            margin-bottom: 5px;
-        }
-        
-        .stat-value {
-            font-size: 24px;
-            font-weight: 600;
-            color: #667eea;
-        }
-        
-        .footer {
-            padding: 20px 30px;
-            background: #f0f0f0;
-            text-align: center;
-            color: #666;
-            font-size: 14px;
-            border-top: 1px solid #e0e0e0;
-        }
-        
-        @media (max-width: 768px) {
-            .header {
+    <html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Evidence Visualization - Question 12</title>
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+            
+            body {
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                min-height: 100vh;
                 padding: 20px;
             }
             
-            .answer-section,
-            .evidence-section,
-            .highlighted-context {
+            .container {
+                max-width: 1000px;
+                margin: 0 auto;
+                background: white;
+                border-radius: 20px;
+                box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+                overflow: hidden;
+            }
+            
+            .header {
+                background: linear-gradient(135deg, #667eea, #764ba2);
+                color: white;
+                padding: 30px;
+            }
+            
+            .header h1 {
+                font-size: 24px;
+                margin-bottom: 10px;
+            }
+            
+            .header .question {
+                font-size: 18px;
+                opacity: 0.9;
+                background: rgba(255, 255, 255, 0.2);
+                padding: 15px;
+                border-radius: 10px;
+                margin-top: 10px;
+                line-height: 1.5;
+            }
+            
+            .keywords-bar {
+                background: #f0f0f0;
+                padding: 15px 30px;
+                border-bottom: 1px solid #e0e0e0;
+            }
+            
+            .keywords-title {
+                font-size: 14px;
+                color: #666;
+                margin-bottom: 10px;
+                font-weight: 600;
+            }
+            
+            .keyword-badge {
+                display: inline-block;
+                background: #ffeb3b;
+                color: #333;
+                padding: 5px 12px;
+                border-radius: 20px;
+                font-size: 13px;
+                margin: 0 5px 5px 0;
+                font-weight: 500;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            }
+            
+            .answer-section {
+                padding: 30px;
+                background: #f8f9fa;
+                border-bottom: 1px solid #e0e0e0;
+            }
+            
+            .answer-section h3 {
+                color: #333;
+                margin-bottom: 15px;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+            
+            .answer-section h3 i {
+                color: #667eea;
+            }
+            
+            .answer-content {
+                background: white;
                 padding: 20px;
+                border-radius: 10px;
+                line-height: 1.8;
+                color: #444;
+                border-left: 4px solid #667eea;
+            }
+            
+            /* NO mark styling for answer - it stays plain */
+            
+            .evidence-section {
+                padding: 30px;
+            }
+            
+            .evidence-section h3 {
+                color: #333;
+                margin-bottom: 20px;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+            
+            .evidence-section h3 i {
+                color: #667eea;
+            }
+            
+            .evidence-card {
+                background: #f8f9fa;
+                border-radius: 10px;
+                padding: 20px;
+                margin-bottom: 20px;
+                border-left: 4px solid #667eea;
             }
             
             .evidence-header {
-                flex-direction: column;
-                align-items: flex-start;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 15px;
+                flex-wrap: wrap;
+                gap: 10px;
             }
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <div class="header">
-            <h1>📚 Evidence Visualization</h1>
-            <div class="question">
-                <strong>Question 12:</strong> 
+            
+            .section-name {
+                font-weight: 600;
+                color: #333;
+                background: #e8eaf6;
+                padding: 5px 12px;
+                border-radius: 20px;
+                font-size: 14px;
+            }
+            
+            .page-number {
+                color: #666;
+                background: white;
+                padding: 5px 12px;
+                border-radius: 20px;
+                font-size: 14px;
+                border: 1px solid #e0e0e0;
+            }
+            
+            .term-badge {
+                display: inline-block;
+                background: #ffeb3b;
+                color: #333;
+                padding: 3px 10px;
+                border-radius: 15px;
+                font-size: 12px;
+                margin: 0 5px 5px 0;
+                font-weight: 500;
+            }
+            
+            .evidence-text {
+                background: white;
+                padding: 15px;
+                border-radius: 8px;
+                color: #555;
+                line-height: 1.6;
+                margin: 15px 0 0 0;
+                border: 1px solid #e0e0e0;
+            }
+            
+            .evidence-text mark {
+                background-color: #ffeb3b;
+                padding: 2px 0;
+                font-weight: 500;
+            }
+            
+            .highlighted-context {
+                padding: 30px;
+                background: #f8f9fa;
+                border-top: 1px solid #e0e0e0;
+                border-bottom: 1px solid #e0e0e0;
+            }
+            
+            .highlighted-context h3 {
+                color: #333;
+                margin-bottom: 15px;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+            
+            .context-box {
+                background: white;
+                padding: 20px;
+                border-radius: 10px;
+                max-height: 400px;
+                overflow-y: auto;
+                border: 1px solid #e0e0e0;
+                line-height: 1.8;
+                font-size: 14px;
+            }
+            
+            .context-box mark {
+                background-color: #ffeb3b;
+                padding: 2px 0;
+                font-weight: 500;
+            }
+            
+            .stats {
+                display: flex;
+                gap: 15px;
+                padding: 20px 30px;
+                background: white;
+                flex-wrap: wrap;
+            }
+            
+            .stat-item {
+                background: #f8f9fa;
+                padding: 10px 20px;
+                border-radius: 10px;
+                flex: 1;
+                min-width: 120px;
+                text-align: center;
+                border: 1px solid #e0e0e0;
+            }
+            
+            .stat-label {
+                font-size: 12px;
+                color: #666;
+                margin-bottom: 5px;
+            }
+            
+            .stat-value {
+                font-size: 24px;
+                font-weight: 600;
+                color: #667eea;
+            }
+            
+            .footer {
+                padding: 20px 30px;
+                background: #f0f0f0;
+                text-align: center;
+                color: #666;
+                font-size: 14px;
+                border-top: 1px solid #e0e0e0;
+            }
+            
+            @media (max-width: 768px) {
+                .header {
+                    padding: 20px;
+                }
+                
+                .answer-section,
+                .evidence-section,
+                .highlighted-context {
+                    padding: 20px;
+                }
+                
+                .evidence-header {
+                    flex-direction: column;
+                    align-items: flex-start;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="header">
+                <h1>📚 Evidence Visualization</h1>
+                <div class="question">
+                    <strong>Question 12:</strong> Who were Wilhelm Wundt and William James?
+                </div>
             </div>
-        </div>
-        
-        <div class="keywords-bar">
-            <div class="keywords-title">🔑 Extracted Keywords:</div>
-
-        </div>
-        
-        <div class="answer-section">
-            <h3><i class="fas fa-robot"></i> Generated Answer</h3>
-            <div class="answer-content">
-                Wilhelm Wundt was a German scientist who is considered the first person to be referred to as a psychologist. He viewed psychology as a scientific study of conscious experience and believed that the goal of psychology was to identify components of consciousness and how those components combined to result in our conscious experience. He used introspection, a process by which someone examines their own conscious experience as objectively as possible, and considered his version experimental introspection.
-
-William James, on the other hand, was an American psychologist who was a proponent of functionalism. This perspective focused on how mental activities served as adaptive responses to an organism's environment. Like Wundt, James also relied on introspection, but his research approach also incorporated more objective measures as well. James is often referred to as the father of psychology in the United States and made significant contributions to early research into motivation, proposing that behavior was driven by a number of instincts that aid survival.
+            
+            <div class="keywords-bar">
+                <div class="keywords-title">🔑 Extracted Keywords:</div>
+    <span class="keyword-badge">were</span><span class="keyword-badge">wilhelm</span><span class="keyword-badge">wundt</span><span class="keyword-badge">william</span><span class="keyword-badge">james</span>
             </div>
-        </div>
-        
-        <div class="evidence-section">
-            <h3><i class="fas fa-book"></i> Evidence by Section</h3>
+            
+            <div class="answer-section">
+                <h3><i class="fas fa-robot"></i> Generated Answer</h3>
+                <div class="answer-content">
+                    Wilhelm Wundt was a German scientist who is considered the first person to be referred to as a psychologist. He viewed psychology as a scientific study of conscious experience and believed that the goal of psychology was to identify components of consciousness and how those components combined to result in our conscious experience. He used introspection, a process by which someone examines their own conscious experience as objectively as possible, and considered his version experimental introspection.
 
+William James, on the other hand, was an American psychologist who was a proponent of functionalism. This perspective focused on how mental activities served as adaptive responses to an organism's environment. Like Wundt, James also relied on introspection, but his research approach also incorporated more objective measures as well. James is often referred to as the father of psychology in the United States and made significant contributions to early research into motivation, proposing that behavior was driven by a number of instincts that aid survival.  <!-- NO HIGHLIGHTING HERE -->
+                </div>
+            </div>
+            
+            <div class="evidence-section">
+                <h3><i class="fas fa-book"></i> Evidence by Section</h3>
+    
             <div class="evidence-card">
                 <div class="evidence-header">
                     <span class="section-name">📖 1.2 History of Psychology
 LEARNING OBJECTIVES
 By the end of this section</span>
                     <span class="page-number">📄 Page 21</span>
-                    <span class="relevance">⭐ Relevance: 0.7</span>
-                </div>
-                <div>
-
                 </div>
                 <div class="evidence-text">
-                    This section discusses 1.2 history of psychology
-learning objectives
-by the end of this section. The content here is relevant to your question about ...
+                    <mark style="background-color: #ffeb3b; font-weight: bold;">james</mark> through today. <mark style="background-color: #ffeb3b; font-weight: bold;">wundt</mark> and Structuralism <mark style="background-color: #ffeb3b; font-weight: bold;">wilhelm</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">wundt</mark> (1832–1920) was a German scientist who was the first person to be referred to as a psychologist. His famous book entitled Principles of Physiological Psychology was published in 1873. <mark style="background-color: #ffeb3b; font-weight: bold;">wundt</mark> viewed psychology as a scientific study of consciou  <!-- HIGHLIGHTING HERE ONLY -->
                 </div>
             </div>
-
+    
             <div class="evidence-card">
                 <div class="evidence-header">
                     <span class="section-name">📖 1.3 Contemporary Psychology
 Psychology is a diverse discipline that is made up of several major subdivisions with unique perspectives</span>
                     <span class="page-number">📄 Page 23</span>
-                    <span class="relevance">⭐ Relevance: 0.75</span>
-                </div>
-                <div>
-
                 </div>
                 <div class="evidence-text">
-                    This section discusses 1.3 contemporary psychology
-psychology is a diverse discipline that is made up of several major subdivisions with unique perspectives. The content here is relevant to your question about ...
+                    <mark style="background-color: #ffeb3b; font-weight: bold;">james</mark> through today. <mark style="background-color: #ffeb3b; font-weight: bold;">wundt</mark> and Structuralism <mark style="background-color: #ffeb3b; font-weight: bold;">wilhelm</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">wundt</mark> (1832–1920) was a German scientist who was the first person to be referred to as a psychologist. His famous book entitled Principles of Physiological Psychology was published in 1873. <mark style="background-color: #ffeb3b; font-weight: bold;">wundt</mark> viewed psychology as a scientific study of consciou  <!-- HIGHLIGHTING HERE ONLY -->
                 </div>
             </div>
-
+    
             <div class="evidence-card">
                 <div class="evidence-header">
                     <span class="section-name">📖 1.3 William James</span>
                     <span class="page-number">📄 Page 29</span>
-                    <span class="relevance">⭐ Relevance: 0.8</span>
-                </div>
-                <div>
-
                 </div>
                 <div class="evidence-text">
-                    This section discusses 1.3 william james. The content here is relevant to your question about ...
+                    <mark style="background-color: #ffeb3b; font-weight: bold;">james</mark> through today. <mark style="background-color: #ffeb3b; font-weight: bold;">wundt</mark> and Structuralism <mark style="background-color: #ffeb3b; font-weight: bold;">wilhelm</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">wundt</mark> (1832–1920) was a German scientist who was the first person to be referred to as a psychologist. His famous book entitled Principles of Physiological Psychology was published in 1873. <mark style="background-color: #ffeb3b; font-weight: bold;">wundt</mark> viewed psychology as a scientific study of consciou  <!-- HIGHLIGHTING HERE ONLY -->
                 </div>
             </div>
-
+    
             <div class="evidence-card">
                 <div class="evidence-header">
                     <span class="section-name">📖 1.9 Noam Chomsky was very influential in beginning the cognitive revolution</span>
                     <span class="page-number">📄 Page 43</span>
-                    <span class="relevance">⭐ Relevance: 0.85</span>
-                </div>
-                <div>
-
                 </div>
                 <div class="evidence-text">
-                    This section discusses 1.9 noam chomsky was very influential in beginning the cognitive revolution. The content here is relevant to your question about ...
+                    <mark style="background-color: #ffeb3b; font-weight: bold;">james</mark> through today. <mark style="background-color: #ffeb3b; font-weight: bold;">wundt</mark> and Structuralism <mark style="background-color: #ffeb3b; font-weight: bold;">wilhelm</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">wundt</mark> (1832–1920) was a German scientist who was the first person to be referred to as a psychologist. His famous book entitled Principles of Physiological Psychology was published in 1873. <mark style="background-color: #ffeb3b; font-weight: bold;">wundt</mark> viewed psychology as a scientific study of consciou  <!-- HIGHLIGHTING HERE ONLY -->
                 </div>
             </div>
-
+    
             <div class="evidence-card">
                 <div class="evidence-header">
                     <span class="section-name">📖 10.3 Research suggests that when something we love to do</span>
                     <span class="page-number">📄 Page 105</span>
-                    <span class="relevance">⭐ Relevance: 0.9</span>
-                </div>
-                <div>
-
                 </div>
                 <div class="evidence-text">
-                    This section discusses 10.3 research suggests that when something we love to do. The content here is relevant to your question about ...
+                    <mark style="background-color: #ffeb3b; font-weight: bold;">james</mark> through today. <mark style="background-color: #ffeb3b; font-weight: bold;">wundt</mark> and Structuralism <mark style="background-color: #ffeb3b; font-weight: bold;">wilhelm</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">wundt</mark> (1832–1920) was a German scientist who was the first person to be referred to as a psychologist. His famous book entitled Principles of Physiological Psychology was published in 1873. <mark style="background-color: #ffeb3b; font-weight: bold;">wundt</mark> viewed psychology as a scientific study of consciou  <!-- HIGHLIGHTING HERE ONLY -->
                 </div>
             </div>
-
-        </div>
-        
-        <div class="highlighted-context">
-            <h3><i class="fas fa-highlighter"></i> Highlighted Context</h3>
-            <div class="context-box">
-                James through today. Wundt and Structuralism Wilhelm Wundt (1832–1920) was a German scientist who was the first person to be referred to as a psychologist. His famous book entitled Principles of Physiological Psychology was published in 1873. Wundt viewed psychology as a scientific study of conscious experience, and he believed that the goal of psychology was to identify components of consciousness and how those components combined to result in our conscious experience. Wundt used introspection (he called it “internal perception”), a process by which someone examines their own conscious experience as objectively as possible, making the human mind like any other aspect of nature that a scientist observed. He believed in the notion of voluntarism—that people have free will and should know the intentions of a psychological experiment if they were participating (Danziger, 1980). Wundt considered his version experimental introspection; he used instruments such as those that measured reaction time. He also wrote Volkerpsychologie in 1904 in which he suggested that psychology should include the study of culture, as it involves the study of people. Edward Titchener, one of his students, went on to 1.2 • History of Psychology 9
-
-LINK TO LEARNING Find out what I-O psychologists do on the Society for Industrial and Organizational Psychology (SIOP) (http://openstax.org/l/siop) website—a professional organization for people working in the discipline. This site also offers several I-O psychologist profiles. The Historical Development of Industrial and Organizational Psychology Industrial and organizational psychology had its origins in the early 20th century. Several influential early psychologists studied issues that today would be categorized as industrial psychology: James Cattell (1860–1944), Hugo Münsterberg (1863–1916), Walter Dill Scott (1869–1955), Robert Yerkes (1876–1956), Walter Bingham (1880–1952), and Lillian Gilbreth (1878–1972). Cattell, Münsterberg, and Scott had been students of Wilhelm Wundt, the father of experimental psychology. Some of these researchers had been involved in work in the area of industrial psychology before World War I. Cattell’s contribution to industrial psychology is largely reflected in his founding of a psychological consulting company, which is still operating today called the Psychological Corporation, and in the accomplishments of students at Columbia in the area of industrial psychology. In 1913, Münsterberg published Psychology and Industrial Efficiency, which covered topics such as employee selection, employee training, and effective advertising. Scott was one of the first psychologists to apply psychology to advertising, management, and personnel selection. In 1903, Scott published two books: The Theory of Advertising and Psychology of Advertising. They are the first books to describe the use of psychology in the business world. By 1911 he published two more books, Influencing Men in Business and Increasing Human Efficiency in Business. In 1916 a newly formed division in the Carnegie Institute of Technology hired Scott to conduct applied research on employee selection (Katzell & Austin, 1992). The focus of all this research was in what we now know as industrial psychology; it was only later in the century that the field of organizational psychology developed as an experimental science (Katzell & Austin, 1992). In addition to their academic positions, these researchers also worked directly for businesses as consultants. When the United States entered World War I in April 1917, the work of psychologists working in this discipline expanded to include their contributions to military efforts. At that time Yerkes was the president of the 25-year-old American Psychological Association (APA). The APA is a professional association in the United States for clinical and research psychologists. Today the APA performs a number of functions including holding conferences, accrediting university degree programs, and publishing scientific journals. Yerkes organized a
-
-William James was the first American psychologist, and he was a proponent of functionalism. This particular perspective focused on how mental activities served as adaptive responses to an organism’s environment. Like Wundt, James also relied on introspection; however, his research approach also incorporated more objective measures as well. Sigmund Freud believed that understanding the unconscious mind was absolutely critical to understand conscious behavior. This was especially true for individuals that he saw who suffered from various hysterias and neuroses. Freud relied on dream analysis, slips of the tongue, and free association as means to access the unconscious. Psychoanalytic theory remained a dominant force in clinical psychology for several decades. Gestalt psychology was very influential in Europe. Gestalt psychology takes a holistic view of an individual and his experiences. As the Nazis came to power in Germany, Wertheimer, Koffka, and Köhler immigrated to the United States. Although they left their laboratories and their research behind, they did introduce America to Gestalt ideas. Some of the principles of Gestalt psychology are still very influential in the study of sensation and perception. One of the most influential schools of thought within psychology’s history was behaviorism. Behaviorism focused on making psychology an objective science by studying overt behavior and deemphasizing the importance of unobservable mental processes. John Watson is often considered the father of behaviorism, and B. F. Skinner’s contributions to our understanding of principles of operant conditioning cannot be underestimated. As behaviorism and psychoanalytic theory took hold of so many aspects of psychology, some began to become dissatisfied with psychology’s picture of human nature. Thus, a humanistic movement within psychology began to take hold. Humanism focuses on the potential of all people for good. Both Maslow and Rogers were influential in shaping humanistic psychology. During the 1950s, the landscape of psychology began to change. A science of behavior began to shift back to its roots of focus on mental processes. The emergence of neuroscience and computer science aided this transition. Ultimately, the cognitive revolution took hold, and people came to realize that cognition was crucial to a true appreciation and understanding of behavior. 1.3 Contemporary Psychology Psychology is a diverse discipline that is made up of several major subdivisions with unique perspectives. Biological psychology involves the study of the biological bases of behavior. Sensation and perception refer to the area of psychology that is focused on how information from our sensory modalities is
-
-specific pattern of behavior that is not learned. There was, however, considerable controversy among James and his contemporaries over the exact definition of instinct. James proposed several dozen special human instincts, but many of his contemporaries had their own lists that differed. A mother’s protection of her baby, the urge to lick sugar, and hunting prey were among the human behaviors proposed as true instincts during James’s era. This view—that human behavior is driven by instincts—received a fair amount of criticism because of the undeniable role of learning in shaping all sorts of human behavior. In fact, as early as the 1900s, some instinctive behaviors were experimentally demonstrated to result from associative learning (recall when you learned about Watson’s conditioning of fear response in “Little Albert”) (Faris, 1921). FIGURE 10.4 (a) William James proposed the instinct theory of motivation, asserting that behavior is driven by instincts. (b) In humans, instincts may include behaviors such as an infant’s rooting for a nipple and sucking. (credit b: modification of work by "Mothering Touch"/Flickr) Another early theory of motivation proposed that the maintenance of homeostasis is particularly important in directing behavior. You may recall from your earlier reading that homeostasis is the tendency to maintain a balance, or optimal level, within a biological system. In a body system, a control center (which is often part of the brain) receives input from receptors (which are often complexes of neurons). The control center directs effectors (which may be other neurons) to correct any imbalance detected by the control center. According to the drive theory of motivation, deviations from homeostasis create physiological needs. These needs result in psychological drive states that direct behavior to meet the need and, ultimately, bring the system back to homeostasis. For example, if it’s been a while since you ate, your blood sugar levels will drop below normal. This low blood sugar will induce a physiological need and a corresponding drive state (i.e., hunger) that will direct you to seek out and consume food (Figure 10.5). Eating will eliminate the hunger, and, ultimately, your blood sugar levels will return to normal. Interestingly, drive theory also emphasizes the role that habits play in the type of behavioral response in which we engage. A habit is a pattern of behavior in which we regularly engage. Once we have engaged in a behavior that successfully reduces a drive, we are more likely to engage
-
-semester: Family Law and Criminal Law. The Family Law professor has a rather intimidating classroom: He likes to put students on the spot with tough questions, which often leaves students feeling belittled or embarrassed. Grades are based exclusively on quizzes and exams, and the instructor posts results of each test on the classroom door. In contrast, the Criminal Law professor facilitates classroom discussions and respectful debates in small groups. The majority of the course grade is not exam-based, but centers on a student-designed research project on a crime issue of the student’s choice. Research suggests that Hakim will be less intrinsically motivated in his Family Law course, where students are intimidated in the classroom setting, and there is an emphasis on teacher-driven evaluations. Hakim is likely to experience a higher level of intrinsic motivation in his Criminal Law course, where the class setting encourages inclusive collaboration and a respect for ideas, and where students have more influence over their learning activities. Theories About Motivation William James (1842–1910) was an important contributor to early research into motivation, and he is often referred to as the father of psychology in the United States. James theorized that behavior was driven by a number of instincts, which aid survival (Figure 10.4). From a biological perspective, an instinct is a species- 10.1 • Motivation 323
-
-In the 1930s, researchers began to study employees’ feelings about their jobs. Kurt Lewin also conducted research on the effects of various leadership styles, team structure, and team dynamics (Katzell & Austin, 1992). Lewin is considered the founder of social psychology and much of his work and that of his students produced results that had important influences in organizational psychology. Lewin and his students’ research included an important early study that used children to study the effect of leadership style on aggression, group dynamics, and satisfaction (Lewin, Lippitt, & White, 1939). Lewin was also responsible for coining the term group dynamics, and he was involved in studies of group interactions, cooperation, competition, and communication that bear on organizational psychology. Parallel to these studies in industrial and organizational psychology, the field of human factors psychology was also developing. Frederick Taylor was an engineer who saw that if one could redesign the workplace there would be an increase in both output for the company and wages for the workers. In 1911 he put forward his theory in a book titled, The Principles of Scientific Management (Figure 13.6). His book exami
-            </div>
-        </div>
-        
-        <div class="stats">
-            <div class="stat-item">
-                <div class="stat-label">Sections Used</div>
-                <div class="stat-value">12</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-label">Pages Referenced</div>
-                <div class="stat-value">12</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-label">Keywords Found</div>
-                <div class="stat-value">0</div>
-            </div>
-        </div>
-        
-        <div class="footer">
-            Generated from Psychology 2e Textbook • Question 12 • 2026-02-26
-        </div>
-    </div>
     
-    <!-- Font Awesome for icons -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
-</body>
-</html>
+            </div>
+            
+            <div class="highlighted-context">
+                <h3><i class="fas fa-highlighter"></i> Highlighted Context</h3>
+                <div class="context-box">
+                    <mark style="background-color: #ffeb3b; font-weight: bold;">james</mark> through today. <mark style="background-color: #ffeb3b; font-weight: bold;">wundt</mark> and Structuralism <mark style="background-color: #ffeb3b; font-weight: bold;">wilhelm</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">wundt</mark> (1832–1920) was a German scientist who was the first person to be referred to as a psychologist. His famous book entitled Principles of Physiological Psychology was published in 1873. <mark style="background-color: #ffeb3b; font-weight: bold;">wundt</mark> viewed psychology as a scientific study of conscious experience, and he believed that the goal of psychology was to identify components of consciousness and how those components combined to result in our conscious experience. <mark style="background-color: #ffeb3b; font-weight: bold;">wundt</mark> used introspection (he called it “internal perception”), a process by which someone examines their own conscious experience as objectively as possible, making the human mind like any other aspect of nature that a scientist observed. He believed in the notion of voluntarism—that people have free will and should know the intentions of a psychological experiment if they <mark style="background-color: #ffeb3b; font-weight: bold;">were</mark> participating (Danziger, 1980). <mark style="background-color: #ffeb3b; font-weight: bold;">wundt</mark> considered his version experimental introspection; he used instruments such as those that measured reaction time. He also wrote Volkerpsychologie in 1904 in which he suggested that psychology should include the study of culture, as it involves the study of people. Edward Titchener, one of his students, went on to 1.2 • History of Psychology 9
+
+LINK TO LEARNING Find out what I-O psychologists do on the Society for Industrial and Organizational Psychology (SIOP) (http://openstax.org/l/siop) website—a professional organization for people working in the discipline. This site also offers several I-O psychologist profiles. The Historical Development of Industrial and Organizational Psychology Industrial and organizational psychology had its origins in the early 20th century. Several influential early psychologists studied issues that today would be categorized as industrial psychology: <mark style="background-color: #ffeb3b; font-weight: bold;">james</mark> Cattell (1860–1944), Hugo Münsterberg (1863–1916), Walter Dill Scott (1869–1955), Robert Yerkes (1876–1956), Walter Bingham (1880–1952), and Lillian Gilbreth (1878–1972). Cattell, Münsterberg, and Scott had been students of <mark style="background-color: #ffeb3b; font-weight: bold;">wilhelm</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">wundt</mark>, the father of experimental psychology. Some of these researchers had been involved in work in the area of industrial psychology before World War I. Cattell’s contribution to industrial psychology is largely reflected in his founding of a psychological consulting company, which is still operating today called the Psychological Corporation, and in the accomplishments of students at Columbia in the area of industrial psychology. In 1913, Münsterberg published Psychology and Industrial Efficiency, which covered topics such as employee selection, employee training, and effective advertising. Scott was one of the first psychologists to apply psychology to advertising, management, and personnel selection. In 1903, Scott published two books: The Theory of Advertising and Psychology of Advertising. They are the first books to describe the use of psychology in the business world. By 1911 he published two more books, Influencing Men in Business and Increasing Human Efficiency in Business. In 1916 a newly formed division in the Carnegie Institute of Technology hired Scott to conduct applied research on employee selection (Katzell & Austin, 1992). The focus of all this research was in what we now know as industrial psychology; it was only later in the century that the field of organizational psychology developed as an experimental science (Katzell & Austin, 1992). In addition to their academic positions, these researchers also worked directly for businesses as consultants. When the United States entered World War I in April 1917, the work of psychologists working in this discipline expanded to include their contributions to military efforts. At that time Yerkes was the president of the 25-year-old American Psychological Association (APA). The APA is a professional association in the United States for clinical and research psychologists. Today the APA performs a number of functions including holding conferences, accrediting university degree programs, and publishing scientific journals. Yerkes organized a
+
+<mark style="background-color: #ffeb3b; font-weight: bold;">william</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">james</mark> was the first American psychologist, and he was a proponent of functionalism. This particular perspective focused on how mental activities served as adaptive responses to an organism’s environment. Like <mark style="background-color: #ffeb3b; font-weight: bold;">wundt</mark>, <mark style="background-color: #ffeb3b; font-weight: bold;">james</mark> also relied on introspection; however, his research approach also incorporated more objective measures as well. Sigmund Freud believed that understanding the unconscious mind was absolutely critical to understand conscious behavior. This was especially true for individuals that he saw who suffered from various hysterias and neuroses. Freud relied on dream analysis, slips of the tongue, and free association as means to access the unconscious. Psychoanalytic theory remained a dominant force in clinical psychology for several decades. Gestalt psychology was very influential in Europe. Gestalt psychology takes a holistic view of an individual and his experiences. As the Nazis came to power in Germany, Wertheimer, Koffka, and Köhler immigrated to the United States. Although they left their laboratories and their research behind, they did introduce America to Gestalt ideas. Some of the principles of Gestalt psychology are still very influential in the study of sensation and perception. One of the most influential schools of thought within psychology’s history was behaviorism. Behaviorism focused on making psychology an objective science by studying overt behavior and deemphasizing the importance of unobservable mental processes. John Watson is often considered the father of behaviorism, and B. F. Skinner’s contributions to our understanding of principles of operant conditioning cannot be underestimated. As behaviorism and psychoanalytic theory took hold of so many aspects of psychology, some began to become dissatisfied with psychology’s picture of human nature. Thus, a humanistic movement within psychology began to take hold. Humanism focuses on the potential of all people for good. Both Maslow and Rogers <mark style="background-color: #ffeb3b; font-weight: bold;">were</mark> influential in shaping humanistic psychology. During the 1950s, the landscape of psychology began to change. A science of behavior began to shift back to its roots of focus on mental processes. The emergence of neuroscience and computer science aided this transition. Ultimately, the cognitive revolution took hold, and people came to realize that cognition was crucial to a true appreciation and understanding of behavior. 1.3 Contemporary Psychology Psychology is a diverse discipline that is made up of several major subdivisions with unique perspectives. Biological psychology involves the study of the biological bases of behavior. Sensation and perception refer to the area of psychology that is focused on how information from our sensory modalities is
+
+specific pattern of behavior that is not learned. There was, however, considerable controversy among <mark style="background-color: #ffeb3b; font-weight: bold;">james</mark> and his contemporaries over the exact definition of instinct. <mark style="background-color: #ffeb3b; font-weight: bold;">james</mark> proposed several dozen special human instincts, but many of his contemporaries had their own lists that differed. A mother’s protection of her baby, the urge to lick sugar, and hunting prey <mark style="background-color: #ffeb3b; font-weight: bold;">were</mark> among the human behaviors proposed as true instincts during <mark style="background-color: #ffeb3b; font-weight: bold;">james</mark>’s era. This view—that human behavior is driven by instincts—received a fair amount of criticism because of the undeniable role of learning in shaping all sorts of human behavior. In fact, as early as the 1900s, some instinctive behaviors <mark style="background-color: #ffeb3b; font-weight: bold;">were</mark> experimentally demonstrated to result from associative learning (recall when you learned about Watson’s conditioning of fear response in “Little Albert”) (Faris, 1921). FIGURE 10.4 (a) <mark style="background-color: #ffeb3b; font-weight: bold;">william</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">james</mark> proposed the instinct theory of motivation, asserting that behavior is driven by instincts. (b) In humans, instincts may include behaviors such as an infant’s rooting for a nipple and sucking. (credit b: modification of work by "Mothering Touch"/Flickr) Another early theory of motivation proposed that the maintenance of homeostasis is particularly important in directing behavior. You may recall from your earlier reading that homeostasis is the tendency to maintain a balance, or optimal level, within a biological system. In a body system, a control center (which is often part of the brain) receives input from receptors (which are often complexes of neurons). The control center directs effectors (which may be other neurons) to correct any imbalance detected by the control center. According to the drive theory of motivation, deviations from homeostasis create physiological needs. These needs result in psychological drive states that direct behavior to meet the need and, ultimately, bring the system back to homeostasis. For example, if it’s been a while since you ate, your blood sugar levels will drop below normal. This low blood sugar will induce a physiological need and a corresponding drive state (i.e., hunger) that will direct you to seek out and consume food (Figure 10.5). Eating will eliminate the hunger, and, ultimately, your blood sugar levels will return to normal. Interestingly, drive theory also emphasizes the role that habits play in the type of behavioral response in which we engage. A habit is a pattern of behavior in which we regularly engage. Once we have engaged in a behavior that successfully reduces a drive, we are more likely to engage
+
+semester: Family Law and Criminal Law. The Family Law professor has a rather intimidating classroom: He likes to put students on the spot with tough questions, which often leaves students feeling belittled or embarrassed. Grades are based exclusively on quizzes and exams, and the instructor posts results of each test on the classroom door. In contrast, the Criminal Law professor facilitates classroom discussions and respectful debates in small groups. The majority of the course grade is not exam-based, but centers on a student-designed research project on a crime issue of the student’s choice. Research suggests that Hakim will be less intrinsically motivated in his Family Law course, where students are intimidated in the classroom setting, and there is an emphasis on teacher-driven evaluations. Hakim is likely to experience a higher level of intrinsic motivation in his Criminal Law course, where the class setting encourages inclusive collaboration and a respect for ideas, and where students have more influence over their learning activities. Theories About Motivation <mark style="background-color: #ffeb3b; font-weight: bold;">william</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">james</mark> (1842–1910) was an important contributor to early research into motivation, and he is often referred to as the father of psychology in the United States. <mark style="background-color: #ffeb3b; font-weight: bold;">james</mark> theorized that behavior was driven by a number of instincts, which aid survival (Figure 10.4). From a biological perspective, an instinct is a species- 10.1 • Motivation 323
+
+In the 1930s, researchers began to study employees’ feelings about their jobs. Kurt Lewin also conducted research on the effects of various leadership styles, team structure, and team dynamics (Katzell & Austin, 1992). Lewin is considered the founder of social psychology and much of his work and that of his students produced results that had important influences in organizational psychology. Lewin and his students’ research included an important early study that used children to study the effect of leadership style on aggression, group dynamics, and satisfaction (Lewin, Lippitt, & White, 1939). Lewin was also responsible for coining the term group dynamics, and he was involved in studies of group interactions, cooperation, competition, and communication that bear on organizational psychology. Parallel to these studies in industrial and organizational psychology, the field of human factors psychology was also developing. Frederick Taylor was an engineer who saw that if one could redesign the workplace there would be an increase in both output for the company and wages for the workers. In 1911 he put forward his theory in a book titled, The Principles of Scientific Management (Figure 13.6). His book exami  <!-- HIGHLIGHTING HERE ONLY -->
+                </div>
+            </div>
+            
+            <div class="stats">
+                <div class="stat-item">
+                    <div class="stat-label">Sections Used</div>
+                    <div class="stat-value">12</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Pages Referenced</div>
+                    <div class="stat-value">12</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Keywords Found</div>
+                    <div class="stat-value">5</div>
+                </div>
+            </div>
+            
+            <div class="footer">
+                Generated from Psychology 2e Textbook • Question 12 • 2026-02-27
+            </div>
+        </div>
+        
+        <!-- Font Awesome for icons -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
+    </body>
+    </html>

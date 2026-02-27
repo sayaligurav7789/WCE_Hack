@@ -1,304 +1,292 @@
 <!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Evidence Visualization - Question 39</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            padding: 20px;
-        }
-        
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            overflow: hidden;
-        }
-        
-        .header {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            padding: 30px;
-        }
-        
-        .header h1 {
-            font-size: 24px;
-            margin-bottom: 10px;
-        }
-        
-        .header .question {
-            font-size: 18px;
-            opacity: 0.9;
-            background: rgba(255, 255, 255, 0.2);
-            padding: 15px;
-            border-radius: 10px;
-            margin-top: 10px;
-            line-height: 1.5;
-        }
-        
-        .keywords-bar {
-            background: #f0f0f0;
-            padding: 15px 30px;
-            border-bottom: 1px solid #e0e0e0;
-        }
-        
-        .keywords-title {
-            font-size: 14px;
-            color: #666;
-            margin-bottom: 10px;
-            font-weight: 600;
-        }
-        
-        .keyword-badge {
-            display: inline-block;
-            background: #ffeb3b;
-            color: #333;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 13px;
-            margin: 0 5px 5px 0;
-            font-weight: 500;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-        
-        .answer-section {
-            padding: 30px;
-            background: #f8f9fa;
-            border-bottom: 1px solid #e0e0e0;
-        }
-        
-        .answer-section h3 {
-            color: #333;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .answer-section h3 i {
-            color: #667eea;
-        }
-        
-        .answer-content {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            line-height: 1.8;
-            color: #444;
-            border-left: 4px solid #667eea;
-        }
-        
-        .answer-content mark {
-            background-color: #ffeb3b;
-            padding: 2px 0;
-            font-weight: 500;
-        }
-        
-        .evidence-section {
-            padding: 30px;
-        }
-        
-        .evidence-section h3 {
-            color: #333;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .evidence-section h3 i {
-            color: #667eea;
-        }
-        
-        .evidence-card {
-            background: #f8f9fa;
-            border-radius: 10px;
-            padding: 20px;
-            margin-bottom: 20px;
-            border-left: 4px solid #667eea;
-        }
-        
-        .evidence-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-        
-        .section-name {
-            font-weight: 600;
-            color: #333;
-            background: #e8eaf6;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 14px;
-        }
-        
-        .page-number {
-            color: #666;
-            background: white;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 14px;
-            border: 1px solid #e0e0e0;
-        }
-        
-        .relevance {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 14px;
-        }
-        
-        .term-badge {
-            display: inline-block;
-            background: #ffeb3b;
-            color: #333;
-            padding: 3px 10px;
-            border-radius: 15px;
-            font-size: 12px;
-            margin: 0 5px 5px 0;
-            font-weight: 500;
-        }
-        
-        .evidence-text {
-            background: white;
-            padding: 15px;
-            border-radius: 8px;
-            color: #555;
-            line-height: 1.6;
-            margin: 15px 0 0 0;
-            border: 1px solid #e0e0e0;
-        }
-        
-        .evidence-text mark {
-            background-color: #ffeb3b;
-            padding: 2px 0;
-            font-weight: 500;
-        }
-        
-        .highlighted-context {
-            padding: 30px;
-            background: #f8f9fa;
-            border-top: 1px solid #e0e0e0;
-            border-bottom: 1px solid #e0e0e0;
-        }
-        
-        .highlighted-context h3 {
-            color: #333;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .context-box {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            max-height: 400px;
-            overflow-y: auto;
-            border: 1px solid #e0e0e0;
-            line-height: 1.8;
-            font-size: 14px;
-        }
-        
-        .context-box mark {
-            background-color: #ffeb3b;
-            padding: 2px 0;
-            font-weight: 500;
-        }
-        
-        .stats {
-            display: flex;
-            gap: 15px;
-            padding: 20px 30px;
-            background: white;
-            flex-wrap: wrap;
-        }
-        
-        .stat-item {
-            background: #f8f9fa;
-            padding: 10px 20px;
-            border-radius: 10px;
-            flex: 1;
-            min-width: 120px;
-            text-align: center;
-            border: 1px solid #e0e0e0;
-        }
-        
-        .stat-label {
-            font-size: 12px;
-            color: #666;
-            margin-bottom: 5px;
-        }
-        
-        .stat-value {
-            font-size: 24px;
-            font-weight: 600;
-            color: #667eea;
-        }
-        
-        .footer {
-            padding: 20px 30px;
-            background: #f0f0f0;
-            text-align: center;
-            color: #666;
-            font-size: 14px;
-            border-top: 1px solid #e0e0e0;
-        }
-        
-        @media (max-width: 768px) {
-            .header {
+    <html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Evidence Visualization - Question 39</title>
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+            
+            body {
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                min-height: 100vh;
                 padding: 20px;
             }
             
-            .answer-section,
-            .evidence-section,
-            .highlighted-context {
+            .container {
+                max-width: 1000px;
+                margin: 0 auto;
+                background: white;
+                border-radius: 20px;
+                box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+                overflow: hidden;
+            }
+            
+            .header {
+                background: linear-gradient(135deg, #667eea, #764ba2);
+                color: white;
+                padding: 30px;
+            }
+            
+            .header h1 {
+                font-size: 24px;
+                margin-bottom: 10px;
+            }
+            
+            .header .question {
+                font-size: 18px;
+                opacity: 0.9;
+                background: rgba(255, 255, 255, 0.2);
+                padding: 15px;
+                border-radius: 10px;
+                margin-top: 10px;
+                line-height: 1.5;
+            }
+            
+            .keywords-bar {
+                background: #f0f0f0;
+                padding: 15px 30px;
+                border-bottom: 1px solid #e0e0e0;
+            }
+            
+            .keywords-title {
+                font-size: 14px;
+                color: #666;
+                margin-bottom: 10px;
+                font-weight: 600;
+            }
+            
+            .keyword-badge {
+                display: inline-block;
+                background: #ffeb3b;
+                color: #333;
+                padding: 5px 12px;
+                border-radius: 20px;
+                font-size: 13px;
+                margin: 0 5px 5px 0;
+                font-weight: 500;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            }
+            
+            .answer-section {
+                padding: 30px;
+                background: #f8f9fa;
+                border-bottom: 1px solid #e0e0e0;
+            }
+            
+            .answer-section h3 {
+                color: #333;
+                margin-bottom: 15px;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+            
+            .answer-section h3 i {
+                color: #667eea;
+            }
+            
+            .answer-content {
+                background: white;
                 padding: 20px;
+                border-radius: 10px;
+                line-height: 1.8;
+                color: #444;
+                border-left: 4px solid #667eea;
+            }
+            
+            /* NO mark styling for answer - it stays plain */
+            
+            .evidence-section {
+                padding: 30px;
+            }
+            
+            .evidence-section h3 {
+                color: #333;
+                margin-bottom: 20px;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+            
+            .evidence-section h3 i {
+                color: #667eea;
+            }
+            
+            .evidence-card {
+                background: #f8f9fa;
+                border-radius: 10px;
+                padding: 20px;
+                margin-bottom: 20px;
+                border-left: 4px solid #667eea;
             }
             
             .evidence-header {
-                flex-direction: column;
-                align-items: flex-start;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 15px;
+                flex-wrap: wrap;
+                gap: 10px;
             }
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <div class="header">
-            <h1>📚 Evidence Visualization</h1>
-            <div class="question">
-                <strong>Question 39:</strong> 
+            
+            .section-name {
+                font-weight: 600;
+                color: #333;
+                background: #e8eaf6;
+                padding: 5px 12px;
+                border-radius: 20px;
+                font-size: 14px;
+            }
+            
+            .page-number {
+                color: #666;
+                background: white;
+                padding: 5px 12px;
+                border-radius: 20px;
+                font-size: 14px;
+                border: 1px solid #e0e0e0;
+            }
+            
+            .term-badge {
+                display: inline-block;
+                background: #ffeb3b;
+                color: #333;
+                padding: 3px 10px;
+                border-radius: 15px;
+                font-size: 12px;
+                margin: 0 5px 5px 0;
+                font-weight: 500;
+            }
+            
+            .evidence-text {
+                background: white;
+                padding: 15px;
+                border-radius: 8px;
+                color: #555;
+                line-height: 1.6;
+                margin: 15px 0 0 0;
+                border: 1px solid #e0e0e0;
+            }
+            
+            .evidence-text mark {
+                background-color: #ffeb3b;
+                padding: 2px 0;
+                font-weight: 500;
+            }
+            
+            .highlighted-context {
+                padding: 30px;
+                background: #f8f9fa;
+                border-top: 1px solid #e0e0e0;
+                border-bottom: 1px solid #e0e0e0;
+            }
+            
+            .highlighted-context h3 {
+                color: #333;
+                margin-bottom: 15px;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+            
+            .context-box {
+                background: white;
+                padding: 20px;
+                border-radius: 10px;
+                max-height: 400px;
+                overflow-y: auto;
+                border: 1px solid #e0e0e0;
+                line-height: 1.8;
+                font-size: 14px;
+            }
+            
+            .context-box mark {
+                background-color: #ffeb3b;
+                padding: 2px 0;
+                font-weight: 500;
+            }
+            
+            .stats {
+                display: flex;
+                gap: 15px;
+                padding: 20px 30px;
+                background: white;
+                flex-wrap: wrap;
+            }
+            
+            .stat-item {
+                background: #f8f9fa;
+                padding: 10px 20px;
+                border-radius: 10px;
+                flex: 1;
+                min-width: 120px;
+                text-align: center;
+                border: 1px solid #e0e0e0;
+            }
+            
+            .stat-label {
+                font-size: 12px;
+                color: #666;
+                margin-bottom: 5px;
+            }
+            
+            .stat-value {
+                font-size: 24px;
+                font-weight: 600;
+                color: #667eea;
+            }
+            
+            .footer {
+                padding: 20px 30px;
+                background: #f0f0f0;
+                text-align: center;
+                color: #666;
+                font-size: 14px;
+                border-top: 1px solid #e0e0e0;
+            }
+            
+            @media (max-width: 768px) {
+                .header {
+                    padding: 20px;
+                }
+                
+                .answer-section,
+                .evidence-section,
+                .highlighted-context {
+                    padding: 20px;
+                }
+                
+                .evidence-header {
+                    flex-direction: column;
+                    align-items: flex-start;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="header">
+                <h1>📚 Evidence Visualization</h1>
+                <div class="question">
+                    <strong>Question 39:</strong> What is the importance of replication in psychological research?
+                </div>
             </div>
-        </div>
-        
-        <div class="keywords-bar">
-            <div class="keywords-title">🔑 Extracted Keywords:</div>
-
-        </div>
-        
-        <div class="answer-section">
-            <h3><i class="fas fa-robot"></i> Generated Answer</h3>
-            <div class="answer-content">
-                According to the provided textbook context, replication is crucial in psychological research as it ensures the legitimacy of published research findings. Replication helps to:
+            
+            <div class="keywords-bar">
+                <div class="keywords-title">🔑 Extracted Keywords:</div>
+    <span class="keyword-badge">importance</span><span class="keyword-badge">replication</span><span class="keyword-badge">psychological</span><span class="keyword-badge">research</span>
+            </div>
+            
+            <div class="answer-section">
+                <h3><i class="fas fa-robot"></i> Generated Answer</h3>
+                <div class="answer-content">
+                    According to the provided textbook context, replication is crucial in psychological research as it ensures the legitimacy of published research findings. Replication helps to:
 
 1. Prevent unnecessary duplication of research findings in the scientific literature.
 2. Provide quality control for psychological research, weeding out poorly conceived or executed studies.
@@ -306,125 +294,103 @@
 4. Provide more evidence to support the original research findings, making scientists more apt to adopt them.
 5. Cast doubt on the legitimacy of the original article if repeated failures occur, leading scientists to look elsewhere.
 
-In summary, replication is essential in psychological research as it ensures the reliability and validity of research findings, prevents duplication of efforts, and promotes the advancement of scientific knowledge.
+In summary, replication is essential in psychological research as it ensures the reliability and validity of research findings, prevents duplication of efforts, and promotes the advancement of scientific knowledge.  <!-- NO HIGHLIGHTING HERE -->
+                </div>
             </div>
-        </div>
-        
-        <div class="evidence-section">
-            <h3><i class="fas fa-book"></i> Evidence by Section</h3>
-
+            
+            <div class="evidence-section">
+                <h3><i class="fas fa-book"></i> Evidence by Section</h3>
+    
             <div class="evidence-card">
                 <div class="evidence-header">
                     <span class="section-name">📖 06.003
 Blann</span>
                     <span class="page-number">📄 Page 26</span>
-                    <span class="relevance">⭐ Relevance: 0.7</span>
-                </div>
-                <div>
-
                 </div>
                 <div class="evidence-text">
-                    This section discusses 06.003
-blann. The content here is relevant to your question about ...
+                    discipline’s knowledge. This helps prevent unnecessary duplication of <mark style="background-color: #ffeb3b; font-weight: bold;">research</mark> findings in the scientific literature and, to some extent, ensures that each <mark style="background-color: #ffeb3b; font-weight: bold;">research</mark> article provides new information. Ultimately, the journal editor will compile all of the peer reviewer feedback and determine whether t  <!-- HIGHLIGHTING HERE ONLY -->
                 </div>
             </div>
-
+    
             <div class="evidence-card">
                 <div class="evidence-header">
                     <span class="section-name">📖 1.14 Stanley Milgram</span>
                     <span class="page-number">📄 Page 36</span>
-                    <span class="relevance">⭐ Relevance: 0.75</span>
-                </div>
-                <div>
-
                 </div>
                 <div class="evidence-text">
-                    This section discusses 1.14 stanley milgram. The content here is relevant to your question about ...
+                    discipline’s knowledge. This helps prevent unnecessary duplication of <mark style="background-color: #ffeb3b; font-weight: bold;">research</mark> findings in the scientific literature and, to some extent, ensures that each <mark style="background-color: #ffeb3b; font-weight: bold;">research</mark> article provides new information. Ultimately, the journal editor will compile all of the peer reviewer feedback and determine whether t  <!-- HIGHLIGHTING HERE ONLY -->
                 </div>
             </div>
-
+    
             <div class="evidence-card">
                 <div class="evidence-header">
                     <span class="section-name">📖 1.5 John B</span>
                     <span class="page-number">📄 Page 54</span>
-                    <span class="relevance">⭐ Relevance: 0.8</span>
-                </div>
-                <div>
-
                 </div>
                 <div class="evidence-text">
-                    This section discusses 1.5 john b. The content here is relevant to your question about ...
+                    discipline’s knowledge. This helps prevent unnecessary duplication of <mark style="background-color: #ffeb3b; font-weight: bold;">research</mark> findings in the scientific literature and, to some extent, ensures that each <mark style="background-color: #ffeb3b; font-weight: bold;">research</mark> article provides new information. Ultimately, the journal editor will compile all of the peer reviewer feedback and determine whether t  <!-- HIGHLIGHTING HERE ONLY -->
                 </div>
             </div>
-
+    
             <div class="evidence-card">
                 <div class="evidence-header">
                     <span class="section-name">📖 13.3
 Another management style was described by Donald Clifton</span>
                     <span class="page-number">📄 Page 59</span>
-                    <span class="relevance">⭐ Relevance: 0.85</span>
-                </div>
-                <div>
-
                 </div>
                 <div class="evidence-text">
-                    This section discusses 13.3
-another management style was described by donald clifton. The content here is relevant to your question about ...
+                    discipline’s knowledge. This helps prevent unnecessary duplication of <mark style="background-color: #ffeb3b; font-weight: bold;">research</mark> findings in the scientific literature and, to some extent, ensures that each <mark style="background-color: #ffeb3b; font-weight: bold;">research</mark> article provides new information. Ultimately, the journal editor will compile all of the peer reviewer feedback and determine whether t  <!-- HIGHLIGHTING HERE ONLY -->
                 </div>
             </div>
-
+    
             <div class="evidence-card">
                 <div class="evidence-header">
                     <span class="section-name">📖 2.1 Why Is Research Important</span>
                     <span class="page-number">📄 Page 68</span>
-                    <span class="relevance">⭐ Relevance: 0.9</span>
-                </div>
-                <div>
-
                 </div>
                 <div class="evidence-text">
-                    This section discusses 2.1 why is research important. The content here is relevant to your question about ...
+                    discipline’s knowledge. This helps prevent unnecessary duplication of <mark style="background-color: #ffeb3b; font-weight: bold;">research</mark> findings in the scientific literature and, to some extent, ensures that each <mark style="background-color: #ffeb3b; font-weight: bold;">research</mark> article provides new information. Ultimately, the journal editor will compile all of the peer reviewer feedback and determine whether t  <!-- HIGHLIGHTING HERE ONLY -->
                 </div>
             </div>
-
-        </div>
-        
-        <div class="highlighted-context">
-            <h3><i class="fas fa-highlighter"></i> Highlighted Context</h3>
-            <div class="context-box">
-                discipline’s knowledge. This helps prevent unnecessary duplication of research findings in the scientific literature and, to some extent, ensures that each research article provides new information. Ultimately, the journal editor will compile all of the peer reviewer feedback and determine whether the article will be published in its current state (a rare occurrence), published with revisions, or not accepted for publication. Peer review provides some degree of quality control for psychological research. Poorly conceived or executed studies can be weeded out, and even well-designed research can be improved by the revisions suggested. Peer review also ensures that the research is described clearly enough to allow other scientists to replicate it, meaning they can repeat the experiment using different samples to determine reliability. Sometimes replications involve additional measures that expand on the original finding. In any case, each replication serves to provide more evidence to support the original research findings. Successful replications of published research make scientists more apt to adopt those findings, while repeated failures tend to cast doubt on the legitimacy of the original article and lead scientists to look elsewhere. For example, it would be a major advancement in the medical field if a published study indicated that taking a new drug helped individuals achieve a healthy weight without changing their diet. But if other scientists could not replicate the results, the original study’s claims would be questioned. In recent years, there has been increasing concern about a “replication crisis” that has affected a number of scientific fields, including psychology. Some of the most well-known studies and scientists have produced research that has failed to be replicated by others (as discussed in Shrout & Rodgers, 2018). In fact, even a famous Nobel Prize-winning scientist has recently retracted a published paper because she had difficulty replicating her results (Nobel Prize-winning scientist Frances Arnold retracts paper, 2020 January 3). These kinds of outcomes have prompted some scientists to begin to work together and more openly, and some would argue that the current “crisis” is actually improving the ways in which science is conducted and in how its results are shared with others (Aschwanden, 2018). The Vaccine-Autism Myth and Retraction of Published Studies Some scientists have claimed that routine childhood vaccines cause some children to develop autism, and, in fact, several peer-reviewed publications published research making these claims. Since the initial reports, large- scale epidemiological research has indicated that vaccinations are
-
-Westen, D. (1998). The scientific legacy of Sigmund Freud, toward a psychodynamically informed psychological science. Psychological Bulletin, 124, 333–371. Psychological Research American Cancer Society. (n.d.). History of the cancer prevention studies. http://www.cancer.org/research/ researchtopreventcancer/history-cancer-prevention-study American Psychological Association. (2009). Publication Manual of the American Psychological Association (6th ed.). Author. American Psychological Association. (n.d.). Research with animals in psychology. https://www.apa.org/ research/responsible/research-animals.pdf Arnett, J. (2008). The neglected 95%: Why American psychology needs to become less American. American Psychologist, 63(7), 602–614. Aschwanden, C. (2018, December 6). Psychology’s replication crisis has made the field better. FiveThirtyEight. https://fivethirtyeight.com/features/psychologys-replication-crisis-has-made-the-field-better/ Barnett, W. S. (2011). Effectiveness of early educational intervention. Science, 333(6045), 975–978. https://science.sciencemag.org/content/333/6045/975 Barton, B. A., Eldridge, A. L., Thompson, D., Affenito, S. G., Striegel-Moore, R. H., Franko, D. L., . . . Crockett, S. J. (2005). The relationship of breakfast and cereal consumption to nutrient intake and body mass index: The national heart, lung, and blood institute growth and health study. Journal of the American Dietetic Association, 105(9), 1383–1389. http://dx.doi.org/10.1016/j.jada.2005.06.003 Blann, L.E. (2005). Early intervention for children and families: With special needs. MCN: The American Journal of Maternal Child Nursing, 30, 263–67. Chwalisz, K., Diener, E., & Gallagher, D. (1988). Autonomic arousal feedback and emotional experience: Evidence from the spinal cord injured. Journal of Personality and Social Psychology, 54, 820–828. Dominus, S. (2011, May 25). Could conjoined twins share a mind? New York Times Sunday Magazine. http://www.nytimes.com/2011/05/29/magazine/could-conjoined-twins-share-a-mind.html?_r=5&hp& Egnor, M. (2017, November 24). What the craniopagus twins teach us about the mind and the brain. Evolution News & Science Today. https://evolutionnews.org/2017/11/what-the-craniopagus-twins-teach-us-about- the-mind-and-the-brain/ Ethnicity and Health in America Series: Featured Psychologists (n.d.). American Psychological Association. https://www.apa.org/pi/oema/resources/ethnicity-health/psychologists/sumner-prosser Fanger, S. M., Frankel, L. A., & Hazen, N. (2012). Peer exclusion in preschool children’s play: Naturalistic observations in a playground setting. Merrill-Palmer Quarterly, 58, 224–254. Fiedler, K. (2004). Illusory correlation. In R. F. Pohl (Ed.), Cognitive illusions: A handbook on fallacies and biases in thinking, judgment and memory (pp. 97–114). Psychology Press. Frantzen, L. B., Treviño, R. P., Echon, R. M., Garcia-Dominic, O., & DiMarco, N. (2013). Association between frequency of ready-to-eat cereal consumption, nutrient intakes, and body mass index in fourth- to sixth- grade low-income minority children. Journal of the Academy of Nutrition and Dietetics, 113(4), 511–519. Godoy, J. C., & Brussino, S. (2010). Psychology in Argentina. The Corsini Encyclopedia of Psychology. John Wiley & Sons. Gunamudian David Boaz. (n.d.). World Library. http://www.worldlibrary.org/articles/Gunamudian_David_Boaz Harper, J. (2013, July 5). Ice cream and crime:
-
-are not. Replication has an important role in ensuring the legitimacy of published research. In the long run, only those findings that are capable of being replicated consistently will achieve consensus in the scientific community. 2.4 Ethics Ethics in research is an evolving field, and some practices that were accepted or tolerated in the past would be considered unethical today. Researchers are expected to adhere to basic ethical guidelines when conducting experiments that involve human participants. Any experiment involving human participants must be approved by an IRB. Participation in experiments is voluntary and requires informed consent of the participants. If any deception is involved in the experiment, each participant must be fully debriefed upon the conclusion of the study. Animal research is also held to a high ethical standard. Researchers who use animals as experimental subjects must design their projects so that pain and distress are minimized. Animal research requires the approval of an IACUC, and all animal facilities are subject to regular inspections to ensure that animals are being treated humanely. 2 • Summary 65
-
-explain behavior and the cognitive and biological processes that underlie it. Some methods rely on observational techniques. Other approaches involve interactions between the researcher and the individuals who are being studied—ranging from a series of simple questions to extensive, in-depth interviews—to well- controlled experiments. Each of these research methods has unique strengths and weaknesses, and each method may only be appropriate for certain types of research questions. For example, studies that rely primarily on observation produce incredible amounts of information, but the ability to apply this information to the larger population is somewhat limited because of small sample sizes. Survey research, on the other hand, allows researchers to easily collect data from relatively large samples. While this allows for results to be generalized to the larger population more easily, the information that can be collected on any given survey is somewhat limited and subject to problems associated with any type of self-reported data. Some researchers conduct archival research by using existing records. While this can be a fairly inexpensive way to collect data that can provide insight into a number of research questions, researchers using this approach have no control on how or what kind of data was collected. All of the methods described thus far are correlational in nature. This means that researchers can speak to important relationships that might exist between two or more variables of interest. However, correlational data cannot be used to make claims about cause-and-effect relationships. Correlational research can find a relationship between two variables, but the only way a researcher can claim that the relationship between the variables is cause and effect is to perform an experiment. In experimental research, which will be discussed later in this chapter, there is a tremendous amount of control over variables of interest. While this is a powerful approach, experiments are often conducted in artificial settings. This calls into question the validity of experimental findings with regard to how they would apply in real-world settings. In addition, many of the questions that psychologists would like to answer cannot be pursued through experimental research because of ethical concerns. Clinical or Case Studies In 2011, the New York Times published a feature story on Krista and Tatiana Hogan, Canadian twin girls. These particular twins are unique because Krista and Tatiana are conjoined twins, connected at the head. There is evidence that the two girls are connected in a part of
-
-for the collection of valid, true-to-life information from realistic situations. However, naturalistic observation does not allow for much control and often requires quite a bit of time and money to perform. Researchers strive to ensure that their tools for collecting data are both reliable (consistent and replicable) and valid (accurate). Surveys can be administered in a number of ways and make it possible to collect large amounts of data quickly. However, the depth of information that can be collected through surveys is somewhat limited compared to a clinical or case study. Archival research involves studying existing data sets to answer research questions. Longitudinal research has been incredibly helpful to researchers who need to collect data on how people change over time. Cross-sectional research compares multiple segments of a population at a single time. 2.3 Analyzing Findings A correlation is described with a correlation coefficient, r, which ranges from -1 to 1. The correlation coefficient tells us about the nature (positive or negative) and the strength of the relationship between two or more variables. Correlations do not tell us anything about causation—regardless of how strong the relationship is between variables. In fact, the only way to demonstrate causation is by conducting an experiment. People often make the mistake of claiming that correlations exist when they really do not. Researchers can test cause-and-effect hypotheses by conducting experiments. Ideally, experimental participants are randomly selected from the population of interest. Then, the participants are randomly assigned to their respective groups. Sometimes, the researcher and the participants are blind to group membership to prevent their expectations from influencing the results. In ideal experimental design, the only difference between the experimental and control groups is whether participants are exposed to the experimental manipulation. Each group goes through all phases of the experiment, but each group will experience a different level of the indepen
-            </div>
-        </div>
-        
-        <div class="stats">
-            <div class="stat-item">
-                <div class="stat-label">Sections Used</div>
-                <div class="stat-value">10</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-label">Pages Referenced</div>
-                <div class="stat-value">11</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-label">Keywords Found</div>
-                <div class="stat-value">0</div>
-            </div>
-        </div>
-        
-        <div class="footer">
-            Generated from Psychology 2e Textbook • Question 39 • 2026-02-26
-        </div>
-    </div>
     
-    <!-- Font Awesome for icons -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
-</body>
-</html>
+            </div>
+            
+            <div class="highlighted-context">
+                <h3><i class="fas fa-highlighter"></i> Highlighted Context</h3>
+                <div class="context-box">
+                    discipline’s knowledge. This helps prevent unnecessary duplication of <mark style="background-color: #ffeb3b; font-weight: bold;">research</mark> findings in the scientific literature and, to some extent, ensures that each <mark style="background-color: #ffeb3b; font-weight: bold;">research</mark> article provides new information. Ultimately, the journal editor will compile all of the peer reviewer feedback and determine whether the article will be published in its current state (a rare occurrence), published with revisions, or not accepted for publication. Peer review provides some degree of quality control for <mark style="background-color: #ffeb3b; font-weight: bold;">psychological</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">research</mark>. Poorly conceived or executed studies can be weeded out, and even well-designed <mark style="background-color: #ffeb3b; font-weight: bold;">research</mark> can be improved by the revisions suggested. Peer review also ensures that the <mark style="background-color: #ffeb3b; font-weight: bold;">research</mark> is described clearly enough to allow other scientists to replicate it, meaning they can repeat the experiment using different samples to determine reliability. Sometimes <mark style="background-color: #ffeb3b; font-weight: bold;">replication</mark>s involve additional measures that expand on the original finding. In any case, each <mark style="background-color: #ffeb3b; font-weight: bold;">replication</mark> serves to provide more evidence to support the original <mark style="background-color: #ffeb3b; font-weight: bold;">research</mark> findings. Successful <mark style="background-color: #ffeb3b; font-weight: bold;">replication</mark>s of published <mark style="background-color: #ffeb3b; font-weight: bold;">research</mark> make scientists more apt to adopt those findings, while repeated failures tend to cast doubt on the legitimacy of the original article and lead scientists to look elsewhere. For example, it would be a major advancement in the medical field if a published study indicated that taking a new drug helped individuals achieve a healthy weight without changing their diet. But if other scientists could not replicate the results, the original study’s claims would be questioned. In recent years, there has been increasing concern about a “<mark style="background-color: #ffeb3b; font-weight: bold;">replication</mark> crisis” that has affected a number of scientific fields, including psychology. Some of the most well-known studies and scientists have produced <mark style="background-color: #ffeb3b; font-weight: bold;">research</mark> that has failed to be replicated by others (as discussed in Shrout & Rodgers, 2018). In fact, even a famous Nobel Prize-winning scientist has recently retracted a published paper because she had difficulty replicating her results (Nobel Prize-winning scientist Frances Arnold retracts paper, 2020 January 3). These kinds of outcomes have prompted some scientists to begin to work together and more openly, and some would argue that the current “crisis” is actually improving the ways in which science is conducted and in how its results are shared with others (Aschwanden, 2018). The Vaccine-Autism Myth and Retraction of Published Studies Some scientists have claimed that routine childhood vaccines cause some children to develop autism, and, in fact, several peer-reviewed publications published <mark style="background-color: #ffeb3b; font-weight: bold;">research</mark> making these claims. Since the initial reports, large- scale epidemiological <mark style="background-color: #ffeb3b; font-weight: bold;">research</mark> has indicated that vaccinations are
+
+Westen, D. (1998). The scientific legacy of Sigmund Freud, toward a psychodynamically informed <mark style="background-color: #ffeb3b; font-weight: bold;">psychological</mark> science. <mark style="background-color: #ffeb3b; font-weight: bold;">psychological</mark> Bulletin, 124, 333–371. <mark style="background-color: #ffeb3b; font-weight: bold;">psychological</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">research</mark> American Cancer Society. (n.d.). History of the cancer prevention studies. http://www.cancer.org/<mark style="background-color: #ffeb3b; font-weight: bold;">research</mark>/ <mark style="background-color: #ffeb3b; font-weight: bold;">research</mark>topreventcancer/history-cancer-prevention-study American <mark style="background-color: #ffeb3b; font-weight: bold;">psychological</mark> Association. (2009). Publication Manual of the American <mark style="background-color: #ffeb3b; font-weight: bold;">psychological</mark> Association (6th ed.). Author. American <mark style="background-color: #ffeb3b; font-weight: bold;">psychological</mark> Association. (n.d.). <mark style="background-color: #ffeb3b; font-weight: bold;">research</mark> with animals in psychology. https://www.apa.org/ <mark style="background-color: #ffeb3b; font-weight: bold;">research</mark>/responsible/<mark style="background-color: #ffeb3b; font-weight: bold;">research</mark>-animals.pdf Arnett, J. (2008). The neglected 95%: Why American psychology needs to become less American. American Psychologist, 63(7), 602–614. Aschwanden, C. (2018, December 6). Psychology’s <mark style="background-color: #ffeb3b; font-weight: bold;">replication</mark> crisis has made the field better. FiveThirtyEight. https://fivethirtyeight.com/features/psychologys-<mark style="background-color: #ffeb3b; font-weight: bold;">replication</mark>-crisis-has-made-the-field-better/ Barnett, W. S. (2011). Effectiveness of early educational intervention. Science, 333(6045), 975–978. https://science.sciencemag.org/content/333/6045/975 Barton, B. A., Eldridge, A. L., Thompson, D., Affenito, S. G., Striegel-Moore, R. H., Franko, D. L., . . . Crockett, S. J. (2005). The relationship of breakfast and cereal consumption to nutrient intake and body mass index: The national heart, lung, and blood institute growth and health study. Journal of the American Dietetic Association, 105(9), 1383–1389. http://dx.doi.org/10.1016/j.jada.2005.06.003 Blann, L.E. (2005). Early intervention for children and families: With special needs. MCN: The American Journal of Maternal Child Nursing, 30, 263–67. Chwalisz, K., Diener, E., & Gallagher, D. (1988). Autonomic arousal feedback and emotional experience: Evidence from the spinal cord injured. Journal of Personality and Social Psychology, 54, 820–828. Dominus, S. (2011, May 25). Could conjoined twins share a mind? New York Times Sunday Magazine. http://www.nytimes.com/2011/05/29/magazine/could-conjoined-twins-share-a-mind.html?_r=5&hp& Egnor, M. (2017, November 24). What the craniopagus twins teach us about the mind and the brain. Evolution News & Science Today. https://evolutionnews.org/2017/11/what-the-craniopagus-twins-teach-us-about- the-mind-and-the-brain/ Ethnicity and Health in America Series: Featured Psychologists (n.d.). American <mark style="background-color: #ffeb3b; font-weight: bold;">psychological</mark> Association. https://www.apa.org/pi/oema/resources/ethnicity-health/psychologists/sumner-prosser Fanger, S. M., Frankel, L. A., & Hazen, N. (2012). Peer exclusion in preschool children’s play: Naturalistic observations in a playground setting. Merrill-Palmer Quarterly, 58, 224–254. Fiedler, K. (2004). Illusory correlation. In R. F. Pohl (Ed.), Cognitive illusions: A handbook on fallacies and biases in thinking, judgment and memory (pp. 97–114). Psychology Press. Frantzen, L. B., Treviño, R. P., Echon, R. M., Garcia-Dominic, O., & DiMarco, N. (2013). Association between frequency of ready-to-eat cereal consumption, nutrient intakes, and body mass index in fourth- to sixth- grade low-income minority children. Journal of the Academy of Nutrition and Dietetics, 113(4), 511–519. Godoy, J. C., & Brussino, S. (2010). Psychology in Argentina. The Corsini Encyclopedia of Psychology. John Wiley & Sons. Gunamudian David Boaz. (n.d.). World Library. http://www.worldlibrary.org/articles/Gunamudian_David_Boaz Harper, J. (2013, July 5). Ice cream and crime:
+
+are not. <mark style="background-color: #ffeb3b; font-weight: bold;">replication</mark> has an important role in ensuring the legitimacy of published <mark style="background-color: #ffeb3b; font-weight: bold;">research</mark>. In the long run, only those findings that are capable of being replicated consistently will achieve consensus in the scientific community. 2.4 Ethics Ethics in <mark style="background-color: #ffeb3b; font-weight: bold;">research</mark> is an evolving field, and some practices that were accepted or tolerated in the past would be considered unethical today. <mark style="background-color: #ffeb3b; font-weight: bold;">research</mark>ers are expected to adhere to basic ethical guidelines when conducting experiments that involve human participants. Any experiment involving human participants must be approved by an IRB. Participation in experiments is voluntary and requires informed consent of the participants. If any deception is involved in the experiment, each participant must be fully debriefed upon the conclusion of the study. Animal <mark style="background-color: #ffeb3b; font-weight: bold;">research</mark> is also held to a high ethical standard. <mark style="background-color: #ffeb3b; font-weight: bold;">research</mark>ers who use animals as experimental subjects must design their projects so that pain and distress are minimized. Animal <mark style="background-color: #ffeb3b; font-weight: bold;">research</mark> requires the approval of an IACUC, and all animal facilities are subject to regular inspections to ensure that animals are being treated humanely. 2 • Summary 65
+
+explain behavior and the cognitive and biological processes that underlie it. Some methods rely on observational techniques. Other approaches involve interactions between the <mark style="background-color: #ffeb3b; font-weight: bold;">research</mark>er and the individuals who are being studied—ranging from a series of simple questions to extensive, in-depth interviews—to well- controlled experiments. Each of these <mark style="background-color: #ffeb3b; font-weight: bold;">research</mark> methods has unique strengths and weaknesses, and each method may only be appropriate for certain types of <mark style="background-color: #ffeb3b; font-weight: bold;">research</mark> questions. For example, studies that rely primarily on observation produce incredible amounts of information, but the ability to apply this information to the larger population is somewhat limited because of small sample sizes. Survey <mark style="background-color: #ffeb3b; font-weight: bold;">research</mark>, on the other hand, allows <mark style="background-color: #ffeb3b; font-weight: bold;">research</mark>ers to easily collect data from relatively large samples. While this allows for results to be generalized to the larger population more easily, the information that can be collected on any given survey is somewhat limited and subject to problems associated with any type of self-reported data. Some <mark style="background-color: #ffeb3b; font-weight: bold;">research</mark>ers conduct archival <mark style="background-color: #ffeb3b; font-weight: bold;">research</mark> by using existing records. While this can be a fairly inexpensive way to collect data that can provide insight into a number of <mark style="background-color: #ffeb3b; font-weight: bold;">research</mark> questions, <mark style="background-color: #ffeb3b; font-weight: bold;">research</mark>ers using this approach have no control on how or what kind of data was collected. All of the methods described thus far are correlational in nature. This means that <mark style="background-color: #ffeb3b; font-weight: bold;">research</mark>ers can speak to important relationships that might exist between two or more variables of interest. However, correlational data cannot be used to make claims about cause-and-effect relationships. Correlational <mark style="background-color: #ffeb3b; font-weight: bold;">research</mark> can find a relationship between two variables, but the only way a <mark style="background-color: #ffeb3b; font-weight: bold;">research</mark>er can claim that the relationship between the variables is cause and effect is to perform an experiment. In experimental <mark style="background-color: #ffeb3b; font-weight: bold;">research</mark>, which will be discussed later in this chapter, there is a tremendous amount of control over variables of interest. While this is a powerful approach, experiments are often conducted in artificial settings. This calls into question the validity of experimental findings with regard to how they would apply in real-world settings. In addition, many of the questions that psychologists would like to answer cannot be pursued through experimental <mark style="background-color: #ffeb3b; font-weight: bold;">research</mark> because of ethical concerns. Clinical or Case Studies In 2011, the New York Times published a feature story on Krista and Tatiana Hogan, Canadian twin girls. These particular twins are unique because Krista and Tatiana are conjoined twins, connected at the head. There is evidence that the two girls are connected in a part of
+
+for the collection of valid, true-to-life information from realistic situations. However, naturalistic observation does not allow for much control and often requires quite a bit of time and money to perform. <mark style="background-color: #ffeb3b; font-weight: bold;">research</mark>ers strive to ensure that their tools for collecting data are both reliable (consistent and replicable) and valid (accurate). Surveys can be administered in a number of ways and make it possible to collect large amounts of data quickly. However, the depth of information that can be collected through surveys is somewhat limited compared to a clinical or case study. Archival <mark style="background-color: #ffeb3b; font-weight: bold;">research</mark> involves studying existing data sets to answer <mark style="background-color: #ffeb3b; font-weight: bold;">research</mark> questions. Longitudinal <mark style="background-color: #ffeb3b; font-weight: bold;">research</mark> has been incredibly helpful to <mark style="background-color: #ffeb3b; font-weight: bold;">research</mark>ers who need to collect data on how people change over time. Cross-sectional <mark style="background-color: #ffeb3b; font-weight: bold;">research</mark> compares multiple segments of a population at a single time. 2.3 Analyzing Findings A correlation is described with a correlation coefficient, r, which ranges from -1 to 1. The correlation coefficient tells us about the nature (positive or negative) and the strength of the relationship between two or more variables. Correlations do not tell us anything about causation—regardless of how strong the relationship is between variables. In fact, the only way to demonstrate causation is by conducting an experiment. People often make the mistake of claiming that correlations exist when they really do not. <mark style="background-color: #ffeb3b; font-weight: bold;">research</mark>ers can test cause-and-effect hypotheses by conducting experiments. Ideally, experimental participants are randomly selected from the population of interest. Then, the participants are randomly assigned to their respective groups. Sometimes, the <mark style="background-color: #ffeb3b; font-weight: bold;">research</mark>er and the participants are blind to group membership to prevent their expectations from influencing the results. In ideal experimental design, the only difference between the experimental and control groups is whether participants are exposed to the experimental manipulation. Each group goes through all phases of the experiment, but each group will experience a different level of the indepen  <!-- HIGHLIGHTING HERE ONLY -->
+                </div>
+            </div>
+            
+            <div class="stats">
+                <div class="stat-item">
+                    <div class="stat-label">Sections Used</div>
+                    <div class="stat-value">10</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Pages Referenced</div>
+                    <div class="stat-value">11</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Keywords Found</div>
+                    <div class="stat-value">4</div>
+                </div>
+            </div>
+            
+            <div class="footer">
+                Generated from Psychology 2e Textbook • Question 39 • 2026-02-27
+            </div>
+        </div>
+        
+        <!-- Font Awesome for icons -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
+    </body>
+    </html>

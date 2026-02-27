@@ -1,432 +1,397 @@
 <!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Evidence Visualization - Question 35</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            padding: 20px;
-        }
-        
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            overflow: hidden;
-        }
-        
-        .header {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            padding: 30px;
-        }
-        
-        .header h1 {
-            font-size: 24px;
-            margin-bottom: 10px;
-        }
-        
-        .header .question {
-            font-size: 18px;
-            opacity: 0.9;
-            background: rgba(255, 255, 255, 0.2);
-            padding: 15px;
-            border-radius: 10px;
-            margin-top: 10px;
-            line-height: 1.5;
-        }
-        
-        .keywords-bar {
-            background: #f0f0f0;
-            padding: 15px 30px;
-            border-bottom: 1px solid #e0e0e0;
-        }
-        
-        .keywords-title {
-            font-size: 14px;
-            color: #666;
-            margin-bottom: 10px;
-            font-weight: 600;
-        }
-        
-        .keyword-badge {
-            display: inline-block;
-            background: #ffeb3b;
-            color: #333;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 13px;
-            margin: 0 5px 5px 0;
-            font-weight: 500;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-        
-        .answer-section {
-            padding: 30px;
-            background: #f8f9fa;
-            border-bottom: 1px solid #e0e0e0;
-        }
-        
-        .answer-section h3 {
-            color: #333;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .answer-section h3 i {
-            color: #667eea;
-        }
-        
-        .answer-content {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            line-height: 1.8;
-            color: #444;
-            border-left: 4px solid #667eea;
-        }
-        
-        .answer-content mark {
-            background-color: #ffeb3b;
-            padding: 2px 0;
-            font-weight: 500;
-        }
-        
-        .evidence-section {
-            padding: 30px;
-        }
-        
-        .evidence-section h3 {
-            color: #333;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .evidence-section h3 i {
-            color: #667eea;
-        }
-        
-        .evidence-card {
-            background: #f8f9fa;
-            border-radius: 10px;
-            padding: 20px;
-            margin-bottom: 20px;
-            border-left: 4px solid #667eea;
-        }
-        
-        .evidence-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-        
-        .section-name {
-            font-weight: 600;
-            color: #333;
-            background: #e8eaf6;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 14px;
-        }
-        
-        .page-number {
-            color: #666;
-            background: white;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 14px;
-            border: 1px solid #e0e0e0;
-        }
-        
-        .relevance {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 14px;
-        }
-        
-        .term-badge {
-            display: inline-block;
-            background: #ffeb3b;
-            color: #333;
-            padding: 3px 10px;
-            border-radius: 15px;
-            font-size: 12px;
-            margin: 0 5px 5px 0;
-            font-weight: 500;
-        }
-        
-        .evidence-text {
-            background: white;
-            padding: 15px;
-            border-radius: 8px;
-            color: #555;
-            line-height: 1.6;
-            margin: 15px 0 0 0;
-            border: 1px solid #e0e0e0;
-        }
-        
-        .evidence-text mark {
-            background-color: #ffeb3b;
-            padding: 2px 0;
-            font-weight: 500;
-        }
-        
-        .highlighted-context {
-            padding: 30px;
-            background: #f8f9fa;
-            border-top: 1px solid #e0e0e0;
-            border-bottom: 1px solid #e0e0e0;
-        }
-        
-        .highlighted-context h3 {
-            color: #333;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .context-box {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            max-height: 400px;
-            overflow-y: auto;
-            border: 1px solid #e0e0e0;
-            line-height: 1.8;
-            font-size: 14px;
-        }
-        
-        .context-box mark {
-            background-color: #ffeb3b;
-            padding: 2px 0;
-            font-weight: 500;
-        }
-        
-        .stats {
-            display: flex;
-            gap: 15px;
-            padding: 20px 30px;
-            background: white;
-            flex-wrap: wrap;
-        }
-        
-        .stat-item {
-            background: #f8f9fa;
-            padding: 10px 20px;
-            border-radius: 10px;
-            flex: 1;
-            min-width: 120px;
-            text-align: center;
-            border: 1px solid #e0e0e0;
-        }
-        
-        .stat-label {
-            font-size: 12px;
-            color: #666;
-            margin-bottom: 5px;
-        }
-        
-        .stat-value {
-            font-size: 24px;
-            font-weight: 600;
-            color: #667eea;
-        }
-        
-        .footer {
-            padding: 20px 30px;
-            background: #f0f0f0;
-            text-align: center;
-            color: #666;
-            font-size: 14px;
-            border-top: 1px solid #e0e0e0;
-        }
-        
-        @media (max-width: 768px) {
-            .header {
+    <html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Evidence Visualization - Question 35</title>
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+            
+            body {
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                min-height: 100vh;
                 padding: 20px;
             }
             
-            .answer-section,
-            .evidence-section,
-            .highlighted-context {
+            .container {
+                max-width: 1000px;
+                margin: 0 auto;
+                background: white;
+                border-radius: 20px;
+                box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+                overflow: hidden;
+            }
+            
+            .header {
+                background: linear-gradient(135deg, #667eea, #764ba2);
+                color: white;
+                padding: 30px;
+            }
+            
+            .header h1 {
+                font-size: 24px;
+                margin-bottom: 10px;
+            }
+            
+            .header .question {
+                font-size: 18px;
+                opacity: 0.9;
+                background: rgba(255, 255, 255, 0.2);
+                padding: 15px;
+                border-radius: 10px;
+                margin-top: 10px;
+                line-height: 1.5;
+            }
+            
+            .keywords-bar {
+                background: #f0f0f0;
+                padding: 15px 30px;
+                border-bottom: 1px solid #e0e0e0;
+            }
+            
+            .keywords-title {
+                font-size: 14px;
+                color: #666;
+                margin-bottom: 10px;
+                font-weight: 600;
+            }
+            
+            .keyword-badge {
+                display: inline-block;
+                background: #ffeb3b;
+                color: #333;
+                padding: 5px 12px;
+                border-radius: 20px;
+                font-size: 13px;
+                margin: 0 5px 5px 0;
+                font-weight: 500;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            }
+            
+            .answer-section {
+                padding: 30px;
+                background: #f8f9fa;
+                border-bottom: 1px solid #e0e0e0;
+            }
+            
+            .answer-section h3 {
+                color: #333;
+                margin-bottom: 15px;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+            
+            .answer-section h3 i {
+                color: #667eea;
+            }
+            
+            .answer-content {
+                background: white;
                 padding: 20px;
+                border-radius: 10px;
+                line-height: 1.8;
+                color: #444;
+                border-left: 4px solid #667eea;
+            }
+            
+            /* NO mark styling for answer - it stays plain */
+            
+            .evidence-section {
+                padding: 30px;
+            }
+            
+            .evidence-section h3 {
+                color: #333;
+                margin-bottom: 20px;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+            
+            .evidence-section h3 i {
+                color: #667eea;
+            }
+            
+            .evidence-card {
+                background: #f8f9fa;
+                border-radius: 10px;
+                padding: 20px;
+                margin-bottom: 20px;
+                border-left: 4px solid #667eea;
             }
             
             .evidence-header {
-                flex-direction: column;
-                align-items: flex-start;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 15px;
+                flex-wrap: wrap;
+                gap: 10px;
             }
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <div class="header">
-            <h1>📚 Evidence Visualization</h1>
-            <div class="question">
-                <strong>Question 35:</strong> 
+            
+            .section-name {
+                font-weight: 600;
+                color: #333;
+                background: #e8eaf6;
+                padding: 5px 12px;
+                border-radius: 20px;
+                font-size: 14px;
+            }
+            
+            .page-number {
+                color: #666;
+                background: white;
+                padding: 5px 12px;
+                border-radius: 20px;
+                font-size: 14px;
+                border: 1px solid #e0e0e0;
+            }
+            
+            .term-badge {
+                display: inline-block;
+                background: #ffeb3b;
+                color: #333;
+                padding: 3px 10px;
+                border-radius: 15px;
+                font-size: 12px;
+                margin: 0 5px 5px 0;
+                font-weight: 500;
+            }
+            
+            .evidence-text {
+                background: white;
+                padding: 15px;
+                border-radius: 8px;
+                color: #555;
+                line-height: 1.6;
+                margin: 15px 0 0 0;
+                border: 1px solid #e0e0e0;
+            }
+            
+            .evidence-text mark {
+                background-color: #ffeb3b;
+                padding: 2px 0;
+                font-weight: 500;
+            }
+            
+            .highlighted-context {
+                padding: 30px;
+                background: #f8f9fa;
+                border-top: 1px solid #e0e0e0;
+                border-bottom: 1px solid #e0e0e0;
+            }
+            
+            .highlighted-context h3 {
+                color: #333;
+                margin-bottom: 15px;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+            
+            .context-box {
+                background: white;
+                padding: 20px;
+                border-radius: 10px;
+                max-height: 400px;
+                overflow-y: auto;
+                border: 1px solid #e0e0e0;
+                line-height: 1.8;
+                font-size: 14px;
+            }
+            
+            .context-box mark {
+                background-color: #ffeb3b;
+                padding: 2px 0;
+                font-weight: 500;
+            }
+            
+            .stats {
+                display: flex;
+                gap: 15px;
+                padding: 20px 30px;
+                background: white;
+                flex-wrap: wrap;
+            }
+            
+            .stat-item {
+                background: #f8f9fa;
+                padding: 10px 20px;
+                border-radius: 10px;
+                flex: 1;
+                min-width: 120px;
+                text-align: center;
+                border: 1px solid #e0e0e0;
+            }
+            
+            .stat-label {
+                font-size: 12px;
+                color: #666;
+                margin-bottom: 5px;
+            }
+            
+            .stat-value {
+                font-size: 24px;
+                font-weight: 600;
+                color: #667eea;
+            }
+            
+            .footer {
+                padding: 20px 30px;
+                background: #f0f0f0;
+                text-align: center;
+                color: #666;
+                font-size: 14px;
+                border-top: 1px solid #e0e0e0;
+            }
+            
+            @media (max-width: 768px) {
+                .header {
+                    padding: 20px;
+                }
+                
+                .answer-section,
+                .evidence-section,
+                .highlighted-context {
+                    padding: 20px;
+                }
+                
+                .evidence-header {
+                    flex-direction: column;
+                    align-items: flex-start;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="header">
+                <h1>📚 Evidence Visualization</h1>
+                <div class="question">
+                    <strong>Question 35:</strong> What is multicultural psychology?
+                </div>
             </div>
-        </div>
-        
-        <div class="keywords-bar">
-            <div class="keywords-title">🔑 Extracted Keywords:</div>
-
-        </div>
-        
-        <div class="answer-section">
-            <h3><i class="fas fa-robot"></i> Generated Answer</h3>
-            <div class="answer-content">
-                Multicultural psychology aims to develop strategies to effectively address the needs of various populations for which Eurocentric therapies have limited application. It offers a helping role and process that uses modalities and defines goals consistent with the life experiences and cultural values of clients. It strives to recognize client identities to include individual, group, and universal dimensions, advocate the use of universal and culture-specific strategies and roles in the healing process, and balances the importance of individualism and collectivism in the assessment, diagnosis, and treatment of client and client systems.
+            
+            <div class="keywords-bar">
+                <div class="keywords-title">🔑 Extracted Keywords:</div>
+    <span class="keyword-badge">multicultural</span><span class="keyword-badge">psychology</span>
             </div>
-        </div>
-        
-        <div class="evidence-section">
-            <h3><i class="fas fa-book"></i> Evidence by Section</h3>
-
+            
+            <div class="answer-section">
+                <h3><i class="fas fa-robot"></i> Generated Answer</h3>
+                <div class="answer-content">
+                    Multicultural psychology aims to develop strategies to effectively address the needs of various populations for which Eurocentric therapies have limited application. It offers a helping role and process that uses modalities and defines goals consistent with the life experiences and cultural values of clients. It strives to recognize client identities to include individual, group, and universal dimensions, advocate the use of universal and culture-specific strategies and roles in the healing process, and balances the importance of individualism and collectivism in the assessment, diagnosis, and treatment of client and client systems.  <!-- NO HIGHLIGHTING HERE -->
+                </div>
+            </div>
+            
+            <div class="evidence-section">
+                <h3><i class="fas fa-book"></i> Evidence by Section</h3>
+    
             <div class="evidence-card">
                 <div class="evidence-header">
                     <span class="section-name">📖 1.1 What Is Psychology</span>
                     <span class="page-number">📄 Page 20</span>
-                    <span class="relevance">⭐ Relevance: 0.7</span>
-                </div>
-                <div>
-
                 </div>
                 <div class="evidence-text">
-                    This section discusses 1.1 what is psychology. The content here is relevant to your question about ...
+                    dependence: A meta-analysis of randomized controlled trials. Alcohol and Alcoholism, 36(6), 544–552. Sue, D. W. (2001). Multidimensional facets of cultural competence. Counseling Psychologist, 29(6), 790–821. Sue, D. W. (2004). <mark style="background-color: #ffeb3b; font-weight: bold;">multicultural</mark> counseling and therapy (MCT). In J. A. Banks and C. Banks   <!-- HIGHLIGHTING HERE ONLY -->
                 </div>
             </div>
-
+    
             <div class="evidence-card">
                 <div class="evidence-header">
                     <span class="section-name">📖 1.1344935
 Thompson</span>
                     <span class="page-number">📄 Page 28</span>
-                    <span class="relevance">⭐ Relevance: 0.75</span>
-                </div>
-                <div>
-
                 </div>
                 <div class="evidence-text">
-                    This section discusses 1.1344935
-thompson. The content here is relevant to your question about ...
+                    dependence: A meta-analysis of randomized controlled trials. Alcohol and Alcoholism, 36(6), 544–552. Sue, D. W. (2001). Multidimensional facets of cultural competence. Counseling Psychologist, 29(6), 790–821. Sue, D. W. (2004). <mark style="background-color: #ffeb3b; font-weight: bold;">multicultural</mark> counseling and therapy (MCT). In J. A. Banks and C. Banks   <!-- HIGHLIGHTING HERE ONLY -->
                 </div>
             </div>
-
+    
             <div class="evidence-card">
                 <div class="evidence-header">
                     <span class="section-name">📖 1.3 Contemporary Psychology
 LEARNING OBJECTIVES
 By the end of this section</span>
                     <span class="page-number">📄 Page 30</span>
-                    <span class="relevance">⭐ Relevance: 0.8</span>
-                </div>
-                <div>
-
                 </div>
                 <div class="evidence-text">
-                    This section discusses 1.3 contemporary psychology
-learning objectives
-by the end of this section. The content here is relevant to your question about ...
+                    dependence: A meta-analysis of randomized controlled trials. Alcohol and Alcoholism, 36(6), 544–552. Sue, D. W. (2001). Multidimensional facets of cultural competence. Counseling Psychologist, 29(6), 790–821. Sue, D. W. (2004). <mark style="background-color: #ffeb3b; font-weight: bold;">multicultural</mark> counseling and therapy (MCT). In J. A. Banks and C. Banks   <!-- HIGHLIGHTING HERE ONLY -->
                 </div>
             </div>
-
+    
             <div class="evidence-card">
                 <div class="evidence-header">
                     <span class="section-name">📖 1.9 Noam Chomsky was very influential in beginning the cognitive revolution</span>
                     <span class="page-number">📄 Page 317</span>
-                    <span class="relevance">⭐ Relevance: 0.85</span>
-                </div>
-                <div>
-
                 </div>
                 <div class="evidence-text">
-                    This section discusses 1.9 noam chomsky was very influential in beginning the cognitive revolution. The content here is relevant to your question about ...
+                    dependence: A meta-analysis of randomized controlled trials. Alcohol and Alcoholism, 36(6), 544–552. Sue, D. W. (2001). Multidimensional facets of cultural competence. Counseling Psychologist, 29(6), 790–821. Sue, D. W. (2004). <mark style="background-color: #ffeb3b; font-weight: bold;">multicultural</mark> counseling and therapy (MCT). In J. A. Banks and C. Banks   <!-- HIGHLIGHTING HERE ONLY -->
                 </div>
             </div>
-
+    
             <div class="evidence-card">
                 <div class="evidence-header">
                     <span class="section-name">📖 11.18 This image from the Thematic Apperception Tests</span>
                     <span class="page-number">📄 Page 398</span>
-                    <span class="relevance">⭐ Relevance: 0.9</span>
-                </div>
-                <div>
-
                 </div>
                 <div class="evidence-text">
-                    This section discusses 11.18 this image from the thematic apperception tests. The content here is relevant to your question about ...
+                    dependence: A meta-analysis of randomized controlled trials. Alcohol and Alcoholism, 36(6), 544–552. Sue, D. W. (2001). Multidimensional facets of cultural competence. Counseling Psychologist, 29(6), 790–821. Sue, D. W. (2004). <mark style="background-color: #ffeb3b; font-weight: bold;">multicultural</mark> counseling and therapy (MCT). In J. A. Banks and C. Banks   <!-- HIGHLIGHTING HERE ONLY -->
                 </div>
             </div>
-
-        </div>
-        
-        <div class="highlighted-context">
-            <h3><i class="fas fa-highlighter"></i> Highlighted Context</h3>
-            <div class="context-box">
-                dependence: A meta-analysis of randomized controlled trials. Alcohol and Alcoholism, 36(6), 544–552. Sue, D. W. (2001). Multidimensional facets of cultural competence. Counseling Psychologist, 29(6), 790–821. Sue, D. W. (2004). Multicultural counseling and therapy (MCT). In J. A. Banks and C. Banks (Eds.), Handbook of research on multicultural education (2nd ed., pp. 813–827). Jossey-Bass. Sue, D. W., & Sue, D. (2007). Counseling the culturally different: Theory and practice (5th ed.). Wiley. Sussman, L. K., Robins, L. N., & Earls, F. (1987). Treatment–seeking for depression by Black and White Americans. Social Science & Medicine, 24, 187–196. Szasz, T. S. (1960). The Myth of Mental Illness. American Psychologist, 15, 113–118. Thomas, K. C., & Snowden, L. R. (2002). Minority response to health insurance coverage for mental health services. Journal of Mental Health Policy and Economics, 4, 35–41. Tiffany, F. (2012/1891). Life of Dorothea Lynde Dix (7th ed.). Houghton, Mifflin. Torrey, E. F. (1997). Out of the shadows: Confronting America's mental illness crisis. Wiley. Torrey, E. F., Zdanowicz, M. T., Kennard, A. D., Lamb, H. R., Eslinger, D. F., Biasotti, M. C., & Fuller, D. A. (2014, April 8). The treatment of persons with mental illness in prisons and jails: A state survey. Treatment Advocacy Center. http://tacreports.org/storage/documents/treatment-behind-bars/treatment-behind- bars.pdf Townes D. L., Cunningham N. J., & Chavez-Korell, S. (2009). Reexaming the relationships between racial identity, cultural mistrust, help-seeking attitudes, and preference for a Black counselor. Journal of Counseling Psychology, 56(2), 330–336. U.S. Department of Agriculture. (2013, December 10). USDA announces support for mental health facilities in rural areas [Press release No. 0234.13]. http://www.usda.gov/wps/portal/usda/usdahome?contentid=2013/ 12/0234.xml U.S. Department of Health and Human Services. (1999). Mental health: A report of the Surgeon General. Rockville, MD: U.S. Department of Health and Human Services, Substance Abuse and Mental Health Services Administration, Center for Mental Health Services, National Institutes of Health, National Institute of Mental Health. U.S. Department of Health and Human Services, Health Resources and Services Administration, Office of Rural Health Policy. (2005). Mental health and rural America: 1984-2005. ftp://ftp.hrsa.gov/ruralhealth/ RuralMentalHealth.pdf U.S. Department of Health and Human Services, Substance Abuse and Mental Health Services Administration, Center for Behavioral Health Statistics and Quality. (2017). Results from the 2016 National Survey on Drug Use and Health: Mental Health Findings. https://www.samhsa.gov/data/sites/default/files/NSDUH- DetTabs-2016/NSDUH-DetTabs-2016.pdf U.S. Department of Health and Human Services, Substance Abuse and Mental Health Services Administration, Center for Behavioral Health Statistics and Quality. (2011, September). Results from the 2010 National Survey on Drug
-
-develop strategies to effectively address the needs of various populations for which Eurocentric therapies have limited application (Sue, 2004). For example, a counselor whose treatment focuses on individual decision making may be ineffective at helping a Chinese client with a collectivist approach to problem solving (Sue, 2004). Multicultural counseling and therapy aims to offer both a helping role and process that uses modalities and defines goals consistent with the life experiences and cultural values of clients. It strives to recognize client identities to include individual, group, and universal dimensions, advocate the use of universal and culture- specific strategies and roles in the healing process, and balances the importance of individualism and collectivism in the assessment, diagnosis, and treatment of client and client systems (Sue, 2001). This therapeutic perspective integrates the impact of cultural and social norms, starting at the beginning of treatment. Therapists who use this perspective work with clients to obtain and integrate information about their cultural patterns into a unique treatment approach based on their particular situation (Stewart, Simmons, & Habibpour, 2012). Sociocultural therapy can include individual, group, family, and couples treatment modalities. 16.5 • The Sociocultural Model and Therapy Utilization 623
-
-of psychology and therefore influencing its development. They also suffered from the attitudes of White male psychologists who were not immune to the nonscientific attitudes prevalent in the society in which they DIG DEEPER 16 1 • Introduction to Psychology Access for free at openstax.org
-
-The TEMAS Multicultural Thematic Apperception Test is another tool designed to be culturally relevant to minority groups, especially Hispanic youths. TEMAS—standing for “Tell Me a Story” but also a play on the Spanish word temas (themes)—uses images and storytelling cues that relate to minority culture (Constantino, 1982). 390 11 • Personality Access for free at openstax.org
-
-M. (1999). Vulnerability to psychopathology: A biosocial model. American Psychological Association. Therapy and Treatment Abbass, A., Kisely, S., & Kroenke, K. (2006). Short-term psychodynamic psychotherapy for somatic disorders: Systematic review and meta-analysis of clinical trials. Psychotherapy and Psychosomatics, 78, 265–274. Ahmed, S., Wilson, K. B., Henriksen, R. C., & Jones, J. W. (2011). What does it mean to be a culturally competent counselor? Journal for Social Action in Counseling and Psychology, 3(1), 17–28. Alavi, A., Sharifi, B., Ghanizadeh, A., & Dehbozorgi, G. (2013). Effectiveness of cognitive-behavioral therapy in decreasing suicidal ideation and hopelessness of the adolescents with previous suicidal attempts. Iranian 726 References Access for free at openstax.org
-
-by Arian Zwegers; credit b: modification of work by "conbon33"/Flickr; credit c: modification of work by Anja Disseldorp) Why do you think this is the case? Collectivistic cultures, which tend to be found in east Asian countries and in Latin American and African countries, focus on the group more than on the individual (Nisbett, Peng, Choi, & 402 12 • Social Psychology Access for free at openstax.org
-
-Endler, J. A. (1986). Natural Selection in the Wild. Princeton University Press. Fogg, N. P., Harrington, P. E., Harrington, T. F., & Shatkin, L. (2012). College majors handbook with real career paths and payoffs (3rd ed.). JIST Publishing. Franko, D. L., et al. (2012). Racial/ethnic differences in adults in randomized clinical trials of binge eating disorder. Journal of Consulting and Clinical Psychology, 80, 186–195. Friedman, H. (2008), Humanistic and positive psychology: The methodological and epistemological divide. The Humanistic Psychologist, 36, 113–126. Gordon, O. E. (1995). A brief history of psychology. http://www.psych.utah.edu/gordon/Classes/Psy4905Docs/ PsychHistory/index.html#maptop Greengrass, M. (2004). 100 years of B.F. Skinner. Monitor on Psychology, 35, 80. Guthrie, R. (1998). Even the rat was white (2nd edition). Allyn and Bacon. Halonen, J. S. (2011). White paper: Are there too many psychology majors? Prepared for the Staff of the State University System of Florida Board of Governors. http://www.cogdop.org/page_attachments/0000/0200/ FLA_White_Paper_for_cogop_posting.pdf Hock, R. R. (2009). Social psychology. Forty studies that changed psychology: Explorations into the history of psychological research (pp. 308–317). Pearson. Hoffman, C. (2012). Careers in clinical, counseling, or school psychology; mental health counseling; clinical social work; marriage & family therapy and related professions. http://www.indiana.edu/~psyugrad/ advising/docs/Careers%20in%20Mental%20Health%20Counseling.pdf Jang, K. L., Livesly, W. J., & Vernon, P. A. (1996). Heritability of the Big Five personality dimensions and their facets: A twin study. Journal of Personality, 64, 577–591. Johnson, R., & Lubin, G. (2011). College exposed: What majors are most popular, highest paying and most likely to get you a job. Business Insider.com. http://www.businessinsider.com/best-college-majors-highest- income-most-employed-georgetwon-study-2011-6?op=1 Jones, M. C. (1924). A laboratory study of fear: The case of Peter. Pedagogical Seminary, 31, 308–315. Knekt, P. P., et al. (2008). Randomized trial on the effectiveness of long- and short-term psychodynamic psychotherapy and solution-focused therapy on psychiatric symptoms during a 3-year follow- up. Psychological Medicine: A Journal of Research In Psychiatry And The Allied Sciences, 38, 689–703. Landers, R. N. (2011, June 14). Grad school: Should I get a PhD or Master’s in I/O psychology? http://neoacademic.com/2011/06/14/grad-school-should-i-get-a-ph-d-or-masters-in-io- psychology/#.UuKKLftOnGg Macdonald, C. (2013). Health psychology center presents: What is health psychology? http://healthpsychology.org/what-is-health-psychology/ Madigan, S. & O'Hara, R. (1992). Short-term memory at the turn of the century: Mary Whiton Calkins's memory research. American Psychologist, 47, 170–174. McCrae, R. R. & Costa, P. T. (2008). Empirical and theoretical status of the five-factor model of personality traits. In G. J. Boyle, G. Matthews, & D. H. Saklofske (Eds.), The Sage handbook of personality theory and assessment.
-
-LINK TO LEARNING Listen to a podcast about the influence of an African American's psychology research on the historic Brown v. Board of Education civil rights case (http://openstax.org/l/crogers2) to learn more. The American Psychological Association has several ethnically based organizations for professional psychologists that facilitate interactions among members. Since psychologists belonging to specific ethnic groups or cultures have the most interest in studying the psychology of their communities, these organizations provide an opportunity for the growth of research on the interplay between culture and psychology. WOMEN IN PSYCHOLOGY Although rarely given credit, women have been contributing to psychology since its inception as a field of study. In 1894, Margaret Floy Washburn was the first woman awarded the doctoral degree in psychology. She wrote The Animal Mind: A Textbook of Comparative Psychology, and it was the standard in the field for over 20 years. In the mid 1890s, Mary Whiton Calkins completed all requirements toward the PhD in psychology, but Harvard University refused to award her that degree because she was a woman. She had been taught and mentored by William James, who tried and failed to convince Harvard to award her the doctoral degree. Her memory research studied primacy and recency (Madigan & O’Hara, 1992), and she also wrote about how structuralism and functionalism both explained self-psychology (Calkins, 1906). Another influential woman, Mary Cover Jones, conducted a study she considered to be a sequel to John B. Watson’s study of Little Albert (you’ll learn about this study in the chapter on Learning). Jones unconditioned fear in Little Peter, who had been afraid of rabbits (Jones, 1924). Ethnic minority women contributing to the field of psychology include Martha Bernal and Inez Beverly Prosser; their studies were related to education. Bernal, the first Latina to earn her doctoral degree in psychology (1962) conducted much of her research with Mexican American children. Prosser was the first African American woman awarded the PhD in 1933 at the University of Cincinnati (Benjamin, Henry, & McMahon, 2005). 1.3 Contemporary Psychology LEARNING OBJECTIVES By the end of this section, you will be able to: • Appreciate the diversity of interests and foci within psychology • Understand basic interests and applications in each of the described areas of psychology • Demonstrate familiarity with some of the major concepts or important figures in each of the described areas of psychology Contemporary psychology is a diverse field that is influenced
-
-2002). Nash was the subject of the 2001 movie
-            </div>
-        </div>
-        
-        <div class="stats">
-            <div class="stat-item">
-                <div class="stat-label">Sections Used</div>
-                <div class="stat-value">11</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-label">Pages Referenced</div>
-                <div class="stat-value">12</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-label">Keywords Found</div>
-                <div class="stat-value">0</div>
-            </div>
-        </div>
-        
-        <div class="footer">
-            Generated from Psychology 2e Textbook • Question 35 • 2026-02-26
-        </div>
-    </div>
     
-    <!-- Font Awesome for icons -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
-</body>
-</html>
+            </div>
+            
+            <div class="highlighted-context">
+                <h3><i class="fas fa-highlighter"></i> Highlighted Context</h3>
+                <div class="context-box">
+                    dependence: A meta-analysis of randomized controlled trials. Alcohol and Alcoholism, 36(6), 544–552. Sue, D. W. (2001). Multidimensional facets of cultural competence. Counseling Psychologist, 29(6), 790–821. Sue, D. W. (2004). <mark style="background-color: #ffeb3b; font-weight: bold;">multicultural</mark> counseling and therapy (MCT). In J. A. Banks and C. Banks (Eds.), Handbook of research on <mark style="background-color: #ffeb3b; font-weight: bold;">multicultural</mark> education (2nd ed., pp. 813–827). Jossey-Bass. Sue, D. W., & Sue, D. (2007). Counseling the culturally different: Theory and practice (5th ed.). Wiley. Sussman, L. K., Robins, L. N., & Earls, F. (1987). Treatment–seeking for depression by Black and White Americans. Social Science & Medicine, 24, 187–196. Szasz, T. S. (1960). The Myth of Mental Illness. American Psychologist, 15, 113–118. Thomas, K. C., & Snowden, L. R. (2002). Minority response to health insurance coverage for mental health services. Journal of Mental Health Policy and Economics, 4, 35–41. Tiffany, F. (2012/1891). Life of Dorothea Lynde Dix (7th ed.). Houghton, Mifflin. Torrey, E. F. (1997). Out of the shadows: Confronting America's mental illness crisis. Wiley. Torrey, E. F., Zdanowicz, M. T., Kennard, A. D., Lamb, H. R., Eslinger, D. F., Biasotti, M. C., & Fuller, D. A. (2014, April 8). The treatment of persons with mental illness in prisons and jails: A state survey. Treatment Advocacy Center. http://tacreports.org/storage/documents/treatment-behind-bars/treatment-behind- bars.pdf Townes D. L., Cunningham N. J., & Chavez-Korell, S. (2009). Reexaming the relationships between racial identity, cultural mistrust, help-seeking attitudes, and preference for a Black counselor. Journal of Counseling <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark>, 56(2), 330–336. U.S. Department of Agriculture. (2013, December 10). USDA announces support for mental health facilities in rural areas [Press release No. 0234.13]. http://www.usda.gov/wps/portal/usda/usdahome?contentid=2013/ 12/0234.xml U.S. Department of Health and Human Services. (1999). Mental health: A report of the Surgeon General. Rockville, MD: U.S. Department of Health and Human Services, Substance Abuse and Mental Health Services Administration, Center for Mental Health Services, National Institutes of Health, National Institute of Mental Health. U.S. Department of Health and Human Services, Health Resources and Services Administration, Office of Rural Health Policy. (2005). Mental health and rural America: 1984-2005. ftp://ftp.hrsa.gov/ruralhealth/ RuralMentalHealth.pdf U.S. Department of Health and Human Services, Substance Abuse and Mental Health Services Administration, Center for Behavioral Health Statistics and Quality. (2017). Results from the 2016 National Survey on Drug Use and Health: Mental Health Findings. https://www.samhsa.gov/data/sites/default/files/NSDUH- DetTabs-2016/NSDUH-DetTabs-2016.pdf U.S. Department of Health and Human Services, Substance Abuse and Mental Health Services Administration, Center for Behavioral Health Statistics and Quality. (2011, September). Results from the 2010 National Survey on Drug
+
+develop strategies to effectively address the needs of various populations for which Eurocentric therapies have limited application (Sue, 2004). For example, a counselor whose treatment focuses on individual decision making may be ineffective at helping a Chinese client with a collectivist approach to problem solving (Sue, 2004). <mark style="background-color: #ffeb3b; font-weight: bold;">multicultural</mark> counseling and therapy aims to offer both a helping role and process that uses modalities and defines goals consistent with the life experiences and cultural values of clients. It strives to recognize client identities to include individual, group, and universal dimensions, advocate the use of universal and culture- specific strategies and roles in the healing process, and balances the importance of individualism and collectivism in the assessment, diagnosis, and treatment of client and client systems (Sue, 2001). This therapeutic perspective integrates the impact of cultural and social norms, starting at the beginning of treatment. Therapists who use this perspective work with clients to obtain and integrate information about their cultural patterns into a unique treatment approach based on their particular situation (Stewart, Simmons, & Habibpour, 2012). Sociocultural therapy can include individual, group, family, and couples treatment modalities. 16.5 • The Sociocultural Model and Therapy Utilization 623
+
+of <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> and therefore influencing its development. They also suffered from the attitudes of White male psychologists who were not immune to the nonscientific attitudes prevalent in the society in which they DIG DEEPER 16 1 • Introduction to <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> Access for free at openstax.org
+
+The TEMAS <mark style="background-color: #ffeb3b; font-weight: bold;">multicultural</mark> Thematic Apperception Test is another tool designed to be culturally relevant to minority groups, especially Hispanic youths. TEMAS—standing for “Tell Me a Story” but also a play on the Spanish word temas (themes)—uses images and storytelling cues that relate to minority culture (Constantino, 1982). 390 11 • Personality Access for free at openstax.org
+
+M. (1999). Vulnerability to psychopathology: A biosocial model. American Psychological Association. Therapy and Treatment Abbass, A., Kisely, S., & Kroenke, K. (2006). Short-term psychodynamic psychotherapy for somatic disorders: Systematic review and meta-analysis of clinical trials. Psychotherapy and Psychosomatics, 78, 265–274. Ahmed, S., Wilson, K. B., Henriksen, R. C., & Jones, J. W. (2011). What does it mean to be a culturally competent counselor? Journal for Social Action in Counseling and <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark>, 3(1), 17–28. Alavi, A., Sharifi, B., Ghanizadeh, A., & Dehbozorgi, G. (2013). Effectiveness of cognitive-behavioral therapy in decreasing suicidal ideation and hopelessness of the adolescents with previous suicidal attempts. Iranian 726 References Access for free at openstax.org
+
+by Arian Zwegers; credit b: modification of work by "conbon33"/Flickr; credit c: modification of work by Anja Disseldorp) Why do you think this is the case? Collectivistic cultures, which tend to be found in east Asian countries and in Latin American and African countries, focus on the group more than on the individual (Nisbett, Peng, Choi, & 402 12 • Social <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> Access for free at openstax.org
+
+Endler, J. A. (1986). Natural Selection in the Wild. Princeton University Press. Fogg, N. P., Harrington, P. E., Harrington, T. F., & Shatkin, L. (2012). College majors handbook with real career paths and payoffs (3rd ed.). JIST Publishing. Franko, D. L., et al. (2012). Racial/ethnic differences in adults in randomized clinical trials of binge eating disorder. Journal of Consulting and Clinical <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark>, 80, 186–195. Friedman, H. (2008), Humanistic and positive <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark>: The methodological and epistemological divide. The Humanistic Psychologist, 36, 113–126. Gordon, O. E. (1995). A brief history of <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark>. http://www.psych.utah.edu/gordon/Classes/Psy4905Docs/ PsychHistory/index.html#maptop Greengrass, M. (2004). 100 years of B.F. Skinner. Monitor on <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark>, 35, 80. Guthrie, R. (1998). Even the rat was white (2nd edition). Allyn and Bacon. Halonen, J. S. (2011). White paper: Are there too many <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> majors? Prepared for the Staff of the State University System of Florida Board of Governors. http://www.cogdop.org/page_attachments/0000/0200/ FLA_White_Paper_for_cogop_posting.pdf Hock, R. R. (2009). Social <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark>. Forty studies that changed <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark>: Explorations into the history of psychological research (pp. 308–317). Pearson. Hoffman, C. (2012). Careers in clinical, counseling, or school <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark>; mental health counseling; clinical social work; marriage & family therapy and related professions. http://www.indiana.edu/~psyugrad/ advising/docs/Careers%20in%20Mental%20Health%20Counseling.pdf Jang, K. L., Livesly, W. J., & Vernon, P. A. (1996). Heritability of the Big Five personality dimensions and their facets: A twin study. Journal of Personality, 64, 577–591. Johnson, R., & Lubin, G. (2011). College exposed: What majors are most popular, highest paying and most likely to get you a job. Business Insider.com. http://www.businessinsider.com/best-college-majors-highest- income-most-employed-georgetwon-study-2011-6?op=1 Jones, M. C. (1924). A laboratory study of fear: The case of Peter. Pedagogical Seminary, 31, 308–315. Knekt, P. P., et al. (2008). Randomized trial on the effectiveness of long- and short-term psychodynamic psychotherapy and solution-focused therapy on psychiatric symptoms during a 3-year follow- up. Psychological Medicine: A Journal of Research In Psychiatry And The Allied Sciences, 38, 689–703. Landers, R. N. (2011, June 14). Grad school: Should I get a PhD or Master’s in I/O <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark>? http://neoacademic.com/2011/06/14/grad-school-should-i-get-a-ph-d-or-masters-in-io- <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark>/#.UuKKLftOnGg Macdonald, C. (2013). Health <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> center presents: What is health <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark>? http://health<mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark>.org/what-is-health-<mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark>/ Madigan, S. & O'Hara, R. (1992). Short-term memory at the turn of the century: Mary Whiton Calkins's memory research. American Psychologist, 47, 170–174. McCrae, R. R. & Costa, P. T. (2008). Empirical and theoretical status of the five-factor model of personality traits. In G. J. Boyle, G. Matthews, & D. H. Saklofske (Eds.), The Sage handbook of personality theory and assessment.
+
+LINK TO LEARNING Listen to a podcast about the influence of an African American's <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> research on the historic Brown v. Board of Education civil rights case (http://openstax.org/l/crogers2) to learn more. The American Psychological Association has several ethnically based organizations for professional psychologists that facilitate interactions among members. Since psychologists belonging to specific ethnic groups or cultures have the most interest in studying the <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> of their communities, these organizations provide an opportunity for the growth of research on the interplay between culture and <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark>. WOMEN IN <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> Although rarely given credit, women have been contributing to <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> since its inception as a field of study. In 1894, Margaret Floy Washburn was the first woman awarded the doctoral degree in <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark>. She wrote The Animal Mind: A Textbook of Comparative <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark>, and it was the standard in the field for over 20 years. In the mid 1890s, Mary Whiton Calkins completed all requirements toward the PhD in <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark>, but Harvard University refused to award her that degree because she was a woman. She had been taught and mentored by William James, who tried and failed to convince Harvard to award her the doctoral degree. Her memory research studied primacy and recency (Madigan & O’Hara, 1992), and she also wrote about how structuralism and functionalism both explained self-<mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> (Calkins, 1906). Another influential woman, Mary Cover Jones, conducted a study she considered to be a sequel to John B. Watson’s study of Little Albert (you’ll learn about this study in the chapter on Learning). Jones unconditioned fear in Little Peter, who had been afraid of rabbits (Jones, 1924). Ethnic minority women contributing to the field of <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> include Martha Bernal and Inez Beverly Prosser; their studies were related to education. Bernal, the first Latina to earn her doctoral degree in <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> (1962) conducted much of her research with Mexican American children. Prosser was the first African American woman awarded the PhD in 1933 at the University of Cincinnati (Benjamin, Henry, & McMahon, 2005). 1.3 Contemporary <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> LEARNING OBJECTIVES By the end of this section, you will be able to: • Appreciate the diversity of interests and foci within <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> • Understand basic interests and applications in each of the described areas of <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> • Demonstrate familiarity with some of the major concepts or important figures in each of the described areas of <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> Contemporary <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> is a diverse field that is influenced
+
+2002). Nash was the subject of the 2001 movie  <!-- HIGHLIGHTING HERE ONLY -->
+                </div>
+            </div>
+            
+            <div class="stats">
+                <div class="stat-item">
+                    <div class="stat-label">Sections Used</div>
+                    <div class="stat-value">11</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Pages Referenced</div>
+                    <div class="stat-value">12</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Keywords Found</div>
+                    <div class="stat-value">2</div>
+                </div>
+            </div>
+            
+            <div class="footer">
+                Generated from Psychology 2e Textbook • Question 35 • 2026-02-27
+            </div>
+        </div>
+        
+        <!-- Font Awesome for icons -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
+    </body>
+    </html>

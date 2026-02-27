@@ -1,420 +1,387 @@
 <!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Evidence Visualization - Question 20</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            padding: 20px;
-        }
-        
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            overflow: hidden;
-        }
-        
-        .header {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            padding: 30px;
-        }
-        
-        .header h1 {
-            font-size: 24px;
-            margin-bottom: 10px;
-        }
-        
-        .header .question {
-            font-size: 18px;
-            opacity: 0.9;
-            background: rgba(255, 255, 255, 0.2);
-            padding: 15px;
-            border-radius: 10px;
-            margin-top: 10px;
-            line-height: 1.5;
-        }
-        
-        .keywords-bar {
-            background: #f0f0f0;
-            padding: 15px 30px;
-            border-bottom: 1px solid #e0e0e0;
-        }
-        
-        .keywords-title {
-            font-size: 14px;
-            color: #666;
-            margin-bottom: 10px;
-            font-weight: 600;
-        }
-        
-        .keyword-badge {
-            display: inline-block;
-            background: #ffeb3b;
-            color: #333;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 13px;
-            margin: 0 5px 5px 0;
-            font-weight: 500;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-        
-        .answer-section {
-            padding: 30px;
-            background: #f8f9fa;
-            border-bottom: 1px solid #e0e0e0;
-        }
-        
-        .answer-section h3 {
-            color: #333;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .answer-section h3 i {
-            color: #667eea;
-        }
-        
-        .answer-content {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            line-height: 1.8;
-            color: #444;
-            border-left: 4px solid #667eea;
-        }
-        
-        .answer-content mark {
-            background-color: #ffeb3b;
-            padding: 2px 0;
-            font-weight: 500;
-        }
-        
-        .evidence-section {
-            padding: 30px;
-        }
-        
-        .evidence-section h3 {
-            color: #333;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .evidence-section h3 i {
-            color: #667eea;
-        }
-        
-        .evidence-card {
-            background: #f8f9fa;
-            border-radius: 10px;
-            padding: 20px;
-            margin-bottom: 20px;
-            border-left: 4px solid #667eea;
-        }
-        
-        .evidence-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-        
-        .section-name {
-            font-weight: 600;
-            color: #333;
-            background: #e8eaf6;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 14px;
-        }
-        
-        .page-number {
-            color: #666;
-            background: white;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 14px;
-            border: 1px solid #e0e0e0;
-        }
-        
-        .relevance {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 14px;
-        }
-        
-        .term-badge {
-            display: inline-block;
-            background: #ffeb3b;
-            color: #333;
-            padding: 3px 10px;
-            border-radius: 15px;
-            font-size: 12px;
-            margin: 0 5px 5px 0;
-            font-weight: 500;
-        }
-        
-        .evidence-text {
-            background: white;
-            padding: 15px;
-            border-radius: 8px;
-            color: #555;
-            line-height: 1.6;
-            margin: 15px 0 0 0;
-            border: 1px solid #e0e0e0;
-        }
-        
-        .evidence-text mark {
-            background-color: #ffeb3b;
-            padding: 2px 0;
-            font-weight: 500;
-        }
-        
-        .highlighted-context {
-            padding: 30px;
-            background: #f8f9fa;
-            border-top: 1px solid #e0e0e0;
-            border-bottom: 1px solid #e0e0e0;
-        }
-        
-        .highlighted-context h3 {
-            color: #333;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .context-box {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            max-height: 400px;
-            overflow-y: auto;
-            border: 1px solid #e0e0e0;
-            line-height: 1.8;
-            font-size: 14px;
-        }
-        
-        .context-box mark {
-            background-color: #ffeb3b;
-            padding: 2px 0;
-            font-weight: 500;
-        }
-        
-        .stats {
-            display: flex;
-            gap: 15px;
-            padding: 20px 30px;
-            background: white;
-            flex-wrap: wrap;
-        }
-        
-        .stat-item {
-            background: #f8f9fa;
-            padding: 10px 20px;
-            border-radius: 10px;
-            flex: 1;
-            min-width: 120px;
-            text-align: center;
-            border: 1px solid #e0e0e0;
-        }
-        
-        .stat-label {
-            font-size: 12px;
-            color: #666;
-            margin-bottom: 5px;
-        }
-        
-        .stat-value {
-            font-size: 24px;
-            font-weight: 600;
-            color: #667eea;
-        }
-        
-        .footer {
-            padding: 20px 30px;
-            background: #f0f0f0;
-            text-align: center;
-            color: #666;
-            font-size: 14px;
-            border-top: 1px solid #e0e0e0;
-        }
-        
-        @media (max-width: 768px) {
-            .header {
+    <html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Evidence Visualization - Question 20</title>
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+            
+            body {
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                min-height: 100vh;
                 padding: 20px;
             }
             
-            .answer-section,
-            .evidence-section,
-            .highlighted-context {
+            .container {
+                max-width: 1000px;
+                margin: 0 auto;
+                background: white;
+                border-radius: 20px;
+                box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+                overflow: hidden;
+            }
+            
+            .header {
+                background: linear-gradient(135deg, #667eea, #764ba2);
+                color: white;
+                padding: 30px;
+            }
+            
+            .header h1 {
+                font-size: 24px;
+                margin-bottom: 10px;
+            }
+            
+            .header .question {
+                font-size: 18px;
+                opacity: 0.9;
+                background: rgba(255, 255, 255, 0.2);
+                padding: 15px;
+                border-radius: 10px;
+                margin-top: 10px;
+                line-height: 1.5;
+            }
+            
+            .keywords-bar {
+                background: #f0f0f0;
+                padding: 15px 30px;
+                border-bottom: 1px solid #e0e0e0;
+            }
+            
+            .keywords-title {
+                font-size: 14px;
+                color: #666;
+                margin-bottom: 10px;
+                font-weight: 600;
+            }
+            
+            .keyword-badge {
+                display: inline-block;
+                background: #ffeb3b;
+                color: #333;
+                padding: 5px 12px;
+                border-radius: 20px;
+                font-size: 13px;
+                margin: 0 5px 5px 0;
+                font-weight: 500;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            }
+            
+            .answer-section {
+                padding: 30px;
+                background: #f8f9fa;
+                border-bottom: 1px solid #e0e0e0;
+            }
+            
+            .answer-section h3 {
+                color: #333;
+                margin-bottom: 15px;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+            
+            .answer-section h3 i {
+                color: #667eea;
+            }
+            
+            .answer-content {
+                background: white;
                 padding: 20px;
+                border-radius: 10px;
+                line-height: 1.8;
+                color: #444;
+                border-left: 4px solid #667eea;
+            }
+            
+            /* NO mark styling for answer - it stays plain */
+            
+            .evidence-section {
+                padding: 30px;
+            }
+            
+            .evidence-section h3 {
+                color: #333;
+                margin-bottom: 20px;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+            
+            .evidence-section h3 i {
+                color: #667eea;
+            }
+            
+            .evidence-card {
+                background: #f8f9fa;
+                border-radius: 10px;
+                padding: 20px;
+                margin-bottom: 20px;
+                border-left: 4px solid #667eea;
             }
             
             .evidence-header {
-                flex-direction: column;
-                align-items: flex-start;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 15px;
+                flex-wrap: wrap;
+                gap: 10px;
             }
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <div class="header">
-            <h1>📚 Evidence Visualization</h1>
-            <div class="question">
-                <strong>Question 20:</strong> 
+            
+            .section-name {
+                font-weight: 600;
+                color: #333;
+                background: #e8eaf6;
+                padding: 5px 12px;
+                border-radius: 20px;
+                font-size: 14px;
+            }
+            
+            .page-number {
+                color: #666;
+                background: white;
+                padding: 5px 12px;
+                border-radius: 20px;
+                font-size: 14px;
+                border: 1px solid #e0e0e0;
+            }
+            
+            .term-badge {
+                display: inline-block;
+                background: #ffeb3b;
+                color: #333;
+                padding: 3px 10px;
+                border-radius: 15px;
+                font-size: 12px;
+                margin: 0 5px 5px 0;
+                font-weight: 500;
+            }
+            
+            .evidence-text {
+                background: white;
+                padding: 15px;
+                border-radius: 8px;
+                color: #555;
+                line-height: 1.6;
+                margin: 15px 0 0 0;
+                border: 1px solid #e0e0e0;
+            }
+            
+            .evidence-text mark {
+                background-color: #ffeb3b;
+                padding: 2px 0;
+                font-weight: 500;
+            }
+            
+            .highlighted-context {
+                padding: 30px;
+                background: #f8f9fa;
+                border-top: 1px solid #e0e0e0;
+                border-bottom: 1px solid #e0e0e0;
+            }
+            
+            .highlighted-context h3 {
+                color: #333;
+                margin-bottom: 15px;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+            
+            .context-box {
+                background: white;
+                padding: 20px;
+                border-radius: 10px;
+                max-height: 400px;
+                overflow-y: auto;
+                border: 1px solid #e0e0e0;
+                line-height: 1.8;
+                font-size: 14px;
+            }
+            
+            .context-box mark {
+                background-color: #ffeb3b;
+                padding: 2px 0;
+                font-weight: 500;
+            }
+            
+            .stats {
+                display: flex;
+                gap: 15px;
+                padding: 20px 30px;
+                background: white;
+                flex-wrap: wrap;
+            }
+            
+            .stat-item {
+                background: #f8f9fa;
+                padding: 10px 20px;
+                border-radius: 10px;
+                flex: 1;
+                min-width: 120px;
+                text-align: center;
+                border: 1px solid #e0e0e0;
+            }
+            
+            .stat-label {
+                font-size: 12px;
+                color: #666;
+                margin-bottom: 5px;
+            }
+            
+            .stat-value {
+                font-size: 24px;
+                font-weight: 600;
+                color: #667eea;
+            }
+            
+            .footer {
+                padding: 20px 30px;
+                background: #f0f0f0;
+                text-align: center;
+                color: #666;
+                font-size: 14px;
+                border-top: 1px solid #e0e0e0;
+            }
+            
+            @media (max-width: 768px) {
+                .header {
+                    padding: 20px;
+                }
+                
+                .answer-section,
+                .evidence-section,
+                .highlighted-context {
+                    padding: 20px;
+                }
+                
+                .evidence-header {
+                    flex-direction: column;
+                    align-items: flex-start;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="header">
+                <h1>📚 Evidence Visualization</h1>
+                <div class="question">
+                    <strong>Question 20:</strong> What is cognitive psychology?
+                </div>
             </div>
-        </div>
-        
-        <div class="keywords-bar">
-            <div class="keywords-title">🔑 Extracted Keywords:</div>
-
-        </div>
-        
-        <div class="answer-section">
-            <h3><i class="fas fa-robot"></i> Generated Answer</h3>
-            <div class="answer-content">
-                Cognitive psychology is the area of psychology that focuses on studying cognitions, or thoughts, and their relationship to our experiences and our actions. It is a broad field that involves collaborations among people from a diverse range of disciplinary backgrounds, and its research interests span a spectrum of topics, including attention, problem solving, language, and memory.
+            
+            <div class="keywords-bar">
+                <div class="keywords-title">🔑 Extracted Keywords:</div>
+    <span class="keyword-badge">cognitive</span><span class="keyword-badge">psychology</span>
             </div>
-        </div>
-        
-        <div class="evidence-section">
-            <h3><i class="fas fa-book"></i> Evidence by Section</h3>
-
+            
+            <div class="answer-section">
+                <h3><i class="fas fa-robot"></i> Generated Answer</h3>
+                <div class="answer-content">
+                    Cognitive psychology is the area of psychology that focuses on studying cognitions, or thoughts, and their relationship to our experiences and our actions. It is a broad field that involves collaborations among people from a diverse range of disciplinary backgrounds, and its research interests span a spectrum of topics, including attention, problem solving, language, and memory.  <!-- NO HIGHLIGHTING HERE -->
+                </div>
+            </div>
+            
+            <div class="evidence-section">
+                <h3><i class="fas fa-book"></i> Evidence by Section</h3>
+    
             <div class="evidence-card">
                 <div class="evidence-header">
                     <span class="section-name">📖 1.1 What Is Psychology</span>
                     <span class="page-number">📄 Page 20</span>
-                    <span class="relevance">⭐ Relevance: 0.7</span>
-                </div>
-                <div>
-
                 </div>
                 <div class="evidence-text">
-                    This section discusses 1.1 what is psychology. The content here is relevant to your question about ...
+                    all factors of interest to someone working in the domain of sensation and perception. FIGURE 1.11 When you look at this image, you may see a duck or a rabbit. The sensory information remains the same, but your perception can vary dramatically. As described in a later chapter that focuses on the resu  <!-- HIGHLIGHTING HERE ONLY -->
                 </div>
             </div>
-
+    
             <div class="evidence-card">
                 <div class="evidence-header">
                     <span class="section-name">📖 1.11 When you look at this image</span>
                     <span class="page-number">📄 Page 28</span>
-                    <span class="relevance">⭐ Relevance: 0.75</span>
-                </div>
-                <div>
-
                 </div>
                 <div class="evidence-text">
-                    This section discusses 1.11 when you look at this image. The content here is relevant to your question about ...
+                    all factors of interest to someone working in the domain of sensation and perception. FIGURE 1.11 When you look at this image, you may see a duck or a rabbit. The sensory information remains the same, but your perception can vary dramatically. As described in a later chapter that focuses on the resu  <!-- HIGHLIGHTING HERE ONLY -->
                 </div>
             </div>
-
+    
             <div class="evidence-card">
                 <div class="evidence-header">
                     <span class="section-name">📖 1.3 Contemporary Psychology
 Psychology is a diverse discipline that is made up of several major subdivisions with unique perspectives</span>
                     <span class="page-number">📄 Page 33</span>
-                    <span class="relevance">⭐ Relevance: 0.8</span>
-                </div>
-                <div>
-
                 </div>
                 <div class="evidence-text">
-                    This section discusses 1.3 contemporary psychology
-psychology is a diverse discipline that is made up of several major subdivisions with unique perspectives. The content here is relevant to your question about ...
+                    all factors of interest to someone working in the domain of sensation and perception. FIGURE 1.11 When you look at this image, you may see a duck or a rabbit. The sensory information remains the same, but your perception can vary dramatically. As described in a later chapter that focuses on the resu  <!-- HIGHLIGHTING HERE ONLY -->
                 </div>
             </div>
-
+    
             <div class="evidence-card">
                 <div class="evidence-header">
                     <span class="section-name">📖 1.9 Noam Chomsky was very influential in beginning the cognitive revolution</span>
                     <span class="page-number">📄 Page 43</span>
-                    <span class="relevance">⭐ Relevance: 0.85</span>
-                </div>
-                <div>
-
                 </div>
                 <div class="evidence-text">
-                    This section discusses 1.9 noam chomsky was very influential in beginning the cognitive revolution. The content here is relevant to your question about ...
+                    all factors of interest to someone working in the domain of sensation and perception. FIGURE 1.11 When you look at this image, you may see a duck or a rabbit. The sensory information remains the same, but your perception can vary dramatically. As described in a later chapter that focuses on the resu  <!-- HIGHLIGHTING HERE ONLY -->
                 </div>
             </div>
-
+    
             <div class="evidence-card">
                 <div class="evidence-header">
                     <span class="section-name">📖 11.5 Freud believed that we are only aware of a small amount of our mind</span>
                     <span class="page-number">📄 Page 225</span>
-                    <span class="relevance">⭐ Relevance: 0.9</span>
-                </div>
-                <div>
-
                 </div>
                 <div class="evidence-text">
-                    This section discusses 11.5 freud believed that we are only aware of a small amount of our mind. The content here is relevant to your question about ...
+                    all factors of interest to someone working in the domain of sensation and perception. FIGURE 1.11 When you look at this image, you may see a duck or a rabbit. The sensory information remains the same, but your perception can vary dramatically. As described in a later chapter that focuses on the resu  <!-- HIGHLIGHTING HERE ONLY -->
                 </div>
             </div>
-
-        </div>
-        
-        <div class="highlighted-context">
-            <h3><i class="fas fa-highlighter"></i> Highlighted Context</h3>
-            <div class="context-box">
-                all factors of interest to someone working in the domain of sensation and perception. FIGURE 1.11 When you look at this image, you may see a duck or a rabbit. The sensory information remains the same, but your perception can vary dramatically. As described in a later chapter that focuses on the results of studies in sensation and perception, our experience of our world is not as simple as the sum total of all of the sensory information (or sensations) together. Rather, our experience (or perception) is complex and is influenced by where we focus our attention, our previous experiences, and even our cultural backgrounds. Cognitive Psychology As mentioned in the previous section, the cognitive revolution created an impetus for psychologists to focus their attention on better understanding the mind and mental processes that underlie behavior. Thus, cognitive psychology is the area of psychology that focuses on studying cognitions, or thoughts, and their relationship to our experiences and our actions. Like biological psychology, cognitive psychology is broad in its scope and often involves collaborations among people from a diverse range of disciplinary backgrounds. This has led some to coin the term cognitive science to describe the interdisciplinary nature of this area of research (Miller, 2003). Cognitive psychologists have research interests that span a spectrum of topics, ranging from attention to problem solving to language to memory. The approaches used in studying these topics are equally diverse. Given such diversity, cognitive psychology is not captured in one chapter of this text per se; rather, various concepts related to cognitive psychology will be covered in relevant portions of the chapters in this text on sensation and perception, thinking and intelligence, memory, lifespan development, social psychology, and therapy. Developmental Psychology Developmental psychology is the scientific study of development across a lifespan. Developmental psychologists are interested in processes related to physical maturation. However, their focus is not limited to the physical changes associated with aging, as they also focus on changes in cognitive skills, moral reasoning, social behavior, and other psychological attributes. Early developmental psychologists focused primarily on changes that occurred through reaching adulthood, providing enormous insight into the differences in physical, cognitive, and social capacities that exist between very young children and adults. For instance, research by Jean Piaget (Figure 1.12) demonstrated that very young children do not demonstrate object permanence. Object permanence refers to the understanding that physical things continue to exist,
-
-your judgment representative sample subset of the population that accurately represents the general population role schema set of expectations that define the behaviors of a person occupying a particular role schema (plural = schemata) mental construct consisting of a cluster or collection of related concepts semantics process by which we derive meaning from morphemes and words standard deviation measure of variability that describes the difference between a set of scores and their mean standardization method of testing in which administration, scoring, and interpretation of results are consistent syntax manner by which words are organized into sentences trial and error problem-solving strategy in which multiple solutions are attempted until the correct one is found triarchic theory of intelligence Sternberg’s theory of intelligence; three facets of intelligence: practical, creative, and analytical working backwards heuristic in which you begin to solve a problem by focusing on the end result Summary 7.1 What Is Cognition? In this section, you were introduced to cognitive psychology, which is the study of cognition, or the brain’s ability to think, perceive, plan, analyze, and remember. Concepts and their corresponding prototypes help us quickly organize our thinking by creating categories into which we can sort new information. We also develop schemata, which are clusters of related concepts. Some schemata involve routines of thought and behavior, and these help us function properly in various situations without having to “think twice” about them. Schemata show up in social situations and routines of daily behavior. 7.2 Language Language is a communication system that has both a lexicon and a system of grammar. Language acquisition occurs naturally and effortlessly during the early stages of life, and this acquisition occurs in a predictable sequence for individuals around the world. Language has a strong influence on thought, and the concept of how language may influence cognition remains an area of study and debate in psychology. 7.3 Problem Solving Many different strategies exist for solving problems. Typical strategies include trial and error, applying algorithms, and using heuristics. To solve a large, complicated problem, it often helps to break the problem into smaller steps that can be accomplished individually, leading to an overall solution. Roadblocks to problem solving include a mental set, functional fixedness, and various biases that can cloud decision making skills. 7.4 What Are Intelligence and Creativity? Intelligence is a complex characteristic of cognition. Many theories have been developed to explain what intelligence is and
-
-2002). Nash was the subject of the 2001 movie A Beautiful Mind. Why did these people have these experiences? How does the human brain work? And what is the connection between the brain’s internal processes and people’s external behaviors? This textbook will introduce you to various ways that the field of psychology has explored these questions. 1.1 What Is Psychology? LEARNING OBJECTIVES By the end of this section, you will be able to: • Define psychology • Understand the merits of an education in psychology What is creativity? What are prejudice and discrimination? What is consciousness? The field of psychology explores questions like these. Psychology refers to the scientific study of the mind and behavior. Psychologists use the scientific method to acquire knowledge. To apply the scientific method, a researcher with a question about how or why something happens will propose a tentative explanation, called a hypothesis, to explain the phenomenon. A hypothesis should fit into the context of a scientific theory, which is a broad explanation or group of explanations for some aspect of the natural world that is consistently supported by evidence over time. A theory is the best understanding we have of that part of the natural world. The researcher then makes observations or carries out an experiment to test the validity of the hypothesis. Those results are then published or presented at research conferences so that others can replicate or build on the results. Scientists test that which is perceivable and measurable. For example, the hypothesis that a bird sings because it is happy is not a hypothesis that can be tested since we have no way to measure the happiness of a bird. We must ask a different question, perhaps about the brain state of the bird, since this can be measured. However, we can ask individuals about whether they sing because they are happy since they are able to tell us. Thus, psychological science is empirical, based on measurable data. In general, science deals only with matter and energy, that is, those things that can be measured, and it cannot arrive at knowledge about values and morality. This is one reason why our scientific understanding of the mind is so limited, since thoughts, at least as we experience them, are neither matter nor energy. The scientific method is also a form of empiricism. An empirical method for acquiring knowledge is one based on observation,
-
-applied to help people with a wide range of psychological problems. One popular operant conditioning intervention is called the token economy. This involves a controlled setting where individuals are reinforced for desirable behaviors with tokens, such as a poker chip, that can be exchanged for items or privileges. Token economies are often used in psychiatric hospitals to increase patient cooperation and activity levels. Patients are rewarded with tokens when they engage in positive behaviors (e.g., making their beds, brushing their teeth, coming to the cafeteria on time, and socializing with other patients). They can later exchange the tokens for extra TV time, private rooms, visits to the canteen, and so on (Dickerson, Tenhula, & Green-Paden, 2005). Psychotherapy: Cognitive Therapy Cognitive therapy is a form of psychotherapy that focuses on how a person’s thoughts lead to feelings of distress. The idea behind cognitive therapy is that how you think determines how you feel and act. Cognitive therapists help their clients change dysfunctional thoughts in order to relieve distress. They help a client see how they misinterpret a situation (cognitive distortion). For example, a client may overgeneralize. Because a person failed one test in Psychology 101, they feel stupid and worthless. These thoughts then cause their mood to worsen. Therapists also help clients recognize when they blow things out of proportion. Because Ray failed his Psychology 101 test, he has concluded that he’s going to fail the entire course and probably flunk out of college altogether. These errors in thinking have contributed to Ray’s feelings of distress. His therapist will help him challenge these irrational beliefs, focus on their illogical basis, and correct them with more logical and rational thoughts and beliefs. Cognitive therapy was developed by psychiatrist Aaron Beck in the 1960s. His initial focus was on depression and how a client’s self-defeating attitude served to maintain a depression despite positive factors in her life (Beck, Rush, Shaw, & Emery, 1979) (Figure 16.13). Through questioning, a cognitive therapist can help a client recognize dysfunctional ideas, challenge catastrophizing thoughts about themselves and their situations, and find a more positive way to view things (Beck, 2011). FIGURE 16.13 Your emotional reactions are the result of your thoughts about the situation rather than the situation itself. For instance, if you consistently interpret events and emotions around the themes of loss and defeat, then you are likely to be depressed. Through therapy, you can learn
-
-LINK TO LEARNING View a brief video of Carl Rogers describing his therapeutic approach (http://openstax.org/l/crogers1) to learn more. The Cognitive Revolution Behaviorism’s emphasis on objectivity and focus on external behavior had pulled psychologists’ attention away from the mind for a prolonged period of time. The early work of the humanistic psychologists redirected attention to the individual human as a whole, and as a conscious and self-aware being. By the 1950s, new disciplinary perspectives in linguistics, neuroscience, and computer science were emerging, and these areas revived interest in the mind as a focus of scientific inquiry. This particular perspective has come to be known as the cognitive revolution (Miller, 2003). By 1967, Ulric Neisser published the first textbook entitled Cognitive Psychology, which served as a core text in cognitive psychology courses around the country (Thorne & Henley, 2005). Although no one person is entirely responsible for starting the cognitive revolution, Noam Chomsky was very influential in the early days of this movement (Figure 1.9). Chomsky (1928–), an American linguist, was dissatisfied with the influence that behaviorism had had on psychology. He believed that psychology’s focus on behavior was short-sighted and that the field had to re-incorporate mental functioning into its purview if it were to offer any meaningful contributions to understanding behavior (Miller, 2003). FIGURE 1.9 Noam Chomsky was very influential in beginning the cognitive revolution. 
-            </div>
-        </div>
-        
-        <div class="stats">
-            <div class="stat-item">
-                <div class="stat-label">Sections Used</div>
-                <div class="stat-value">10</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-label">Pages Referenced</div>
-                <div class="stat-value">10</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-label">Keywords Found</div>
-                <div class="stat-value">0</div>
-            </div>
-        </div>
-        
-        <div class="footer">
-            Generated from Psychology 2e Textbook • Question 20 • 2026-02-26
-        </div>
-    </div>
     
-    <!-- Font Awesome for icons -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
-</body>
-</html>
+            </div>
+            
+            <div class="highlighted-context">
+                <h3><i class="fas fa-highlighter"></i> Highlighted Context</h3>
+                <div class="context-box">
+                    all factors of interest to someone working in the domain of sensation and perception. FIGURE 1.11 When you look at this image, you may see a duck or a rabbit. The sensory information remains the same, but your perception can vary dramatically. As described in a later chapter that focuses on the results of studies in sensation and perception, our experience of our world is not as simple as the sum total of all of the sensory information (or sensations) together. Rather, our experience (or perception) is complex and is influenced by where we focus our attention, our previous experiences, and even our cultural backgrounds. <mark style="background-color: #ffeb3b; font-weight: bold;">cognitive</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> As mentioned in the previous section, the <mark style="background-color: #ffeb3b; font-weight: bold;">cognitive</mark> revolution created an impetus for psychologists to focus their attention on better understanding the mind and mental processes that underlie behavior. Thus, <mark style="background-color: #ffeb3b; font-weight: bold;">cognitive</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> is the area of <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> that focuses on studying cognitions, or thoughts, and their relationship to our experiences and our actions. Like biological <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark>, <mark style="background-color: #ffeb3b; font-weight: bold;">cognitive</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> is broad in its scope and often involves collaborations among people from a diverse range of disciplinary backgrounds. This has led some to coin the term <mark style="background-color: #ffeb3b; font-weight: bold;">cognitive</mark> science to describe the interdisciplinary nature of this area of research (Miller, 2003). <mark style="background-color: #ffeb3b; font-weight: bold;">cognitive</mark> psychologists have research interests that span a spectrum of topics, ranging from attention to problem solving to language to memory. The approaches used in studying these topics are equally diverse. Given such diversity, <mark style="background-color: #ffeb3b; font-weight: bold;">cognitive</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> is not captured in one chapter of this text per se; rather, various concepts related to <mark style="background-color: #ffeb3b; font-weight: bold;">cognitive</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> will be covered in relevant portions of the chapters in this text on sensation and perception, thinking and intelligence, memory, lifespan development, social <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark>, and therapy. Developmental <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> Developmental <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> is the scientific study of development across a lifespan. Developmental psychologists are interested in processes related to physical maturation. However, their focus is not limited to the physical changes associated with aging, as they also focus on changes in <mark style="background-color: #ffeb3b; font-weight: bold;">cognitive</mark> skills, moral reasoning, social behavior, and other psychological attributes. Early developmental psychologists focused primarily on changes that occurred through reaching adulthood, providing enormous insight into the differences in physical, <mark style="background-color: #ffeb3b; font-weight: bold;">cognitive</mark>, and social capacities that exist between very young children and adults. For instance, research by Jean Piaget (Figure 1.12) demonstrated that very young children do not demonstrate object permanence. Object permanence refers to the understanding that physical things continue to exist,
+
+your judgment representative sample subset of the population that accurately represents the general population role schema set of expectations that define the behaviors of a person occupying a particular role schema (plural = schemata) mental construct consisting of a cluster or collection of related concepts semantics process by which we derive meaning from morphemes and words standard deviation measure of variability that describes the difference between a set of scores and their mean standardization method of testing in which administration, scoring, and interpretation of results are consistent syntax manner by which words are organized into sentences trial and error problem-solving strategy in which multiple solutions are attempted until the correct one is found triarchic theory of intelligence Sternberg’s theory of intelligence; three facets of intelligence: practical, creative, and analytical working backwards heuristic in which you begin to solve a problem by focusing on the end result Summary 7.1 What Is Cognition? In this section, you were introduced to <mark style="background-color: #ffeb3b; font-weight: bold;">cognitive</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark>, which is the study of cognition, or the brain’s ability to think, perceive, plan, analyze, and remember. Concepts and their corresponding prototypes help us quickly organize our thinking by creating categories into which we can sort new information. We also develop schemata, which are clusters of related concepts. Some schemata involve routines of thought and behavior, and these help us function properly in various situations without having to “think twice” about them. Schemata show up in social situations and routines of daily behavior. 7.2 Language Language is a communication system that has both a lexicon and a system of grammar. Language acquisition occurs naturally and effortlessly during the early stages of life, and this acquisition occurs in a predictable sequence for individuals around the world. Language has a strong influence on thought, and the concept of how language may influence cognition remains an area of study and debate in <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark>. 7.3 Problem Solving Many different strategies exist for solving problems. Typical strategies include trial and error, applying algorithms, and using heuristics. To solve a large, complicated problem, it often helps to break the problem into smaller steps that can be accomplished individually, leading to an overall solution. Roadblocks to problem solving include a mental set, functional fixedness, and various biases that can cloud decision making skills. 7.4 What Are Intelligence and Creativity? Intelligence is a complex characteristic of cognition. Many theories have been developed to explain what intelligence is and
+
+2002). Nash was the subject of the 2001 movie A Beautiful Mind. Why did these people have these experiences? How does the human brain work? And what is the connection between the brain’s internal processes and people’s external behaviors? This textbook will introduce you to various ways that the field of <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> has explored these questions. 1.1 What Is <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark>? LEARNING OBJECTIVES By the end of this section, you will be able to: • Define <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> • Understand the merits of an education in <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> What is creativity? What are prejudice and discrimination? What is consciousness? The field of <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> explores questions like these. <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> refers to the scientific study of the mind and behavior. Psychologists use the scientific method to acquire knowledge. To apply the scientific method, a researcher with a question about how or why something happens will propose a tentative explanation, called a hypothesis, to explain the phenomenon. A hypothesis should fit into the context of a scientific theory, which is a broad explanation or group of explanations for some aspect of the natural world that is consistently supported by evidence over time. A theory is the best understanding we have of that part of the natural world. The researcher then makes observations or carries out an experiment to test the validity of the hypothesis. Those results are then published or presented at research conferences so that others can replicate or build on the results. Scientists test that which is perceivable and measurable. For example, the hypothesis that a bird sings because it is happy is not a hypothesis that can be tested since we have no way to measure the happiness of a bird. We must ask a different question, perhaps about the brain state of the bird, since this can be measured. However, we can ask individuals about whether they sing because they are happy since they are able to tell us. Thus, psychological science is empirical, based on measurable data. In general, science deals only with matter and energy, that is, those things that can be measured, and it cannot arrive at knowledge about values and morality. This is one reason why our scientific understanding of the mind is so limited, since thoughts, at least as we experience them, are neither matter nor energy. The scientific method is also a form of empiricism. An empirical method for acquiring knowledge is one based on observation,
+
+applied to help people with a wide range of psychological problems. One popular operant conditioning intervention is called the token economy. This involves a controlled setting where individuals are reinforced for desirable behaviors with tokens, such as a poker chip, that can be exchanged for items or privileges. Token economies are often used in psychiatric hospitals to increase patient cooperation and activity levels. Patients are rewarded with tokens when they engage in positive behaviors (e.g., making their beds, brushing their teeth, coming to the cafeteria on time, and socializing with other patients). They can later exchange the tokens for extra TV time, private rooms, visits to the canteen, and so on (Dickerson, Tenhula, & Green-Paden, 2005). Psychotherapy: <mark style="background-color: #ffeb3b; font-weight: bold;">cognitive</mark> Therapy <mark style="background-color: #ffeb3b; font-weight: bold;">cognitive</mark> therapy is a form of psychotherapy that focuses on how a person’s thoughts lead to feelings of distress. The idea behind <mark style="background-color: #ffeb3b; font-weight: bold;">cognitive</mark> therapy is that how you think determines how you feel and act. <mark style="background-color: #ffeb3b; font-weight: bold;">cognitive</mark> therapists help their clients change dysfunctional thoughts in order to relieve distress. They help a client see how they misinterpret a situation (<mark style="background-color: #ffeb3b; font-weight: bold;">cognitive</mark> distortion). For example, a client may overgeneralize. Because a person failed one test in <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> 101, they feel stupid and worthless. These thoughts then cause their mood to worsen. Therapists also help clients recognize when they blow things out of proportion. Because Ray failed his <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> 101 test, he has concluded that he’s going to fail the entire course and probably flunk out of college altogether. These errors in thinking have contributed to Ray’s feelings of distress. His therapist will help him challenge these irrational beliefs, focus on their illogical basis, and correct them with more logical and rational thoughts and beliefs. <mark style="background-color: #ffeb3b; font-weight: bold;">cognitive</mark> therapy was developed by psychiatrist Aaron Beck in the 1960s. His initial focus was on depression and how a client’s self-defeating attitude served to maintain a depression despite positive factors in her life (Beck, Rush, Shaw, & Emery, 1979) (Figure 16.13). Through questioning, a <mark style="background-color: #ffeb3b; font-weight: bold;">cognitive</mark> therapist can help a client recognize dysfunctional ideas, challenge catastrophizing thoughts about themselves and their situations, and find a more positive way to view things (Beck, 2011). FIGURE 16.13 Your emotional reactions are the result of your thoughts about the situation rather than the situation itself. For instance, if you consistently interpret events and emotions around the themes of loss and defeat, then you are likely to be depressed. Through therapy, you can learn
+
+LINK TO LEARNING View a brief video of Carl Rogers describing his therapeutic approach (http://openstax.org/l/crogers1) to learn more. The <mark style="background-color: #ffeb3b; font-weight: bold;">cognitive</mark> Revolution Behaviorism’s emphasis on objectivity and focus on external behavior had pulled psychologists’ attention away from the mind for a prolonged period of time. The early work of the humanistic psychologists redirected attention to the individual human as a whole, and as a conscious and self-aware being. By the 1950s, new disciplinary perspectives in linguistics, neuroscience, and computer science were emerging, and these areas revived interest in the mind as a focus of scientific inquiry. This particular perspective has come to be known as the <mark style="background-color: #ffeb3b; font-weight: bold;">cognitive</mark> revolution (Miller, 2003). By 1967, Ulric Neisser published the first textbook entitled <mark style="background-color: #ffeb3b; font-weight: bold;">cognitive</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark>, which served as a core text in <mark style="background-color: #ffeb3b; font-weight: bold;">cognitive</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> courses around the country (Thorne & Henley, 2005). Although no one person is entirely responsible for starting the <mark style="background-color: #ffeb3b; font-weight: bold;">cognitive</mark> revolution, Noam Chomsky was very influential in the early days of this movement (Figure 1.9). Chomsky (1928–), an American linguist, was dissatisfied with the influence that behaviorism had had on <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark>. He believed that <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark>’s focus on behavior was short-sighted and that the field had to re-incorporate mental functioning into its purview if it were to offer any meaningful contributions to understanding behavior (Miller, 2003). FIGURE 1.9 Noam Chomsky was very influential in beginning the <mark style="background-color: #ffeb3b; font-weight: bold;">cognitive</mark> revolution.   <!-- HIGHLIGHTING HERE ONLY -->
+                </div>
+            </div>
+            
+            <div class="stats">
+                <div class="stat-item">
+                    <div class="stat-label">Sections Used</div>
+                    <div class="stat-value">10</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Pages Referenced</div>
+                    <div class="stat-value">10</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Keywords Found</div>
+                    <div class="stat-value">2</div>
+                </div>
+            </div>
+            
+            <div class="footer">
+                Generated from Psychology 2e Textbook • Question 20 • 2026-02-27
+            </div>
+        </div>
+        
+        <!-- Font Awesome for icons -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
+    </body>
+    </html>

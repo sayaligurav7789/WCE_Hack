@@ -1,426 +1,392 @@
 <!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Evidence Visualization - Question 19</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            padding: 20px;
-        }
-        
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            overflow: hidden;
-        }
-        
-        .header {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            padding: 30px;
-        }
-        
-        .header h1 {
-            font-size: 24px;
-            margin-bottom: 10px;
-        }
-        
-        .header .question {
-            font-size: 18px;
-            opacity: 0.9;
-            background: rgba(255, 255, 255, 0.2);
-            padding: 15px;
-            border-radius: 10px;
-            margin-top: 10px;
-            line-height: 1.5;
-        }
-        
-        .keywords-bar {
-            background: #f0f0f0;
-            padding: 15px 30px;
-            border-bottom: 1px solid #e0e0e0;
-        }
-        
-        .keywords-title {
-            font-size: 14px;
-            color: #666;
-            margin-bottom: 10px;
-            font-weight: 600;
-        }
-        
-        .keyword-badge {
-            display: inline-block;
-            background: #ffeb3b;
-            color: #333;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 13px;
-            margin: 0 5px 5px 0;
-            font-weight: 500;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-        
-        .answer-section {
-            padding: 30px;
-            background: #f8f9fa;
-            border-bottom: 1px solid #e0e0e0;
-        }
-        
-        .answer-section h3 {
-            color: #333;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .answer-section h3 i {
-            color: #667eea;
-        }
-        
-        .answer-content {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            line-height: 1.8;
-            color: #444;
-            border-left: 4px solid #667eea;
-        }
-        
-        .answer-content mark {
-            background-color: #ffeb3b;
-            padding: 2px 0;
-            font-weight: 500;
-        }
-        
-        .evidence-section {
-            padding: 30px;
-        }
-        
-        .evidence-section h3 {
-            color: #333;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .evidence-section h3 i {
-            color: #667eea;
-        }
-        
-        .evidence-card {
-            background: #f8f9fa;
-            border-radius: 10px;
-            padding: 20px;
-            margin-bottom: 20px;
-            border-left: 4px solid #667eea;
-        }
-        
-        .evidence-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-        
-        .section-name {
-            font-weight: 600;
-            color: #333;
-            background: #e8eaf6;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 14px;
-        }
-        
-        .page-number {
-            color: #666;
-            background: white;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 14px;
-            border: 1px solid #e0e0e0;
-        }
-        
-        .relevance {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 14px;
-        }
-        
-        .term-badge {
-            display: inline-block;
-            background: #ffeb3b;
-            color: #333;
-            padding: 3px 10px;
-            border-radius: 15px;
-            font-size: 12px;
-            margin: 0 5px 5px 0;
-            font-weight: 500;
-        }
-        
-        .evidence-text {
-            background: white;
-            padding: 15px;
-            border-radius: 8px;
-            color: #555;
-            line-height: 1.6;
-            margin: 15px 0 0 0;
-            border: 1px solid #e0e0e0;
-        }
-        
-        .evidence-text mark {
-            background-color: #ffeb3b;
-            padding: 2px 0;
-            font-weight: 500;
-        }
-        
-        .highlighted-context {
-            padding: 30px;
-            background: #f8f9fa;
-            border-top: 1px solid #e0e0e0;
-            border-bottom: 1px solid #e0e0e0;
-        }
-        
-        .highlighted-context h3 {
-            color: #333;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .context-box {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            max-height: 400px;
-            overflow-y: auto;
-            border: 1px solid #e0e0e0;
-            line-height: 1.8;
-            font-size: 14px;
-        }
-        
-        .context-box mark {
-            background-color: #ffeb3b;
-            padding: 2px 0;
-            font-weight: 500;
-        }
-        
-        .stats {
-            display: flex;
-            gap: 15px;
-            padding: 20px 30px;
-            background: white;
-            flex-wrap: wrap;
-        }
-        
-        .stat-item {
-            background: #f8f9fa;
-            padding: 10px 20px;
-            border-radius: 10px;
-            flex: 1;
-            min-width: 120px;
-            text-align: center;
-            border: 1px solid #e0e0e0;
-        }
-        
-        .stat-label {
-            font-size: 12px;
-            color: #666;
-            margin-bottom: 5px;
-        }
-        
-        .stat-value {
-            font-size: 24px;
-            font-weight: 600;
-            color: #667eea;
-        }
-        
-        .footer {
-            padding: 20px 30px;
-            background: #f0f0f0;
-            text-align: center;
-            color: #666;
-            font-size: 14px;
-            border-top: 1px solid #e0e0e0;
-        }
-        
-        @media (max-width: 768px) {
-            .header {
+    <html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Evidence Visualization - Question 19</title>
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+            
+            body {
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                min-height: 100vh;
                 padding: 20px;
             }
             
-            .answer-section,
-            .evidence-section,
-            .highlighted-context {
+            .container {
+                max-width: 1000px;
+                margin: 0 auto;
+                background: white;
+                border-radius: 20px;
+                box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+                overflow: hidden;
+            }
+            
+            .header {
+                background: linear-gradient(135deg, #667eea, #764ba2);
+                color: white;
+                padding: 30px;
+            }
+            
+            .header h1 {
+                font-size: 24px;
+                margin-bottom: 10px;
+            }
+            
+            .header .question {
+                font-size: 18px;
+                opacity: 0.9;
+                background: rgba(255, 255, 255, 0.2);
+                padding: 15px;
+                border-radius: 10px;
+                margin-top: 10px;
+                line-height: 1.5;
+            }
+            
+            .keywords-bar {
+                background: #f0f0f0;
+                padding: 15px 30px;
+                border-bottom: 1px solid #e0e0e0;
+            }
+            
+            .keywords-title {
+                font-size: 14px;
+                color: #666;
+                margin-bottom: 10px;
+                font-weight: 600;
+            }
+            
+            .keyword-badge {
+                display: inline-block;
+                background: #ffeb3b;
+                color: #333;
+                padding: 5px 12px;
+                border-radius: 20px;
+                font-size: 13px;
+                margin: 0 5px 5px 0;
+                font-weight: 500;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            }
+            
+            .answer-section {
+                padding: 30px;
+                background: #f8f9fa;
+                border-bottom: 1px solid #e0e0e0;
+            }
+            
+            .answer-section h3 {
+                color: #333;
+                margin-bottom: 15px;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+            
+            .answer-section h3 i {
+                color: #667eea;
+            }
+            
+            .answer-content {
+                background: white;
                 padding: 20px;
+                border-radius: 10px;
+                line-height: 1.8;
+                color: #444;
+                border-left: 4px solid #667eea;
+            }
+            
+            /* NO mark styling for answer - it stays plain */
+            
+            .evidence-section {
+                padding: 30px;
+            }
+            
+            .evidence-section h3 {
+                color: #333;
+                margin-bottom: 20px;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+            
+            .evidence-section h3 i {
+                color: #667eea;
+            }
+            
+            .evidence-card {
+                background: #f8f9fa;
+                border-radius: 10px;
+                padding: 20px;
+                margin-bottom: 20px;
+                border-left: 4px solid #667eea;
             }
             
             .evidence-header {
-                flex-direction: column;
-                align-items: flex-start;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 15px;
+                flex-wrap: wrap;
+                gap: 10px;
             }
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <div class="header">
-            <h1>📚 Evidence Visualization</h1>
-            <div class="question">
-                <strong>Question 19:</strong> 
+            
+            .section-name {
+                font-weight: 600;
+                color: #333;
+                background: #e8eaf6;
+                padding: 5px 12px;
+                border-radius: 20px;
+                font-size: 14px;
+            }
+            
+            .page-number {
+                color: #666;
+                background: white;
+                padding: 5px 12px;
+                border-radius: 20px;
+                font-size: 14px;
+                border: 1px solid #e0e0e0;
+            }
+            
+            .term-badge {
+                display: inline-block;
+                background: #ffeb3b;
+                color: #333;
+                padding: 3px 10px;
+                border-radius: 15px;
+                font-size: 12px;
+                margin: 0 5px 5px 0;
+                font-weight: 500;
+            }
+            
+            .evidence-text {
+                background: white;
+                padding: 15px;
+                border-radius: 8px;
+                color: #555;
+                line-height: 1.6;
+                margin: 15px 0 0 0;
+                border: 1px solid #e0e0e0;
+            }
+            
+            .evidence-text mark {
+                background-color: #ffeb3b;
+                padding: 2px 0;
+                font-weight: 500;
+            }
+            
+            .highlighted-context {
+                padding: 30px;
+                background: #f8f9fa;
+                border-top: 1px solid #e0e0e0;
+                border-bottom: 1px solid #e0e0e0;
+            }
+            
+            .highlighted-context h3 {
+                color: #333;
+                margin-bottom: 15px;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+            
+            .context-box {
+                background: white;
+                padding: 20px;
+                border-radius: 10px;
+                max-height: 400px;
+                overflow-y: auto;
+                border: 1px solid #e0e0e0;
+                line-height: 1.8;
+                font-size: 14px;
+            }
+            
+            .context-box mark {
+                background-color: #ffeb3b;
+                padding: 2px 0;
+                font-weight: 500;
+            }
+            
+            .stats {
+                display: flex;
+                gap: 15px;
+                padding: 20px 30px;
+                background: white;
+                flex-wrap: wrap;
+            }
+            
+            .stat-item {
+                background: #f8f9fa;
+                padding: 10px 20px;
+                border-radius: 10px;
+                flex: 1;
+                min-width: 120px;
+                text-align: center;
+                border: 1px solid #e0e0e0;
+            }
+            
+            .stat-label {
+                font-size: 12px;
+                color: #666;
+                margin-bottom: 5px;
+            }
+            
+            .stat-value {
+                font-size: 24px;
+                font-weight: 600;
+                color: #667eea;
+            }
+            
+            .footer {
+                padding: 20px 30px;
+                background: #f0f0f0;
+                text-align: center;
+                color: #666;
+                font-size: 14px;
+                border-top: 1px solid #e0e0e0;
+            }
+            
+            @media (max-width: 768px) {
+                .header {
+                    padding: 20px;
+                }
+                
+                .answer-section,
+                .evidence-section,
+                .highlighted-context {
+                    padding: 20px;
+                }
+                
+                .evidence-header {
+                    flex-direction: column;
+                    align-items: flex-start;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="header">
+                <h1>📚 Evidence Visualization</h1>
+                <div class="question">
+                    <strong>Question 19:</strong> What is client-centered therapy?
+                </div>
             </div>
-        </div>
-        
-        <div class="keywords-bar">
-            <div class="keywords-title">🔑 Extracted Keywords:</div>
-
-        </div>
-        
-        <div class="answer-section">
-            <h3><i class="fas fa-robot"></i> Generated Answer</h3>
-            <div class="answer-content">
-                Client-centered therapy is a therapeutic technique developed by Carl Rogers that focuses on helping clients deal with problematic issues. In this approach, the client takes a lead role in the therapy session, and the therapist displays three features to maximize effectiveness: unconditional positive regard, genuineness, and empathy. The therapist accepts the client for who they are, without judgment, and helps them work through their own issues. This approach emphasizes the potential for good that exists within all people and aims to help clients become more accepting of themselves.
+            
+            <div class="keywords-bar">
+                <div class="keywords-title">🔑 Extracted Keywords:</div>
+    <span class="keyword-badge">client</span><span class="keyword-badge">centered</span><span class="keyword-badge">therapy</span>
             </div>
-        </div>
-        
-        <div class="evidence-section">
-            <h3><i class="fas fa-book"></i> Evidence by Section</h3>
-
+            
+            <div class="answer-section">
+                <h3><i class="fas fa-robot"></i> Generated Answer</h3>
+                <div class="answer-content">
+                    Client-centered therapy is a therapeutic technique developed by Carl Rogers that focuses on helping clients deal with problematic issues. In this approach, the client takes a lead role in the therapy session, and the therapist displays three features to maximize effectiveness: unconditional positive regard, genuineness, and empathy. The therapist accepts the client for who they are, without judgment, and helps them work through their own issues. This approach emphasizes the potential for good that exists within all people and aims to help clients become more accepting of themselves.  <!-- NO HIGHLIGHTING HERE -->
+                </div>
+            </div>
+            
+            <div class="evidence-section">
+                <h3><i class="fas fa-book"></i> Evidence by Section</h3>
+    
             <div class="evidence-card">
                 <div class="evidence-header">
                     <span class="section-name">📖 1.7 Maslow</span>
                     <span class="page-number">📄 Page 27</span>
-                    <span class="relevance">⭐ Relevance: 0.7</span>
-                </div>
-                <div>
-
                 </div>
                 <div class="evidence-text">
-                    This section discusses 1.7 maslow. The content here is relevant to your question about ...
+                    which a <mark style="background-color: #ffeb3b; font-weight: bold;">client</mark> learns a new response to a stimulus that has previously elicited an undesirable behavior via classical conditioning. Principles of operant conditioning can be applied to help people deal with a wide range of psychological problems. Token economy is an example of a popular operant cond  <!-- HIGHLIGHTING HERE ONLY -->
                 </div>
             </div>
-
+    
             <div class="evidence-card">
                 <div class="evidence-header">
                     <span class="section-name">📖 16.1 Mental Health Treatment: Past and Present
 It was once believed that people with psychological disorders</span>
                     <span class="page-number">📄 Page 620</span>
-                    <span class="relevance">⭐ Relevance: 0.75</span>
-                </div>
-                <div>
-
                 </div>
                 <div class="evidence-text">
-                    This section discusses 16.1 mental health treatment: past and present
-it was once believed that people with psychological disorders. The content here is relevant to your question about ...
+                    which a <mark style="background-color: #ffeb3b; font-weight: bold;">client</mark> learns a new response to a stimulus that has previously elicited an undesirable behavior via classical conditioning. Principles of operant conditioning can be applied to help people deal with a wide range of psychological problems. Token economy is an example of a popular operant cond  <!-- HIGHLIGHTING HERE ONLY -->
                 </div>
             </div>
-
+    
             <div class="evidence-card">
                 <div class="evidence-header">
                     <span class="section-name">📖 16.13 Your emotional reactions are the result of your thoughts about the situation rather than the situation
 itself</span>
                     <span class="page-number">📄 Page 624</span>
-                    <span class="relevance">⭐ Relevance: 0.8</span>
-                </div>
-                <div>
-
                 </div>
                 <div class="evidence-text">
-                    This section discusses 16.13 your emotional reactions are the result of your thoughts about the situation rather than the situation
-itself. The content here is relevant to your question about ...
+                    which a <mark style="background-color: #ffeb3b; font-weight: bold;">client</mark> learns a new response to a stimulus that has previously elicited an undesirable behavior via classical conditioning. Principles of operant conditioning can be applied to help people deal with a wide range of psychological problems. Token economy is an example of a popular operant cond  <!-- HIGHLIGHTING HERE ONLY -->
                 </div>
             </div>
-
+    
             <div class="evidence-card">
                 <div class="evidence-header">
                     <span class="section-name">📖 16.14 Therapy may occur</span>
                     <span class="page-number">📄 Page 629</span>
-                    <span class="relevance">⭐ Relevance: 0.85</span>
-                </div>
-                <div>
-
                 </div>
                 <div class="evidence-text">
-                    This section discusses 16.14 therapy may occur. The content here is relevant to your question about ...
+                    which a <mark style="background-color: #ffeb3b; font-weight: bold;">client</mark> learns a new response to a stimulus that has previously elicited an undesirable behavior via classical conditioning. Principles of operant conditioning can be applied to help people deal with a wide range of psychological problems. Token economy is an example of a popular operant cond  <!-- HIGHLIGHTING HERE ONLY -->
                 </div>
             </div>
-
+    
             <div class="evidence-card">
                 <div class="evidence-header">
                     <span class="section-name">📖 16.17 In couples counseling</span>
                     <span class="page-number">📄 Page 630</span>
-                    <span class="relevance">⭐ Relevance: 0.9</span>
-                </div>
-                <div>
-
                 </div>
                 <div class="evidence-text">
-                    This section discusses 16.17 in couples counseling. The content here is relevant to your question about ...
+                    which a <mark style="background-color: #ffeb3b; font-weight: bold;">client</mark> learns a new response to a stimulus that has previously elicited an undesirable behavior via classical conditioning. Principles of operant conditioning can be applied to help people deal with a wide range of psychological problems. Token economy is an example of a popular operant cond  <!-- HIGHLIGHTING HERE ONLY -->
                 </div>
             </div>
-
-        </div>
-        
-        <div class="highlighted-context">
-            <h3><i class="fas fa-highlighter"></i> Highlighted Context</h3>
-            <div class="context-box">
-                which a client learns a new response to a stimulus that has previously elicited an undesirable behavior via classical conditioning. Principles of operant conditioning can be applied to help people deal with a wide range of psychological problems. Token economy is an example of a popular operant conditioning technique. Cognitive therapy is a technique that focuses on how thoughts lead to feelings of distress. The idea behind cognitive therapy is that how you think determines how you feel and act. Cognitive therapists help clients change dysfunctional thoughts in order to relieve distress. Cognitive-behavioral therapy explores how our thoughts affect our behavior. Cognitive-behavioral therapy aims to change cognitive distortions and self- defeating behaviors. Humanistic therapy focuses on helping people achieve their potential. One form of humanistic therapy developed by Carl Rogers is known as client-centered or Rogerian therapy. Client-centered therapists use the techniques of active listening, unconditional positive regard, genuineness, and empathy to help clients become more accepting of themselves. Often in combination with psychotherapy, people can be prescribed biologically based treatments such as psychotropic medications and/or other medical procedures such as electro-convulsive therapy. 16.3 Treatment Modalities There are several modalities of treatment: individual therapy, group therapy, couples therapy, and family therapy are the most common. In an individual therapy session, a client works one-on-one with a trained therapist. In group therapy, usually 5–10 people meet with a trained group therapist to discuss a common issue (e.g., divorce, grief, eating disorders, substance abuse, or anger management). Couples therapy involves two people in an intimate relationship who are having difficulties and are trying to resolve them. The couple may be dating, partnered, engaged, or married. The therapist helps them resolve their problems as well as implement strategies that will lead to a healthier and happier relationship. Family therapy is a special form of group therapy. The therapy group is made up of one or more families. The goal of this approach is to enhance the growth of each individual family member and the family as a whole. 16.4 Substance-Related and Addictive Disorders: A Special Case Addiction is often viewed as a chronic disease that rewires the brain. This helps explain why relapse rates tend to be high, around 40%–60% (McLellan, Lewis, & O’Brien, & Kleber, 2000). The goal of treatment is to help an addict stop compulsive drug-seeking behaviors. Treatment usually includes behavioral therapy, which can take place individually or in a
-
-FIGURE 1.7 Maslow’s hierarchy of needs is shown. Carl Rogers (1902–1987) was also an American psychologist who, like Maslow, emphasized the potential for good that exists within all people (Figure 1.8). Rogers used a therapeutic technique known as client-centered therapy in helping his clients deal with problematic issues that resulted in their seeking psychotherapy. Unlike a psychoanalytic approach in which the therapist plays an important role in interpreting what conscious behavior reveals about the unconscious mind, client-centered therapy involves the patient taking a lead role in the therapy session. Rogers believed that a therapist needed to display three features to maximize the effectiveness of this particular approach: unconditional positive regard, genuineness, and empathy. Unconditional positive regard refers to the fact that the therapist accepts their client for who they are, no matter what they might say. Provided these factors, Rogers believed that people were more than capable of dealing with and working through their own issues (Thorne & Henley, 2005). FIGURE 1.8 Carl Rogers, shown in this portrait, developed a client-centered therapy method that has been influential in clinical settings. (credit: "Didius"/Wikimedia Commons) Humanism has been influential to psychology as a whole. Both Maslow and Rogers are well-known names among students of psychology (you will read more about both later in this text), and their ideas have influenced many scholars. Furthermore, Rogers’ client-centered approach to therapy is still commonly used in psychotherapeutic settings today (O’hara, n.d.) 1.2 • History of Psychology 15
-
-FIGURE 16.14 Therapy may occur (a) one-on-one between a therapist and client, or (b) in a group setting. (credit a: modification of work by Connor Ashleigh, AusAID/Department of Foreign Affairs and Trade) Individual Therapy In individual therapy, also known as individual psychotherapy or individual counseling, the client and clinician meet one-on-one (usually from 45 minutes to 1 hour). These meetings typically occur weekly or every other week, and sessions are conducted in a confidential and caring environment (Figure 16.15). The clinician will work with clients to help them explore their feelings, work through life challenges, identify aspects of themselves and their lives that they wish to change, and set goals to help them work towards these changes. A client might see a clinician for only a few sessions, or the client may attend individual therapy sessions for a year or longer. The amount of time spent in therapy depends on the needs of the client as well as her personal goals. FIGURE 16.15 In an individual therapy session, a client works one-on-one with a trained therapist. (credit: Alan Cleaver) Group Therapy In group therapy, a clinician meets together with several clients with similar problems (Figure 16.16). When children are placed in group therapy, it is particularly important to match clients for age and problems. One benefit of group therapy is that it can help decrease a client’s shame and isolation about a problem while offering needed support, both from the therapist and other members of the group (American Psychological Association, 2014). A nine-year-old sexual abuse victim, for example, may feel very embarrassed and ashamed. If he is placed in a group with other sexually abused boys, he will realize that he is not alone. A child struggling with poor social skills would likely benefit from a group with a specific curriculum to foster special 618 16 • Therapy and Treatment Access for free at openstax.org
-
-develop strategies to effectively address the needs of various populations for which Eurocentric therapies have limited application (Sue, 2004). For example, a counselor whose treatment focuses on individual decision making may be ineffective at helping a Chinese client with a collectivist approach to problem solving (Sue, 2004). Multicultural counseling and therapy aims to offer both a helping role and process that uses modalities and defines goals consistent with the life experiences and cultural values of clients. It strives to recognize client identities to include individual, group, and universal dimensions, advocate the use of universal and culture- specific strategies and roles in the healing process, and balances the importance of individualism and collectivism in the assessment, diagnosis, and treatment of client and client systems (Sue, 2001). This therapeutic perspective integrates the impact of cultural and social norms, starting at the beginning of treatment. Therapists who use this perspective work with clients to obtain and integrate information about their cultural patterns into a unique treatment approach based on their particular situation (Stewart, Simmons, & Habibpour, 2012). Sociocultural therapy can include individual, group, family, and couples treatment modalities. 16.5 • The Sociocultural Model and Therapy Utilization 623
-
-more logical ways to interpret situations. LINK TO LEARNING View a brief video in which Judith Beck talks about cognitive therapy (http://openstax.org/l/JBeck) and conducts a session with a client. Psychotherapy: Cognitive-Behavioral Therapy Cognitive-behavioral therapists focus much more on present issues than on a patient’s childhood or past, as in other forms of psychotherapy. One of the first forms of cognitive-behavioral therapy was rational emotive 612 16 • Therapy and Treatment Access for free at openstax.org
-
-hospitalized. A person suffering symptoms could speak with a primary care physician, who most likely would refer him to someone who specializes in therapy. The person can receive outpatient mental health services from a variety of sources, including psychologists, psychiatrists, marriage and family therapists, school counselors, clinical social workers, and religious personnel. These therapy sessions would be covered through insurance, government funds, or private (self) pay. 16.2 Types of Treatment Psychoanalysis was developed by Sigmund Freud. Freud’s theory is that a person’s psychological problems are the result of repressed impulses or childhood trauma. The goal of the therapist is to help a person uncover buried feelings by using techniques such as free association and dream analysis. Play therapy is a psychodynamic therapy technique often used with children. The idea is that children play out their hopes, fantasies, and traumas, using dolls, stuffed animals, and sandbox figurines. In behavior therapy, a therapist employs principles of learning from classical and operant conditioning to help clients change undesirable behaviors. Counterconditioning is a commonly used therapeutic technique in 628 16 • Summary Access for free at openstax.org
-
-Couples Therapy Couples therapy involves two people in an intimate relationship who are having difficulties and are trying to resolve them (Figure 16.17). The couple may be dating, partnered, engaged, or married. The primary therapeutic orientation used in couples counseling is cognitive-behavioral therapy (Rathus & Sanderson, 1999). Couples meet with a therapist to discuss conflicts and/or aspects of their relationship that they want to change. The therapist helps them see how their individual backgrounds, beliefs, and actions are affecting their relationship. Often, a therapist tries to help the couple resolve these problems, as well as implement strategies that will lead to a healthier and happier relationship, such as how to listen, how to argue, and how to express feelings. However, sometimes, after working with a therapist, a couple will realize that they are too incompatible and will decide to separate. Some couples seek therapy to work out their problems, while others attend therapy to determine whether staying together is the best solution. Counseling couples in a high- conflict and volatile relationship can be difficult. In fact, psychologists Peter Pearson and Ellyn Bader, who founded the Couples Institute in Palo Alto, California, have compared the experience of the clinician in couples’ therapy to be like “piloting a helicopter in a hurricane” (Weil, 2012, para. 7). FIGURE 16.17 In couples counseling, a therapist helps people work on their relationship. (credit: Cory Zanker) Family Therapy Family therapy is a special form of group therapy, consisting of one or more families. Although there are many theoretical orientations in family therapy, one of the most predominant is the systems approach. The family is viewed as an organized system, and each individual within the family is a contributing member who creates and maintains processes within the system that shape behavior (Minuchin, 1985). Each member of the family influences and is influenced by the others. The goal of this approach is to enhance the growth of each family member as well as that of the family as a whole. Often, dysfunctional patterns of communication that develop between family members can lead to conflict. A family with this dynamic might wish to attend therapy together rather than individually. In many cases, one member of the family has problems that detrimentally affect everyone. For example, a mother’s depression, teen daughter’s eating disorder, or father’s alcohol dependence could affect all members
-            </div>
-        </div>
-        
-        <div class="stats">
-            <div class="stat-item">
-                <div class="stat-label">Sections Used</div>
-                <div class="stat-value">10</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-label">Pages Referenced</div>
-                <div class="stat-value">10</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-label">Keywords Found</div>
-                <div class="stat-value">0</div>
-            </div>
-        </div>
-        
-        <div class="footer">
-            Generated from Psychology 2e Textbook • Question 19 • 2026-02-26
-        </div>
-    </div>
     
-    <!-- Font Awesome for icons -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
-</body>
-</html>
+            </div>
+            
+            <div class="highlighted-context">
+                <h3><i class="fas fa-highlighter"></i> Highlighted Context</h3>
+                <div class="context-box">
+                    which a <mark style="background-color: #ffeb3b; font-weight: bold;">client</mark> learns a new response to a stimulus that has previously elicited an undesirable behavior via classical conditioning. Principles of operant conditioning can be applied to help people deal with a wide range of psychological problems. Token economy is an example of a popular operant conditioning technique. Cognitive <mark style="background-color: #ffeb3b; font-weight: bold;">therapy</mark> is a technique that focuses on how thoughts lead to feelings of distress. The idea behind cognitive <mark style="background-color: #ffeb3b; font-weight: bold;">therapy</mark> is that how you think determines how you feel and act. Cognitive therapists help <mark style="background-color: #ffeb3b; font-weight: bold;">client</mark>s change dysfunctional thoughts in order to relieve distress. Cognitive-behavioral <mark style="background-color: #ffeb3b; font-weight: bold;">therapy</mark> explores how our thoughts affect our behavior. Cognitive-behavioral <mark style="background-color: #ffeb3b; font-weight: bold;">therapy</mark> aims to change cognitive distortions and self- defeating behaviors. Humanistic <mark style="background-color: #ffeb3b; font-weight: bold;">therapy</mark> focuses on helping people achieve their potential. One form of humanistic <mark style="background-color: #ffeb3b; font-weight: bold;">therapy</mark> developed by Carl Rogers is known as <mark style="background-color: #ffeb3b; font-weight: bold;">client</mark>-<mark style="background-color: #ffeb3b; font-weight: bold;">centered</mark> or Rogerian <mark style="background-color: #ffeb3b; font-weight: bold;">therapy</mark>. <mark style="background-color: #ffeb3b; font-weight: bold;">client</mark>-<mark style="background-color: #ffeb3b; font-weight: bold;">centered</mark> therapists use the techniques of active listening, unconditional positive regard, genuineness, and empathy to help <mark style="background-color: #ffeb3b; font-weight: bold;">client</mark>s become more accepting of themselves. Often in combination with psycho<mark style="background-color: #ffeb3b; font-weight: bold;">therapy</mark>, people can be prescribed biologically based treatments such as psychotropic medications and/or other medical procedures such as electro-convulsive <mark style="background-color: #ffeb3b; font-weight: bold;">therapy</mark>. 16.3 Treatment Modalities There are several modalities of treatment: individual <mark style="background-color: #ffeb3b; font-weight: bold;">therapy</mark>, group <mark style="background-color: #ffeb3b; font-weight: bold;">therapy</mark>, couples <mark style="background-color: #ffeb3b; font-weight: bold;">therapy</mark>, and family <mark style="background-color: #ffeb3b; font-weight: bold;">therapy</mark> are the most common. In an individual <mark style="background-color: #ffeb3b; font-weight: bold;">therapy</mark> session, a <mark style="background-color: #ffeb3b; font-weight: bold;">client</mark> works one-on-one with a trained therapist. In group <mark style="background-color: #ffeb3b; font-weight: bold;">therapy</mark>, usually 5–10 people meet with a trained group therapist to discuss a common issue (e.g., divorce, grief, eating disorders, substance abuse, or anger management). Couples <mark style="background-color: #ffeb3b; font-weight: bold;">therapy</mark> involves two people in an intimate relationship who are having difficulties and are trying to resolve them. The couple may be dating, partnered, engaged, or married. The therapist helps them resolve their problems as well as implement strategies that will lead to a healthier and happier relationship. Family <mark style="background-color: #ffeb3b; font-weight: bold;">therapy</mark> is a special form of group <mark style="background-color: #ffeb3b; font-weight: bold;">therapy</mark>. The <mark style="background-color: #ffeb3b; font-weight: bold;">therapy</mark> group is made up of one or more families. The goal of this approach is to enhance the growth of each individual family member and the family as a whole. 16.4 Substance-Related and Addictive Disorders: A Special Case Addiction is often viewed as a chronic disease that rewires the brain. This helps explain why relapse rates tend to be high, around 40%–60% (McLellan, Lewis, & O’Brien, & Kleber, 2000). The goal of treatment is to help an addict stop compulsive drug-seeking behaviors. Treatment usually includes behavioral <mark style="background-color: #ffeb3b; font-weight: bold;">therapy</mark>, which can take place individually or in a
+
+FIGURE 1.7 Maslow’s hierarchy of needs is shown. Carl Rogers (1902–1987) was also an American psychologist who, like Maslow, emphasized the potential for good that exists within all people (Figure 1.8). Rogers used a therapeutic technique known as <mark style="background-color: #ffeb3b; font-weight: bold;">client</mark>-<mark style="background-color: #ffeb3b; font-weight: bold;">centered</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">therapy</mark> in helping his <mark style="background-color: #ffeb3b; font-weight: bold;">client</mark>s deal with problematic issues that resulted in their seeking psycho<mark style="background-color: #ffeb3b; font-weight: bold;">therapy</mark>. Unlike a psychoanalytic approach in which the therapist plays an important role in interpreting what conscious behavior reveals about the unconscious mind, <mark style="background-color: #ffeb3b; font-weight: bold;">client</mark>-<mark style="background-color: #ffeb3b; font-weight: bold;">centered</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">therapy</mark> involves the patient taking a lead role in the <mark style="background-color: #ffeb3b; font-weight: bold;">therapy</mark> session. Rogers believed that a therapist needed to display three features to maximize the effectiveness of this particular approach: unconditional positive regard, genuineness, and empathy. Unconditional positive regard refers to the fact that the therapist accepts their <mark style="background-color: #ffeb3b; font-weight: bold;">client</mark> for who they are, no matter what they might say. Provided these factors, Rogers believed that people were more than capable of dealing with and working through their own issues (Thorne & Henley, 2005). FIGURE 1.8 Carl Rogers, shown in this portrait, developed a <mark style="background-color: #ffeb3b; font-weight: bold;">client</mark>-<mark style="background-color: #ffeb3b; font-weight: bold;">centered</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">therapy</mark> method that has been influential in clinical settings. (credit: "Didius"/Wikimedia Commons) Humanism has been influential to psychology as a whole. Both Maslow and Rogers are well-known names among students of psychology (you will read more about both later in this text), and their ideas have influenced many scholars. Furthermore, Rogers’ <mark style="background-color: #ffeb3b; font-weight: bold;">client</mark>-<mark style="background-color: #ffeb3b; font-weight: bold;">centered</mark> approach to <mark style="background-color: #ffeb3b; font-weight: bold;">therapy</mark> is still commonly used in psychotherapeutic settings today (O’hara, n.d.) 1.2 • History of Psychology 15
+
+FIGURE 16.14 <mark style="background-color: #ffeb3b; font-weight: bold;">therapy</mark> may occur (a) one-on-one between a therapist and <mark style="background-color: #ffeb3b; font-weight: bold;">client</mark>, or (b) in a group setting. (credit a: modification of work by Connor Ashleigh, AusAID/Department of Foreign Affairs and Trade) Individual <mark style="background-color: #ffeb3b; font-weight: bold;">therapy</mark> In individual <mark style="background-color: #ffeb3b; font-weight: bold;">therapy</mark>, also known as individual psycho<mark style="background-color: #ffeb3b; font-weight: bold;">therapy</mark> or individual counseling, the <mark style="background-color: #ffeb3b; font-weight: bold;">client</mark> and clinician meet one-on-one (usually from 45 minutes to 1 hour). These meetings typically occur weekly or every other week, and sessions are conducted in a confidential and caring environment (Figure 16.15). The clinician will work with <mark style="background-color: #ffeb3b; font-weight: bold;">client</mark>s to help them explore their feelings, work through life challenges, identify aspects of themselves and their lives that they wish to change, and set goals to help them work towards these changes. A <mark style="background-color: #ffeb3b; font-weight: bold;">client</mark> might see a clinician for only a few sessions, or the <mark style="background-color: #ffeb3b; font-weight: bold;">client</mark> may attend individual <mark style="background-color: #ffeb3b; font-weight: bold;">therapy</mark> sessions for a year or longer. The amount of time spent in <mark style="background-color: #ffeb3b; font-weight: bold;">therapy</mark> depends on the needs of the <mark style="background-color: #ffeb3b; font-weight: bold;">client</mark> as well as her personal goals. FIGURE 16.15 In an individual <mark style="background-color: #ffeb3b; font-weight: bold;">therapy</mark> session, a <mark style="background-color: #ffeb3b; font-weight: bold;">client</mark> works one-on-one with a trained therapist. (credit: Alan Cleaver) Group <mark style="background-color: #ffeb3b; font-weight: bold;">therapy</mark> In group <mark style="background-color: #ffeb3b; font-weight: bold;">therapy</mark>, a clinician meets together with several <mark style="background-color: #ffeb3b; font-weight: bold;">client</mark>s with similar problems (Figure 16.16). When children are placed in group <mark style="background-color: #ffeb3b; font-weight: bold;">therapy</mark>, it is particularly important to match <mark style="background-color: #ffeb3b; font-weight: bold;">client</mark>s for age and problems. One benefit of group <mark style="background-color: #ffeb3b; font-weight: bold;">therapy</mark> is that it can help decrease a <mark style="background-color: #ffeb3b; font-weight: bold;">client</mark>’s shame and isolation about a problem while offering needed support, both from the therapist and other members of the group (American Psychological Association, 2014). A nine-year-old sexual abuse victim, for example, may feel very embarrassed and ashamed. If he is placed in a group with other sexually abused boys, he will realize that he is not alone. A child struggling with poor social skills would likely benefit from a group with a specific curriculum to foster special 618 16 • <mark style="background-color: #ffeb3b; font-weight: bold;">therapy</mark> and Treatment Access for free at openstax.org
+
+develop strategies to effectively address the needs of various populations for which Eurocentric therapies have limited application (Sue, 2004). For example, a counselor whose treatment focuses on individual decision making may be ineffective at helping a Chinese <mark style="background-color: #ffeb3b; font-weight: bold;">client</mark> with a collectivist approach to problem solving (Sue, 2004). Multicultural counseling and <mark style="background-color: #ffeb3b; font-weight: bold;">therapy</mark> aims to offer both a helping role and process that uses modalities and defines goals consistent with the life experiences and cultural values of <mark style="background-color: #ffeb3b; font-weight: bold;">client</mark>s. It strives to recognize <mark style="background-color: #ffeb3b; font-weight: bold;">client</mark> identities to include individual, group, and universal dimensions, advocate the use of universal and culture- specific strategies and roles in the healing process, and balances the importance of individualism and collectivism in the assessment, diagnosis, and treatment of <mark style="background-color: #ffeb3b; font-weight: bold;">client</mark> and <mark style="background-color: #ffeb3b; font-weight: bold;">client</mark> systems (Sue, 2001). This therapeutic perspective integrates the impact of cultural and social norms, starting at the beginning of treatment. Therapists who use this perspective work with <mark style="background-color: #ffeb3b; font-weight: bold;">client</mark>s to obtain and integrate information about their cultural patterns into a unique treatment approach based on their particular situation (Stewart, Simmons, & Habibpour, 2012). Sociocultural <mark style="background-color: #ffeb3b; font-weight: bold;">therapy</mark> can include individual, group, family, and couples treatment modalities. 16.5 • The Sociocultural Model and <mark style="background-color: #ffeb3b; font-weight: bold;">therapy</mark> Utilization 623
+
+more logical ways to interpret situations. LINK TO LEARNING View a brief video in which Judith Beck talks about cognitive <mark style="background-color: #ffeb3b; font-weight: bold;">therapy</mark> (http://openstax.org/l/JBeck) and conducts a session with a <mark style="background-color: #ffeb3b; font-weight: bold;">client</mark>. Psycho<mark style="background-color: #ffeb3b; font-weight: bold;">therapy</mark>: Cognitive-Behavioral <mark style="background-color: #ffeb3b; font-weight: bold;">therapy</mark> Cognitive-behavioral therapists focus much more on present issues than on a patient’s childhood or past, as in other forms of psycho<mark style="background-color: #ffeb3b; font-weight: bold;">therapy</mark>. One of the first forms of cognitive-behavioral <mark style="background-color: #ffeb3b; font-weight: bold;">therapy</mark> was rational emotive 612 16 • <mark style="background-color: #ffeb3b; font-weight: bold;">therapy</mark> and Treatment Access for free at openstax.org
+
+hospitalized. A person suffering symptoms could speak with a primary care physician, who most likely would refer him to someone who specializes in <mark style="background-color: #ffeb3b; font-weight: bold;">therapy</mark>. The person can receive outpatient mental health services from a variety of sources, including psychologists, psychiatrists, marriage and family therapists, school counselors, clinical social workers, and religious personnel. These <mark style="background-color: #ffeb3b; font-weight: bold;">therapy</mark> sessions would be covered through insurance, government funds, or private (self) pay. 16.2 Types of Treatment Psychoanalysis was developed by Sigmund Freud. Freud’s theory is that a person’s psychological problems are the result of repressed impulses or childhood trauma. The goal of the therapist is to help a person uncover buried feelings by using techniques such as free association and dream analysis. Play <mark style="background-color: #ffeb3b; font-weight: bold;">therapy</mark> is a psychodynamic <mark style="background-color: #ffeb3b; font-weight: bold;">therapy</mark> technique often used with children. The idea is that children play out their hopes, fantasies, and traumas, using dolls, stuffed animals, and sandbox figurines. In behavior <mark style="background-color: #ffeb3b; font-weight: bold;">therapy</mark>, a therapist employs principles of learning from classical and operant conditioning to help <mark style="background-color: #ffeb3b; font-weight: bold;">client</mark>s change undesirable behaviors. Counterconditioning is a commonly used therapeutic technique in 628 16 • Summary Access for free at openstax.org
+
+Couples <mark style="background-color: #ffeb3b; font-weight: bold;">therapy</mark> Couples <mark style="background-color: #ffeb3b; font-weight: bold;">therapy</mark> involves two people in an intimate relationship who are having difficulties and are trying to resolve them (Figure 16.17). The couple may be dating, partnered, engaged, or married. The primary therapeutic orientation used in couples counseling is cognitive-behavioral <mark style="background-color: #ffeb3b; font-weight: bold;">therapy</mark> (Rathus & Sanderson, 1999). Couples meet with a therapist to discuss conflicts and/or aspects of their relationship that they want to change. The therapist helps them see how their individual backgrounds, beliefs, and actions are affecting their relationship. Often, a therapist tries to help the couple resolve these problems, as well as implement strategies that will lead to a healthier and happier relationship, such as how to listen, how to argue, and how to express feelings. However, sometimes, after working with a therapist, a couple will realize that they are too incompatible and will decide to separate. Some couples seek <mark style="background-color: #ffeb3b; font-weight: bold;">therapy</mark> to work out their problems, while others attend <mark style="background-color: #ffeb3b; font-weight: bold;">therapy</mark> to determine whether staying together is the best solution. Counseling couples in a high- conflict and volatile relationship can be difficult. In fact, psychologists Peter Pearson and Ellyn Bader, who founded the Couples Institute in Palo Alto, California, have compared the experience of the clinician in couples’ <mark style="background-color: #ffeb3b; font-weight: bold;">therapy</mark> to be like “piloting a helicopter in a hurricane” (Weil, 2012, para. 7). FIGURE 16.17 In couples counseling, a therapist helps people work on their relationship. (credit: Cory Zanker) Family <mark style="background-color: #ffeb3b; font-weight: bold;">therapy</mark> Family <mark style="background-color: #ffeb3b; font-weight: bold;">therapy</mark> is a special form of group <mark style="background-color: #ffeb3b; font-weight: bold;">therapy</mark>, consisting of one or more families. Although there are many theoretical orientations in family <mark style="background-color: #ffeb3b; font-weight: bold;">therapy</mark>, one of the most predominant is the systems approach. The family is viewed as an organized system, and each individual within the family is a contributing member who creates and maintains processes within the system that shape behavior (Minuchin, 1985). Each member of the family influences and is influenced by the others. The goal of this approach is to enhance the growth of each family member as well as that of the family as a whole. Often, dysfunctional patterns of communication that develop between family members can lead to conflict. A family with this dynamic might wish to attend <mark style="background-color: #ffeb3b; font-weight: bold;">therapy</mark> together rather than individually. In many cases, one member of the family has problems that detrimentally affect everyone. For example, a mother’s depression, teen daughter’s eating disorder, or father’s alcohol dependence could affect all members  <!-- HIGHLIGHTING HERE ONLY -->
+                </div>
+            </div>
+            
+            <div class="stats">
+                <div class="stat-item">
+                    <div class="stat-label">Sections Used</div>
+                    <div class="stat-value">10</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Pages Referenced</div>
+                    <div class="stat-value">10</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Keywords Found</div>
+                    <div class="stat-value">3</div>
+                </div>
+            </div>
+            
+            <div class="footer">
+                Generated from Psychology 2e Textbook • Question 19 • 2026-02-27
+            </div>
+        </div>
+        
+        <!-- Font Awesome for icons -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
+    </body>
+    </html>

@@ -1,426 +1,391 @@
 <!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Evidence Visualization - Question 34</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            padding: 20px;
-        }
-        
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            overflow: hidden;
-        }
-        
-        .header {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            padding: 30px;
-        }
-        
-        .header h1 {
-            font-size: 24px;
-            margin-bottom: 10px;
-        }
-        
-        .header .question {
-            font-size: 18px;
-            opacity: 0.9;
-            background: rgba(255, 255, 255, 0.2);
-            padding: 15px;
-            border-radius: 10px;
-            margin-top: 10px;
-            line-height: 1.5;
-        }
-        
-        .keywords-bar {
-            background: #f0f0f0;
-            padding: 15px 30px;
-            border-bottom: 1px solid #e0e0e0;
-        }
-        
-        .keywords-title {
-            font-size: 14px;
-            color: #666;
-            margin-bottom: 10px;
-            font-weight: 600;
-        }
-        
-        .keyword-badge {
-            display: inline-block;
-            background: #ffeb3b;
-            color: #333;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 13px;
-            margin: 0 5px 5px 0;
-            font-weight: 500;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-        
-        .answer-section {
-            padding: 30px;
-            background: #f8f9fa;
-            border-bottom: 1px solid #e0e0e0;
-        }
-        
-        .answer-section h3 {
-            color: #333;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .answer-section h3 i {
-            color: #667eea;
-        }
-        
-        .answer-content {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            line-height: 1.8;
-            color: #444;
-            border-left: 4px solid #667eea;
-        }
-        
-        .answer-content mark {
-            background-color: #ffeb3b;
-            padding: 2px 0;
-            font-weight: 500;
-        }
-        
-        .evidence-section {
-            padding: 30px;
-        }
-        
-        .evidence-section h3 {
-            color: #333;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .evidence-section h3 i {
-            color: #667eea;
-        }
-        
-        .evidence-card {
-            background: #f8f9fa;
-            border-radius: 10px;
-            padding: 20px;
-            margin-bottom: 20px;
-            border-left: 4px solid #667eea;
-        }
-        
-        .evidence-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-        
-        .section-name {
-            font-weight: 600;
-            color: #333;
-            background: #e8eaf6;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 14px;
-        }
-        
-        .page-number {
-            color: #666;
-            background: white;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 14px;
-            border: 1px solid #e0e0e0;
-        }
-        
-        .relevance {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 14px;
-        }
-        
-        .term-badge {
-            display: inline-block;
-            background: #ffeb3b;
-            color: #333;
-            padding: 3px 10px;
-            border-radius: 15px;
-            font-size: 12px;
-            margin: 0 5px 5px 0;
-            font-weight: 500;
-        }
-        
-        .evidence-text {
-            background: white;
-            padding: 15px;
-            border-radius: 8px;
-            color: #555;
-            line-height: 1.6;
-            margin: 15px 0 0 0;
-            border: 1px solid #e0e0e0;
-        }
-        
-        .evidence-text mark {
-            background-color: #ffeb3b;
-            padding: 2px 0;
-            font-weight: 500;
-        }
-        
-        .highlighted-context {
-            padding: 30px;
-            background: #f8f9fa;
-            border-top: 1px solid #e0e0e0;
-            border-bottom: 1px solid #e0e0e0;
-        }
-        
-        .highlighted-context h3 {
-            color: #333;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .context-box {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            max-height: 400px;
-            overflow-y: auto;
-            border: 1px solid #e0e0e0;
-            line-height: 1.8;
-            font-size: 14px;
-        }
-        
-        .context-box mark {
-            background-color: #ffeb3b;
-            padding: 2px 0;
-            font-weight: 500;
-        }
-        
-        .stats {
-            display: flex;
-            gap: 15px;
-            padding: 20px 30px;
-            background: white;
-            flex-wrap: wrap;
-        }
-        
-        .stat-item {
-            background: #f8f9fa;
-            padding: 10px 20px;
-            border-radius: 10px;
-            flex: 1;
-            min-width: 120px;
-            text-align: center;
-            border: 1px solid #e0e0e0;
-        }
-        
-        .stat-label {
-            font-size: 12px;
-            color: #666;
-            margin-bottom: 5px;
-        }
-        
-        .stat-value {
-            font-size: 24px;
-            font-weight: 600;
-            color: #667eea;
-        }
-        
-        .footer {
-            padding: 20px 30px;
-            background: #f0f0f0;
-            text-align: center;
-            color: #666;
-            font-size: 14px;
-            border-top: 1px solid #e0e0e0;
-        }
-        
-        @media (max-width: 768px) {
-            .header {
+    <html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Evidence Visualization - Question 34</title>
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+            
+            body {
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                min-height: 100vh;
                 padding: 20px;
             }
             
-            .answer-section,
-            .evidence-section,
-            .highlighted-context {
+            .container {
+                max-width: 1000px;
+                margin: 0 auto;
+                background: white;
+                border-radius: 20px;
+                box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+                overflow: hidden;
+            }
+            
+            .header {
+                background: linear-gradient(135deg, #667eea, #764ba2);
+                color: white;
+                padding: 30px;
+            }
+            
+            .header h1 {
+                font-size: 24px;
+                margin-bottom: 10px;
+            }
+            
+            .header .question {
+                font-size: 18px;
+                opacity: 0.9;
+                background: rgba(255, 255, 255, 0.2);
+                padding: 15px;
+                border-radius: 10px;
+                margin-top: 10px;
+                line-height: 1.5;
+            }
+            
+            .keywords-bar {
+                background: #f0f0f0;
+                padding: 15px 30px;
+                border-bottom: 1px solid #e0e0e0;
+            }
+            
+            .keywords-title {
+                font-size: 14px;
+                color: #666;
+                margin-bottom: 10px;
+                font-weight: 600;
+            }
+            
+            .keyword-badge {
+                display: inline-block;
+                background: #ffeb3b;
+                color: #333;
+                padding: 5px 12px;
+                border-radius: 20px;
+                font-size: 13px;
+                margin: 0 5px 5px 0;
+                font-weight: 500;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            }
+            
+            .answer-section {
+                padding: 30px;
+                background: #f8f9fa;
+                border-bottom: 1px solid #e0e0e0;
+            }
+            
+            .answer-section h3 {
+                color: #333;
+                margin-bottom: 15px;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+            
+            .answer-section h3 i {
+                color: #667eea;
+            }
+            
+            .answer-content {
+                background: white;
                 padding: 20px;
+                border-radius: 10px;
+                line-height: 1.8;
+                color: #444;
+                border-left: 4px solid #667eea;
+            }
+            
+            /* NO mark styling for answer - it stays plain */
+            
+            .evidence-section {
+                padding: 30px;
+            }
+            
+            .evidence-section h3 {
+                color: #333;
+                margin-bottom: 20px;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+            
+            .evidence-section h3 i {
+                color: #667eea;
+            }
+            
+            .evidence-card {
+                background: #f8f9fa;
+                border-radius: 10px;
+                padding: 20px;
+                margin-bottom: 20px;
+                border-left: 4px solid #667eea;
             }
             
             .evidence-header {
-                flex-direction: column;
-                align-items: flex-start;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 15px;
+                flex-wrap: wrap;
+                gap: 10px;
             }
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <div class="header">
-            <h1>📚 Evidence Visualization</h1>
-            <div class="question">
-                <strong>Question 34:</strong> 
+            
+            .section-name {
+                font-weight: 600;
+                color: #333;
+                background: #e8eaf6;
+                padding: 5px 12px;
+                border-radius: 20px;
+                font-size: 14px;
+            }
+            
+            .page-number {
+                color: #666;
+                background: white;
+                padding: 5px 12px;
+                border-radius: 20px;
+                font-size: 14px;
+                border: 1px solid #e0e0e0;
+            }
+            
+            .term-badge {
+                display: inline-block;
+                background: #ffeb3b;
+                color: #333;
+                padding: 3px 10px;
+                border-radius: 15px;
+                font-size: 12px;
+                margin: 0 5px 5px 0;
+                font-weight: 500;
+            }
+            
+            .evidence-text {
+                background: white;
+                padding: 15px;
+                border-radius: 8px;
+                color: #555;
+                line-height: 1.6;
+                margin: 15px 0 0 0;
+                border: 1px solid #e0e0e0;
+            }
+            
+            .evidence-text mark {
+                background-color: #ffeb3b;
+                padding: 2px 0;
+                font-weight: 500;
+            }
+            
+            .highlighted-context {
+                padding: 30px;
+                background: #f8f9fa;
+                border-top: 1px solid #e0e0e0;
+                border-bottom: 1px solid #e0e0e0;
+            }
+            
+            .highlighted-context h3 {
+                color: #333;
+                margin-bottom: 15px;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+            
+            .context-box {
+                background: white;
+                padding: 20px;
+                border-radius: 10px;
+                max-height: 400px;
+                overflow-y: auto;
+                border: 1px solid #e0e0e0;
+                line-height: 1.8;
+                font-size: 14px;
+            }
+            
+            .context-box mark {
+                background-color: #ffeb3b;
+                padding: 2px 0;
+                font-weight: 500;
+            }
+            
+            .stats {
+                display: flex;
+                gap: 15px;
+                padding: 20px 30px;
+                background: white;
+                flex-wrap: wrap;
+            }
+            
+            .stat-item {
+                background: #f8f9fa;
+                padding: 10px 20px;
+                border-radius: 10px;
+                flex: 1;
+                min-width: 120px;
+                text-align: center;
+                border: 1px solid #e0e0e0;
+            }
+            
+            .stat-label {
+                font-size: 12px;
+                color: #666;
+                margin-bottom: 5px;
+            }
+            
+            .stat-value {
+                font-size: 24px;
+                font-weight: 600;
+                color: #667eea;
+            }
+            
+            .footer {
+                padding: 20px 30px;
+                background: #f0f0f0;
+                text-align: center;
+                color: #666;
+                font-size: 14px;
+                border-top: 1px solid #e0e0e0;
+            }
+            
+            @media (max-width: 768px) {
+                .header {
+                    padding: 20px;
+                }
+                
+                .answer-section,
+                .evidence-section,
+                .highlighted-context {
+                    padding: 20px;
+                }
+                
+                .evidence-header {
+                    flex-direction: column;
+                    align-items: flex-start;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="header">
+                <h1>📚 Evidence Visualization</h1>
+                <div class="question">
+                    <strong>Question 34:</strong> What is feminist psychology?
+                </div>
             </div>
-        </div>
-        
-        <div class="keywords-bar">
-            <div class="keywords-title">🔑 Extracted Keywords:</div>
-
-        </div>
-        
-        <div class="answer-section">
-            <h3><i class="fas fa-robot"></i> Generated Answer</h3>
-            <div class="answer-content">
-                According to the provided textbook context, feminist psychology is an approach to psychology that attempts to be free of the influence of male cultural biases on our knowledge of the psychology of women. It involves re-evaluating and discovering the contributions of women to the history of psychology, studying psychological gender differences, and questioning the male bias present across the practice of the scientific approach to knowledge.
+            
+            <div class="keywords-bar">
+                <div class="keywords-title">🔑 Extracted Keywords:</div>
+    <span class="keyword-badge">feminist</span><span class="keyword-badge">psychology</span>
             </div>
-        </div>
-        
-        <div class="evidence-section">
-            <h3><i class="fas fa-book"></i> Evidence by Section</h3>
-
+            
+            <div class="answer-section">
+                <h3><i class="fas fa-robot"></i> Generated Answer</h3>
+                <div class="answer-content">
+                    According to the provided textbook context, feminist psychology is an approach to psychology that attempts to be free of the influence of male cultural biases on our knowledge of the psychology of women. It involves re-evaluating and discovering the contributions of women to the history of psychology, studying psychological gender differences, and questioning the male bias present across the practice of the scientific approach to knowledge.  <!-- NO HIGHLIGHTING HERE -->
+                </div>
+            </div>
+            
+            <div class="evidence-section">
+                <h3><i class="fas fa-book"></i> Evidence by Section</h3>
+    
             <div class="evidence-card">
                 <div class="evidence-header">
                     <span class="section-name">📖 06.003
 Blann</span>
                     <span class="page-number">📄 Page 20</span>
-                    <span class="relevance">⭐ Relevance: 0.7</span>
-                </div>
-                <div>
-
                 </div>
                 <div class="evidence-text">
-                    This section discusses 06.003
-blann. The content here is relevant to your question about ...
+                    developed and worked. Until the 1960s, the science of <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> was largely a “womanless” <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> (Crawford & Marecek, 1989), meaning that few women were able to practice <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark>, so they had little influence on what was studied. In addition, the experimental subjects of <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> were mostl  <!-- HIGHLIGHTING HERE ONLY -->
                 </div>
             </div>
-
+    
             <div class="evidence-card">
                 <div class="evidence-header">
                     <span class="section-name">📖 1.1 What Is Psychology</span>
                     <span class="page-number">📄 Page 28</span>
-                    <span class="relevance">⭐ Relevance: 0.75</span>
-                </div>
-                <div>
-
                 </div>
                 <div class="evidence-text">
-                    This section discusses 1.1 what is psychology. The content here is relevant to your question about ...
+                    developed and worked. Until the 1960s, the science of <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> was largely a “womanless” <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> (Crawford & Marecek, 1989), meaning that few women were able to practice <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark>, so they had little influence on what was studied. In addition, the experimental subjects of <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> were mostl  <!-- HIGHLIGHTING HERE ONLY -->
                 </div>
             </div>
-
+    
             <div class="evidence-card">
                 <div class="evidence-header">
                     <span class="section-name">📖 1.3 Contemporary Psychology
 LEARNING OBJECTIVES
 By the end of this section</span>
                     <span class="page-number">📄 Page 29</span>
-                    <span class="relevance">⭐ Relevance: 0.8</span>
-                </div>
-                <div>
-
                 </div>
                 <div class="evidence-text">
-                    This section discusses 1.3 contemporary psychology
-learning objectives
-by the end of this section. The content here is relevant to your question about ...
+                    developed and worked. Until the 1960s, the science of <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> was largely a “womanless” <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> (Crawford & Marecek, 1989), meaning that few women were able to practice <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark>, so they had little influence on what was studied. In addition, the experimental subjects of <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> were mostl  <!-- HIGHLIGHTING HERE ONLY -->
                 </div>
             </div>
-
+    
             <div class="evidence-card">
                 <div class="evidence-header">
                     <span class="section-name">📖 1.9 Noam Chomsky was very influential in beginning the cognitive revolution</span>
                     <span class="page-number">📄 Page 30</span>
-                    <span class="relevance">⭐ Relevance: 0.85</span>
-                </div>
-                <div>
-
                 </div>
                 <div class="evidence-text">
-                    This section discusses 1.9 noam chomsky was very influential in beginning the cognitive revolution. The content here is relevant to your question about ...
+                    developed and worked. Until the 1960s, the science of <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> was largely a “womanless” <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> (Crawford & Marecek, 1989), meaning that few women were able to practice <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark>, so they had little influence on what was studied. In addition, the experimental subjects of <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> were mostl  <!-- HIGHLIGHTING HERE ONLY -->
                 </div>
             </div>
-
+    
             <div class="evidence-card">
                 <div class="evidence-header">
                     <span class="section-name">📖 11.3 Neo-Freudians: Adler</span>
                     <span class="page-number">📄 Page 50</span>
-                    <span class="relevance">⭐ Relevance: 0.9</span>
-                </div>
-                <div>
-
                 </div>
                 <div class="evidence-text">
-                    This section discusses 11.3 neo-freudians: adler. The content here is relevant to your question about ...
+                    developed and worked. Until the 1960s, the science of <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> was largely a “womanless” <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> (Crawford & Marecek, 1989), meaning that few women were able to practice <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark>, so they had little influence on what was studied. In addition, the experimental subjects of <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> were mostl  <!-- HIGHLIGHTING HERE ONLY -->
                 </div>
             </div>
+    
+            </div>
+            
+            <div class="highlighted-context">
+                <h3><i class="fas fa-highlighter"></i> Highlighted Context</h3>
+                <div class="context-box">
+                    developed and worked. Until the 1960s, the science of <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> was largely a “womanless” <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> (Crawford & Marecek, 1989), meaning that few women were able to practice <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark>, so they had little influence on what was studied. In addition, the experimental subjects of <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> were mostly men, which resulted from underlying assumptions that gender had no influence on <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> and that women were not of sufficient interest to study. An article by Naomi Weisstein, first published in 1968 (Weisstein, 1993), stimulated a <mark style="background-color: #ffeb3b; font-weight: bold;">feminist</mark> revolution in <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> by presenting a critique of <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> as a science. She also specifically criticized male psychologists for constructing the <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> of women entirely out of their own cultural biases and without careful experimental tests to verify any of their characterizations of women. Weisstein used, as examples, statements by prominent psychologists in the 1960s, such as this quote by Bruno Bettleheim: “We must start with the realization that, as much as women want to be good scientists or engineers, they want first and foremost to be womanly companions of men and to be mothers.” Weisstein’s critique formed the foundation for the subsequent development of a <mark style="background-color: #ffeb3b; font-weight: bold;">feminist</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> that attempted to be free of the influence of male cultural biases on our knowledge of the <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> of women. Crawford & Marecek (1989) identify several <mark style="background-color: #ffeb3b; font-weight: bold;">feminist</mark> approaches to <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> that can be described as <mark style="background-color: #ffeb3b; font-weight: bold;">feminist</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark>. These include re-evaluating and discovering the contributions of women to the history of <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark>, studying psychological gender differences, and questioning the male bias present across the practice of the scientific approach to knowledge. Multicultural And Cross-Cultural <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> Culture impacts individuals, groups, and society. An ongoing issue researchers are trying to correct is that certain populations have been over-studied and the results of these studies have been applied to other populations. For example, Henrich, Heine, and Norenzayan discuss how WEIRD societies have been overstudied and the results have been wrongly applied to non-WEIRD societies (2010). WEIRD stands for western, educated, industrialized, rich, and democratic. Henrich, Heine, and Norenzayan found that there are many differences between people in the WEIRD group and people in less industrialized, less urban, and non- Western societies. These differences occur in a variety of areas, including perception, cooperation, and moral reasoning. That is, people vary depending on their culture and environment. Multicultural psychologists develop theories and conduct research with diverse populations, typically within one country. Cross-cultural psychologists compare populations
 
-        </div>
-        
-        <div class="highlighted-context">
-            <h3><i class="fas fa-highlighter"></i> Highlighted Context</h3>
-            <div class="context-box">
-                developed and worked. Until the 1960s, the science of psychology was largely a “womanless” psychology (Crawford & Marecek, 1989), meaning that few women were able to practice psychology, so they had little influence on what was studied. In addition, the experimental subjects of psychology were mostly men, which resulted from underlying assumptions that gender had no influence on psychology and that women were not of sufficient interest to study. An article by Naomi Weisstein, first published in 1968 (Weisstein, 1993), stimulated a feminist revolution in psychology by presenting a critique of psychology as a science. She also specifically criticized male psychologists for constructing the psychology of women entirely out of their own cultural biases and without careful experimental tests to verify any of their characterizations of women. Weisstein used, as examples, statements by prominent psychologists in the 1960s, such as this quote by Bruno Bettleheim: “We must start with the realization that, as much as women want to be good scientists or engineers, they want first and foremost to be womanly companions of men and to be mothers.” Weisstein’s critique formed the foundation for the subsequent development of a feminist psychology that attempted to be free of the influence of male cultural biases on our knowledge of the psychology of women. Crawford & Marecek (1989) identify several feminist approaches to psychology that can be described as feminist psychology. These include re-evaluating and discovering the contributions of women to the history of psychology, studying psychological gender differences, and questioning the male bias present across the practice of the scientific approach to knowledge. Multicultural And Cross-Cultural Psychology Culture impacts individuals, groups, and society. An ongoing issue researchers are trying to correct is that certain populations have been over-studied and the results of these studies have been applied to other populations. For example, Henrich, Heine, and Norenzayan discuss how WEIRD societies have been overstudied and the results have been wrongly applied to non-WEIRD societies (2010). WEIRD stands for western, educated, industrialized, rich, and democratic. Henrich, Heine, and Norenzayan found that there are many differences between people in the WEIRD group and people in less industrialized, less urban, and non- Western societies. These differences occur in a variety of areas, including perception, cooperation, and moral reasoning. That is, people vary depending on their culture and environment. Multicultural psychologists develop theories and conduct research with diverse populations, typically within one country. Cross-cultural psychologists compare populations
+LINK TO LEARNING Listen to a podcast about the influence of an African American's <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> research on the historic Brown v. Board of Education civil rights case (http://openstax.org/l/crogers2) to learn more. The American Psychological Association has several ethnically based organizations for professional psychologists that facilitate interactions among members. Since psychologists belonging to specific ethnic groups or cultures have the most interest in studying the <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> of their communities, these organizations provide an opportunity for the growth of research on the interplay between culture and <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark>. WOMEN IN <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> Although rarely given credit, women have been contributing to <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> since its inception as a field of study. In 1894, Margaret Floy Washburn was the first woman awarded the doctoral degree in <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark>. She wrote The Animal Mind: A Textbook of Comparative <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark>, and it was the standard in the field for over 20 years. In the mid 1890s, Mary Whiton Calkins completed all requirements toward the PhD in <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark>, but Harvard University refused to award her that degree because she was a woman. She had been taught and mentored by William James, who tried and failed to convince Harvard to award her the doctoral degree. Her memory research studied primacy and recency (Madigan & O’Hara, 1992), and she also wrote about how structuralism and functionalism both explained self-<mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> (Calkins, 1906). Another influential woman, Mary Cover Jones, conducted a study she considered to be a sequel to John B. Watson’s study of Little Albert (you’ll learn about this study in the chapter on Learning). Jones unconditioned fear in Little Peter, who had been afraid of rabbits (Jones, 1924). Ethnic minority women contributing to the field of <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> include Martha Bernal and Inez Beverly Prosser; their studies were related to education. Bernal, the first Latina to earn her doctoral degree in <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> (1962) conducted much of her research with Mexican American children. Prosser was the first African American woman awarded the PhD in 1933 at the University of Cincinnati (Benjamin, Henry, & McMahon, 2005). 1.3 Contemporary <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> LEARNING OBJECTIVES By the end of this section, you will be able to: • Appreciate the diversity of interests and foci within <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> • Understand basic interests and applications in each of the described areas of <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> • Demonstrate familiarity with some of the major concepts or important figures in each of the described areas of <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> Contemporary <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> is a diverse field that is influenced
 
-LINK TO LEARNING Listen to a podcast about the influence of an African American's psychology research on the historic Brown v. Board of Education civil rights case (http://openstax.org/l/crogers2) to learn more. The American Psychological Association has several ethnically based organizations for professional psychologists that facilitate interactions among members. Since psychologists belonging to specific ethnic groups or cultures have the most interest in studying the psychology of their communities, these organizations provide an opportunity for the growth of research on the interplay between culture and psychology. WOMEN IN PSYCHOLOGY Although rarely given credit, women have been contributing to psychology since its inception as a field of study. In 1894, Margaret Floy Washburn was the first woman awarded the doctoral degree in psychology. She wrote The Animal Mind: A Textbook of Comparative Psychology, and it was the standard in the field for over 20 years. In the mid 1890s, Mary Whiton Calkins completed all requirements toward the PhD in psychology, but Harvard University refused to award her that degree because she was a woman. She had been taught and mentored by William James, who tried and failed to convince Harvard to award her the doctoral degree. Her memory research studied primacy and recency (Madigan & O’Hara, 1992), and she also wrote about how structuralism and functionalism both explained self-psychology (Calkins, 1906). Another influential woman, Mary Cover Jones, conducted a study she considered to be a sequel to John B. Watson’s study of Little Albert (you’ll learn about this study in the chapter on Learning). Jones unconditioned fear in Little Peter, who had been afraid of rabbits (Jones, 1924). Ethnic minority women contributing to the field of psychology include Martha Bernal and Inez Beverly Prosser; their studies were related to education. Bernal, the first Latina to earn her doctoral degree in psychology (1962) conducted much of her research with Mexican American children. Prosser was the first African American woman awarded the PhD in 1933 at the University of Cincinnati (Benjamin, Henry, & McMahon, 2005). 1.3 Contemporary Psychology LEARNING OBJECTIVES By the end of this section, you will be able to: • Appreciate the diversity of interests and foci within psychology • Understand basic interests and applications in each of the described areas of psychology • Demonstrate familiarity with some of the major concepts or important figures in each of the described areas of psychology Contemporary psychology is a diverse field that is influenced
+of <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> and therefore influencing its development. They also suffered from the attitudes of White male psychologists who were not immune to the nonscientific attitudes prevalent in the society in which they DIG DEEPER 16 1 • Introduction to <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> Access for free at openstax.org
 
-of psychology and therefore influencing its development. They also suffered from the attitudes of White male psychologists who were not immune to the nonscientific attitudes prevalent in the society in which they DIG DEEPER 16 1 • Introduction to Psychology Access for free at openstax.org
-
-2002). Nash was the subject of the 2001 movie A Beautiful Mind. Why did these people have these experiences? How does the human brain work? And what is the connection between the brain’s internal processes and people’s external behaviors? This textbook will introduce you to various ways that the field of psychology has explored these questions. 1.1 What Is Psychology? LEARNING OBJECTIVES By the end of this section, you will be able to: • Define psychology • Understand the merits of an education in psychology What is creativity? What are prejudice and discrimination? What is consciousness? The field of psychology explores questions like these. Psychology refers to the scientific study of the mind and behavior. Psychologists use the scientific method to acquire knowledge. To apply the scientific method, a researcher with a question about how or why something happens will propose a tentative explanation, called a hypothesis, to explain the phenomenon. A hypothesis should fit into the context of a scientific theory, which is a broad explanation or group of explanations for some aspect of the natural world that is consistently supported by evidence over time. A theory is the best understanding we have of that part of the natural world. The researcher then makes observations or carries out an experiment to test the validity of the hypothesis. Those results are then published or presented at research conferences so that others can replicate or build on the results. Scientists test that which is perceivable and measurable. For example, the hypothesis that a bird sings because it is happy is not a hypothesis that can be tested since we have no way to measure the happiness of a bird. We must ask a different question, perhaps about the brain state of the bird, since this can be measured. However, we can ask individuals about whether they sing because they are happy since they are able to tell us. Thus, psychological science is empirical, based on measurable data. In general, science deals only with matter and energy, that is, those things that can be measured, and it cannot arrive at knowledge about values and morality. This is one reason why our scientific understanding of the mind is so limited, since thoughts, at least as we experience them, are neither matter nor energy. The scientific method is also a form of empiricism. An empirical method for acquiring knowledge is one based on observation,
+2002). Nash was the subject of the 2001 movie A Beautiful Mind. Why did these people have these experiences? How does the human brain work? And what is the connection between the brain’s internal processes and people’s external behaviors? This textbook will introduce you to various ways that the field of <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> has explored these questions. 1.1 What Is <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark>? LEARNING OBJECTIVES By the end of this section, you will be able to: • Define <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> • Understand the merits of an education in <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> What is creativity? What are prejudice and discrimination? What is consciousness? The field of <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> explores questions like these. <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> refers to the scientific study of the mind and behavior. Psychologists use the scientific method to acquire knowledge. To apply the scientific method, a researcher with a question about how or why something happens will propose a tentative explanation, called a hypothesis, to explain the phenomenon. A hypothesis should fit into the context of a scientific theory, which is a broad explanation or group of explanations for some aspect of the natural world that is consistently supported by evidence over time. A theory is the best understanding we have of that part of the natural world. The researcher then makes observations or carries out an experiment to test the validity of the hypothesis. Those results are then published or presented at research conferences so that others can replicate or build on the results. Scientists test that which is perceivable and measurable. For example, the hypothesis that a bird sings because it is happy is not a hypothesis that can be tested since we have no way to measure the happiness of a bird. We must ask a different question, perhaps about the brain state of the bird, since this can be measured. However, we can ask individuals about whether they sing because they are happy since they are able to tell us. Thus, psychological science is empirical, based on measurable data. In general, science deals only with matter and energy, that is, those things that can be measured, and it cannot arrive at knowledge about values and morality. This is one reason why our scientific understanding of the mind is so limited, since thoughts, at least as we experience them, are neither matter nor energy. The scientific method is also a form of empiricism. An empirical method for acquiring knowledge is one based on observation,
 
 the form of men holding biases against women, but anyone can show sexism toward their own or the other sex. Like racism, sexism may be subtle and difficult to detect. Common forms of sexism in modern society include gender role expectations, such as expecting women to be the caretakers of the household. Sexism also includes people’s expectations for how members of a gender group should behave. For example, women are expected to be friendly, passive, and nurturing, and when women behave in an unfriendly, assertive, or neglectful manner they often are disliked for violating their gender role (Rudman, 1998). Research by Laurie Rudman (1998) finds that when female job applicants self-promote, they are likely to be viewed as competent, but they may be disliked and are less likely to be hired because they violated gender expectations for modesty. In this way, women are sometimes blamed for wage and employment inequality, but they would be viewed negatively for trying to overcome them, a phenomenon sometimes referred to as the double bind. Sexism can exist on a societal level such as in hiring, employment opportunities, and education. Women are less likely to be hired or promoted in male-dominated professions such as engineering, aviation, and construction (Figure 12.22) (Blau, Ferber, & Winkler, 2010; Ceci & Williams, 2011). Have you ever experienced or witnessed sexism? Think about your family members’ jobs or careers. Why do you think there are differences in the jobs women and men have, such as more women nurses but more male surgeons (Betz, 2008)? 12.5 • Prejudice and Discrimination 425
 
-Bartels, J. M., Milovich, M. M., & Moussier, S. (2016). Coverage of the Stanford prison experiment in introductory psychology courses: A survey of introductory psychology instructors. Teaching of Psychology, 43(2), 136–141. Batson, C. D. (1991). The altruism question: Toward a social-psychological answer. Erlbaum. Berkowitz, A. D. (2004). The social norms approach: Theory, research and annotated bibliography. http://www.alanberkowitz.com/articles/social_norms.pdf. Berkowitz, L. (1993). Aggression: Its causes, consequences, and control. McGraw-Hill. Betz, N. E. (2008). Women’s career development. In F. Denmark & M. Paludi (Eds.), Psychology of women: Handbook of issues and theories (2nd ed., pp. 717–752). Praeger. Blau, F. D., Ferber, M. A., & Winkler, A. E. (2010). The economics of women, men, and work (6th ed.). Prentice Hall. Bond, C. F., & Titus, L. J. (1983). Social facilitation: A meta-analysis of 241 studies. Psychological Bulletin, 94, 265–292. Bond, R., & Smith, P. B. (1996). Culture and conformity: A meta-analysis of studies using Asch’s (1952b, 1956) line judgment task. Psychological Bulletin, 119(1), 111–137. Bowen, L. (2011). Bullying may contribute to lower test scores. Monitor on Psychology, 42(9), 19. Brown, R. (2010). Prejudice: Its social psychology (2nd ed.). Wiley-Blackwell. Burger, J. (2009). Replicating Milgram: Would people still obey today? American Psychologist, 64, 1–11. https://www.ncbi.nlm.nih.gov/pubmed/19209958 Buss, D. M. (2004). Evolutionary psychology: The new science of the mind (2nd ed.). Allyn and Bacon. Buss, D. M. (1989). Sex differences in human mate preferences: Evolutionary hypotheses tested in 37 cultures. Behavioral and Brain Sciences, 12, 1–49. Carnahan, T., & McFarland, S. (2007). Revisiting the Stanford Prison Experiment: Could participant self- selection have led to the cruelty? Personality and Social Psychology Bulletin, 33(5), 603–614. Ceci, S. J., & Williams, W. M. (2011). Understanding current causes of women’s underrepresentation in science. Proceedings of the National Academy of Sciences, 108, 3157–3162. Chang, E., Kannoth, S., Levy, S., Wang, S., Lee, J., & Levy, B. (2020). Global reach of ageism on older persons' health: A systematic review. PLoS ONE, 15, 1–24. Choi, I., & Nisbett R. E. (1998). Situati
+Bartels, J. M., Milovich, M. M., & Moussier, S. (2016). Coverage of the Stanford prison experiment in introductory <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> courses: A survey of introductory <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> instructors. Teaching of <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark>, 43(2), 136–141. Batson, C. D. (1991). The altruism question: Toward a social-psychological answer. Erlbaum. Berkowitz, A. D. (2004). The social norms approach: Theory, research and annotated bibliography. http://www.alanberkowitz.com/articles/social_norms.pdf. Berkowitz, L. (1993). Aggression: Its causes, consequences, and control. McGraw-Hill. Betz, N. E. (2008). Women’s career development. In F. Denmark & M. Paludi (Eds.), <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> of women: Handbook of issues and theories (2nd ed., pp. 717–752). Praeger. Blau, F. D., Ferber, M. A., & Winkler, A. E. (2010). The economics of women, men, and work (6th ed.). Prentice Hall. Bond, C. F., & Titus, L. J. (1983). Social facilitation: A meta-analysis of 241 studies. Psychological Bulletin, 94, 265–292. Bond, R., & Smith, P. B. (1996). Culture and conformity: A meta-analysis of studies using Asch’s (1952b, 1956) line judgment task. Psychological Bulletin, 119(1), 111–137. Bowen, L. (2011). Bullying may contribute to lower test scores. Monitor on <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark>, 42(9), 19. Brown, R. (2010). Prejudice: Its social <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> (2nd ed.). Wiley-Blackwell. Burger, J. (2009). Replicating Milgram: Would people still obey today? American Psychologist, 64, 1–11. https://www.ncbi.nlm.nih.gov/pubmed/19209958 Buss, D. M. (2004). Evolutionary <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark>: The new science of the mind (2nd ed.). Allyn and Bacon. Buss, D. M. (1989). Sex differences in human mate preferences: Evolutionary hypotheses tested in 37 cultures. Behavioral and Brain Sciences, 12, 1–49. Carnahan, T., & McFarland, S. (2007). Revisiting the Stanford Prison Experiment: Could participant self- selection have led to the cruelty? Personality and Social <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> Bulletin, 33(5), 603–614. Ceci, S. J., & Williams, W. M. (2011). Understanding current causes of women’s underrepresentation in science. Proceedings of the National Academy of Sciences, 108, 3157–3162. Chang, E., Kannoth, S., Levy, S., Wang, S., Lee, J., & Levy, B. (2020). Global reach of ageism on older persons' health: A systematic review. PLoS ONE, 15, 1–24. Choi, I., & Nisbett R. E. (1998). Situati  <!-- HIGHLIGHTING HERE ONLY -->
+                </div>
+            </div>
+            
+            <div class="stats">
+                <div class="stat-item">
+                    <div class="stat-label">Sections Used</div>
+                    <div class="stat-value">10</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Pages Referenced</div>
+                    <div class="stat-value">11</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Keywords Found</div>
+                    <div class="stat-value">2</div>
+                </div>
+            </div>
+            
+            <div class="footer">
+                Generated from Psychology 2e Textbook • Question 34 • 2026-02-27
             </div>
         </div>
         
-        <div class="stats">
-            <div class="stat-item">
-                <div class="stat-label">Sections Used</div>
-                <div class="stat-value">10</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-label">Pages Referenced</div>
-                <div class="stat-value">11</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-label">Keywords Found</div>
-                <div class="stat-value">0</div>
-            </div>
-        </div>
-        
-        <div class="footer">
-            Generated from Psychology 2e Textbook • Question 34 • 2026-02-26
-        </div>
-    </div>
-    
-    <!-- Font Awesome for icons -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
-</body>
-</html>
+        <!-- Font Awesome for icons -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
+    </body>
+    </html>

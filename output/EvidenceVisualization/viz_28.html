@@ -1,304 +1,292 @@
 <!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Evidence Visualization - Question 28</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            padding: 20px;
-        }
-        
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            overflow: hidden;
-        }
-        
-        .header {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            padding: 30px;
-        }
-        
-        .header h1 {
-            font-size: 24px;
-            margin-bottom: 10px;
-        }
-        
-        .header .question {
-            font-size: 18px;
-            opacity: 0.9;
-            background: rgba(255, 255, 255, 0.2);
-            padding: 15px;
-            border-radius: 10px;
-            margin-top: 10px;
-            line-height: 1.5;
-        }
-        
-        .keywords-bar {
-            background: #f0f0f0;
-            padding: 15px 30px;
-            border-bottom: 1px solid #e0e0e0;
-        }
-        
-        .keywords-title {
-            font-size: 14px;
-            color: #666;
-            margin-bottom: 10px;
-            font-weight: 600;
-        }
-        
-        .keyword-badge {
-            display: inline-block;
-            background: #ffeb3b;
-            color: #333;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 13px;
-            margin: 0 5px 5px 0;
-            font-weight: 500;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-        
-        .answer-section {
-            padding: 30px;
-            background: #f8f9fa;
-            border-bottom: 1px solid #e0e0e0;
-        }
-        
-        .answer-section h3 {
-            color: #333;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .answer-section h3 i {
-            color: #667eea;
-        }
-        
-        .answer-content {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            line-height: 1.8;
-            color: #444;
-            border-left: 4px solid #667eea;
-        }
-        
-        .answer-content mark {
-            background-color: #ffeb3b;
-            padding: 2px 0;
-            font-weight: 500;
-        }
-        
-        .evidence-section {
-            padding: 30px;
-        }
-        
-        .evidence-section h3 {
-            color: #333;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .evidence-section h3 i {
-            color: #667eea;
-        }
-        
-        .evidence-card {
-            background: #f8f9fa;
-            border-radius: 10px;
-            padding: 20px;
-            margin-bottom: 20px;
-            border-left: 4px solid #667eea;
-        }
-        
-        .evidence-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-        
-        .section-name {
-            font-weight: 600;
-            color: #333;
-            background: #e8eaf6;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 14px;
-        }
-        
-        .page-number {
-            color: #666;
-            background: white;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 14px;
-            border: 1px solid #e0e0e0;
-        }
-        
-        .relevance {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 14px;
-        }
-        
-        .term-badge {
-            display: inline-block;
-            background: #ffeb3b;
-            color: #333;
-            padding: 3px 10px;
-            border-radius: 15px;
-            font-size: 12px;
-            margin: 0 5px 5px 0;
-            font-weight: 500;
-        }
-        
-        .evidence-text {
-            background: white;
-            padding: 15px;
-            border-radius: 8px;
-            color: #555;
-            line-height: 1.6;
-            margin: 15px 0 0 0;
-            border: 1px solid #e0e0e0;
-        }
-        
-        .evidence-text mark {
-            background-color: #ffeb3b;
-            padding: 2px 0;
-            font-weight: 500;
-        }
-        
-        .highlighted-context {
-            padding: 30px;
-            background: #f8f9fa;
-            border-top: 1px solid #e0e0e0;
-            border-bottom: 1px solid #e0e0e0;
-        }
-        
-        .highlighted-context h3 {
-            color: #333;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .context-box {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            max-height: 400px;
-            overflow-y: auto;
-            border: 1px solid #e0e0e0;
-            line-height: 1.8;
-            font-size: 14px;
-        }
-        
-        .context-box mark {
-            background-color: #ffeb3b;
-            padding: 2px 0;
-            font-weight: 500;
-        }
-        
-        .stats {
-            display: flex;
-            gap: 15px;
-            padding: 20px 30px;
-            background: white;
-            flex-wrap: wrap;
-        }
-        
-        .stat-item {
-            background: #f8f9fa;
-            padding: 10px 20px;
-            border-radius: 10px;
-            flex: 1;
-            min-width: 120px;
-            text-align: center;
-            border: 1px solid #e0e0e0;
-        }
-        
-        .stat-label {
-            font-size: 12px;
-            color: #666;
-            margin-bottom: 5px;
-        }
-        
-        .stat-value {
-            font-size: 24px;
-            font-weight: 600;
-            color: #667eea;
-        }
-        
-        .footer {
-            padding: 20px 30px;
-            background: #f0f0f0;
-            text-align: center;
-            color: #666;
-            font-size: 14px;
-            border-top: 1px solid #e0e0e0;
-        }
-        
-        @media (max-width: 768px) {
-            .header {
+    <html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Evidence Visualization - Question 28</title>
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+            
+            body {
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                min-height: 100vh;
                 padding: 20px;
             }
             
-            .answer-section,
-            .evidence-section,
-            .highlighted-context {
+            .container {
+                max-width: 1000px;
+                margin: 0 auto;
+                background: white;
+                border-radius: 20px;
+                box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+                overflow: hidden;
+            }
+            
+            .header {
+                background: linear-gradient(135deg, #667eea, #764ba2);
+                color: white;
+                padding: 30px;
+            }
+            
+            .header h1 {
+                font-size: 24px;
+                margin-bottom: 10px;
+            }
+            
+            .header .question {
+                font-size: 18px;
+                opacity: 0.9;
+                background: rgba(255, 255, 255, 0.2);
+                padding: 15px;
+                border-radius: 10px;
+                margin-top: 10px;
+                line-height: 1.5;
+            }
+            
+            .keywords-bar {
+                background: #f0f0f0;
+                padding: 15px 30px;
+                border-bottom: 1px solid #e0e0e0;
+            }
+            
+            .keywords-title {
+                font-size: 14px;
+                color: #666;
+                margin-bottom: 10px;
+                font-weight: 600;
+            }
+            
+            .keyword-badge {
+                display: inline-block;
+                background: #ffeb3b;
+                color: #333;
+                padding: 5px 12px;
+                border-radius: 20px;
+                font-size: 13px;
+                margin: 0 5px 5px 0;
+                font-weight: 500;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            }
+            
+            .answer-section {
+                padding: 30px;
+                background: #f8f9fa;
+                border-bottom: 1px solid #e0e0e0;
+            }
+            
+            .answer-section h3 {
+                color: #333;
+                margin-bottom: 15px;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+            
+            .answer-section h3 i {
+                color: #667eea;
+            }
+            
+            .answer-content {
+                background: white;
                 padding: 20px;
+                border-radius: 10px;
+                line-height: 1.8;
+                color: #444;
+                border-left: 4px solid #667eea;
+            }
+            
+            /* NO mark styling for answer - it stays plain */
+            
+            .evidence-section {
+                padding: 30px;
+            }
+            
+            .evidence-section h3 {
+                color: #333;
+                margin-bottom: 20px;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+            
+            .evidence-section h3 i {
+                color: #667eea;
+            }
+            
+            .evidence-card {
+                background: #f8f9fa;
+                border-radius: 10px;
+                padding: 20px;
+                margin-bottom: 20px;
+                border-left: 4px solid #667eea;
             }
             
             .evidence-header {
-                flex-direction: column;
-                align-items: flex-start;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 15px;
+                flex-wrap: wrap;
+                gap: 10px;
             }
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <div class="header">
-            <h1>📚 Evidence Visualization</h1>
-            <div class="question">
-                <strong>Question 28:</strong> 
+            
+            .section-name {
+                font-weight: 600;
+                color: #333;
+                background: #e8eaf6;
+                padding: 5px 12px;
+                border-radius: 20px;
+                font-size: 14px;
+            }
+            
+            .page-number {
+                color: #666;
+                background: white;
+                padding: 5px 12px;
+                border-radius: 20px;
+                font-size: 14px;
+                border: 1px solid #e0e0e0;
+            }
+            
+            .term-badge {
+                display: inline-block;
+                background: #ffeb3b;
+                color: #333;
+                padding: 3px 10px;
+                border-radius: 15px;
+                font-size: 12px;
+                margin: 0 5px 5px 0;
+                font-weight: 500;
+            }
+            
+            .evidence-text {
+                background: white;
+                padding: 15px;
+                border-radius: 8px;
+                color: #555;
+                line-height: 1.6;
+                margin: 15px 0 0 0;
+                border: 1px solid #e0e0e0;
+            }
+            
+            .evidence-text mark {
+                background-color: #ffeb3b;
+                padding: 2px 0;
+                font-weight: 500;
+            }
+            
+            .highlighted-context {
+                padding: 30px;
+                background: #f8f9fa;
+                border-top: 1px solid #e0e0e0;
+                border-bottom: 1px solid #e0e0e0;
+            }
+            
+            .highlighted-context h3 {
+                color: #333;
+                margin-bottom: 15px;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+            
+            .context-box {
+                background: white;
+                padding: 20px;
+                border-radius: 10px;
+                max-height: 400px;
+                overflow-y: auto;
+                border: 1px solid #e0e0e0;
+                line-height: 1.8;
+                font-size: 14px;
+            }
+            
+            .context-box mark {
+                background-color: #ffeb3b;
+                padding: 2px 0;
+                font-weight: 500;
+            }
+            
+            .stats {
+                display: flex;
+                gap: 15px;
+                padding: 20px 30px;
+                background: white;
+                flex-wrap: wrap;
+            }
+            
+            .stat-item {
+                background: #f8f9fa;
+                padding: 10px 20px;
+                border-radius: 10px;
+                flex: 1;
+                min-width: 120px;
+                text-align: center;
+                border: 1px solid #e0e0e0;
+            }
+            
+            .stat-label {
+                font-size: 12px;
+                color: #666;
+                margin-bottom: 5px;
+            }
+            
+            .stat-value {
+                font-size: 24px;
+                font-weight: 600;
+                color: #667eea;
+            }
+            
+            .footer {
+                padding: 20px 30px;
+                background: #f0f0f0;
+                text-align: center;
+                color: #666;
+                font-size: 14px;
+                border-top: 1px solid #e0e0e0;
+            }
+            
+            @media (max-width: 768px) {
+                .header {
+                    padding: 20px;
+                }
+                
+                .answer-section,
+                .evidence-section,
+                .highlighted-context {
+                    padding: 20px;
+                }
+                
+                .evidence-header {
+                    flex-direction: column;
+                    align-items: flex-start;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="header">
+                <h1>📚 Evidence Visualization</h1>
+                <div class="question">
+                    <strong>Question 28:</strong> What is the role of neurotransmitters in psychology?
+                </div>
             </div>
-        </div>
-        
-        <div class="keywords-bar">
-            <div class="keywords-title">🔑 Extracted Keywords:</div>
-
-        </div>
-        
-        <div class="answer-section">
-            <h3><i class="fas fa-robot"></i> Generated Answer</h3>
-            <div class="answer-content">
-                According to the provided textbook context, neurotransmitters play a crucial role in psychology as they are involved in various functions associated with behavior. Different neurotransmitters are associated with different functions, such as:
+            
+            <div class="keywords-bar">
+                <div class="keywords-title">🔑 Extracted Keywords:</div>
+    <span class="keyword-badge">role</span><span class="keyword-badge">neurotransmitters</span><span class="keyword-badge">psychology</span>
+            </div>
+            
+            <div class="answer-section">
+                <h3><i class="fas fa-robot"></i> Generated Answer</h3>
+                <div class="answer-content">
+                    According to the provided textbook context, neurotransmitters play a crucial role in psychology as they are involved in various functions associated with behavior. Different neurotransmitters are associated with different functions, such as:
 
 * Acetylcholine: muscle action, memory, increased arousal, and enhanced cognition
 * Beta-endorphin: pain, pleasure, decreased anxiety, and decreased tension
@@ -308,135 +296,111 @@
 * Norepinephrine: heart, intestines, alertness, increased arousal, and suppressed appetite
 * Serotonin: mood, sleep, modulated mood, and suppressed appetite
 
-Imbalances in one or more neurotransmitter systems are associated with psychological disorders such as depression and schizophrenia. Psychotropic medications can help improve the symptoms associated with these disorders by restoring neurotransmitter balance.
+Imbalances in one or more neurotransmitter systems are associated with psychological disorders such as depression and schizophrenia. Psychotropic medications can help improve the symptoms associated with these disorders by restoring neurotransmitter balance.  <!-- NO HIGHLIGHTING HERE -->
+                </div>
             </div>
-        </div>
-        
-        <div class="evidence-section">
-            <h3><i class="fas fa-book"></i> Evidence by Section</h3>
-
+            
+            <div class="evidence-section">
+                <h3><i class="fas fa-book"></i> Evidence by Section</h3>
+    
             <div class="evidence-card">
                 <div class="evidence-header">
                     <span class="section-name">📖 10.21 This figure illustrates the major assertions of the James-Lange</span>
                     <span class="page-number">📄 Page 90</span>
-                    <span class="relevance">⭐ Relevance: 0.7</span>
-                </div>
-                <div>
-
                 </div>
                 <div class="evidence-text">
-                    This section discusses 10.21 this figure illustrates the major assertions of the james-lange. The content here is relevant to your question about ...
+                    <mark style="background-color: #ffeb3b; font-weight: bold;">neurotransmitters</mark> and Drugs There are several different types of <mark style="background-color: #ffeb3b; font-weight: bold;">neurotransmitters</mark> released by different neurons, and we can speak in broad terms about the kinds of functions associated with different <mark style="background-color: #ffeb3b; font-weight: bold;">neurotransmitters</mark> (Table 3.1). Much of what psychologists know about the functions of neurotransmit  <!-- HIGHLIGHTING HERE ONLY -->
                 </div>
             </div>
-
+    
             <div class="evidence-card">
                 <div class="evidence-header">
                     <span class="section-name">📖 15.16 Many medications designed to treat mood disorders work by altering neurotransmitter activity in the
 neural synapse</span>
                     <span class="page-number">📄 Page 91</span>
-                    <span class="relevance">⭐ Relevance: 0.75</span>
-                </div>
-                <div>
-
                 </div>
                 <div class="evidence-text">
-                    This section discusses 15.16 many medications designed to treat mood disorders work by altering neurotransmitter activity in the
-neural synapse. The content here is relevant to your question about ...
+                    <mark style="background-color: #ffeb3b; font-weight: bold;">neurotransmitters</mark> and Drugs There are several different types of <mark style="background-color: #ffeb3b; font-weight: bold;">neurotransmitters</mark> released by different neurons, and we can speak in broad terms about the kinds of functions associated with different <mark style="background-color: #ffeb3b; font-weight: bold;">neurotransmitters</mark> (Table 3.1). Much of what psychologists know about the functions of neurotransmit  <!-- HIGHLIGHTING HERE ONLY -->
                 </div>
             </div>
-
+    
             <div class="evidence-card">
                 <div class="evidence-header">
                     <span class="section-name">📖 3.1
 Psychoactive drugs can act as agonists or antagonists for a given neurotransmitter system</span>
                     <span class="page-number">📄 Page 92</span>
-                    <span class="relevance">⭐ Relevance: 0.8</span>
-                </div>
-                <div>
-
                 </div>
                 <div class="evidence-text">
-                    This section discusses 3.1
-psychoactive drugs can act as agonists or antagonists for a given neurotransmitter system. The content here is relevant to your question about ...
+                    <mark style="background-color: #ffeb3b; font-weight: bold;">neurotransmitters</mark> and Drugs There are several different types of <mark style="background-color: #ffeb3b; font-weight: bold;">neurotransmitters</mark> released by different neurons, and we can speak in broad terms about the kinds of functions associated with different <mark style="background-color: #ffeb3b; font-weight: bold;">neurotransmitters</mark> (Table 3.1). Much of what psychologists know about the functions of neurotransmit  <!-- HIGHLIGHTING HERE ONLY -->
                 </div>
             </div>
-
+    
             <div class="evidence-card">
                 <div class="evidence-header">
                     <span class="section-name">📖 3.1 Human Genetics
 Genes are sequences of DNA that code for a particular trait</span>
                     <span class="page-number">📄 Page 94</span>
-                    <span class="relevance">⭐ Relevance: 0.85</span>
-                </div>
-                <div>
-
                 </div>
                 <div class="evidence-text">
-                    This section discusses 3.1 human genetics
-genes are sequences of dna that code for a particular trait. The content here is relevant to your question about ...
+                    <mark style="background-color: #ffeb3b; font-weight: bold;">neurotransmitters</mark> and Drugs There are several different types of <mark style="background-color: #ffeb3b; font-weight: bold;">neurotransmitters</mark> released by different neurons, and we can speak in broad terms about the kinds of functions associated with different <mark style="background-color: #ffeb3b; font-weight: bold;">neurotransmitters</mark> (Table 3.1). Much of what psychologists know about the functions of neurotransmit  <!-- HIGHLIGHTING HERE ONLY -->
                 </div>
             </div>
-
+    
             <div class="evidence-card">
                 <div class="evidence-header">
                     <span class="section-name">📖 3.12 Reuptake involves moving a neurotransmitter from the synapse back into the axon terminal from
 which it was released</span>
                     <span class="page-number">📄 Page 95</span>
-                    <span class="relevance">⭐ Relevance: 0.9</span>
-                </div>
-                <div>
-
                 </div>
                 <div class="evidence-text">
-                    This section discusses 3.12 reuptake involves moving a neurotransmitter from the synapse back into the axon terminal from
-which it was released. The content here is relevant to your question about ...
+                    <mark style="background-color: #ffeb3b; font-weight: bold;">neurotransmitters</mark> and Drugs There are several different types of <mark style="background-color: #ffeb3b; font-weight: bold;">neurotransmitters</mark> released by different neurons, and we can speak in broad terms about the kinds of functions associated with different <mark style="background-color: #ffeb3b; font-weight: bold;">neurotransmitters</mark> (Table 3.1). Much of what psychologists know about the functions of neurotransmit  <!-- HIGHLIGHTING HERE ONLY -->
                 </div>
             </div>
+    
+            </div>
+            
+            <div class="highlighted-context">
+                <h3><i class="fas fa-highlighter"></i> Highlighted Context</h3>
+                <div class="context-box">
+                    <mark style="background-color: #ffeb3b; font-weight: bold;">neurotransmitters</mark> and Drugs There are several different types of <mark style="background-color: #ffeb3b; font-weight: bold;">neurotransmitters</mark> released by different neurons, and we can speak in broad terms about the kinds of functions associated with different <mark style="background-color: #ffeb3b; font-weight: bold;">neurotransmitters</mark> (Table 3.1). Much of what psychologists know about the functions of <mark style="background-color: #ffeb3b; font-weight: bold;">neurotransmitters</mark> comes from research on the effects of drugs in psychological disorders. Psychologists who take a biological perspective and focus on the physiological causes of behavior assert that psychological disorders like depression and schizophrenia are associated with imbalances in one or more neurotransmitter systems. In this perspective, psychotropic medications can help improve the symptoms associated with these disorders. Psychotropic medications are drugs that treat psychiatric symptoms by restoring neurotransmitter balance. Major <mark style="background-color: #ffeb3b; font-weight: bold;">neurotransmitters</mark> and How They Affect Behavior Neurotransmitter Involved in Potential Effect on Behavior Acetylcholine Muscle action, memory Increased arousal, enhanced cognition Beta-endorphin Pain, pleasure Decreased anxiety, decreased tension Dopamine Mood, sleep, learning Increased pleasure, suppressed appetite Gamma-aminobutyric acid (GABA) Brain function, sleep Decreased anxiety, decreased tension Glutamate Memory, learning Increased learning, enhanced memory Norepinephrine Heart, intestines, alertness Increased arousal, suppressed appetite Serotonin Mood, sleep Modulated mood, suppressed appetite TABLE 3.1 Psychoactive drugs can act as agonists or antagonists for a given neurotransmitter system. Agonists are chemicals that mimic a neurotransmitter at the receptor site. An antagonist, on the other hand, blocks or impedes the normal activity of a neurotransmitter at the receptor. Agonists and antagonists represent drugs that are prescribed to correct the specific neurotransmitter imbalances underlying a person’s condition. For example, Parkinson's disease, a progressive nervous system disorder, is associated with low levels of dopamine. Therefore, a common treatment strategy for Parkinson's disease involves using dopamine agonists, which mimic the effects of dopamine by binding to dopamine receptors. Certain symptoms of schizophrenia are associated with overactive dopamine neurotransmission. The antipsychotics used to treat these symptoms are antagonists for dopamine—they block dopamine’s effects by binding its receptors without activating them. Thus, they prevent dopamine released by one neuron from signaling information to adjacent neurons. In contrast to agonists and antagonists, which both operate by binding to receptor sites, reuptake inhibitors prevent unused <mark style="background-color: #ffeb3b; font-weight: bold;">neurotransmitters</mark> from being transported back to the neuron. This allows <mark style="background-color: #ffeb3b; font-weight: bold;">neurotransmitters</mark> to remain active in the synaptic cleft for longer durations, increasing their effectiveness. Depression, which has been consistently linked with reduced serotonin levels, is commonly treated with selective serotonin reuptake inhibitors (SSRIs). By preventing reuptake, SSRIs strengthen the effect of serotonin, giving it more time
 
-        </div>
-        
-        <div class="highlighted-context">
-            <h3><i class="fas fa-highlighter"></i> Highlighted Context</h3>
-            <div class="context-box">
-                Neurotransmitters and Drugs There are several different types of neurotransmitters released by different neurons, and we can speak in broad terms about the kinds of functions associated with different neurotransmitters (Table 3.1). Much of what psychologists know about the functions of neurotransmitters comes from research on the effects of drugs in psychological disorders. Psychologists who take a biological perspective and focus on the physiological causes of behavior assert that psychological disorders like depression and schizophrenia are associated with imbalances in one or more neurotransmitter systems. In this perspective, psychotropic medications can help improve the symptoms associated with these disorders. Psychotropic medications are drugs that treat psychiatric symptoms by restoring neurotransmitter balance. Major Neurotransmitters and How They Affect Behavior Neurotransmitter Involved in Potential Effect on Behavior Acetylcholine Muscle action, memory Increased arousal, enhanced cognition Beta-endorphin Pain, pleasure Decreased anxiety, decreased tension Dopamine Mood, sleep, learning Increased pleasure, suppressed appetite Gamma-aminobutyric acid (GABA) Brain function, sleep Decreased anxiety, decreased tension Glutamate Memory, learning Increased learning, enhanced memory Norepinephrine Heart, intestines, alertness Increased arousal, suppressed appetite Serotonin Mood, sleep Modulated mood, suppressed appetite TABLE 3.1 Psychoactive drugs can act as agonists or antagonists for a given neurotransmitter system. Agonists are chemicals that mimic a neurotransmitter at the receptor site. An antagonist, on the other hand, blocks or impedes the normal activity of a neurotransmitter at the receptor. Agonists and antagonists represent drugs that are prescribed to correct the specific neurotransmitter imbalances underlying a person’s condition. For example, Parkinson's disease, a progressive nervous system disorder, is associated with low levels of dopamine. Therefore, a common treatment strategy for Parkinson's disease involves using dopamine agonists, which mimic the effects of dopamine by binding to dopamine receptors. Certain symptoms of schizophrenia are associated with overactive dopamine neurotransmission. The antipsychotics used to treat these symptoms are antagonists for dopamine—they block dopamine’s effects by binding its receptors without activating them. Thus, they prevent dopamine released by one neuron from signaling information to adjacent neurons. In contrast to agonists and antagonists, which both operate by binding to receptor sites, reuptake inhibitors prevent unused neurotransmitters from being transported back to the neuron. This allows neurotransmitters to remain active in the synaptic cleft for longer durations, increasing their effectiveness. Depression, which has been consistently linked with reduced serotonin levels, is commonly treated with selective serotonin reuptake inhibitors (SSRIs). By preventing reuptake, SSRIs strengthen the effect of serotonin, giving it more time
-
-Explain how drugs act as agonists or antagonists for a given neurotransmitter system Psychologists striving to understand the human mind may study the nervous system. Learning how the body's cells and organs function can help us understand the biological basis of human psychology. The nervous system is composed of two basic cell types: glial cells (also known as glia) and neurons. Glial cells are traditionally thought to play a supportive role to neurons, both physically and metabolically. Glial cells provide scaffolding on which the nervous system is built, help neurons line up closely with each other to allow neuronal communication, provide insulation to neurons, transport nutrients and waste products, and mediate immune responses. For years, researchers believed that there were many more glial cells than neurons; however, more recent work from Suzanna Herculano-Houzel's laboratory has called this long-standing assumption into question and has provided important evidence that there may be a nearly 1:1 ratio of glia cells to neurons. This is important because it suggests that human brains are more similar to other primate brains than previously thought (Azevedo et al, 2009; Herculano-Houzel, 2012; Herculano-Houzel, 2009). Neurons, on 78 3 • Biopsychology Access for free at openstax.org
+Explain how drugs act as agonists or antagonists for a given neurotransmitter system Psychologists striving to understand the human mind may study the nervous system. Learning how the body's cells and organs function can help us understand the biological basis of human <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark>. The nervous system is composed of two basic cell types: glial cells (also known as glia) and neurons. Glial cells are traditionally thought to play a supportive <mark style="background-color: #ffeb3b; font-weight: bold;">role</mark> to neurons, both physically and metabolically. Glial cells provide scaffolding on which the nervous system is built, help neurons line up closely with each other to allow neuronal communication, provide insulation to neurons, transport nutrients and waste products, and mediate immune responses. For years, researchers believed that there were many more glial cells than neurons; however, more recent work from Suzanna Herculano-Houzel's laboratory has called this long-standing assumption into question and has provided important evidence that there may be a nearly 1:1 ratio of glia cells to neurons. This is important because it suggests that human brains are more similar to other primate brains than previously thought (Azevedo et al, 2009; Herculano-Houzel, 2012; Herculano-Houzel, 2009). Neurons, on 78 3 • Bio<mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> Access for free at openstax.org
 
 FIGURE 15.16 Many medications designed to treat mood disorders work by altering neurotransmitter activity in the neural synapse. Depression is linked to abnormal activity in several regions of the brain (Fitzgerald, Laird, Maller, & Daskalakis, 2008) including those important in assessing the emotional significance of stimuli and experiencing emotions (amygdala), and in regulating and controlling emotions (like the prefrontal cortex, or PFC) (LeMoult, Castonguay, Joormann, & McAleavey, 2013). People with depression show elevated amygdala activity (Drevets, Bogers, & Raichle, 2002), especially when presented with negative emotional stimuli, such as photos of sad faces (Figure 15.17) (Surguladze et al., 2005). Interestingly, heightened amygdala activation to negative emotional stimuli among depressed persons occurs even when stimuli are presented outside of conscious awareness (Victor, Furey, Fromm, Öhman, & Drevets, 2010), and it persists even after the negative emotional stimuli are no longer present (Siegle, Thompson, Carter, Steinhauer, & Thase, 2007). Additionally, depressed individuals exhibit less activation in the prefrontal, particularly on the left side (Davidson, Pizzagalli, & Nitschke, 2009). Because the PFC can dampen amygdala activation, thereby enabling one to suppress negative emotions (Phan et al., 2005), decreased activation in certain regions of the PFC may inhibit its ability to override negative emotions that might then lead to more negative mood states (Davidson et al., 2009). These findings suggest that people with depression are more prone to react to emotionally negative stimuli, yet have greater difficulty controlling these reactions. 15.7 • Mood and Related Disorders 565
 
-fatigue, loss of motor control, and sexual dysfunction. While some treatments may help to modify the course of the disease and manage certain symptoms, there is currently no known cure for multiple sclerosis. In healthy individuals, the neuronal signal moves rapidly down the axon to the terminal buttons, where synaptic vesicles release neurotransmitters into the synaptic cleft (Figure 3.9). The synaptic cleft is a very small space between two neurons and is an important site where communication between neurons occurs. Once neurotransmitters are released into the synaptic cleft, they travel across it and bind with corresponding receptors on the dendrite of an adjacent neuron. Receptors, proteins on the cell surface where neurotransmitters attach, vary in shape, with different shapes “matching” different neurotransmitters. How does a neurotransmitter “know” which receptor to bind to? The neurotransmitter and the receptor have 3.2 • Cells of the Nervous System 79
+fatigue, loss of motor control, and sexual dysfunction. While some treatments may help to modify the course of the disease and manage certain symptoms, there is currently no known cure for multiple sclerosis. In healthy individuals, the neuronal signal moves rapidly down the axon to the terminal buttons, where synaptic vesicles release <mark style="background-color: #ffeb3b; font-weight: bold;">neurotransmitters</mark> into the synaptic cleft (Figure 3.9). The synaptic cleft is a very small space between two neurons and is an important site where communication between neurons occurs. Once <mark style="background-color: #ffeb3b; font-weight: bold;">neurotransmitters</mark> are released into the synaptic cleft, they travel across it and bind with corresponding receptors on the dendrite of an adjacent neuron. Receptors, proteins on the cell surface where <mark style="background-color: #ffeb3b; font-weight: bold;">neurotransmitters</mark> attach, vary in shape, with different shapes “matching” different <mark style="background-color: #ffeb3b; font-weight: bold;">neurotransmitters</mark>. How does a neurotransmitter “know” which receptor to bind to? The neurotransmitter and the receptor have 3.2 • Cells of the Nervous System 79
 
-what is referred to as a lock-and-key relationship—specific neurotransmitters fit specific receptors similar to how a key fits a lock. The neurotransmitter binds to any receptor that it fits. FIGURE 3.9 (a) The synaptic cleft is the space between the terminal button of one neuron and the dendrite of another neuron. (b) In this pseudo-colored image from a scanning electron microscope, a terminal button (green) has been opened to reveal the synaptic vesicles (orange and blue) inside. Each vesicle contains about 10,000 neurotransmitter molecules. (credit b: modification of work by Tina Carvalho, NIH-NIGMS; scale-bar data from Matt Russell) Neuronal Communication Now that we have learned about the basic structures of the neuron and the role that these structures play in neuronal communication, let’s take a closer look at the signal itself—how it moves through the neuron and then jumps to the next neuron, where the process is repeated. We begin at the neuronal membrane. The neuron exists in a fluid environment—it is surrounded by extracellular fluid and contains intracellular fluid (i.e., cytoplasm). The neuronal membrane keeps these two fluids separate—a critical role because the electrical signal that passes through the neuron depends on the intra- and extracellular fluids being electrically different. This difference in charge across the membrane, called the membrane potential, provides energy for the signal. The electrical charge of the fluids is caused by charged molecules (ions) dissolved in the fluid. The semipermeable nature of the neuronal membrane somewhat restricts the movement of these charged molecules, and, as a result, some of the charged particles tend to become more concentrated either inside or outside the cell. Between signals, the neuron membrane’s potential is held in a state of readiness, called the resting potential. Like a rubber band stretched out and waiting to spring into action, ions line up on either side of the cell membrane, ready to rush across the membrane when the neuron goes active and the membrane opens its gates. Ions in high-concentration areas are ready to move to low-concentration areas, and positive ions are ready to move to areas with a negative charge. In the resting state, sodium (Na+) is at higher concentrations outside the cell, so it will tend to move into the cell. Potassium (K+), on the other hand, is more concentrated inside the cell, and will tend to move out of the cell (Figure 3.10). In addition, the inside of the cell
+what is referred to as a lock-and-key relationship—specific <mark style="background-color: #ffeb3b; font-weight: bold;">neurotransmitters</mark> fit specific receptors similar to how a key fits a lock. The neurotransmitter binds to any receptor that it fits. FIGURE 3.9 (a) The synaptic cleft is the space between the terminal button of one neuron and the dendrite of another neuron. (b) In this pseudo-colored image from a scanning electron microscope, a terminal button (green) has been opened to reveal the synaptic vesicles (orange and blue) inside. Each vesicle contains about 10,000 neurotransmitter molecules. (credit b: modification of work by Tina Carvalho, NIH-NIGMS; scale-bar data from Matt Russell) Neuronal Communication Now that we have learned about the basic structures of the neuron and the <mark style="background-color: #ffeb3b; font-weight: bold;">role</mark> that these structures play in neuronal communication, let’s take a closer look at the signal itself—how it moves through the neuron and then jumps to the next neuron, where the process is repeated. We begin at the neuronal membrane. The neuron exists in a fluid environment—it is surrounded by extracellular fluid and contains intracellular fluid (i.e., cytoplasm). The neuronal membrane keeps these two fluids separate—a critical <mark style="background-color: #ffeb3b; font-weight: bold;">role</mark> because the electrical signal that passes through the neuron depends on the intra- and extracellular fluids being electrically different. This difference in charge across the membrane, called the membrane potential, provides energy for the signal. The electrical charge of the fluids is caused by charged molecules (ions) dissolved in the fluid. The semipermeable nature of the neuronal membrane somewhat restricts the movement of these charged molecules, and, as a result, some of the charged particles tend to become more concentrated either inside or outside the cell. Between signals, the neuron membrane’s potential is held in a state of readiness, called the resting potential. Like a rubber band stretched out and waiting to spring into action, ions line up on either side of the cell membrane, ready to rush across the membrane when the neuron goes active and the membrane opens its gates. Ions in high-concentration areas are ready to move to low-concentration areas, and positive ions are ready to move to areas with a negative charge. In the resting state, sodium (Na+) is at higher concentrations outside the cell, so it will tend to move into the cell. Potassium (K+), on the other hand, is more concentrated inside the cell, and will tend to move out of the cell (Figure 3.10). In addition, the inside of the cell
 
-response. The Biology of Emotions Earlier, you learned about the limbic system, which is the area of the brain involved in emotion and memory (Figure 10.22). The limbic system includes the hypothalamus, thalamus, amygdala, and the hippocampus. The hypothalamus plays a role in the activation of the sympathetic nervous system that is a part of any given emotional reaction. The thalamus serves as a sensory relay center whose neurons project to both the amygdala and the higher cortical regions for further processing. The amygdala plays a role in processing emotional information and sending that information on (Fossati, 2012).The hippocampus integrates emotional experience with cognition (Femenía, Gómez-Galán, Lindskog, & Magara, 2012). 10.4 • Emotion 347
+response. The Biology of Emotions Earlier, you learned about the limbic system, which is the area of the brain involved in emotion and memory (Figure 10.22). The limbic system includes the hypothalamus, thalamus, amygdala, and the hippocampus. The hypothalamus plays a <mark style="background-color: #ffeb3b; font-weight: bold;">role</mark> in the activation of the sympathetic nervous system that is a part of any given emotional reaction. The thalamus serves as a sensory relay center whose neurons project to both the amygdala and the higher cortical regions for further processing. The amygdala plays a <mark style="background-color: #ffeb3b; font-weight: bold;">role</mark> in processing emotional information and sending that information on (Fossati, 2012).The hippocampus integrates emotional experience with cognition (Femenía, Gómez-Galán, Lindskog, & Magara, 2012). 10.4 • Emotion 347
 
-specialized structures. The soma contains the cell nucleus, and the dendrites extend from the soma in tree-like branches. The axon is another major extension of the cell body; axons are often covered by a myelin sheath, which increases the speed of transmission of neural impulses. At the end of the axon are terminal buttons that contain synaptic vesicles filled with neurotransmitters. Neuronal communication is an electrochemical event. The dendrites contain receptors for neurotransmitters released by nearby neurons. If the signals received from other neurons are sufficiently strong, an action potential will travel down the length of the axon to the terminal buttons, resulting in the release of neurotransmitters into the synaptic cleft. Action potentials operate on the all-or-none principle and involve 102 3 • Summary Access for free at openstax.org
+specialized structures. The soma contains the cell nucleus, and the dendrites extend from the soma in tree-like branches. The axon is another major extension of the cell body; axons are often covered by a myelin sheath, which increases the speed of transmission of neural impulses. At the end of the axon are terminal buttons that contain synaptic vesicles filled with <mark style="background-color: #ffeb3b; font-weight: bold;">neurotransmitters</mark>. Neuronal communication is an electrochemical event. The dendrites contain receptors for <mark style="background-color: #ffeb3b; font-weight: bold;">neurotransmitters</mark> released by nearby neurons. If the signals received from other neurons are sufficiently strong, an action potential will travel down the length of the axon to the terminal buttons, resulting in the release of <mark style="background-color: #ffeb3b; font-weight: bold;">neurotransmitters</mark> into the synaptic cleft. Action potentials operate on the all-or-none principle and involve 102 3 • Summary Access for free at openstax.org
 
-psychoactive drugs have significant negative side effects. Furthermore, individuals vary dramatically in how they respond to the drugs. To improve chances for success, it is not uncommon for people receiving pharmacotherapy to undergo psychological and/or behavioral therapies as well. Some research suggests that combining drug therapy with other forms of therapy tends to be more effective than any one treatment alone (for one such example, see March et al., 2007). 3.3 Parts of the Nervous System LEARNING OBJECTIVES By the end of this section, you will be able to: • Describe the difference between the central and peripheral nervous systems • Explain the difference between the somatic and autonomic nervous systems • Differentiate between the sympathetic and parasympathetic divisions
+psychoactive drugs have significant negative side effects. Furthermore, individuals vary dramatically in how they respond to the drugs. To improve chances for success, it is not uncommon for people receiving pharmacotherapy to undergo psychological and/or behavioral therapies as well. Some research suggests that combining drug therapy with other forms of therapy tends to be more effective than any one treatment alone (for one such example, see March et al., 2007). 3.3 Parts of the Nervous System LEARNING OBJECTIVES By the end of this section, you will be able to: • Describe the difference between the central and peripheral nervous systems • Explain the difference between the somatic and autonomic nervous systems • Differentiate between the sympathetic and parasympathetic divisions  <!-- HIGHLIGHTING HERE ONLY -->
+                </div>
+            </div>
+            
+            <div class="stats">
+                <div class="stat-item">
+                    <div class="stat-label">Sections Used</div>
+                    <div class="stat-value">9</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Pages Referenced</div>
+                    <div class="stat-value">10</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Keywords Found</div>
+                    <div class="stat-value">3</div>
+                </div>
+            </div>
+            
+            <div class="footer">
+                Generated from Psychology 2e Textbook • Question 28 • 2026-02-27
             </div>
         </div>
         
-        <div class="stats">
-            <div class="stat-item">
-                <div class="stat-label">Sections Used</div>
-                <div class="stat-value">9</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-label">Pages Referenced</div>
-                <div class="stat-value">10</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-label">Keywords Found</div>
-                <div class="stat-value">0</div>
-            </div>
-        </div>
-        
-        <div class="footer">
-            Generated from Psychology 2e Textbook • Question 28 • 2026-02-26
-        </div>
-    </div>
-    
-    <!-- Font Awesome for icons -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
-</body>
-</html>
+        <!-- Font Awesome for icons -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
+    </body>
+    </html>

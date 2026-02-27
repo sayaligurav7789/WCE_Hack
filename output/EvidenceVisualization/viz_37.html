@@ -1,430 +1,394 @@
 <!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Evidence Visualization - Question 37</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            padding: 20px;
-        }
-        
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            overflow: hidden;
-        }
-        
-        .header {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            padding: 30px;
-        }
-        
-        .header h1 {
-            font-size: 24px;
-            margin-bottom: 10px;
-        }
-        
-        .header .question {
-            font-size: 18px;
-            opacity: 0.9;
-            background: rgba(255, 255, 255, 0.2);
-            padding: 15px;
-            border-radius: 10px;
-            margin-top: 10px;
-            line-height: 1.5;
-        }
-        
-        .keywords-bar {
-            background: #f0f0f0;
-            padding: 15px 30px;
-            border-bottom: 1px solid #e0e0e0;
-        }
-        
-        .keywords-title {
-            font-size: 14px;
-            color: #666;
-            margin-bottom: 10px;
-            font-weight: 600;
-        }
-        
-        .keyword-badge {
-            display: inline-block;
-            background: #ffeb3b;
-            color: #333;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 13px;
-            margin: 0 5px 5px 0;
-            font-weight: 500;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-        
-        .answer-section {
-            padding: 30px;
-            background: #f8f9fa;
-            border-bottom: 1px solid #e0e0e0;
-        }
-        
-        .answer-section h3 {
-            color: #333;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .answer-section h3 i {
-            color: #667eea;
-        }
-        
-        .answer-content {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            line-height: 1.8;
-            color: #444;
-            border-left: 4px solid #667eea;
-        }
-        
-        .answer-content mark {
-            background-color: #ffeb3b;
-            padding: 2px 0;
-            font-weight: 500;
-        }
-        
-        .evidence-section {
-            padding: 30px;
-        }
-        
-        .evidence-section h3 {
-            color: #333;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .evidence-section h3 i {
-            color: #667eea;
-        }
-        
-        .evidence-card {
-            background: #f8f9fa;
-            border-radius: 10px;
-            padding: 20px;
-            margin-bottom: 20px;
-            border-left: 4px solid #667eea;
-        }
-        
-        .evidence-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-        
-        .section-name {
-            font-weight: 600;
-            color: #333;
-            background: #e8eaf6;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 14px;
-        }
-        
-        .page-number {
-            color: #666;
-            background: white;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 14px;
-            border: 1px solid #e0e0e0;
-        }
-        
-        .relevance {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 14px;
-        }
-        
-        .term-badge {
-            display: inline-block;
-            background: #ffeb3b;
-            color: #333;
-            padding: 3px 10px;
-            border-radius: 15px;
-            font-size: 12px;
-            margin: 0 5px 5px 0;
-            font-weight: 500;
-        }
-        
-        .evidence-text {
-            background: white;
-            padding: 15px;
-            border-radius: 8px;
-            color: #555;
-            line-height: 1.6;
-            margin: 15px 0 0 0;
-            border: 1px solid #e0e0e0;
-        }
-        
-        .evidence-text mark {
-            background-color: #ffeb3b;
-            padding: 2px 0;
-            font-weight: 500;
-        }
-        
-        .highlighted-context {
-            padding: 30px;
-            background: #f8f9fa;
-            border-top: 1px solid #e0e0e0;
-            border-bottom: 1px solid #e0e0e0;
-        }
-        
-        .highlighted-context h3 {
-            color: #333;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .context-box {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            max-height: 400px;
-            overflow-y: auto;
-            border: 1px solid #e0e0e0;
-            line-height: 1.8;
-            font-size: 14px;
-        }
-        
-        .context-box mark {
-            background-color: #ffeb3b;
-            padding: 2px 0;
-            font-weight: 500;
-        }
-        
-        .stats {
-            display: flex;
-            gap: 15px;
-            padding: 20px 30px;
-            background: white;
-            flex-wrap: wrap;
-        }
-        
-        .stat-item {
-            background: #f8f9fa;
-            padding: 10px 20px;
-            border-radius: 10px;
-            flex: 1;
-            min-width: 120px;
-            text-align: center;
-            border: 1px solid #e0e0e0;
-        }
-        
-        .stat-label {
-            font-size: 12px;
-            color: #666;
-            margin-bottom: 5px;
-        }
-        
-        .stat-value {
-            font-size: 24px;
-            font-weight: 600;
-            color: #667eea;
-        }
-        
-        .footer {
-            padding: 20px 30px;
-            background: #f0f0f0;
-            text-align: center;
-            color: #666;
-            font-size: 14px;
-            border-top: 1px solid #e0e0e0;
-        }
-        
-        @media (max-width: 768px) {
-            .header {
+    <html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Evidence Visualization - Question 37</title>
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+            
+            body {
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                min-height: 100vh;
                 padding: 20px;
             }
             
-            .answer-section,
-            .evidence-section,
-            .highlighted-context {
+            .container {
+                max-width: 1000px;
+                margin: 0 auto;
+                background: white;
+                border-radius: 20px;
+                box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+                overflow: hidden;
+            }
+            
+            .header {
+                background: linear-gradient(135deg, #667eea, #764ba2);
+                color: white;
+                padding: 30px;
+            }
+            
+            .header h1 {
+                font-size: 24px;
+                margin-bottom: 10px;
+            }
+            
+            .header .question {
+                font-size: 18px;
+                opacity: 0.9;
+                background: rgba(255, 255, 255, 0.2);
+                padding: 15px;
+                border-radius: 10px;
+                margin-top: 10px;
+                line-height: 1.5;
+            }
+            
+            .keywords-bar {
+                background: #f0f0f0;
+                padding: 15px 30px;
+                border-bottom: 1px solid #e0e0e0;
+            }
+            
+            .keywords-title {
+                font-size: 14px;
+                color: #666;
+                margin-bottom: 10px;
+                font-weight: 600;
+            }
+            
+            .keyword-badge {
+                display: inline-block;
+                background: #ffeb3b;
+                color: #333;
+                padding: 5px 12px;
+                border-radius: 20px;
+                font-size: 13px;
+                margin: 0 5px 5px 0;
+                font-weight: 500;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            }
+            
+            .answer-section {
+                padding: 30px;
+                background: #f8f9fa;
+                border-bottom: 1px solid #e0e0e0;
+            }
+            
+            .answer-section h3 {
+                color: #333;
+                margin-bottom: 15px;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+            
+            .answer-section h3 i {
+                color: #667eea;
+            }
+            
+            .answer-content {
+                background: white;
                 padding: 20px;
+                border-radius: 10px;
+                line-height: 1.8;
+                color: #444;
+                border-left: 4px solid #667eea;
+            }
+            
+            /* NO mark styling for answer - it stays plain */
+            
+            .evidence-section {
+                padding: 30px;
+            }
+            
+            .evidence-section h3 {
+                color: #333;
+                margin-bottom: 20px;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+            
+            .evidence-section h3 i {
+                color: #667eea;
+            }
+            
+            .evidence-card {
+                background: #f8f9fa;
+                border-radius: 10px;
+                padding: 20px;
+                margin-bottom: 20px;
+                border-left: 4px solid #667eea;
             }
             
             .evidence-header {
-                flex-direction: column;
-                align-items: flex-start;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 15px;
+                flex-wrap: wrap;
+                gap: 10px;
             }
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <div class="header">
-            <h1>📚 Evidence Visualization</h1>
-            <div class="question">
-                <strong>Question 37:</strong> 
+            
+            .section-name {
+                font-weight: 600;
+                color: #333;
+                background: #e8eaf6;
+                padding: 5px 12px;
+                border-radius: 20px;
+                font-size: 14px;
+            }
+            
+            .page-number {
+                color: #666;
+                background: white;
+                padding: 5px 12px;
+                border-radius: 20px;
+                font-size: 14px;
+                border: 1px solid #e0e0e0;
+            }
+            
+            .term-badge {
+                display: inline-block;
+                background: #ffeb3b;
+                color: #333;
+                padding: 3px 10px;
+                border-radius: 15px;
+                font-size: 12px;
+                margin: 0 5px 5px 0;
+                font-weight: 500;
+            }
+            
+            .evidence-text {
+                background: white;
+                padding: 15px;
+                border-radius: 8px;
+                color: #555;
+                line-height: 1.6;
+                margin: 15px 0 0 0;
+                border: 1px solid #e0e0e0;
+            }
+            
+            .evidence-text mark {
+                background-color: #ffeb3b;
+                padding: 2px 0;
+                font-weight: 500;
+            }
+            
+            .highlighted-context {
+                padding: 30px;
+                background: #f8f9fa;
+                border-top: 1px solid #e0e0e0;
+                border-bottom: 1px solid #e0e0e0;
+            }
+            
+            .highlighted-context h3 {
+                color: #333;
+                margin-bottom: 15px;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+            
+            .context-box {
+                background: white;
+                padding: 20px;
+                border-radius: 10px;
+                max-height: 400px;
+                overflow-y: auto;
+                border: 1px solid #e0e0e0;
+                line-height: 1.8;
+                font-size: 14px;
+            }
+            
+            .context-box mark {
+                background-color: #ffeb3b;
+                padding: 2px 0;
+                font-weight: 500;
+            }
+            
+            .stats {
+                display: flex;
+                gap: 15px;
+                padding: 20px 30px;
+                background: white;
+                flex-wrap: wrap;
+            }
+            
+            .stat-item {
+                background: #f8f9fa;
+                padding: 10px 20px;
+                border-radius: 10px;
+                flex: 1;
+                min-width: 120px;
+                text-align: center;
+                border: 1px solid #e0e0e0;
+            }
+            
+            .stat-label {
+                font-size: 12px;
+                color: #666;
+                margin-bottom: 5px;
+            }
+            
+            .stat-value {
+                font-size: 24px;
+                font-weight: 600;
+                color: #667eea;
+            }
+            
+            .footer {
+                padding: 20px 30px;
+                background: #f0f0f0;
+                text-align: center;
+                color: #666;
+                font-size: 14px;
+                border-top: 1px solid #e0e0e0;
+            }
+            
+            @media (max-width: 768px) {
+                .header {
+                    padding: 20px;
+                }
+                
+                .answer-section,
+                .evidence-section,
+                .highlighted-context {
+                    padding: 20px;
+                }
+                
+                .evidence-header {
+                    flex-direction: column;
+                    align-items: flex-start;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="header">
+                <h1>📚 Evidence Visualization</h1>
+                <div class="question">
+                    <strong>Question 37:</strong> What is stress in psychology?
+                </div>
             </div>
-        </div>
-        
-        <div class="keywords-bar">
-            <div class="keywords-title">🔑 Extracted Keywords:</div>
-
-        </div>
-        
-        <div class="answer-section">
-            <h3><i class="fas fa-robot"></i> Generated Answer</h3>
-            <div class="answer-content">
-                According to the provided textbook context, stress in psychology can be defined as a process whereby an individual perceives and responds to events that they appraise as overwhelming or threatening to their well-being (Lazarus & Folkman, 1984). This definition emphasizes the importance of how we appraise, or judge, demanding or threatening events (often referred to as stressors), which in turn influence our reactions to such events.
+            
+            <div class="keywords-bar">
+                <div class="keywords-title">🔑 Extracted Keywords:</div>
+    <span class="keyword-badge">stress</span><span class="keyword-badge">psychology</span>
             </div>
-        </div>
-        
-        <div class="evidence-section">
-            <h3><i class="fas fa-book"></i> Evidence by Section</h3>
-
+            
+            <div class="answer-section">
+                <h3><i class="fas fa-robot"></i> Generated Answer</h3>
+                <div class="answer-content">
+                    According to the provided textbook context, stress in psychology can be defined as a process whereby an individual perceives and responds to events that they appraise as overwhelming or threatening to their well-being (Lazarus & Folkman, 1984). This definition emphasizes the importance of how we appraise, or judge, demanding or threatening events (often referred to as stressors), which in turn influence our reactions to such events.  <!-- NO HIGHLIGHTING HERE -->
+                </div>
+            </div>
+            
+            <div class="evidence-section">
+                <h3><i class="fas fa-book"></i> Evidence by Section</h3>
+    
             <div class="evidence-card">
                 <div class="evidence-header">
                     <span class="section-name">📖 1.15 The biopsychosocial model suggests that health</span>
                     <span class="page-number">📄 Page 37</span>
-                    <span class="relevance">⭐ Relevance: 0.7</span>
-                </div>
-                <div>
-
                 </div>
                 <div class="evidence-text">
-                    This section discusses 1.15 the biopsychosocial model suggests that health. The content here is relevant to your question about ...
+                    FIGURE 14.5 Nearly half of U.S. adults indicated that their <mark style="background-color: #ffeb3b; font-weight: bold;">stress</mark> levels have increased over the last five years (Neelakantan, 2013). <mark style="background-color: #ffeb3b; font-weight: bold;">stress</mark> is an experience that evokes a variety of responses, including those that are physiological (e.g., accelerated heart rate, headaches, or gastrointestinal prob  <!-- HIGHLIGHTING HERE ONLY -->
                 </div>
             </div>
-
+    
             <div class="evidence-card">
                 <div class="evidence-header">
                     <span class="section-name">📖 14.1 What Is Stress</span>
                     <span class="page-number">📄 Page 498</span>
-                    <span class="relevance">⭐ Relevance: 0.75</span>
-                </div>
-                <div>
-
                 </div>
                 <div class="evidence-text">
-                    This section discusses 14.1 what is stress. The content here is relevant to your question about ...
+                    FIGURE 14.5 Nearly half of U.S. adults indicated that their <mark style="background-color: #ffeb3b; font-weight: bold;">stress</mark> levels have increased over the last five years (Neelakantan, 2013). <mark style="background-color: #ffeb3b; font-weight: bold;">stress</mark> is an experience that evokes a variety of responses, including those that are physiological (e.g., accelerated heart rate, headaches, or gastrointestinal prob  <!-- HIGHLIGHTING HERE ONLY -->
                 </div>
             </div>
-
+    
             <div class="evidence-card">
                 <div class="evidence-header">
                     <span class="section-name">📖 14.3 Stress and Illness
 LEARNING OBJECTIVES
 By the end of this section</span>
                     <span class="page-number">📄 Page 501</span>
-                    <span class="relevance">⭐ Relevance: 0.8</span>
-                </div>
-                <div>
-
                 </div>
                 <div class="evidence-text">
-                    This section discusses 14.3 stress and illness
-learning objectives
-by the end of this section. The content here is relevant to your question about ...
+                    FIGURE 14.5 Nearly half of U.S. adults indicated that their <mark style="background-color: #ffeb3b; font-weight: bold;">stress</mark> levels have increased over the last five years (Neelakantan, 2013). <mark style="background-color: #ffeb3b; font-weight: bold;">stress</mark> is an experience that evokes a variety of responses, including those that are physiological (e.g., accelerated heart rate, headaches, or gastrointestinal prob  <!-- HIGHLIGHTING HERE ONLY -->
                 </div>
             </div>
-
+    
             <div class="evidence-card">
                 <div class="evidence-header">
                     <span class="section-name">📖 14.4 As the stress level increases from low to moderate</span>
                     <span class="page-number">📄 Page 502</span>
-                    <span class="relevance">⭐ Relevance: 0.85</span>
-                </div>
-                <div>
-
                 </div>
                 <div class="evidence-text">
-                    This section discusses 14.4 as the stress level increases from low to moderate. The content here is relevant to your question about ...
+                    FIGURE 14.5 Nearly half of U.S. adults indicated that their <mark style="background-color: #ffeb3b; font-weight: bold;">stress</mark> levels have increased over the last five years (Neelakantan, 2013). <mark style="background-color: #ffeb3b; font-weight: bold;">stress</mark> is an experience that evokes a variety of responses, including those that are physiological (e.g., accelerated heart rate, headaches, or gastrointestinal prob  <!-- HIGHLIGHTING HERE ONLY -->
                 </div>
             </div>
-
+    
             <div class="evidence-card">
                 <div class="evidence-header">
                     <span class="section-name">📖 14.4 Regulation of Stress
 LEARNING OBJECTIVES
 By the end of this section</span>
                     <span class="page-number">📄 Page 503</span>
-                    <span class="relevance">⭐ Relevance: 0.9</span>
-                </div>
-                <div>
-
                 </div>
                 <div class="evidence-text">
-                    This section discusses 14.4 regulation of stress
-learning objectives
-by the end of this section. The content here is relevant to your question about ...
+                    FIGURE 14.5 Nearly half of U.S. adults indicated that their <mark style="background-color: #ffeb3b; font-weight: bold;">stress</mark> levels have increased over the last five years (Neelakantan, 2013). <mark style="background-color: #ffeb3b; font-weight: bold;">stress</mark> is an experience that evokes a variety of responses, including those that are physiological (e.g., accelerated heart rate, headaches, or gastrointestinal prob  <!-- HIGHLIGHTING HERE ONLY -->
                 </div>
             </div>
-
-        </div>
-        
-        <div class="highlighted-context">
-            <h3><i class="fas fa-highlighter"></i> Highlighted Context</h3>
-            <div class="context-box">
-                FIGURE 14.5 Nearly half of U.S. adults indicated that their stress levels have increased over the last five years (Neelakantan, 2013). Stress is an experience that evokes a variety of responses, including those that are physiological (e.g., accelerated heart rate, headaches, or gastrointestinal problems), cognitive (e.g., difficulty concentrating or making decisions), and behavioral (e.g., drinking alcohol, smoking, or taking actions directed at eliminating the cause of the stress). Although stress can be positive at times, it can have deleterious health implications, contributing to the onset and progression of a variety of physical illnesses and diseases (Cohen & Herbert, 1996). The scientific study of how stress and other psychological factors impact health falls within the realm of health psychology, a subfield of psychology devoted to understanding the importance of psychological influences on health, illness, and how people respond when they become ill (Taylor, 1999). Health psychology emerged as a discipline in the 1970s, a time during which there was increasing awareness of the role behavioral and lifestyle factors play in the development of illnesses and diseases (Straub, 2007). In addition to studying the connection between stress and illness, health psychologists investigate issues such as why people make certain lifestyle choices (e.g., smoking or eating unhealthy food despite knowing the potential adverse health implications of such behaviors). Health psychologists also design and investigate the effectiveness of interventions aimed at changing unhealthy behaviors. Perhaps one of the more fundamental tasks of health psychologists is to identify which groups of people are especially at risk for negative health outcomes, based on psychological or behavioral factors. For example, measuring differences in stress levels among demographic groups and how these levels change over time can help identify populations who may have an increased risk for illness or disease. Figure 14.6 depicts the results of three national surveys in which several thousand individuals from different demographic groups completed a brief stress questionnaire; the surveys were administered in 1983, 2006, and 2009 (Cohen & Janicki-Deverts, 2012). All three surveys demonstrated higher stress in women than in men. Unemployed individuals reported high levels of stress in all three surveys, as did those with less education and income; retired persons reported the lowest stress levels. However, from 2006 to 2009 the greatest increase in stress levels occurred among men, Hispanic people aged 45–64, college graduates, and those with full-time employment. One interpretation of these findings is that concerns surrounding the
-
-14.1 What Is Stress? LEARNING OBJECTIVES By the end of this section, you will be able to: • Differentiate between stimulus-based and response-based definitions of stress • Define stress as a process • Differentiate between good stress and bad stress • Describe the early contributions of Walter Cannon and Hans Selye to the stress research field • Understand the physiological basis of stress and describe the general adaptation syndrome The term stress as it relates to the human condition first emerged in scientific literature in the 1930s, but it did not enter the popular vernacular until the 1970s (Lyon, 2012). Today, we often use the term loosely in describing a variety of unpleasant feeling states; for example, we often say we are stressed out when we feel frustrated, angry, conflicted, overwhelmed, or fatigued. Despite the widespread use of the term, stress is a fairly vague concept that is difficult to define with precision. Researchers have had a difficult time agreeing on an acceptable definition of stress. Some have conceptualized stress as a demanding or threatening event or situation (e.g., a high-stress job, overcrowding, and long commutes to work). Such conceptualizations are known as stimulus-based definitions because they characterize stress as a stimulus that causes certain reactions. Stimulus-based definitions of stress are problematic, however, because they fail to recognize that people differ in how they view and react to challenging life events and situations. For example, a conscientious student who has studied diligently all semester would likely experience less stress during final exams week than would a less responsible, unprepared student. Others have conceptualized stress in ways that emphasize the physiological responses that occur when faced with demanding or threatening situations (e.g., increased arousal). These conceptualizations are referred to as response-based definitions because they describe stress as a response to environmental conditions. For example, the endocrinologist Hans Selye, a famous stress researcher, once defined stress as the “response of the body to any demand, whether it is caused by, or results in, pleasant or unpleasant conditions” (Selye, 1976, p. 74). Selye’s definition of stress is response-based in that it conceptualizes stress chiefly in terms of the body’s physiological reaction to any demand that is placed on it. Neither stimulus-based nor response-based definitions provide a complete definition of stress. Many of the physiological reactions that occur when faced with demanding situations (e.g., accelerated heart rate) can also occur in response to things
-
-from the perspective of human psychoneuroimmunology. Annual Review of Psychology, 47, 113–142. Cohen, S., & Janicki-Deverts, D. (2012). Who’s stressed? Distributions of psychological stress in the United States in probability samples in 1993, 2006, and 2009. Journal of Applied Social Psychology, 42, 1320–1334. Cohen, S., Janicki-Deverts, D., & Miller, G. E. (2007). Psychological distress and disease. Journal of the American Medical Association, 98, 1685–1687. Cohen, S., Doyle, W. J., Turner, R., Alper, C. M., & Skoner, D. P. (2003). Sociability and susceptibility to the 700 References Access for free at openstax.org
-
-by Walter Cannon. The fight-or-flight response involves the coordinated activity of both the sympathetic nervous system and the hypothalamic-pituitary-adrenal (HPA) axis. Hans Selye, a noted endocrinologist, referred to these physiological reactions to stress as part of general adaptation syndrome, which occurs in three stages: alarm reaction (fight-or-flight reactions begin), resistance (the body begins to adapt to continuing stress), and exhaustion (adaptive energy is depleted, and stress begins to take a physical toll). 14.2 Stressors Stressors can be chronic (long term) or acute (short term), and can include traumatic events, significant life changes, daily hassles, and situations in which people are frequently exposed to challenging and unpleasant events. Many potential stressors include events or situations that require us to make changes in our lives, such as a divorce or moving to a new residence. Thomas Holmes and Richard Rahe developed the Social 530 14 • Summary Access for free at openstax.org
-
-can sometimes be a positive, motivating force that can improve the quality of our lives. This kind of stress, which Selye called eustress (from the Greek eu = “good”), is a good kind of stress associated with positive feelings, optimal health, and performance. A moderate amount of stress can be beneficial in challenging situations. For example, athletes may be motivated and energized by pregame stress, and students may experience similar beneficial stress before a major exam. Indeed, research shows that moderate stress can enhance both immediate and delayed recall of educational material. Participants in one study who memorized a scientific text passage showed improved memory of the passage immediately after exposure to a mild stressor as well as one day following exposure to the stressor (Hupbach & Fieman, 2012). Increasing one’s level of stress will cause performance to change in a predictable way. As shown in Figure 14.4, as stress increases, so do performance and general well-being (eustress); when stress levels reach an optimal level (the highest point of the curve), performance reaches its peak. A person at this stress level is colloquially at the top of their game, meaning they feel fully energized, focused, and can work with minimal effort and maximum efficiency. But when stress exceeds this optimal level, it is no longer a positive force—it becomes excessive and debilitating, or what Selye termed distress (from the Latin dis = “bad”). People who reach this level of stress feel burned out; they are fatigued, exhausted, and their performance begins to decline. If the stress remains excessive, health may begin to erode as well (Everly & Lating, 2002). A good example of distress is severe test anxiety. When students are feeling very stressed about a test, negative emotions combined with physical symptoms may make concentration difficult, thereby negatively affecting test scores. FIGURE 14.4 As the stress level increases from low to moderate, so does performance (eustress). At the optimal level (the peak of the curve), performance has reached its peak. If stress exceeds the optimal level, it will reach the distress region, where it will become excessive and debilitating, and performance will decline (Everly & Lating, 2002). The Prevalence of Stress Stress is everywhere and, as shown in Figure 14.5, it has been on the rise over the last several years. Each of us is acquainted with stress—some are more familiar than others. In many ways, stress feels like
-
-that most people would not consider to be genuinely stressful, such as receiving unanticipated good news: an unexpected promotion or raise. A useful way to conceptualize stress is to view it as a process whereby an individual perceives and responds to events that they appraise as overwhelming or threatening to their well-being (Lazarus & Folkman, 1984). A critical element of this definition is that it emphasizes the importance of how we appraise—that is, judge—demanding or threatening events (often referred to as stressors); these appraisals, in turn, influence our reactions to such events. Two kinds of appraisals of a stressor are especially important in this regard: primary and secondary appraisals. A primary appraisal involves judgment about the degree of potential harm or threat to well-being that a stressor might entail. A stressor would likely be appraised as a threat if one anticipates that it could lead to some kind of harm, loss, or other negative consequence; conversely, a stressor would likely be appraised as a challenge if one believes that it carries the potential for gain or personal growth. For example, an employee who is promoted to a leadership position would likely perceive the promotion as a much greater threat if they believed the promotion would lead to excessive work demands than if they viewed it as an opportunity to gain new skills and grow professionally. Similarly, a college student on the cusp of graduation may face the change as a threat or a challenge (Figure 14.2). 486 14 • Stress, Lifestyle, and Health Access for free at openstax.org
-
-Neuroscientists Robert Sapolsky and Carol Shively have conducted extensive research on stress in non-human primates for over 30 years. Both have shown that position in the social hierarchy predicts stress, mental health status, and disease. Their research sheds light on how stress may lead to negative health outcomes for stigmatized or ostracized people. Here are two videos featuring Dr. Sapolsky: one is regarding killer stress (http://openstax.org/l/sapolsky1) and the other is an excellent in-depth documentary (http://openstax.org/l/ sapolsky2) from National Geographic. Physical disorders or diseases whose symptoms are brought about or worsened by stress and emotional factors are called psychophysiological disorders. The physical symptoms of psychophysiological disorders are real and they can be produced or exacerbated by psychological facto
-            </div>
-        </div>
-        
-        <div class="stats">
-            <div class="stat-item">
-                <div class="stat-label">Sections Used</div>
-                <div class="stat-value">8</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-label">Pages Referenced</div>
-                <div class="stat-value">9</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-label">Keywords Found</div>
-                <div class="stat-value">0</div>
-            </div>
-        </div>
-        
-        <div class="footer">
-            Generated from Psychology 2e Textbook • Question 37 • 2026-02-26
-        </div>
-    </div>
     
-    <!-- Font Awesome for icons -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
-</body>
-</html>
+            </div>
+            
+            <div class="highlighted-context">
+                <h3><i class="fas fa-highlighter"></i> Highlighted Context</h3>
+                <div class="context-box">
+                    FIGURE 14.5 Nearly half of U.S. adults indicated that their <mark style="background-color: #ffeb3b; font-weight: bold;">stress</mark> levels have increased over the last five years (Neelakantan, 2013). <mark style="background-color: #ffeb3b; font-weight: bold;">stress</mark> is an experience that evokes a variety of responses, including those that are physiological (e.g., accelerated heart rate, headaches, or gastrointestinal problems), cognitive (e.g., difficulty concentrating or making decisions), and behavioral (e.g., drinking alcohol, smoking, or taking actions directed at eliminating the cause of the <mark style="background-color: #ffeb3b; font-weight: bold;">stress</mark>). Although <mark style="background-color: #ffeb3b; font-weight: bold;">stress</mark> can be positive at times, it can have deleterious health implications, contributing to the onset and progression of a variety of physical illnesses and diseases (Cohen & Herbert, 1996). The scientific study of how <mark style="background-color: #ffeb3b; font-weight: bold;">stress</mark> and other psychological factors impact health falls within the realm of health <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark>, a subfield of <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> devoted to understanding the importance of psychological influences on health, illness, and how people respond when they become ill (Taylor, 1999). Health <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> emerged as a discipline in the 1970s, a time during which there was increasing awareness of the role behavioral and lifestyle factors play in the development of illnesses and diseases (Straub, 2007). In addition to studying the connection between <mark style="background-color: #ffeb3b; font-weight: bold;">stress</mark> and illness, health psychologists investigate issues such as why people make certain lifestyle choices (e.g., smoking or eating unhealthy food despite knowing the potential adverse health implications of such behaviors). Health psychologists also design and investigate the effectiveness of interventions aimed at changing unhealthy behaviors. Perhaps one of the more fundamental tasks of health psychologists is to identify which groups of people are especially at risk for negative health outcomes, based on psychological or behavioral factors. For example, measuring differences in <mark style="background-color: #ffeb3b; font-weight: bold;">stress</mark> levels among demographic groups and how these levels change over time can help identify populations who may have an increased risk for illness or disease. Figure 14.6 depicts the results of three national surveys in which several thousand individuals from different demographic groups completed a brief <mark style="background-color: #ffeb3b; font-weight: bold;">stress</mark> questionnaire; the surveys were administered in 1983, 2006, and 2009 (Cohen & Janicki-Deverts, 2012). All three surveys demonstrated higher <mark style="background-color: #ffeb3b; font-weight: bold;">stress</mark> in women than in men. Unemployed individuals reported high levels of <mark style="background-color: #ffeb3b; font-weight: bold;">stress</mark> in all three surveys, as did those with less education and income; retired persons reported the lowest <mark style="background-color: #ffeb3b; font-weight: bold;">stress</mark> levels. However, from 2006 to 2009 the greatest increase in <mark style="background-color: #ffeb3b; font-weight: bold;">stress</mark> levels occurred among men, Hispanic people aged 45–64, college graduates, and those with full-time employment. One interpretation of these findings is that concerns surrounding the
+
+14.1 What Is <mark style="background-color: #ffeb3b; font-weight: bold;">stress</mark>? LEARNING OBJECTIVES By the end of this section, you will be able to: • Differentiate between stimulus-based and response-based definitions of <mark style="background-color: #ffeb3b; font-weight: bold;">stress</mark> • Define <mark style="background-color: #ffeb3b; font-weight: bold;">stress</mark> as a process • Differentiate between good <mark style="background-color: #ffeb3b; font-weight: bold;">stress</mark> and bad <mark style="background-color: #ffeb3b; font-weight: bold;">stress</mark> • Describe the early contributions of Walter Cannon and Hans Selye to the <mark style="background-color: #ffeb3b; font-weight: bold;">stress</mark> research field • Understand the physiological basis of <mark style="background-color: #ffeb3b; font-weight: bold;">stress</mark> and describe the general adaptation syndrome The term <mark style="background-color: #ffeb3b; font-weight: bold;">stress</mark> as it relates to the human condition first emerged in scientific literature in the 1930s, but it did not enter the popular vernacular until the 1970s (Lyon, 2012). Today, we often use the term loosely in describing a variety of unpleasant feeling states; for example, we often say we are <mark style="background-color: #ffeb3b; font-weight: bold;">stress</mark>ed out when we feel frustrated, angry, conflicted, overwhelmed, or fatigued. Despite the widespread use of the term, <mark style="background-color: #ffeb3b; font-weight: bold;">stress</mark> is a fairly vague concept that is difficult to define with precision. Researchers have had a difficult time agreeing on an acceptable definition of <mark style="background-color: #ffeb3b; font-weight: bold;">stress</mark>. Some have conceptualized <mark style="background-color: #ffeb3b; font-weight: bold;">stress</mark> as a demanding or threatening event or situation (e.g., a high-<mark style="background-color: #ffeb3b; font-weight: bold;">stress</mark> job, overcrowding, and long commutes to work). Such conceptualizations are known as stimulus-based definitions because they characterize <mark style="background-color: #ffeb3b; font-weight: bold;">stress</mark> as a stimulus that causes certain reactions. Stimulus-based definitions of <mark style="background-color: #ffeb3b; font-weight: bold;">stress</mark> are problematic, however, because they fail to recognize that people differ in how they view and react to challenging life events and situations. For example, a conscientious student who has studied diligently all semester would likely experience less <mark style="background-color: #ffeb3b; font-weight: bold;">stress</mark> during final exams week than would a less responsible, unprepared student. Others have conceptualized <mark style="background-color: #ffeb3b; font-weight: bold;">stress</mark> in ways that emphasize the physiological responses that occur when faced with demanding or threatening situations (e.g., increased arousal). These conceptualizations are referred to as response-based definitions because they describe <mark style="background-color: #ffeb3b; font-weight: bold;">stress</mark> as a response to environmental conditions. For example, the endocrinologist Hans Selye, a famous <mark style="background-color: #ffeb3b; font-weight: bold;">stress</mark> researcher, once defined <mark style="background-color: #ffeb3b; font-weight: bold;">stress</mark> as the “response of the body to any demand, whether it is caused by, or results in, pleasant or unpleasant conditions” (Selye, 1976, p. 74). Selye’s definition of <mark style="background-color: #ffeb3b; font-weight: bold;">stress</mark> is response-based in that it conceptualizes <mark style="background-color: #ffeb3b; font-weight: bold;">stress</mark> chiefly in terms of the body’s physiological reaction to any demand that is placed on it. Neither stimulus-based nor response-based definitions provide a complete definition of <mark style="background-color: #ffeb3b; font-weight: bold;">stress</mark>. Many of the physiological reactions that occur when faced with demanding situations (e.g., accelerated heart rate) can also occur in response to things
+
+from the perspective of human psychoneuroimmunology. Annual Review of <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark>, 47, 113–142. Cohen, S., & Janicki-Deverts, D. (2012). Who’s <mark style="background-color: #ffeb3b; font-weight: bold;">stress</mark>ed? Distributions of psychological <mark style="background-color: #ffeb3b; font-weight: bold;">stress</mark> in the United States in probability samples in 1993, 2006, and 2009. Journal of Applied Social <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark>, 42, 1320–1334. Cohen, S., Janicki-Deverts, D., & Miller, G. E. (2007). Psychological di<mark style="background-color: #ffeb3b; font-weight: bold;">stress</mark> and disease. Journal of the American Medical Association, 98, 1685–1687. Cohen, S., Doyle, W. J., Turner, R., Alper, C. M., & Skoner, D. P. (2003). Sociability and susceptibility to the 700 References Access for free at openstax.org
+
+by Walter Cannon. The fight-or-flight response involves the coordinated activity of both the sympathetic nervous system and the hypothalamic-pituitary-adrenal (HPA) axis. Hans Selye, a noted endocrinologist, referred to these physiological reactions to <mark style="background-color: #ffeb3b; font-weight: bold;">stress</mark> as part of general adaptation syndrome, which occurs in three stages: alarm reaction (fight-or-flight reactions begin), resistance (the body begins to adapt to continuing <mark style="background-color: #ffeb3b; font-weight: bold;">stress</mark>), and exhaustion (adaptive energy is depleted, and <mark style="background-color: #ffeb3b; font-weight: bold;">stress</mark> begins to take a physical toll). 14.2 <mark style="background-color: #ffeb3b; font-weight: bold;">stress</mark>ors <mark style="background-color: #ffeb3b; font-weight: bold;">stress</mark>ors can be chronic (long term) or acute (short term), and can include traumatic events, significant life changes, daily hassles, and situations in which people are frequently exposed to challenging and unpleasant events. Many potential <mark style="background-color: #ffeb3b; font-weight: bold;">stress</mark>ors include events or situations that require us to make changes in our lives, such as a divorce or moving to a new residence. Thomas Holmes and Richard Rahe developed the Social 530 14 • Summary Access for free at openstax.org
+
+can sometimes be a positive, motivating force that can improve the quality of our lives. This kind of <mark style="background-color: #ffeb3b; font-weight: bold;">stress</mark>, which Selye called eu<mark style="background-color: #ffeb3b; font-weight: bold;">stress</mark> (from the Greek eu = “good”), is a good kind of <mark style="background-color: #ffeb3b; font-weight: bold;">stress</mark> associated with positive feelings, optimal health, and performance. A moderate amount of <mark style="background-color: #ffeb3b; font-weight: bold;">stress</mark> can be beneficial in challenging situations. For example, athletes may be motivated and energized by pregame <mark style="background-color: #ffeb3b; font-weight: bold;">stress</mark>, and students may experience similar beneficial <mark style="background-color: #ffeb3b; font-weight: bold;">stress</mark> before a major exam. Indeed, research shows that moderate <mark style="background-color: #ffeb3b; font-weight: bold;">stress</mark> can enhance both immediate and delayed recall of educational material. Participants in one study who memorized a scientific text passage showed improved memory of the passage immediately after exposure to a mild <mark style="background-color: #ffeb3b; font-weight: bold;">stress</mark>or as well as one day following exposure to the <mark style="background-color: #ffeb3b; font-weight: bold;">stress</mark>or (Hupbach & Fieman, 2012). Increasing one’s level of <mark style="background-color: #ffeb3b; font-weight: bold;">stress</mark> will cause performance to change in a predictable way. As shown in Figure 14.4, as <mark style="background-color: #ffeb3b; font-weight: bold;">stress</mark> increases, so do performance and general well-being (eu<mark style="background-color: #ffeb3b; font-weight: bold;">stress</mark>); when <mark style="background-color: #ffeb3b; font-weight: bold;">stress</mark> levels reach an optimal level (the highest point of the curve), performance reaches its peak. A person at this <mark style="background-color: #ffeb3b; font-weight: bold;">stress</mark> level is colloquially at the top of their game, meaning they feel fully energized, focused, and can work with minimal effort and maximum efficiency. But when <mark style="background-color: #ffeb3b; font-weight: bold;">stress</mark> exceeds this optimal level, it is no longer a positive force—it becomes excessive and debilitating, or what Selye termed di<mark style="background-color: #ffeb3b; font-weight: bold;">stress</mark> (from the Latin dis = “bad”). People who reach this level of <mark style="background-color: #ffeb3b; font-weight: bold;">stress</mark> feel burned out; they are fatigued, exhausted, and their performance begins to decline. If the <mark style="background-color: #ffeb3b; font-weight: bold;">stress</mark> remains excessive, health may begin to erode as well (Everly & Lating, 2002). A good example of di<mark style="background-color: #ffeb3b; font-weight: bold;">stress</mark> is severe test anxiety. When students are feeling very <mark style="background-color: #ffeb3b; font-weight: bold;">stress</mark>ed about a test, negative emotions combined with physical symptoms may make concentration difficult, thereby negatively affecting test scores. FIGURE 14.4 As the <mark style="background-color: #ffeb3b; font-weight: bold;">stress</mark> level increases from low to moderate, so does performance (eu<mark style="background-color: #ffeb3b; font-weight: bold;">stress</mark>). At the optimal level (the peak of the curve), performance has reached its peak. If <mark style="background-color: #ffeb3b; font-weight: bold;">stress</mark> exceeds the optimal level, it will reach the di<mark style="background-color: #ffeb3b; font-weight: bold;">stress</mark> region, where it will become excessive and debilitating, and performance will decline (Everly & Lating, 2002). The Prevalence of <mark style="background-color: #ffeb3b; font-weight: bold;">stress</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">stress</mark> is everywhere and, as shown in Figure 14.5, it has been on the rise over the last several years. Each of us is acquainted with <mark style="background-color: #ffeb3b; font-weight: bold;">stress</mark>—some are more familiar than others. In many ways, <mark style="background-color: #ffeb3b; font-weight: bold;">stress</mark> feels like
+
+that most people would not consider to be genuinely <mark style="background-color: #ffeb3b; font-weight: bold;">stress</mark>ful, such as receiving unanticipated good news: an unexpected promotion or raise. A useful way to conceptualize <mark style="background-color: #ffeb3b; font-weight: bold;">stress</mark> is to view it as a process whereby an individual perceives and responds to events that they appraise as overwhelming or threatening to their well-being (Lazarus & Folkman, 1984). A critical element of this definition is that it emphasizes the importance of how we appraise—that is, judge—demanding or threatening events (often referred to as <mark style="background-color: #ffeb3b; font-weight: bold;">stress</mark>ors); these appraisals, in turn, influence our reactions to such events. Two kinds of appraisals of a <mark style="background-color: #ffeb3b; font-weight: bold;">stress</mark>or are especially important in this regard: primary and secondary appraisals. A primary appraisal involves judgment about the degree of potential harm or threat to well-being that a <mark style="background-color: #ffeb3b; font-weight: bold;">stress</mark>or might entail. A <mark style="background-color: #ffeb3b; font-weight: bold;">stress</mark>or would likely be appraised as a threat if one anticipates that it could lead to some kind of harm, loss, or other negative consequence; conversely, a <mark style="background-color: #ffeb3b; font-weight: bold;">stress</mark>or would likely be appraised as a challenge if one believes that it carries the potential for gain or personal growth. For example, an employee who is promoted to a leadership position would likely perceive the promotion as a much greater threat if they believed the promotion would lead to excessive work demands than if they viewed it as an opportunity to gain new skills and grow professionally. Similarly, a college student on the cusp of graduation may face the change as a threat or a challenge (Figure 14.2). 486 14 • <mark style="background-color: #ffeb3b; font-weight: bold;">stress</mark>, Lifestyle, and Health Access for free at openstax.org
+
+Neuroscientists Robert Sapolsky and Carol Shively have conducted extensive research on <mark style="background-color: #ffeb3b; font-weight: bold;">stress</mark> in non-human primates for over 30 years. Both have shown that position in the social hierarchy predicts <mark style="background-color: #ffeb3b; font-weight: bold;">stress</mark>, mental health status, and disease. Their research sheds light on how <mark style="background-color: #ffeb3b; font-weight: bold;">stress</mark> may lead to negative health outcomes for stigmatized or ostracized people. Here are two videos featuring Dr. Sapolsky: one is regarding killer <mark style="background-color: #ffeb3b; font-weight: bold;">stress</mark> (http://openstax.org/l/sapolsky1) and the other is an excellent in-depth documentary (http://openstax.org/l/ sapolsky2) from National Geographic. Physical disorders or diseases whose symptoms are brought about or worsened by <mark style="background-color: #ffeb3b; font-weight: bold;">stress</mark> and emotional factors are called psychophysiological disorders. The physical symptoms of psychophysiological disorders are real and they can be produced or exacerbated by psychological facto  <!-- HIGHLIGHTING HERE ONLY -->
+                </div>
+            </div>
+            
+            <div class="stats">
+                <div class="stat-item">
+                    <div class="stat-label">Sections Used</div>
+                    <div class="stat-value">8</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Pages Referenced</div>
+                    <div class="stat-value">9</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Keywords Found</div>
+                    <div class="stat-value">2</div>
+                </div>
+            </div>
+            
+            <div class="footer">
+                Generated from Psychology 2e Textbook • Question 37 • 2026-02-27
+            </div>
+        </div>
+        
+        <!-- Font Awesome for icons -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
+    </body>
+    </html>

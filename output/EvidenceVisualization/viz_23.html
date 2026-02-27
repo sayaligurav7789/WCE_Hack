@@ -1,434 +1,396 @@
 <!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Evidence Visualization - Question 23</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            padding: 20px;
-        }
-        
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            overflow: hidden;
-        }
-        
-        .header {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            padding: 30px;
-        }
-        
-        .header h1 {
-            font-size: 24px;
-            margin-bottom: 10px;
-        }
-        
-        .header .question {
-            font-size: 18px;
-            opacity: 0.9;
-            background: rgba(255, 255, 255, 0.2);
-            padding: 15px;
-            border-radius: 10px;
-            margin-top: 10px;
-            line-height: 1.5;
-        }
-        
-        .keywords-bar {
-            background: #f0f0f0;
-            padding: 15px 30px;
-            border-bottom: 1px solid #e0e0e0;
-        }
-        
-        .keywords-title {
-            font-size: 14px;
-            color: #666;
-            margin-bottom: 10px;
-            font-weight: 600;
-        }
-        
-        .keyword-badge {
-            display: inline-block;
-            background: #ffeb3b;
-            color: #333;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 13px;
-            margin: 0 5px 5px 0;
-            font-weight: 500;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-        
-        .answer-section {
-            padding: 30px;
-            background: #f8f9fa;
-            border-bottom: 1px solid #e0e0e0;
-        }
-        
-        .answer-section h3 {
-            color: #333;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .answer-section h3 i {
-            color: #667eea;
-        }
-        
-        .answer-content {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            line-height: 1.8;
-            color: #444;
-            border-left: 4px solid #667eea;
-        }
-        
-        .answer-content mark {
-            background-color: #ffeb3b;
-            padding: 2px 0;
-            font-weight: 500;
-        }
-        
-        .evidence-section {
-            padding: 30px;
-        }
-        
-        .evidence-section h3 {
-            color: #333;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .evidence-section h3 i {
-            color: #667eea;
-        }
-        
-        .evidence-card {
-            background: #f8f9fa;
-            border-radius: 10px;
-            padding: 20px;
-            margin-bottom: 20px;
-            border-left: 4px solid #667eea;
-        }
-        
-        .evidence-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-        
-        .section-name {
-            font-weight: 600;
-            color: #333;
-            background: #e8eaf6;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 14px;
-        }
-        
-        .page-number {
-            color: #666;
-            background: white;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 14px;
-            border: 1px solid #e0e0e0;
-        }
-        
-        .relevance {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 14px;
-        }
-        
-        .term-badge {
-            display: inline-block;
-            background: #ffeb3b;
-            color: #333;
-            padding: 3px 10px;
-            border-radius: 15px;
-            font-size: 12px;
-            margin: 0 5px 5px 0;
-            font-weight: 500;
-        }
-        
-        .evidence-text {
-            background: white;
-            padding: 15px;
-            border-radius: 8px;
-            color: #555;
-            line-height: 1.6;
-            margin: 15px 0 0 0;
-            border: 1px solid #e0e0e0;
-        }
-        
-        .evidence-text mark {
-            background-color: #ffeb3b;
-            padding: 2px 0;
-            font-weight: 500;
-        }
-        
-        .highlighted-context {
-            padding: 30px;
-            background: #f8f9fa;
-            border-top: 1px solid #e0e0e0;
-            border-bottom: 1px solid #e0e0e0;
-        }
-        
-        .highlighted-context h3 {
-            color: #333;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .context-box {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            max-height: 400px;
-            overflow-y: auto;
-            border: 1px solid #e0e0e0;
-            line-height: 1.8;
-            font-size: 14px;
-        }
-        
-        .context-box mark {
-            background-color: #ffeb3b;
-            padding: 2px 0;
-            font-weight: 500;
-        }
-        
-        .stats {
-            display: flex;
-            gap: 15px;
-            padding: 20px 30px;
-            background: white;
-            flex-wrap: wrap;
-        }
-        
-        .stat-item {
-            background: #f8f9fa;
-            padding: 10px 20px;
-            border-radius: 10px;
-            flex: 1;
-            min-width: 120px;
-            text-align: center;
-            border: 1px solid #e0e0e0;
-        }
-        
-        .stat-label {
-            font-size: 12px;
-            color: #666;
-            margin-bottom: 5px;
-        }
-        
-        .stat-value {
-            font-size: 24px;
-            font-weight: 600;
-            color: #667eea;
-        }
-        
-        .footer {
-            padding: 20px 30px;
-            background: #f0f0f0;
-            text-align: center;
-            color: #666;
-            font-size: 14px;
-            border-top: 1px solid #e0e0e0;
-        }
-        
-        @media (max-width: 768px) {
-            .header {
+    <html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Evidence Visualization - Question 23</title>
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+            
+            body {
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                min-height: 100vh;
                 padding: 20px;
             }
             
-            .answer-section,
-            .evidence-section,
-            .highlighted-context {
+            .container {
+                max-width: 1000px;
+                margin: 0 auto;
+                background: white;
+                border-radius: 20px;
+                box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+                overflow: hidden;
+            }
+            
+            .header {
+                background: linear-gradient(135deg, #667eea, #764ba2);
+                color: white;
+                padding: 30px;
+            }
+            
+            .header h1 {
+                font-size: 24px;
+                margin-bottom: 10px;
+            }
+            
+            .header .question {
+                font-size: 18px;
+                opacity: 0.9;
+                background: rgba(255, 255, 255, 0.2);
+                padding: 15px;
+                border-radius: 10px;
+                margin-top: 10px;
+                line-height: 1.5;
+            }
+            
+            .keywords-bar {
+                background: #f0f0f0;
+                padding: 15px 30px;
+                border-bottom: 1px solid #e0e0e0;
+            }
+            
+            .keywords-title {
+                font-size: 14px;
+                color: #666;
+                margin-bottom: 10px;
+                font-weight: 600;
+            }
+            
+            .keyword-badge {
+                display: inline-block;
+                background: #ffeb3b;
+                color: #333;
+                padding: 5px 12px;
+                border-radius: 20px;
+                font-size: 13px;
+                margin: 0 5px 5px 0;
+                font-weight: 500;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            }
+            
+            .answer-section {
+                padding: 30px;
+                background: #f8f9fa;
+                border-bottom: 1px solid #e0e0e0;
+            }
+            
+            .answer-section h3 {
+                color: #333;
+                margin-bottom: 15px;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+            
+            .answer-section h3 i {
+                color: #667eea;
+            }
+            
+            .answer-content {
+                background: white;
                 padding: 20px;
+                border-radius: 10px;
+                line-height: 1.8;
+                color: #444;
+                border-left: 4px solid #667eea;
+            }
+            
+            /* NO mark styling for answer - it stays plain */
+            
+            .evidence-section {
+                padding: 30px;
+            }
+            
+            .evidence-section h3 {
+                color: #333;
+                margin-bottom: 20px;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+            
+            .evidence-section h3 i {
+                color: #667eea;
+            }
+            
+            .evidence-card {
+                background: #f8f9fa;
+                border-radius: 10px;
+                padding: 20px;
+                margin-bottom: 20px;
+                border-left: 4px solid #667eea;
             }
             
             .evidence-header {
-                flex-direction: column;
-                align-items: flex-start;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 15px;
+                flex-wrap: wrap;
+                gap: 10px;
             }
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <div class="header">
-            <h1>📚 Evidence Visualization</h1>
-            <div class="question">
-                <strong>Question 23:</strong> 
+            
+            .section-name {
+                font-weight: 600;
+                color: #333;
+                background: #e8eaf6;
+                padding: 5px 12px;
+                border-radius: 20px;
+                font-size: 14px;
+            }
+            
+            .page-number {
+                color: #666;
+                background: white;
+                padding: 5px 12px;
+                border-radius: 20px;
+                font-size: 14px;
+                border: 1px solid #e0e0e0;
+            }
+            
+            .term-badge {
+                display: inline-block;
+                background: #ffeb3b;
+                color: #333;
+                padding: 3px 10px;
+                border-radius: 15px;
+                font-size: 12px;
+                margin: 0 5px 5px 0;
+                font-weight: 500;
+            }
+            
+            .evidence-text {
+                background: white;
+                padding: 15px;
+                border-radius: 8px;
+                color: #555;
+                line-height: 1.6;
+                margin: 15px 0 0 0;
+                border: 1px solid #e0e0e0;
+            }
+            
+            .evidence-text mark {
+                background-color: #ffeb3b;
+                padding: 2px 0;
+                font-weight: 500;
+            }
+            
+            .highlighted-context {
+                padding: 30px;
+                background: #f8f9fa;
+                border-top: 1px solid #e0e0e0;
+                border-bottom: 1px solid #e0e0e0;
+            }
+            
+            .highlighted-context h3 {
+                color: #333;
+                margin-bottom: 15px;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+            
+            .context-box {
+                background: white;
+                padding: 20px;
+                border-radius: 10px;
+                max-height: 400px;
+                overflow-y: auto;
+                border: 1px solid #e0e0e0;
+                line-height: 1.8;
+                font-size: 14px;
+            }
+            
+            .context-box mark {
+                background-color: #ffeb3b;
+                padding: 2px 0;
+                font-weight: 500;
+            }
+            
+            .stats {
+                display: flex;
+                gap: 15px;
+                padding: 20px 30px;
+                background: white;
+                flex-wrap: wrap;
+            }
+            
+            .stat-item {
+                background: #f8f9fa;
+                padding: 10px 20px;
+                border-radius: 10px;
+                flex: 1;
+                min-width: 120px;
+                text-align: center;
+                border: 1px solid #e0e0e0;
+            }
+            
+            .stat-label {
+                font-size: 12px;
+                color: #666;
+                margin-bottom: 5px;
+            }
+            
+            .stat-value {
+                font-size: 24px;
+                font-weight: 600;
+                color: #667eea;
+            }
+            
+            .footer {
+                padding: 20px 30px;
+                background: #f0f0f0;
+                text-align: center;
+                color: #666;
+                font-size: 14px;
+                border-top: 1px solid #e0e0e0;
+            }
+            
+            @media (max-width: 768px) {
+                .header {
+                    padding: 20px;
+                }
+                
+                .answer-section,
+                .evidence-section,
+                .highlighted-context {
+                    padding: 20px;
+                }
+                
+                .evidence-header {
+                    flex-direction: column;
+                    align-items: flex-start;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="header">
+                <h1>📚 Evidence Visualization</h1>
+                <div class="question">
+                    <strong>Question 23:</strong> What are evolutionary psychologists interested in?
+                </div>
             </div>
-        </div>
-        
-        <div class="keywords-bar">
-            <div class="keywords-title">🔑 Extracted Keywords:</div>
-
-        </div>
-        
-        <div class="answer-section">
-            <h3><i class="fas fa-robot"></i> Generated Answer</h3>
-            <div class="answer-content">
-                Evolutionary psychologists are interested in studying the ultimate biological causes of behavior. They seek to understand how behaviors have evolved over time to adapt to the environment and social surroundings, and how these adaptations have contributed to survival and reproduction. They are interested in predicting the outcome of a behavior in a particular situation based on evolutionary theory and then testing these predictions through observations or experiments.
+            
+            <div class="keywords-bar">
+                <div class="keywords-title">🔑 Extracted Keywords:</div>
+    <span class="keyword-badge">evolutionary</span><span class="keyword-badge">psychologists</span><span class="keyword-badge">interested</span>
             </div>
-        </div>
-        
-        <div class="evidence-section">
-            <h3><i class="fas fa-book"></i> Evidence by Section</h3>
-
+            
+            <div class="answer-section">
+                <h3><i class="fas fa-robot"></i> Generated Answer</h3>
+                <div class="answer-content">
+                    Evolutionary psychologists are interested in studying the ultimate biological causes of behavior. They seek to understand how behaviors have evolved over time to adapt to the environment and social surroundings, and how these adaptations have contributed to survival and reproduction. They are interested in predicting the outcome of a behavior in a particular situation based on evolutionary theory and then testing these predictions through observations or experiments.  <!-- NO HIGHLIGHTING HERE -->
+                </div>
+            </div>
+            
+            <div class="evidence-section">
+                <h3><i class="fas fa-book"></i> Evidence by Section</h3>
+    
             <div class="evidence-card">
                 <div class="evidence-header">
                     <span class="section-name">📖 1.10 Biological psychologists study how the structure and function of the nervous system generate
 behavior</span>
                     <span class="page-number">📄 Page 28</span>
-                    <span class="relevance">⭐ Relevance: 0.7</span>
-                </div>
-                <div>
-
                 </div>
                 <div class="evidence-text">
-                    This section discusses 1.10 biological psychologists study how the structure and function of the nervous system generate
-behavior. The content here is relevant to your question about ...
+                    Psychiatric Genetics, 10, 185–189. Confer, J. C., Easton, J. A., Fleischman, D. S., Goetz, C. D., Lewis, D. M. G, Perilloux, C., & Buss, D. M. (2010). <mark style="background-color: #ffeb3b; font-weight: bold;">evolutionary</mark> psychology: Controversies, questions, prospects, and limitations. American Psychologist, 65, 638 References Access for free at openstax.  <!-- HIGHLIGHTING HERE ONLY -->
                 </div>
             </div>
-
+    
             <div class="evidence-card">
                 <div class="evidence-header">
                     <span class="section-name">📖 1.9 Noam Chomsky was very influential in beginning the cognitive revolution</span>
                     <span class="page-number">📄 Page 32</span>
-                    <span class="relevance">⭐ Relevance: 0.75</span>
-                </div>
-                <div>
-
                 </div>
                 <div class="evidence-text">
-                    This section discusses 1.9 noam chomsky was very influential in beginning the cognitive revolution. The content here is relevant to your question about ...
+                    Psychiatric Genetics, 10, 185–189. Confer, J. C., Easton, J. A., Fleischman, D. S., Goetz, C. D., Lewis, D. M. G, Perilloux, C., & Buss, D. M. (2010). <mark style="background-color: #ffeb3b; font-weight: bold;">evolutionary</mark> psychology: Controversies, questions, prospects, and limitations. American Psychologist, 65, 638 References Access for free at openstax.  <!-- HIGHLIGHTING HERE ONLY -->
                 </div>
             </div>
-
+    
             <div class="evidence-card">
                 <div class="evidence-header">
                     <span class="section-name">📖 11.4 Learning Approaches
 Behavioral theorists view personality as significantly shaped and impacted by the reinforcements and
 consequences outside of the organism</span>
                     <span class="page-number">📄 Page 86</span>
-                    <span class="relevance">⭐ Relevance: 0.8</span>
-                </div>
-                <div>
-
                 </div>
                 <div class="evidence-text">
-                    This section discusses 11.4 learning approaches
-behavioral theorists view personality as significantly shaped and impacted by the reinforcements and
-consequences outside of the organism. The content here is relevant to your question about ...
+                    Psychiatric Genetics, 10, 185–189. Confer, J. C., Easton, J. A., Fleischman, D. S., Goetz, C. D., Lewis, D. M. G, Perilloux, C., & Buss, D. M. (2010). <mark style="background-color: #ffeb3b; font-weight: bold;">evolutionary</mark> psychology: Controversies, questions, prospects, and limitations. American Psychologist, 65, 638 References Access for free at openstax.  <!-- HIGHLIGHTING HERE ONLY -->
                 </div>
             </div>
-
+    
             <div class="evidence-card">
                 <div class="evidence-header">
                     <span class="section-name">📖 11.6 Biological Approaches
 LEARNING OBJECTIVES
 By the end of this section</span>
                     <span class="page-number">📄 Page 227</span>
-                    <span class="relevance">⭐ Relevance: 0.85</span>
-                </div>
-                <div>
-
                 </div>
                 <div class="evidence-text">
-                    This section discusses 11.6 biological approaches
-learning objectives
-by the end of this section. The content here is relevant to your question about ...
+                    Psychiatric Genetics, 10, 185–189. Confer, J. C., Easton, J. A., Fleischman, D. S., Goetz, C. D., Lewis, D. M. G, Perilloux, C., & Buss, D. M. (2010). <mark style="background-color: #ffeb3b; font-weight: bold;">evolutionary</mark> psychology: Controversies, questions, prospects, and limitations. American Psychologist, 65, 638 References Access for free at openstax.  <!-- HIGHLIGHTING HERE ONLY -->
                 </div>
             </div>
-
+    
             <div class="evidence-card">
                 <div class="evidence-header">
                     <span class="section-name">📖 16.3 Treatment Modalities
 There are several modalities of treatment: individual therapy</span>
                     <span class="page-number">📄 Page 292</span>
-                    <span class="relevance">⭐ Relevance: 0.9</span>
-                </div>
-                <div>
-
                 </div>
                 <div class="evidence-text">
-                    This section discusses 16.3 treatment modalities
-there are several modalities of treatment: individual therapy. The content here is relevant to your question about ...
+                    Psychiatric Genetics, 10, 185–189. Confer, J. C., Easton, J. A., Fleischman, D. S., Goetz, C. D., Lewis, D. M. G, Perilloux, C., & Buss, D. M. (2010). <mark style="background-color: #ffeb3b; font-weight: bold;">evolutionary</mark> psychology: Controversies, questions, prospects, and limitations. American Psychologist, 65, 638 References Access for free at openstax.  <!-- HIGHLIGHTING HERE ONLY -->
                 </div>
             </div>
+    
+            </div>
+            
+            <div class="highlighted-context">
+                <h3><i class="fas fa-highlighter"></i> Highlighted Context</h3>
+                <div class="context-box">
+                    Psychiatric Genetics, 10, 185–189. Confer, J. C., Easton, J. A., Fleischman, D. S., Goetz, C. D., Lewis, D. M. G, Perilloux, C., & Buss, D. M. (2010). <mark style="background-color: #ffeb3b; font-weight: bold;">evolutionary</mark> psychology: Controversies, questions, prospects, and limitations. American Psychologist, 65, 638 References Access for free at openstax.org
 
-        </div>
-        
-        <div class="highlighted-context">
-            <h3><i class="fas fa-highlighter"></i> Highlighted Context</h3>
-            <div class="context-box">
-                Psychiatric Genetics, 10, 185–189. Confer, J. C., Easton, J. A., Fleischman, D. S., Goetz, C. D., Lewis, D. M. G, Perilloux, C., & Buss, D. M. (2010). Evolutionary psychology: Controversies, questions, prospects, and limitations. American Psychologist, 65, 638 References Access for free at openstax.org
+sensory and motor systems, sleep, drug use and abuse, ingestive behavior, reproductive behavior, neurodevelopment, plasticity of the nervous system, and biological correlates of psychological disorders. Given the broad areas of interest falling under the purview of biological psychology, it will probably come as no surprise that individuals from all sorts of backgrounds are involved in this research, including biologists, medical professionals, physiologists, and chemists. This interdisciplinary approach is often referred to as neuroscience, of which biological psychology is a component (Carlson, 2013). While biopsychology typically focuses on the immediate causes of behavior based in the physiology of a human or other animal, <mark style="background-color: #ffeb3b; font-weight: bold;">evolutionary</mark> psychology seeks to study the ultimate biological causes of behavior. To the extent that a behavior is impacted by genetics, a behavior, like any anatomical characteristic of a human or animal, will demonstrate adaption to its surroundings. These surroundings include the physical environment and, since interactions between organisms can be important to survival and reproduction, the social environment. The study of behavior in the context of evolution has its origins with Charles Darwin, the co- discoverer of the theory of evolution by natural selection. Darwin was well aware that behaviors should be adaptive and wrote books titled, The Descent of Man (1871) and The Expression of the Emotions in Man and Animals (1872), to explore this field. <mark style="background-color: #ffeb3b; font-weight: bold;">evolutionary</mark> psychology, and specifically, the <mark style="background-color: #ffeb3b; font-weight: bold;">evolutionary</mark> psychology of humans, has enjoyed a resurgence in recent decades. To be subject to evolution by natural selection, a behavior must have a significant genetic cause. In general, we expect all human cultures to express a behavior if it is caused genetically, since the genetic differences among human groups are small. The approach taken by most <mark style="background-color: #ffeb3b; font-weight: bold;">evolutionary</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">psychologists</mark> is to predict the outcome of a behavior in a particular situation based on <mark style="background-color: #ffeb3b; font-weight: bold;">evolutionary</mark> theory and then to make observations, or conduct experiments, to determine whether the results match the theory. It is important to recognize that these types of studies are not strong evidence that a behavior is adaptive, since they lack information that the behavior is in some part genetic and not entirely cultural (Endler, 1986). Demonstrating that a trait, especially in humans, is naturally selected is extraordinarily difficult; perhaps for this reason, some <mark style="background-color: #ffeb3b; font-weight: bold;">evolutionary</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">psychologists</mark> are content to assume the behaviors they study have genetic determinants (Confer et al., 2010). One other drawback of <mark style="background-color: #ffeb3b; font-weight: bold;">evolutionary</mark> psychology is that the traits that we
 
-sensory and motor systems, sleep, drug use and abuse, ingestive behavior, reproductive behavior, neurodevelopment, plasticity of the nervous system, and biological correlates of psychological disorders. Given the broad areas of interest falling under the purview of biological psychology, it will probably come as no surprise that individuals from all sorts of backgrounds are involved in this research, including biologists, medical professionals, physiologists, and chemists. This interdisciplinary approach is often referred to as neuroscience, of which biological psychology is a component (Carlson, 2013). While biopsychology typically focuses on the immediate causes of behavior based in the physiology of a human or other animal, evolutionary psychology seeks to study the ultimate biological causes of behavior. To the extent that a behavior is impacted by genetics, a behavior, like any anatomical characteristic of a human or animal, will demonstrate adaption to its surroundings. These surroundings include the physical environment and, since interactions between organisms can be important to survival and reproduction, the social environment. The study of behavior in the context of evolution has its origins with Charles Darwin, the co- discoverer of the theory of evolution by natural selection. Darwin was well aware that behaviors should be adaptive and wrote books titled, The Descent of Man (1871) and The Expression of the Emotions in Man and Animals (1872), to explore this field. Evolutionary psychology, and specifically, the evolutionary psychology of humans, has enjoyed a resurgence in recent decades. To be subject to evolution by natural selection, a behavior must have a significant genetic cause. In general, we expect all human cultures to express a behavior if it is caused genetically, since the genetic differences among human groups are small. The approach taken by most evolutionary psychologists is to predict the outcome of a behavior in a particular situation based on evolutionary theory and then to make observations, or conduct experiments, to determine whether the results match the theory. It is important to recognize that these types of studies are not strong evidence that a behavior is adaptive, since they lack information that the behavior is in some part genetic and not entirely cultural (Endler, 1986). Demonstrating that a trait, especially in humans, is naturally selected is extraordinarily difficult; perhaps for this reason, some evolutionary psychologists are content to assume the behaviors they study have genetic determinants (Confer et al., 2010). One other drawback of evolutionary psychology is that the traits that we
+possess now evolved under environmental and social conditions far back in human history, and we have a poor understanding of what these conditions were. This makes predictions about what is adaptive for a behavior difficult. Behavioral traits need not be adaptive under current conditions, only under the conditions of the past when they evolved, about which we can only hypothesize. There are many areas of human behavior for which evolution can make predictions. Examples include memory, mate choice, relationships between kin, friendship and cooperation, parenting, social organization, and status (Confer et al., 2010). <mark style="background-color: #ffeb3b; font-weight: bold;">evolutionary</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">psychologists</mark> have had success in finding experimental correspondence between observations and expectations. In one example, in a study of mate preference differences between men and women that spanned 37 cultures, Buss (1989) found that women valued earning potential factors greater than men, and men valued potential reproductive factors (youth and attractiveness) greater than women in their prospective mates. In general, the predictions were in line with the predictions of evolution, although there were deviations in some cultures. Sensation and Perception Scientists <mark style="background-color: #ffeb3b; font-weight: bold;">interested</mark> in both physiological aspects of sensory systems as well as in the psychological experience of sensory information work within the area of sensation and perception (Figure 1.11). As such, sensation and perception research is also quite interdisciplinary. Imagine walking between buildings as you move from one class to another. You are inundated with sights, sounds, touch sensations, and smells. You also experience the temperature of the air around you and maintain your balance as you make your way. These are 20 1 • Introduction to Psychology Access for free at openstax.org
 
-possess now evolved under environmental and social conditions far back in human history, and we have a poor understanding of what these conditions were. This makes predictions about what is adaptive for a behavior difficult. Behavioral traits need not be adaptive under current conditions, only under the conditions of the past when they evolved, about which we can only hypothesize. There are many areas of human behavior for which evolution can make predictions. Examples include memory, mate choice, relationships between kin, friendship and cooperation, parenting, social organization, and status (Confer et al., 2010). Evolutionary psychologists have had success in finding experimental correspondence between observations and expectations. In one example, in a study of mate preference differences between men and women that spanned 37 cultures, Buss (1989) found that women valued earning potential factors greater than men, and men valued potential reproductive factors (youth and attractiveness) greater than women in their prospective mates. In general, the predictions were in line with the predictions of evolution, although there were deviations in some cultures. Sensation and Perception Scientists interested in both physiological aspects of sensory systems as well as in the psychological experience of sensory information work within the area of sensation and perception (Figure 1.11). As such, sensation and perception research is also quite interdisciplinary. Imagine walking between buildings as you move from one class to another. You are inundated with sights, sounds, touch sensations, and smells. You also experience the temperature of the air around you and maintain your balance as you make your way. These are 20 1 • Introduction to Psychology Access for free at openstax.org
-
-response, food preferences, mate selection, and cooperative behaviors (Confer et al., 2010). Whereas evolutionary psychologists focus on universal patterns that evolved over millions of years, behavioral geneticists study how individual differences arise, in the present, through the interaction of genes and the environment. When studying human behavior, behavioral geneticists often employ twin and adoption studies to research questions of interest. Twin studies compare the likelihood that a given behavioral trait is shared among identical and fraternal twins; adoption studies compare those rates among biologically related relatives and adopted relatives. Both approaches provide some insight into the relative importance of genes and environment for the expression of a given trait. LINK TO LEARNING Watch this interview with renowned evolutionary psychologist David Buss (http://openstax.org/l/buss) to learn more about how a psychologist approaches evolution and how this approach fits within the social sciences. Genetic Variation Genetic variation, the genetic difference between individuals, is what contributes to a species’ adaptation to its environment. In humans, genetic variation begins with an egg, about 100 million sperm, and fertilization. Roughly once per month, active ovaries release an egg from follicles. During the egg's journey from the ovary through the fallopian tubes, to the uterus, a sperm may fertilize the egg. The egg and the sperm each contain 23 chromosomes. Chromosomes are long strings of genetic material known as deoxyribonucleic acid (DNA). DNA is a helix-shaped molecule made up of nucleotide base pairs. In each chromosome, sequences of DNA make up genes that control or partially control a number of visible characteristics, known as traits, such as eye color, hair color, and so on. A single gene may have multiple possible variations, or alleles. An allele is a specific version of a gene. So, a given gene may code for the trait of hair color, and the different alleles of that gene affect which hair color an individual has. When a sperm and egg fuse, their 23 chromosomes combine to create a zygote with 46 chromosomes (23 pairs). Therefore, each parent contributes half the genetic information carried by the offspring; the resulting physical characteristics of the offspring (called the phenotype) are determined by the interaction of genetic material supplied by the sperm and egg (called the genotype). A person’s genotype is the genetic makeup of that individual. Phenotype, on the other hand, refers to the individual’s inherited physical characteristics, which are a combination of genetic and environmental
+response, food preferences, mate selection, and cooperative behaviors (Confer et al., 2010). Whereas <mark style="background-color: #ffeb3b; font-weight: bold;">evolutionary</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">psychologists</mark> focus on universal patterns that evolved over millions of years, behavioral geneticists study how individual differences arise, in the present, through the interaction of genes and the environment. When studying human behavior, behavioral geneticists often employ twin and adoption studies to research questions of interest. Twin studies compare the likelihood that a given behavioral trait is shared among identical and fraternal twins; adoption studies compare those rates among biologically related relatives and adopted relatives. Both approaches provide some insight into the relative importance of genes and environment for the expression of a given trait. LINK TO LEARNING Watch this interview with renowned <mark style="background-color: #ffeb3b; font-weight: bold;">evolutionary</mark> psychologist David Buss (http://openstax.org/l/buss) to learn more about how a psychologist approaches evolution and how this approach fits within the social sciences. Genetic Variation Genetic variation, the genetic difference between individuals, is what contributes to a species’ adaptation to its environment. In humans, genetic variation begins with an egg, about 100 million sperm, and fertilization. Roughly once per month, active ovaries release an egg from follicles. During the egg's journey from the ovary through the fallopian tubes, to the uterus, a sperm may fertilize the egg. The egg and the sperm each contain 23 chromosomes. Chromosomes are long strings of genetic material known as deoxyribonucleic acid (DNA). DNA is a helix-shaped molecule made up of nucleotide base pairs. In each chromosome, sequences of DNA make up genes that control or partially control a number of visible characteristics, known as traits, such as eye color, hair color, and so on. A single gene may have multiple possible variations, or alleles. An allele is a specific version of a gene. So, a given gene may code for the trait of hair color, and the different alleles of that gene affect which hair color an individual has. When a sperm and egg fuse, their 23 chromosomes combine to create a zygote with 46 chromosomes (23 pairs). Therefore, each parent contributes half the genetic information carried by the offspring; the resulting physical characteristics of the offspring (called the phenotype) are determined by the interaction of genetic material supplied by the sperm and egg (called the genotype). A person’s genotype is the genetic makeup of that individual. Phenotype, on the other hand, refers to the individual’s inherited physical characteristics, which are a combination of genetic and environmental
 
 Watson, J. B. & Rayner, R. (1920). Conditioned emotional reactions. Journal of Experimental Psychology, 3, 1–14. Watson, J. B. (1919). Psychology from the standpoint of a behaviorist. J. B. Lippincott. Yamamoto, S., Humle, T., & Tanaka, M. (2013). Basis for cumulative cultural evolution in chimpanzees: Social learning of a more efficient tool-use technique. PLoS ONE, 8(1): e55768. doi:10.1371/journal.pone.0055768 Thinking and Intelligence Abler, W. (2013). Sapir, Harris, and Chomsky in the twentieth century. Cognitive Critique, 7, 29–48. American Association on Intellectual and Developmental Disabilities. (2013). Definition of intellectual disability. http://aaidd.org/intellectual-disability/definition#.UmkR2xD2Bh4 American Psychiatric Association. (2013). In Diagnostic and statistical manual of psychological disorders (5th ed., pp. 34–36). American Psychiatric Association. Aronson, E. (Ed.). (1995). Social cognition. In The social animal (p. 151). W.H. Freeman and Company. Atkins v. Virginia, 00-8452 (2002). Bartels, M., Rietveld, M., Van Baal, G., & Boomsma, D. I. (2002). Genetic and environmental influences on the development of intelligence. Behavior Genetics, 32(4), 237–238. Bartlett, F. C. (1932). Remembering: A study in experimental and social psychology. Cambridge University Press. Bayer, J. B., & Campbell, S. W. (2012). Texting while driving on automatic: Considering the frequency- independent side of habit. Computers in Human Behavior, 28, 2083–2090. Barton, S. M. (2003). Classroom accommodations for students with dyslexia. Learning Disabilities Journal, 13, 10–14. Berlin, B., & Kay, P. (1969). Basic color terms: Their universality and evolution. University of California Press. Berninger, V. W. (2008). Defining and differentiating dysgraphia, dyslexia, and language learning disability within a working memory model. In M. Mody & E. R. Silliman (Eds.), Brain, behavior, and learning in language and reading disorders (pp. 103–134). The Guilford Press. Blossom, M., & Morgan, J. L. (2006). Does the face say what the mouth says? A study of infants’ sensitivity to visual prosody. In the 30th annual Boston University Conference on Language Development, Somerville, MA. Boake, C. (2002, May 24). From the Binet-Simon to the Wechsler-Bellevue: Tracing the history of intelligence testing. Journal of Clinical and Experimental Neuropsychology, 24(3), 383–405. Boroditsky, L. (2001). Does language shape thought? Mandarin and English speakers’ conceptions of time. Cognitive Psychology, 43, 1–22. Boroditsky, L. (2011, February). How language shapes thought. Scientific American, 63–65. Bouchard, T. J., Lykken, D. T., McGue, M., Segal, N. L., & Tellegen, A. (1990). Sources of human psychological differences: The Minnesota Study of Twins Reared Apart. Science, 250, 223–228. Buck v. Bell, 274 U.S. 200 Cairns Regional Council. (n.d.). Cultural greetings. http://www.cairns.qld.gov.au/__data/assets/pdf_file/0007/ 8953/CulturalGreetingExercise.pdf
 
-of psychology and therefore influencing its development. They also suffered from the attitudes of White male psychologists who were not immune to the nonscientific attitudes prevalent in the society in which they DIG DEEPER 16 1 • Introduction to Psychology Access for free at openstax.org
+of psychology and therefore influencing its development. They also suffered from the attitudes of White male <mark style="background-color: #ffeb3b; font-weight: bold;">psychologists</mark> who were not immune to the nonscientific attitudes prevalent in the society in which they DIG DEEPER 16 1 • Introduction to Psychology Access for free at openstax.org
 
-actual selves, we experience a state Rogers called incongruence, which can lead to maladjustment. Both Rogers’s and Maslow’s theories focus on individual choices and do not believe that biology is deterministic. 11.6 Biological Approaches LEARNING OBJECTIVES By the end of this section, you will be able to: • Discuss the findings of the Minnesota Study of Twins Reared Apart as they relate to personality and genetics • Discuss temperament and describe the three infant temperaments identified by Thomas and Chess • Discuss the evolutionary perspective on personality development How much of our personality is in-born and biological, and how much is influenced by the environment and culture we are raised in? Psychologists who favor the biological approach believe that inherited predispositions as well as physiological processes can be used to explain differences in our personalities (Burger, 2008). Evolutionary psychology relative to personality development looks at personality traits that are universal, as well as differences across individuals. In this view, adaptive differences have evolved and then provide a survival and reproductive advantage. Individual differences are important from an evolutionary viewpoint for several reasons. Certain ind
+actual selves, we experience a state Rogers called incongruence, which can lead to maladjustment. Both Rogers’s and Maslow’s theories focus on individual choices and do not believe that biology is deterministic. 11.6 Biological Approaches LEARNING OBJECTIVES By the end of this section, you will be able to: • Discuss the findings of the Minnesota Study of Twins Reared Apart as they relate to personality and genetics • Discuss temperament and describe the three infant temperaments identified by Thomas and Chess • Discuss the <mark style="background-color: #ffeb3b; font-weight: bold;">evolutionary</mark> perspective on personality development How much of our personality is in-born and biological, and how much is influenced by the environment and culture we are raised in? <mark style="background-color: #ffeb3b; font-weight: bold;">psychologists</mark> who favor the biological approach believe that inherited predispositions as well as physiological processes can be used to explain differences in our personalities (Burger, 2008). <mark style="background-color: #ffeb3b; font-weight: bold;">evolutionary</mark> psychology relative to personality development looks at personality traits that are universal, as well as differences across individuals. In this view, adaptive differences have evolved and then provide a survival and reproductive advantage. Individual differences are important from an <mark style="background-color: #ffeb3b; font-weight: bold;">evolutionary</mark> viewpoint for several reasons. Certain ind  <!-- HIGHLIGHTING HERE ONLY -->
+                </div>
+            </div>
+            
+            <div class="stats">
+                <div class="stat-item">
+                    <div class="stat-label">Sections Used</div>
+                    <div class="stat-value">11</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Pages Referenced</div>
+                    <div class="stat-value">11</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Keywords Found</div>
+                    <div class="stat-value">3</div>
+                </div>
+            </div>
+            
+            <div class="footer">
+                Generated from Psychology 2e Textbook • Question 23 • 2026-02-27
             </div>
         </div>
         
-        <div class="stats">
-            <div class="stat-item">
-                <div class="stat-label">Sections Used</div>
-                <div class="stat-value">11</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-label">Pages Referenced</div>
-                <div class="stat-value">11</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-label">Keywords Found</div>
-                <div class="stat-value">0</div>
-            </div>
-        </div>
-        
-        <div class="footer">
-            Generated from Psychology 2e Textbook • Question 23 • 2026-02-26
-        </div>
-    </div>
-    
-    <!-- Font Awesome for icons -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
-</body>
-</html>
+        <!-- Font Awesome for icons -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
+    </body>
+    </html>

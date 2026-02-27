@@ -1,392 +1,357 @@
 <!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Evidence Visualization - Question 22</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            padding: 20px;
-        }
-        
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            overflow: hidden;
-        }
-        
-        .header {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            padding: 30px;
-        }
-        
-        .header h1 {
-            font-size: 24px;
-            margin-bottom: 10px;
-        }
-        
-        .header .question {
-            font-size: 18px;
-            opacity: 0.9;
-            background: rgba(255, 255, 255, 0.2);
-            padding: 15px;
-            border-radius: 10px;
-            margin-top: 10px;
-            line-height: 1.5;
-        }
-        
-        .keywords-bar {
-            background: #f0f0f0;
-            padding: 15px 30px;
-            border-bottom: 1px solid #e0e0e0;
-        }
-        
-        .keywords-title {
-            font-size: 14px;
-            color: #666;
-            margin-bottom: 10px;
-            font-weight: 600;
-        }
-        
-        .keyword-badge {
-            display: inline-block;
-            background: #ffeb3b;
-            color: #333;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 13px;
-            margin: 0 5px 5px 0;
-            font-weight: 500;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-        
-        .answer-section {
-            padding: 30px;
-            background: #f8f9fa;
-            border-bottom: 1px solid #e0e0e0;
-        }
-        
-        .answer-section h3 {
-            color: #333;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .answer-section h3 i {
-            color: #667eea;
-        }
-        
-        .answer-content {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            line-height: 1.8;
-            color: #444;
-            border-left: 4px solid #667eea;
-        }
-        
-        .answer-content mark {
-            background-color: #ffeb3b;
-            padding: 2px 0;
-            font-weight: 500;
-        }
-        
-        .evidence-section {
-            padding: 30px;
-        }
-        
-        .evidence-section h3 {
-            color: #333;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .evidence-section h3 i {
-            color: #667eea;
-        }
-        
-        .evidence-card {
-            background: #f8f9fa;
-            border-radius: 10px;
-            padding: 20px;
-            margin-bottom: 20px;
-            border-left: 4px solid #667eea;
-        }
-        
-        .evidence-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-        
-        .section-name {
-            font-weight: 600;
-            color: #333;
-            background: #e8eaf6;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 14px;
-        }
-        
-        .page-number {
-            color: #666;
-            background: white;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 14px;
-            border: 1px solid #e0e0e0;
-        }
-        
-        .relevance {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 14px;
-        }
-        
-        .term-badge {
-            display: inline-block;
-            background: #ffeb3b;
-            color: #333;
-            padding: 3px 10px;
-            border-radius: 15px;
-            font-size: 12px;
-            margin: 0 5px 5px 0;
-            font-weight: 500;
-        }
-        
-        .evidence-text {
-            background: white;
-            padding: 15px;
-            border-radius: 8px;
-            color: #555;
-            line-height: 1.6;
-            margin: 15px 0 0 0;
-            border: 1px solid #e0e0e0;
-        }
-        
-        .evidence-text mark {
-            background-color: #ffeb3b;
-            padding: 2px 0;
-            font-weight: 500;
-        }
-        
-        .highlighted-context {
-            padding: 30px;
-            background: #f8f9fa;
-            border-top: 1px solid #e0e0e0;
-            border-bottom: 1px solid #e0e0e0;
-        }
-        
-        .highlighted-context h3 {
-            color: #333;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .context-box {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            max-height: 400px;
-            overflow-y: auto;
-            border: 1px solid #e0e0e0;
-            line-height: 1.8;
-            font-size: 14px;
-        }
-        
-        .context-box mark {
-            background-color: #ffeb3b;
-            padding: 2px 0;
-            font-weight: 500;
-        }
-        
-        .stats {
-            display: flex;
-            gap: 15px;
-            padding: 20px 30px;
-            background: white;
-            flex-wrap: wrap;
-        }
-        
-        .stat-item {
-            background: #f8f9fa;
-            padding: 10px 20px;
-            border-radius: 10px;
-            flex: 1;
-            min-width: 120px;
-            text-align: center;
-            border: 1px solid #e0e0e0;
-        }
-        
-        .stat-label {
-            font-size: 12px;
-            color: #666;
-            margin-bottom: 5px;
-        }
-        
-        .stat-value {
-            font-size: 24px;
-            font-weight: 600;
-            color: #667eea;
-        }
-        
-        .footer {
-            padding: 20px 30px;
-            background: #f0f0f0;
-            text-align: center;
-            color: #666;
-            font-size: 14px;
-            border-top: 1px solid #e0e0e0;
-        }
-        
-        @media (max-width: 768px) {
-            .header {
+    <html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Evidence Visualization - Question 22</title>
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+            
+            body {
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                min-height: 100vh;
                 padding: 20px;
             }
             
-            .answer-section,
-            .evidence-section,
-            .highlighted-context {
+            .container {
+                max-width: 1000px;
+                margin: 0 auto;
+                background: white;
+                border-radius: 20px;
+                box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+                overflow: hidden;
+            }
+            
+            .header {
+                background: linear-gradient(135deg, #667eea, #764ba2);
+                color: white;
+                padding: 30px;
+            }
+            
+            .header h1 {
+                font-size: 24px;
+                margin-bottom: 10px;
+            }
+            
+            .header .question {
+                font-size: 18px;
+                opacity: 0.9;
+                background: rgba(255, 255, 255, 0.2);
+                padding: 15px;
+                border-radius: 10px;
+                margin-top: 10px;
+                line-height: 1.5;
+            }
+            
+            .keywords-bar {
+                background: #f0f0f0;
+                padding: 15px 30px;
+                border-bottom: 1px solid #e0e0e0;
+            }
+            
+            .keywords-title {
+                font-size: 14px;
+                color: #666;
+                margin-bottom: 10px;
+                font-weight: 600;
+            }
+            
+            .keyword-badge {
+                display: inline-block;
+                background: #ffeb3b;
+                color: #333;
+                padding: 5px 12px;
+                border-radius: 20px;
+                font-size: 13px;
+                margin: 0 5px 5px 0;
+                font-weight: 500;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            }
+            
+            .answer-section {
+                padding: 30px;
+                background: #f8f9fa;
+                border-bottom: 1px solid #e0e0e0;
+            }
+            
+            .answer-section h3 {
+                color: #333;
+                margin-bottom: 15px;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+            
+            .answer-section h3 i {
+                color: #667eea;
+            }
+            
+            .answer-content {
+                background: white;
                 padding: 20px;
+                border-radius: 10px;
+                line-height: 1.8;
+                color: #444;
+                border-left: 4px solid #667eea;
+            }
+            
+            /* NO mark styling for answer - it stays plain */
+            
+            .evidence-section {
+                padding: 30px;
+            }
+            
+            .evidence-section h3 {
+                color: #333;
+                margin-bottom: 20px;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+            
+            .evidence-section h3 i {
+                color: #667eea;
+            }
+            
+            .evidence-card {
+                background: #f8f9fa;
+                border-radius: 10px;
+                padding: 20px;
+                margin-bottom: 20px;
+                border-left: 4px solid #667eea;
             }
             
             .evidence-header {
-                flex-direction: column;
-                align-items: flex-start;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 15px;
+                flex-wrap: wrap;
+                gap: 10px;
             }
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <div class="header">
-            <h1>📚 Evidence Visualization</h1>
-            <div class="question">
-                <strong>Question 22:</strong> 
+            
+            .section-name {
+                font-weight: 600;
+                color: #333;
+                background: #e8eaf6;
+                padding: 5px 12px;
+                border-radius: 20px;
+                font-size: 14px;
+            }
+            
+            .page-number {
+                color: #666;
+                background: white;
+                padding: 5px 12px;
+                border-radius: 20px;
+                font-size: 14px;
+                border: 1px solid #e0e0e0;
+            }
+            
+            .term-badge {
+                display: inline-block;
+                background: #ffeb3b;
+                color: #333;
+                padding: 3px 10px;
+                border-radius: 15px;
+                font-size: 12px;
+                margin: 0 5px 5px 0;
+                font-weight: 500;
+            }
+            
+            .evidence-text {
+                background: white;
+                padding: 15px;
+                border-radius: 8px;
+                color: #555;
+                line-height: 1.6;
+                margin: 15px 0 0 0;
+                border: 1px solid #e0e0e0;
+            }
+            
+            .evidence-text mark {
+                background-color: #ffeb3b;
+                padding: 2px 0;
+                font-weight: 500;
+            }
+            
+            .highlighted-context {
+                padding: 30px;
+                background: #f8f9fa;
+                border-top: 1px solid #e0e0e0;
+                border-bottom: 1px solid #e0e0e0;
+            }
+            
+            .highlighted-context h3 {
+                color: #333;
+                margin-bottom: 15px;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+            
+            .context-box {
+                background: white;
+                padding: 20px;
+                border-radius: 10px;
+                max-height: 400px;
+                overflow-y: auto;
+                border: 1px solid #e0e0e0;
+                line-height: 1.8;
+                font-size: 14px;
+            }
+            
+            .context-box mark {
+                background-color: #ffeb3b;
+                padding: 2px 0;
+                font-weight: 500;
+            }
+            
+            .stats {
+                display: flex;
+                gap: 15px;
+                padding: 20px 30px;
+                background: white;
+                flex-wrap: wrap;
+            }
+            
+            .stat-item {
+                background: #f8f9fa;
+                padding: 10px 20px;
+                border-radius: 10px;
+                flex: 1;
+                min-width: 120px;
+                text-align: center;
+                border: 1px solid #e0e0e0;
+            }
+            
+            .stat-label {
+                font-size: 12px;
+                color: #666;
+                margin-bottom: 5px;
+            }
+            
+            .stat-value {
+                font-size: 24px;
+                font-weight: 600;
+                color: #667eea;
+            }
+            
+            .footer {
+                padding: 20px 30px;
+                background: #f0f0f0;
+                text-align: center;
+                color: #666;
+                font-size: 14px;
+                border-top: 1px solid #e0e0e0;
+            }
+            
+            @media (max-width: 768px) {
+                .header {
+                    padding: 20px;
+                }
+                
+                .answer-section,
+                .evidence-section,
+                .highlighted-context {
+                    padding: 20px;
+                }
+                
+                .evidence-header {
+                    flex-direction: column;
+                    align-items: flex-start;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="header">
+                <h1>📚 Evidence Visualization</h1>
+                <div class="question">
+                    <strong>Question 22:</strong> What is biopsychology?
+                </div>
             </div>
-        </div>
-        
-        <div class="keywords-bar">
-            <div class="keywords-title">🔑 Extracted Keywords:</div>
-
-        </div>
-        
-        <div class="answer-section">
-            <h3><i class="fas fa-robot"></i> Generated Answer</h3>
-            <div class="answer-content">
-                Biopsychology, also referred to as biological psychology, is the area of psychology that focuses on the immediate causes of behavior based in the physiology of a human or other animal. It is an interdisciplinary approach that involves collaborations among people from diverse backgrounds, including biologists, medical professionals, physiologists, and chemists, and is often referred to as neuroscience.
+            
+            <div class="keywords-bar">
+                <div class="keywords-title">🔑 Extracted Keywords:</div>
+    <span class="keyword-badge">biopsychology</span>
             </div>
-        </div>
-        
-        <div class="evidence-section">
-            <h3><i class="fas fa-book"></i> Evidence by Section</h3>
-
+            
+            <div class="answer-section">
+                <h3><i class="fas fa-robot"></i> Generated Answer</h3>
+                <div class="answer-content">
+                    Biopsychology, also referred to as biological psychology, is the area of psychology that focuses on the immediate causes of behavior based in the physiology of a human or other animal. It is an interdisciplinary approach that involves collaborations among people from diverse backgrounds, including biologists, medical professionals, physiologists, and chemists, and is often referred to as neuroscience.  <!-- NO HIGHLIGHTING HERE -->
+                </div>
+            </div>
+            
+            <div class="evidence-section">
+                <h3><i class="fas fa-book"></i> Evidence by Section</h3>
+    
             <div class="evidence-card">
                 <div class="evidence-header">
                     <span class="section-name">📖 1.1 What Is Psychology</span>
                     <span class="page-number">📄 Page 20</span>
-                    <span class="relevance">⭐ Relevance: 0.7</span>
-                </div>
-                <div>
-
                 </div>
                 <div class="evidence-text">
-                    This section discusses 1.1 what is psychology. The content here is relevant to your question about ...
+                    sensory and motor systems, sleep, drug use and abuse, ingestive behavior, reproductive behavior, neurodevelopment, plasticity of the nervous system, and biological correlates of psychological disorders. Given the broad areas of interest falling under the purview of biological psychology, it will pro  <!-- HIGHLIGHTING HERE ONLY -->
                 </div>
             </div>
-
+    
             <div class="evidence-card">
                 <div class="evidence-header">
                     <span class="section-name">📖 1.10 Biological psychologists study how the structure and function of the nervous system generate
 behavior</span>
                     <span class="page-number">📄 Page 23</span>
-                    <span class="relevance">⭐ Relevance: 0.75</span>
-                </div>
-                <div>
-
                 </div>
                 <div class="evidence-text">
-                    This section discusses 1.10 biological psychologists study how the structure and function of the nervous system generate
-behavior. The content here is relevant to your question about ...
+                    sensory and motor systems, sleep, drug use and abuse, ingestive behavior, reproductive behavior, neurodevelopment, plasticity of the nervous system, and biological correlates of psychological disorders. Given the broad areas of interest falling under the purview of biological psychology, it will pro  <!-- HIGHLIGHTING HERE ONLY -->
                 </div>
             </div>
-
+    
             <div class="evidence-card">
                 <div class="evidence-header">
                     <span class="section-name">📖 1.11 When you look at this image</span>
                     <span class="page-number">📄 Page 32</span>
-                    <span class="relevance">⭐ Relevance: 0.8</span>
-                </div>
-                <div>
-
                 </div>
                 <div class="evidence-text">
-                    This section discusses 1.11 when you look at this image. The content here is relevant to your question about ...
+                    sensory and motor systems, sleep, drug use and abuse, ingestive behavior, reproductive behavior, neurodevelopment, plasticity of the nervous system, and biological correlates of psychological disorders. Given the broad areas of interest falling under the purview of biological psychology, it will pro  <!-- HIGHLIGHTING HERE ONLY -->
                 </div>
             </div>
-
+    
             <div class="evidence-card">
                 <div class="evidence-header">
                     <span class="section-name">📖 1.16 Cognitive-behavioral therapists take cognitive processes and behaviors into account when providing
 psychotherapy</span>
                     <span class="page-number">📄 Page 33</span>
-                    <span class="relevance">⭐ Relevance: 0.85</span>
-                </div>
-                <div>
-
                 </div>
                 <div class="evidence-text">
-                    This section discusses 1.16 cognitive-behavioral therapists take cognitive processes and behaviors into account when providing
-psychotherapy. The content here is relevant to your question about ...
+                    sensory and motor systems, sleep, drug use and abuse, ingestive behavior, reproductive behavior, neurodevelopment, plasticity of the nervous system, and biological correlates of psychological disorders. Given the broad areas of interest falling under the purview of biological psychology, it will pro  <!-- HIGHLIGHTING HERE ONLY -->
                 </div>
             </div>
-
+    
             <div class="evidence-card">
                 <div class="evidence-header">
                     <span class="section-name">📖 1.3 Contemporary Psychology
 Psychology is a diverse discipline that is made up of several major subdivisions with unique perspectives</span>
                     <span class="page-number">📄 Page 38</span>
-                    <span class="relevance">⭐ Relevance: 0.9</span>
-                </div>
-                <div>
-
                 </div>
                 <div class="evidence-text">
-                    This section discusses 1.3 contemporary psychology
-psychology is a diverse discipline that is made up of several major subdivisions with unique perspectives. The content here is relevant to your question about ...
+                    sensory and motor systems, sleep, drug use and abuse, ingestive behavior, reproductive behavior, neurodevelopment, plasticity of the nervous system, and biological correlates of psychological disorders. Given the broad areas of interest falling under the purview of biological psychology, it will pro  <!-- HIGHLIGHTING HERE ONLY -->
                 </div>
             </div>
-
-        </div>
-        
-        <div class="highlighted-context">
-            <h3><i class="fas fa-highlighter"></i> Highlighted Context</h3>
-            <div class="context-box">
-                sensory and motor systems, sleep, drug use and abuse, ingestive behavior, reproductive behavior, neurodevelopment, plasticity of the nervous system, and biological correlates of psychological disorders. Given the broad areas of interest falling under the purview of biological psychology, it will probably come as no surprise that individuals from all sorts of backgrounds are involved in this research, including biologists, medical professionals, physiologists, and chemists. This interdisciplinary approach is often referred to as neuroscience, of which biological psychology is a component (Carlson, 2013). While biopsychology typically focuses on the immediate causes of behavior based in the physiology of a human or other animal, evolutionary psychology seeks to study the ultimate biological causes of behavior. To the extent that a behavior is impacted by genetics, a behavior, like any anatomical characteristic of a human or animal, will demonstrate adaption to its surroundings. These surroundings include the physical environment and, since interactions between organisms can be important to survival and reproduction, the social environment. The study of behavior in the context of evolution has its origins with Charles Darwin, the co- discoverer of the theory of evolution by natural selection. Darwin was well aware that behaviors should be adaptive and wrote books titled, The Descent of Man (1871) and The Expression of the Emotions in Man and Animals (1872), to explore this field. Evolutionary psychology, and specifically, the evolutionary psychology of humans, has enjoyed a resurgence in recent decades. To be subject to evolution by natural selection, a behavior must have a significant genetic cause. In general, we expect all human cultures to express a behavior if it is caused genetically, since the genetic differences among human groups are small. The approach taken by most evolutionary psychologists is to predict the outcome of a behavior in a particular situation based on evolutionary theory and then to make observations, or conduct experiments, to determine whether the results match the theory. It is important to recognize that these types of studies are not strong evidence that a behavior is adaptive, since they lack information that the behavior is in some part genetic and not entirely cultural (Endler, 1986). Demonstrating that a trait, especially in humans, is naturally selected is extraordinarily difficult; perhaps for this reason, some evolutionary psychologists are content to assume the behaviors they study have genetic determinants (Confer et al., 2010). One other drawback of evolutionary psychology is that the traits that we
+    
+            </div>
+            
+            <div class="highlighted-context">
+                <h3><i class="fas fa-highlighter"></i> Highlighted Context</h3>
+                <div class="context-box">
+                    sensory and motor systems, sleep, drug use and abuse, ingestive behavior, reproductive behavior, neurodevelopment, plasticity of the nervous system, and biological correlates of psychological disorders. Given the broad areas of interest falling under the purview of biological psychology, it will probably come as no surprise that individuals from all sorts of backgrounds are involved in this research, including biologists, medical professionals, physiologists, and chemists. This interdisciplinary approach is often referred to as neuroscience, of which biological psychology is a component (Carlson, 2013). While <mark style="background-color: #ffeb3b; font-weight: bold;">biopsychology</mark> typically focuses on the immediate causes of behavior based in the physiology of a human or other animal, evolutionary psychology seeks to study the ultimate biological causes of behavior. To the extent that a behavior is impacted by genetics, a behavior, like any anatomical characteristic of a human or animal, will demonstrate adaption to its surroundings. These surroundings include the physical environment and, since interactions between organisms can be important to survival and reproduction, the social environment. The study of behavior in the context of evolution has its origins with Charles Darwin, the co- discoverer of the theory of evolution by natural selection. Darwin was well aware that behaviors should be adaptive and wrote books titled, The Descent of Man (1871) and The Expression of the Emotions in Man and Animals (1872), to explore this field. Evolutionary psychology, and specifically, the evolutionary psychology of humans, has enjoyed a resurgence in recent decades. To be subject to evolution by natural selection, a behavior must have a significant genetic cause. In general, we expect all human cultures to express a behavior if it is caused genetically, since the genetic differences among human groups are small. The approach taken by most evolutionary psychologists is to predict the outcome of a behavior in a particular situation based on evolutionary theory and then to make observations, or conduct experiments, to determine whether the results match the theory. It is important to recognize that these types of studies are not strong evidence that a behavior is adaptive, since they lack information that the behavior is in some part genetic and not entirely cultural (Endler, 1986). Demonstrating that a trait, especially in humans, is naturally selected is extraordinarily difficult; perhaps for this reason, some evolutionary psychologists are content to assume the behaviors they study have genetic determinants (Confer et al., 2010). One other drawback of evolutionary psychology is that the traits that we
 
 all factors of interest to someone working in the domain of sensation and perception. FIGURE 1.11 When you look at this image, you may see a duck or a rabbit. The sensory information remains the same, but your perception can vary dramatically. As described in a later chapter that focuses on the results of studies in sensation and perception, our experience of our world is not as simple as the sum total of all of the sensory information (or sensations) together. Rather, our experience (or perception) is complex and is influenced by where we focus our attention, our previous experiences, and even our cultural backgrounds. Cognitive Psychology As mentioned in the previous section, the cognitive revolution created an impetus for psychologists to focus their attention on better understanding the mind and mental processes that underlie behavior. Thus, cognitive psychology is the area of psychology that focuses on studying cognitions, or thoughts, and their relationship to our experiences and our actions. Like biological psychology, cognitive psychology is broad in its scope and often involves collaborations among people from a diverse range of disciplinary backgrounds. This has led some to coin the term cognitive science to describe the interdisciplinary nature of this area of research (Miller, 2003). Cognitive psychologists have research interests that span a spectrum of topics, ranging from attention to problem solving to language to memory. The approaches used in studying these topics are equally diverse. Given such diversity, cognitive psychology is not captured in one chapter of this text per se; rather, various concepts related to cognitive psychology will be covered in relevant portions of the chapters in this text on sensation and perception, thinking and intelligence, memory, lifespan development, social psychology, and therapy. Developmental Psychology Developmental psychology is the scientific study of development across a lifespan. Developmental psychologists are interested in processes related to physical maturation. However, their focus is not limited to the physical changes associated with aging, as they also focus on changes in cognitive skills, moral reasoning, social behavior, and other psychological attributes. Early developmental psychologists focused primarily on changes that occurred through reaching adulthood, providing enormous insight into the differences in physical, cognitive, and social capacities that exist between very young children and adults. For instance, research by Jean Piaget (Figure 1.12) demonstrated that very young children do not demonstrate object permanence. Object permanence refers to the understanding that physical things continue to exist,
 
@@ -400,31 +365,31 @@ including experimentation, rather than a method based only on forms of logical a
 
 able to do so by coming up with theories that generate hypotheses that are testable and falsifiable. Theories that stand up to their tests are retained and refined, while those that do not are discarded or modified. In this way, research enables scientists to separate fact from simple opinion. Having good information generated from research aids in making wise decisions both in public policy and in our personal lives. 2.2 Approaches to Research The clinical or case study involves studying just a few individuals for an extended period of time. While this approach provides an incredible depth of information, the ability to generalize these observations to the larger population is problematic. Naturalistic observation involves observing behavior in a natural setting and allows 64 2 • Summary Access for free at openstax.org
 
-received, and how this information is transformed into our perceptual experiences of the world around us. Cognitive psychology is concerned with the relationship that exists between thought and behavior, and developmental psychologists study the physical and cognit
+received, and how this information is transformed into our perceptual experiences of the world around us. Cognitive psychology is concerned with the relationship that exists between thought and behavior, and developmental psychologists study the physical and cognit  <!-- HIGHLIGHTING HERE ONLY -->
+                </div>
+            </div>
+            
+            <div class="stats">
+                <div class="stat-item">
+                    <div class="stat-label">Sections Used</div>
+                    <div class="stat-value">11</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Pages Referenced</div>
+                    <div class="stat-value">11</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Keywords Found</div>
+                    <div class="stat-value">1</div>
+                </div>
+            </div>
+            
+            <div class="footer">
+                Generated from Psychology 2e Textbook • Question 22 • 2026-02-27
             </div>
         </div>
         
-        <div class="stats">
-            <div class="stat-item">
-                <div class="stat-label">Sections Used</div>
-                <div class="stat-value">11</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-label">Pages Referenced</div>
-                <div class="stat-value">11</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-label">Keywords Found</div>
-                <div class="stat-value">0</div>
-            </div>
-        </div>
-        
-        <div class="footer">
-            Generated from Psychology 2e Textbook • Question 22 • 2026-02-26
-        </div>
-    </div>
-    
-    <!-- Font Awesome for icons -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
-</body>
-</html>
+        <!-- Font Awesome for icons -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
+    </body>
+    </html>

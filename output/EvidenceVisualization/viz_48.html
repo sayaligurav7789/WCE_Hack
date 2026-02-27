@@ -1,432 +1,396 @@
 <!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Evidence Visualization - Question 48</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            padding: 20px;
-        }
-        
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            overflow: hidden;
-        }
-        
-        .header {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            padding: 30px;
-        }
-        
-        .header h1 {
-            font-size: 24px;
-            margin-bottom: 10px;
-        }
-        
-        .header .question {
-            font-size: 18px;
-            opacity: 0.9;
-            background: rgba(255, 255, 255, 0.2);
-            padding: 15px;
-            border-radius: 10px;
-            margin-top: 10px;
-            line-height: 1.5;
-        }
-        
-        .keywords-bar {
-            background: #f0f0f0;
-            padding: 15px 30px;
-            border-bottom: 1px solid #e0e0e0;
-        }
-        
-        .keywords-title {
-            font-size: 14px;
-            color: #666;
-            margin-bottom: 10px;
-            font-weight: 600;
-        }
-        
-        .keyword-badge {
-            display: inline-block;
-            background: #ffeb3b;
-            color: #333;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 13px;
-            margin: 0 5px 5px 0;
-            font-weight: 500;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-        
-        .answer-section {
-            padding: 30px;
-            background: #f8f9fa;
-            border-bottom: 1px solid #e0e0e0;
-        }
-        
-        .answer-section h3 {
-            color: #333;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .answer-section h3 i {
-            color: #667eea;
-        }
-        
-        .answer-content {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            line-height: 1.8;
-            color: #444;
-            border-left: 4px solid #667eea;
-        }
-        
-        .answer-content mark {
-            background-color: #ffeb3b;
-            padding: 2px 0;
-            font-weight: 500;
-        }
-        
-        .evidence-section {
-            padding: 30px;
-        }
-        
-        .evidence-section h3 {
-            color: #333;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .evidence-section h3 i {
-            color: #667eea;
-        }
-        
-        .evidence-card {
-            background: #f8f9fa;
-            border-radius: 10px;
-            padding: 20px;
-            margin-bottom: 20px;
-            border-left: 4px solid #667eea;
-        }
-        
-        .evidence-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-        
-        .section-name {
-            font-weight: 600;
-            color: #333;
-            background: #e8eaf6;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 14px;
-        }
-        
-        .page-number {
-            color: #666;
-            background: white;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 14px;
-            border: 1px solid #e0e0e0;
-        }
-        
-        .relevance {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 14px;
-        }
-        
-        .term-badge {
-            display: inline-block;
-            background: #ffeb3b;
-            color: #333;
-            padding: 3px 10px;
-            border-radius: 15px;
-            font-size: 12px;
-            margin: 0 5px 5px 0;
-            font-weight: 500;
-        }
-        
-        .evidence-text {
-            background: white;
-            padding: 15px;
-            border-radius: 8px;
-            color: #555;
-            line-height: 1.6;
-            margin: 15px 0 0 0;
-            border: 1px solid #e0e0e0;
-        }
-        
-        .evidence-text mark {
-            background-color: #ffeb3b;
-            padding: 2px 0;
-            font-weight: 500;
-        }
-        
-        .highlighted-context {
-            padding: 30px;
-            background: #f8f9fa;
-            border-top: 1px solid #e0e0e0;
-            border-bottom: 1px solid #e0e0e0;
-        }
-        
-        .highlighted-context h3 {
-            color: #333;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .context-box {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            max-height: 400px;
-            overflow-y: auto;
-            border: 1px solid #e0e0e0;
-            line-height: 1.8;
-            font-size: 14px;
-        }
-        
-        .context-box mark {
-            background-color: #ffeb3b;
-            padding: 2px 0;
-            font-weight: 500;
-        }
-        
-        .stats {
-            display: flex;
-            gap: 15px;
-            padding: 20px 30px;
-            background: white;
-            flex-wrap: wrap;
-        }
-        
-        .stat-item {
-            background: #f8f9fa;
-            padding: 10px 20px;
-            border-radius: 10px;
-            flex: 1;
-            min-width: 120px;
-            text-align: center;
-            border: 1px solid #e0e0e0;
-        }
-        
-        .stat-label {
-            font-size: 12px;
-            color: #666;
-            margin-bottom: 5px;
-        }
-        
-        .stat-value {
-            font-size: 24px;
-            font-weight: 600;
-            color: #667eea;
-        }
-        
-        .footer {
-            padding: 20px 30px;
-            background: #f0f0f0;
-            text-align: center;
-            color: #666;
-            font-size: 14px;
-            border-top: 1px solid #e0e0e0;
-        }
-        
-        @media (max-width: 768px) {
-            .header {
+    <html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Evidence Visualization - Question 48</title>
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+            
+            body {
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                min-height: 100vh;
                 padding: 20px;
             }
             
-            .answer-section,
-            .evidence-section,
-            .highlighted-context {
+            .container {
+                max-width: 1000px;
+                margin: 0 auto;
+                background: white;
+                border-radius: 20px;
+                box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+                overflow: hidden;
+            }
+            
+            .header {
+                background: linear-gradient(135deg, #667eea, #764ba2);
+                color: white;
+                padding: 30px;
+            }
+            
+            .header h1 {
+                font-size: 24px;
+                margin-bottom: 10px;
+            }
+            
+            .header .question {
+                font-size: 18px;
+                opacity: 0.9;
+                background: rgba(255, 255, 255, 0.2);
+                padding: 15px;
+                border-radius: 10px;
+                margin-top: 10px;
+                line-height: 1.5;
+            }
+            
+            .keywords-bar {
+                background: #f0f0f0;
+                padding: 15px 30px;
+                border-bottom: 1px solid #e0e0e0;
+            }
+            
+            .keywords-title {
+                font-size: 14px;
+                color: #666;
+                margin-bottom: 10px;
+                font-weight: 600;
+            }
+            
+            .keyword-badge {
+                display: inline-block;
+                background: #ffeb3b;
+                color: #333;
+                padding: 5px 12px;
+                border-radius: 20px;
+                font-size: 13px;
+                margin: 0 5px 5px 0;
+                font-weight: 500;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            }
+            
+            .answer-section {
+                padding: 30px;
+                background: #f8f9fa;
+                border-bottom: 1px solid #e0e0e0;
+            }
+            
+            .answer-section h3 {
+                color: #333;
+                margin-bottom: 15px;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+            
+            .answer-section h3 i {
+                color: #667eea;
+            }
+            
+            .answer-content {
+                background: white;
                 padding: 20px;
+                border-radius: 10px;
+                line-height: 1.8;
+                color: #444;
+                border-left: 4px solid #667eea;
+            }
+            
+            /* NO mark styling for answer - it stays plain */
+            
+            .evidence-section {
+                padding: 30px;
+            }
+            
+            .evidence-section h3 {
+                color: #333;
+                margin-bottom: 20px;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+            
+            .evidence-section h3 i {
+                color: #667eea;
+            }
+            
+            .evidence-card {
+                background: #f8f9fa;
+                border-radius: 10px;
+                padding: 20px;
+                margin-bottom: 20px;
+                border-left: 4px solid #667eea;
             }
             
             .evidence-header {
-                flex-direction: column;
-                align-items: flex-start;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 15px;
+                flex-wrap: wrap;
+                gap: 10px;
             }
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <div class="header">
-            <h1>📚 Evidence Visualization</h1>
-            <div class="question">
-                <strong>Question 48:</strong> 
+            
+            .section-name {
+                font-weight: 600;
+                color: #333;
+                background: #e8eaf6;
+                padding: 5px 12px;
+                border-radius: 20px;
+                font-size: 14px;
+            }
+            
+            .page-number {
+                color: #666;
+                background: white;
+                padding: 5px 12px;
+                border-radius: 20px;
+                font-size: 14px;
+                border: 1px solid #e0e0e0;
+            }
+            
+            .term-badge {
+                display: inline-block;
+                background: #ffeb3b;
+                color: #333;
+                padding: 3px 10px;
+                border-radius: 15px;
+                font-size: 12px;
+                margin: 0 5px 5px 0;
+                font-weight: 500;
+            }
+            
+            .evidence-text {
+                background: white;
+                padding: 15px;
+                border-radius: 8px;
+                color: #555;
+                line-height: 1.6;
+                margin: 15px 0 0 0;
+                border: 1px solid #e0e0e0;
+            }
+            
+            .evidence-text mark {
+                background-color: #ffeb3b;
+                padding: 2px 0;
+                font-weight: 500;
+            }
+            
+            .highlighted-context {
+                padding: 30px;
+                background: #f8f9fa;
+                border-top: 1px solid #e0e0e0;
+                border-bottom: 1px solid #e0e0e0;
+            }
+            
+            .highlighted-context h3 {
+                color: #333;
+                margin-bottom: 15px;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+            
+            .context-box {
+                background: white;
+                padding: 20px;
+                border-radius: 10px;
+                max-height: 400px;
+                overflow-y: auto;
+                border: 1px solid #e0e0e0;
+                line-height: 1.8;
+                font-size: 14px;
+            }
+            
+            .context-box mark {
+                background-color: #ffeb3b;
+                padding: 2px 0;
+                font-weight: 500;
+            }
+            
+            .stats {
+                display: flex;
+                gap: 15px;
+                padding: 20px 30px;
+                background: white;
+                flex-wrap: wrap;
+            }
+            
+            .stat-item {
+                background: #f8f9fa;
+                padding: 10px 20px;
+                border-radius: 10px;
+                flex: 1;
+                min-width: 120px;
+                text-align: center;
+                border: 1px solid #e0e0e0;
+            }
+            
+            .stat-label {
+                font-size: 12px;
+                color: #666;
+                margin-bottom: 5px;
+            }
+            
+            .stat-value {
+                font-size: 24px;
+                font-weight: 600;
+                color: #667eea;
+            }
+            
+            .footer {
+                padding: 20px 30px;
+                background: #f0f0f0;
+                text-align: center;
+                color: #666;
+                font-size: 14px;
+                border-top: 1px solid #e0e0e0;
+            }
+            
+            @media (max-width: 768px) {
+                .header {
+                    padding: 20px;
+                }
+                
+                .answer-section,
+                .evidence-section,
+                .highlighted-context {
+                    padding: 20px;
+                }
+                
+                .evidence-header {
+                    flex-direction: column;
+                    align-items: flex-start;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="header">
+                <h1>📚 Evidence Visualization</h1>
+                <div class="question">
+                    <strong>Question 48:</strong> What is the difference between mood disorders and personality disorders?
+                </div>
             </div>
-        </div>
-        
-        <div class="keywords-bar">
-            <div class="keywords-title">🔑 Extracted Keywords:</div>
-
-        </div>
-        
-        <div class="answer-section">
-            <h3><i class="fas fa-robot"></i> Generated Answer</h3>
-            <div class="answer-content">
-                The provided textbook context does not explicitly discuss the difference between mood disorders and personality disorders. However, it does provide information on both types of disorders separately.
+            
+            <div class="keywords-bar">
+                <div class="keywords-title">🔑 Extracted Keywords:</div>
+    <span class="keyword-badge">difference</span><span class="keyword-badge">between</span><span class="keyword-badge">mood</span><span class="keyword-badge">disorders</span><span class="keyword-badge">personality</span><span class="keyword-badge">disorders</span>
+            </div>
+            
+            <div class="answer-section">
+                <h3><i class="fas fa-robot"></i> Generated Answer</h3>
+                <div class="answer-content">
+                    The provided textbook context does not explicitly discuss the difference between mood disorders and personality disorders. However, it does provide information on both types of disorders separately.
 
 Mood disorders are characterized by severe disturbances in mood and emotions, such as depression, mania, and elation (Rothschild, 1999). They are categorized into depressive disorders, which feature depression as the main symptom, and bipolar and related disorders, which feature mania as the defining feature.
 
 Personality disorders, on the other hand, are characterized by enduring patterns of thought, feeling, and behavior that deviate from societal norms and expectations. Borderline personality disorder, for example, is marked by instability in interpersonal relationships, self-image, and mood, as well as impulsivity (APA, 2013).
 
-While both mood disorders and personality disorders can affect an individual's emotional state and behavior, they are distinct categories of psychological disorders with different diagnostic criteria and characteristics.
+While both mood disorders and personality disorders can affect an individual's emotional state and behavior, they are distinct categories of psychological disorders with different diagnostic criteria and characteristics.  <!-- NO HIGHLIGHTING HERE -->
+                </div>
             </div>
-        </div>
-        
-        <div class="evidence-section">
-            <h3><i class="fas fa-book"></i> Evidence by Section</h3>
-
+            
+            <div class="evidence-section">
+                <h3><i class="fas fa-book"></i> Evidence by Section</h3>
+    
             <div class="evidence-card">
                 <div class="evidence-header">
                     <span class="section-name">📖 14.3
 Friedman and Booth-Kewley</span>
                     <span class="page-number">📄 Page 515</span>
-                    <span class="relevance">⭐ Relevance: 0.7</span>
-                </div>
-                <div>
-
                 </div>
                 <div class="evidence-text">
-                    This section discusses 14.3
-friedman and booth-kewley. The content here is relevant to your question about ...
+                    depression, but also mania and elation (Rothschild, 1999). All of us experience fluctuations in our <mark style="background-color: #ffeb3b; font-weight: bold;">mood</mark>s and emotional states, and often these fluctuations are caused by events in our lives. We become elated if our favorite team wins the World Series and dejected if a romantic relationship ends or   <!-- HIGHLIGHTING HERE ONLY -->
                 </div>
             </div>
-
+    
             <div class="evidence-card">
                 <div class="evidence-header">
                     <span class="section-name">📖 15.1 What Are Psychological Disorders</span>
                     <span class="page-number">📄 Page 550</span>
-                    <span class="relevance">⭐ Relevance: 0.75</span>
-                </div>
-                <div>
-
                 </div>
                 <div class="evidence-text">
-                    This section discusses 15.1 what are psychological disorders. The content here is relevant to your question about ...
+                    depression, but also mania and elation (Rothschild, 1999). All of us experience fluctuations in our <mark style="background-color: #ffeb3b; font-weight: bold;">mood</mark>s and emotional states, and often these fluctuations are caused by events in our lives. We become elated if our favorite team wins the World Series and dejected if a romantic relationship ends or   <!-- HIGHLIGHTING HERE ONLY -->
                 </div>
             </div>
-
+    
             <div class="evidence-card">
                 <div class="evidence-header">
                     <span class="section-name">📖 15.15 Mood disorders are characterized by massive disruptions in mood</span>
                     <span class="page-number">📄 Page 557</span>
-                    <span class="relevance">⭐ Relevance: 0.8</span>
-                </div>
-                <div>
-
                 </div>
                 <div class="evidence-text">
-                    This section discusses 15.15 mood disorders are characterized by massive disruptions in mood. The content here is relevant to your question about ...
+                    depression, but also mania and elation (Rothschild, 1999). All of us experience fluctuations in our <mark style="background-color: #ffeb3b; font-weight: bold;">mood</mark>s and emotional states, and often these fluctuations are caused by events in our lives. We become elated if our favorite team wins the World Series and dejected if a romantic relationship ends or   <!-- HIGHLIGHTING HERE ONLY -->
                 </div>
             </div>
-
+    
             <div class="evidence-card">
                 <div class="evidence-header">
                     <span class="section-name">📖 15.2
 Slightly over</span>
                     <span class="page-number">📄 Page 572</span>
-                    <span class="relevance">⭐ Relevance: 0.85</span>
-                </div>
-                <div>
-
                 </div>
                 <div class="evidence-text">
-                    This section discusses 15.2
-slightly over. The content here is relevant to your question about ...
+                    depression, but also mania and elation (Rothschild, 1999). All of us experience fluctuations in our <mark style="background-color: #ffeb3b; font-weight: bold;">mood</mark>s and emotional states, and often these fluctuations are caused by events in our lives. We become elated if our favorite team wins the World Series and dejected if a romantic relationship ends or   <!-- HIGHLIGHTING HERE ONLY -->
                 </div>
             </div>
-
+    
             <div class="evidence-card">
                 <div class="evidence-header">
                     <span class="section-name">📖 15.3 Perspectives on Psychological Disorders
 LEARNING OBJECTIVES
 By the end of this section</span>
                     <span class="page-number">📄 Page 573</span>
-                    <span class="relevance">⭐ Relevance: 0.9</span>
-                </div>
-                <div>
-
                 </div>
                 <div class="evidence-text">
-                    This section discusses 15.3 perspectives on psychological disorders
-learning objectives
-by the end of this section. The content here is relevant to your question about ...
+                    depression, but also mania and elation (Rothschild, 1999). All of us experience fluctuations in our <mark style="background-color: #ffeb3b; font-weight: bold;">mood</mark>s and emotional states, and often these fluctuations are caused by events in our lives. We become elated if our favorite team wins the World Series and dejected if a romantic relationship ends or   <!-- HIGHLIGHTING HERE ONLY -->
                 </div>
             </div>
-
-        </div>
-        
-        <div class="highlighted-context">
-            <h3><i class="fas fa-highlighter"></i> Highlighted Context</h3>
-            <div class="context-box">
-                depression, but also mania and elation (Rothschild, 1999). All of us experience fluctuations in our moods and emotional states, and often these fluctuations are caused by events in our lives. We become elated if our favorite team wins the World Series and dejected if a romantic relationship ends or if we lose our job. At times, we feel fantastic or miserable for no clear reason. People with mood disorders also experience mood fluctuations, but their fluctuations are extreme, distort their outlook on life, and impair their ability to function. FIGURE 15.15 Mood disorders are characterized by massive disruptions in mood. Symptoms can range from the extreme sadness and hopelessness of depression to the extreme elation and irritability of mania. (credit: Kiran Foster) The DSM-5 lists two general categories of mood disorders. Depressive disorders are a group of disorders in which depression is the main feature. Depression is a vague term that, in everyday language, refers to an intense and persistent sadness. Depression is a heterogeneous mood state—it consists of a broad spectrum of symptoms that range in severity. Depressed people feel sad, discouraged, and hopeless. These individuals lose interest in activities once enjoyed, often experience a decrease in drives such as hunger and sex, and frequently doubt personal worth. Depressive disorders vary by degree, but this chapter highlights the most well-known: major depressive disorder (sometimes called unipolar depression). Bipolar and related disorders are a group of disorders in which mania is the defining feature. Mania is a state of extreme elation and agitation. When people experience mania, they may become extremely talkative, behave recklessly, or attempt to take on many tasks simultaneously. The most recognized of these disorders is bipolar disorder. Major Depressive Disorder According to the DSM-5, the defining symptoms of major depressive disorder include “depressed mood most of the day, nearly every day” (feeling sad, empty, hopeless, or appearing tearful to others), and loss of interest and pleasure in usual activities (APA, 2013). In addition to feeling overwhelmingly sad most of each day, people with depression will no longer show interest or enjoyment in activities that previously were gratifying, such as hobbies, sports, sex, social events, time spent with family, and so on. Friends and family members may notice that the person has completely abandoned previously enjoyed hobbies; for example, an avid tennis player who develops major depressive disorder no longer plays tennis (Rothschild, 1999). To receive a
-
-preventing both a change in the nature of the memory and a change in the problematic appraisals. 15.7 Mood and Related Disorders LEARNING OBJECTIVES By the end of this section, you will be able to: • Distinguish normal states of sadness and euphoria from states of depression and mania • Describe the symptoms of major depressive disorder and bipolar disorder • Understand the differences between major depressive disorder and persistent depressive disorder, and identify two subtypes of depression • Define the criteria for a manic episode • Understand genetic, biological, and psychological explanations of major depressive disorder • Discuss the relationship between mood disorders and suicidal ideation, as well as factors associated with suicide Blake cries all day and feeling that he is worthless and his life is hopeless, he cannot get out of bed. Crystal stays up all night, talks very rapidly, and went on a shopping spree in which she spent $3,000 on furniture, although she cannot afford it. Maria recently had a baby, and she feels overwhelmed, teary, anxious, and panicked, and believes she is a terrible mother—practically every day since the baby was born. All these individuals demonstrate symptoms of a potential mood disorder. Mood disorders (Figure 15.15) are characterized by severe disturbances in mood and emotions—most often 560 15 • Psychological Disorders Access for free at openstax.org
-
-personality disorders the most frequent (Lezenweger, Lane, Loranger, & Kessler, 2007). Two of these personality disorders, borderline personality disorder and antisocial personality disorder, are regarded by many as especially problematic. Borderline Personality Disorder The “borderline” in borderline personality disorder was originally coined in the late 1930s in an effort to describe patients who appeared anxious, but were prone to brief psychotic experiences—that is, patients who were thought to be literally on the borderline between anxiety and psychosis (Freeman, Stone, Martin, & Reinecke, 2005). Today, borderline personality disorder has a completely different meaning. Borderline personality disorder is characterized chiefly by instability in interpersonal relationships, self-image, and mood, as well as marked impulsivity (APA, 2013). People with borderline personality disorder cannot tolerate the thought of being alone and will make frantic efforts (including making suicidal gestures and engaging in self-mutilation) to avoid abandonment or separation (whether real or imagined). Their relationships are intense and unstable; for example, a romantic partner may be idealized early in a relationship, but then later vilified at the slightest sign they appear to no longer show interest. These individuals have an unstable view of self and, thus, might suddenly display a shift in personal attitudes, interests, career plans, and choice of friends. For example, a law school student may, despite having invested tens of thousands of dollars toward earning a law degree and despite having performed well in the program, consider dropping out and pursuing a career in another field. People with borderline personality disorder may be highly impulsive and may engage in reckless and self-destructive behaviors such as excessive gambling, spending money irresponsibly, substance abuse, engaging in unsafe sex, and reckless driving. They sometimes show intense and inappropriate anger that they have difficulty controlling, and they can be moody, sarcastic, bitter, and verbally abusive. The prevalence of borderline personality disorder in the U.S. population is estimated to be around 1.4% (Lezenweger et al., 2007), but the rates are higher among those who use mental health services; approximately 10% of mental health outpatients and 20% of psychiatric inpatients meet the criteria for diagnosis (APA, 2013). Additionally, borderline personality disorder is comorbid with anxiety, mood, and substance use disorders (Lezenweger et al., 2007). Biological Basis for Borderline Personality Disorder Genetic factors appear to be important in the development of borderline personality disorder. For example, core personality traits that characterize this disorder, such as impulsivity and emotional instability, show
-
-LINK TO LEARNING Watch this video about treating substance-related disorders using the biological, behavioral, and psychodynamic approaches (http://openstax.org/l/subdisorder) to learn more. Comorbid Disorders Frequently, a person with an addiction to drugs and/or alcohol has an additional psychological disorder. Saying a person has comorbid disorders means the individual has two or more diagnoses. This can often be a substance-related diagnosis and another psychiatric diagnosis, such as depression, bipolar disorder, or schizophrenia. These individuals fall into the category of mentally ill and chemically addicted (MICA)—their problems are often chronic and expensive to treat, with limited success. Compared with the overall population, people who use illicit drugs or misuse prescription drugs are twice as likely to have a mood or anxiety disorder. Drug use can cause symptoms of mood and anxiety disorders and the reverse is also true—people with debilitating symptoms of a psychiatric disorder may self-medicate and misuse substances. In cases of comorbidity, the best treatment is thought to address both (or multiple) disorders simultaneously (NIDA, 2012). Behavior therapies are used to treat comorbid conditions, and in many cases, psychotropic medications are used along with psychotherapy. For example, evidence suggests that bupropion (trade names: Wellbutrin and Zyban), approved for treating depression and nicotine dependence, might also help reduce craving and use of the drug methamphetamine (NIDA, 2011). However, more research is needed to better understand how these medications work—particularly when combined in patients with comorbidities. 16.5 The Sociocultural Model and Therapy Utilization LEARNING OBJECTIVES By the end of this section, you will be able to: • Explain how the sociocultural model is used in therapy • Discuss barriers to mental health services among ethnic minorities The sociocultural perspective looks at you, your behaviors, and your symptoms in the context of your culture and background. For example, José is an 18-year-old Hispanic male from a traditional family. José comes to treatment because of depression. During the intake session, he reveals that he is gay and is nervous about telling his family. He also discloses that he is concerned because his religious background has taught him that being gay is wrong. How does his religious and cultural background affect him? How might his cultural background affect how his family reacts if José were to tell them he is gay? Mental health professionals must develop cultural competence (Figure 16.20), which means they must understand and address issues of race, culture, and ethnicity. They must also
-
-Types of Psychophysiological Disorders (adapted from Everly & Lating, 2002) Type of Psychophysiological Disorder Examples Cardiovascular hypertension, coronary heart disease Gastrointestinal irritable bowel syndrome Respiratory asthma, allergy Musculoskeletal low back pain, tension headaches Skin acne, eczema, psoriasis TABLE 14.3 Friedman and Booth-Kewley (1987) statistically reviewed 101 studies to examine the link between personality and illness. They proposed the existence of disease-prone personality characteristics, including depression, anger/hostility, and anxiety. Indeed, a study of over 61,000 Norwegians identified depression as a risk factor for all major disease-related causes of death (Mykletun et al., 2007). In addition, neuroticism—a personality trait that reflects how anxious, moody, and sad one is—has been identified as a risk factor for chronic health problems and mortality (Ploubidis & Grundy, 2009). Below, we discuss two kinds of psychophysiological disorders about which a great deal is known: cardiovascular disorders and asthma. First, however, it is necessary to turn our attention to a discussion of the immune system—one of the major pathways through which stress and emotional factors can lead to illness and disease. Social Status, Stress, and Health Care Psychologists have long been aware that social status (e.g., wealth, privilege) is intimately tied to stress, health, and well-being. Some factors that contribute to high stress and poor health among people with lower social status include lack of control and predictability (e.g., greater unemployment) and resource inequality (e.g., less access to health care and other community resources) (Marmot & Sapolsky, 2014). In the United States, resource inequalities tied to social status often create race and gender differences in health care. For example, African American women have the highest rates of emergency room visits and unmet health care needs compared to any other group, and this disparity increased significantly from 2006 to 2014 (Manuel, 2018). Lesbian, gay, bisexual, and transgender youth often experience poor quality of care as a result of stigma, lack of understanding, and insensitivity among health care professionals (Hafeez, Zeshan, Tahir, Jahan, & Naveed, 2017). One goal of the U.S. government’s Healthy People 2020 initiative is to eliminate gender and race disparities in health care. Their interact
-            </div>
-        </div>
-        
-        <div class="stats">
-            <div class="stat-item">
-                <div class="stat-label">Sections Used</div>
-                <div class="stat-value">9</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-label">Pages Referenced</div>
-                <div class="stat-value">11</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-label">Keywords Found</div>
-                <div class="stat-value">0</div>
-            </div>
-        </div>
-        
-        <div class="footer">
-            Generated from Psychology 2e Textbook • Question 48 • 2026-02-26
-        </div>
-    </div>
     
-    <!-- Font Awesome for icons -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
-</body>
-</html>
+            </div>
+            
+            <div class="highlighted-context">
+                <h3><i class="fas fa-highlighter"></i> Highlighted Context</h3>
+                <div class="context-box">
+                    depression, but also mania and elation (Rothschild, 1999). All of us experience fluctuations in our <mark style="background-color: #ffeb3b; font-weight: bold;">mood</mark>s and emotional states, and often these fluctuations are caused by events in our lives. We become elated if our favorite team wins the World Series and dejected if a romantic relationship ends or if we lose our job. At times, we feel fantastic or miserable for no clear reason. People with <mark style="background-color: #ffeb3b; font-weight: bold;">mood</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">disorders</mark> also experience <mark style="background-color: #ffeb3b; font-weight: bold;">mood</mark> fluctuations, but their fluctuations are extreme, distort their outlook on life, and impair their ability to function. FIGURE 15.15 <mark style="background-color: #ffeb3b; font-weight: bold;">mood</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">disorders</mark> are characterized by massive disruptions in <mark style="background-color: #ffeb3b; font-weight: bold;">mood</mark>. Symptoms can range from the extreme sadness and hopelessness of depression to the extreme elation and irritability of mania. (credit: Kiran Foster) The DSM-5 lists two general categories of <mark style="background-color: #ffeb3b; font-weight: bold;">mood</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">disorders</mark>. Depressive <mark style="background-color: #ffeb3b; font-weight: bold;">disorders</mark> are a group of <mark style="background-color: #ffeb3b; font-weight: bold;">disorders</mark> in which depression is the main feature. Depression is a vague term that, in everyday language, refers to an intense and persistent sadness. Depression is a heterogeneous <mark style="background-color: #ffeb3b; font-weight: bold;">mood</mark> state—it consists of a broad spectrum of symptoms that range in severity. Depressed people feel sad, discouraged, and hopeless. These individuals lose interest in activities once enjoyed, often experience a decrease in drives such as hunger and sex, and frequently doubt personal worth. Depressive <mark style="background-color: #ffeb3b; font-weight: bold;">disorders</mark> vary by degree, but this chapter highlights the most well-known: major depressive disorder (sometimes called unipolar depression). Bipolar and related <mark style="background-color: #ffeb3b; font-weight: bold;">disorders</mark> are a group of <mark style="background-color: #ffeb3b; font-weight: bold;">disorders</mark> in which mania is the defining feature. Mania is a state of extreme elation and agitation. When people experience mania, they may become extremely talkative, behave recklessly, or attempt to take on many tasks simultaneously. The most recognized of these <mark style="background-color: #ffeb3b; font-weight: bold;">disorders</mark> is bipolar disorder. Major Depressive Disorder According to the DSM-5, the defining symptoms of major depressive disorder include “depressed <mark style="background-color: #ffeb3b; font-weight: bold;">mood</mark> most of the day, nearly every day” (feeling sad, empty, hopeless, or appearing tearful to others), and loss of interest and pleasure in usual activities (APA, 2013). In addition to feeling overwhelmingly sad most of each day, people with depression will no longer show interest or enjoyment in activities that previously were gratifying, such as hobbies, sports, sex, social events, time spent with family, and so on. Friends and family members may notice that the person has completely abandoned previously enjoyed hobbies; for example, an avid tennis player who develops major depressive disorder no longer plays tennis (Rothschild, 1999). To receive a
+
+preventing both a change in the nature of the memory and a change in the problematic appraisals. 15.7 <mark style="background-color: #ffeb3b; font-weight: bold;">mood</mark> and Related <mark style="background-color: #ffeb3b; font-weight: bold;">disorders</mark> LEARNING OBJECTIVES By the end of this section, you will be able to: • Distinguish normal states of sadness and euphoria from states of depression and mania • Describe the symptoms of major depressive disorder and bipolar disorder • Understand the <mark style="background-color: #ffeb3b; font-weight: bold;">difference</mark>s <mark style="background-color: #ffeb3b; font-weight: bold;">between</mark> major depressive disorder and persistent depressive disorder, and identify two subtypes of depression • Define the criteria for a manic episode • Understand genetic, biological, and psychological explanations of major depressive disorder • Discuss the relationship <mark style="background-color: #ffeb3b; font-weight: bold;">between</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">mood</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">disorders</mark> and suicidal ideation, as well as factors associated with suicide Blake cries all day and feeling that he is worthless and his life is hopeless, he cannot get out of bed. Crystal stays up all night, talks very rapidly, and went on a shopping spree in which she spent $3,000 on furniture, although she cannot afford it. Maria recently had a baby, and she feels overwhelmed, teary, anxious, and panicked, and believes she is a terrible mother—practically every day since the baby was born. All these individuals demonstrate symptoms of a potential <mark style="background-color: #ffeb3b; font-weight: bold;">mood</mark> disorder. <mark style="background-color: #ffeb3b; font-weight: bold;">mood</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">disorders</mark> (Figure 15.15) are characterized by severe disturbances in <mark style="background-color: #ffeb3b; font-weight: bold;">mood</mark> and emotions—most often 560 15 • Psychological <mark style="background-color: #ffeb3b; font-weight: bold;">disorders</mark> Access for free at openstax.org
+
+<mark style="background-color: #ffeb3b; font-weight: bold;">personality</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">disorders</mark> the most frequent (Lezenweger, Lane, Loranger, & Kessler, 2007). Two of these <mark style="background-color: #ffeb3b; font-weight: bold;">personality</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">disorders</mark>, borderline <mark style="background-color: #ffeb3b; font-weight: bold;">personality</mark> disorder and antisocial <mark style="background-color: #ffeb3b; font-weight: bold;">personality</mark> disorder, are regarded by many as especially problematic. Borderline <mark style="background-color: #ffeb3b; font-weight: bold;">personality</mark> Disorder The “borderline” in borderline <mark style="background-color: #ffeb3b; font-weight: bold;">personality</mark> disorder was originally coined in the late 1930s in an effort to describe patients who appeared anxious, but were prone to brief psychotic experiences—that is, patients who were thought to be literally on the borderline <mark style="background-color: #ffeb3b; font-weight: bold;">between</mark> anxiety and psychosis (Freeman, Stone, Martin, & Reinecke, 2005). Today, borderline <mark style="background-color: #ffeb3b; font-weight: bold;">personality</mark> disorder has a completely different meaning. Borderline <mark style="background-color: #ffeb3b; font-weight: bold;">personality</mark> disorder is characterized chiefly by instability in interpersonal relationships, self-image, and <mark style="background-color: #ffeb3b; font-weight: bold;">mood</mark>, as well as marked impulsivity (APA, 2013). People with borderline <mark style="background-color: #ffeb3b; font-weight: bold;">personality</mark> disorder cannot tolerate the thought of being alone and will make frantic efforts (including making suicidal gestures and engaging in self-mutilation) to avoid abandonment or separation (whether real or imagined). Their relationships are intense and unstable; for example, a romantic partner may be idealized early in a relationship, but then later vilified at the slightest sign they appear to no longer show interest. These individuals have an unstable view of self and, thus, might suddenly display a shift in personal attitudes, interests, career plans, and choice of friends. For example, a law school student may, despite having invested tens of thousands of dollars toward earning a law degree and despite having performed well in the program, consider dropping out and pursuing a career in another field. People with borderline <mark style="background-color: #ffeb3b; font-weight: bold;">personality</mark> disorder may be highly impulsive and may engage in reckless and self-destructive behaviors such as excessive gambling, spending money irresponsibly, substance abuse, engaging in unsafe sex, and reckless driving. They sometimes show intense and inappropriate anger that they have difficulty controlling, and they can be <mark style="background-color: #ffeb3b; font-weight: bold;">mood</mark>y, sarcastic, bitter, and verbally abusive. The prevalence of borderline <mark style="background-color: #ffeb3b; font-weight: bold;">personality</mark> disorder in the U.S. population is estimated to be around 1.4% (Lezenweger et al., 2007), but the rates are higher among those who use mental health services; approximately 10% of mental health outpatients and 20% of psychiatric inpatients meet the criteria for diagnosis (APA, 2013). Additionally, borderline <mark style="background-color: #ffeb3b; font-weight: bold;">personality</mark> disorder is comorbid with anxiety, <mark style="background-color: #ffeb3b; font-weight: bold;">mood</mark>, and substance use <mark style="background-color: #ffeb3b; font-weight: bold;">disorders</mark> (Lezenweger et al., 2007). Biological Basis for Borderline <mark style="background-color: #ffeb3b; font-weight: bold;">personality</mark> Disorder Genetic factors appear to be important in the development of borderline <mark style="background-color: #ffeb3b; font-weight: bold;">personality</mark> disorder. For example, core <mark style="background-color: #ffeb3b; font-weight: bold;">personality</mark> traits that characterize this disorder, such as impulsivity and emotional instability, show
+
+LINK TO LEARNING Watch this video about treating substance-related <mark style="background-color: #ffeb3b; font-weight: bold;">disorders</mark> using the biological, behavioral, and psychodynamic approaches (http://openstax.org/l/subdisorder) to learn more. Comorbid <mark style="background-color: #ffeb3b; font-weight: bold;">disorders</mark> Frequently, a person with an addiction to drugs and/or alcohol has an additional psychological disorder. Saying a person has comorbid <mark style="background-color: #ffeb3b; font-weight: bold;">disorders</mark> means the individual has two or more diagnoses. This can often be a substance-related diagnosis and another psychiatric diagnosis, such as depression, bipolar disorder, or schizophrenia. These individuals fall into the category of mentally ill and chemically addicted (MICA)—their problems are often chronic and expensive to treat, with limited success. Compared with the overall population, people who use illicit drugs or misuse prescription drugs are twice as likely to have a <mark style="background-color: #ffeb3b; font-weight: bold;">mood</mark> or anxiety disorder. Drug use can cause symptoms of <mark style="background-color: #ffeb3b; font-weight: bold;">mood</mark> and anxiety <mark style="background-color: #ffeb3b; font-weight: bold;">disorders</mark> and the reverse is also true—people with debilitating symptoms of a psychiatric disorder may self-medicate and misuse substances. In cases of comorbidity, the best treatment is thought to address both (or multiple) <mark style="background-color: #ffeb3b; font-weight: bold;">disorders</mark> simultaneously (NIDA, 2012). Behavior therapies are used to treat comorbid conditions, and in many cases, psychotropic medications are used along with psychotherapy. For example, evidence suggests that bupropion (trade names: Wellbutrin and Zyban), approved for treating depression and nicotine dependence, might also help reduce craving and use of the drug methamphetamine (NIDA, 2011). However, more research is needed to better understand how these medications work—particularly when combined in patients with comorbidities. 16.5 The Sociocultural Model and Therapy Utilization LEARNING OBJECTIVES By the end of this section, you will be able to: • Explain how the sociocultural model is used in therapy • Discuss barriers to mental health services among ethnic minorities The sociocultural perspective looks at you, your behaviors, and your symptoms in the context of your culture and background. For example, José is an 18-year-old Hispanic male from a traditional family. José comes to treatment because of depression. During the intake session, he reveals that he is gay and is nervous about telling his family. He also discloses that he is concerned because his religious background has taught him that being gay is wrong. How does his religious and cultural background affect him? How might his cultural background affect how his family reacts if José were to tell them he is gay? Mental health professionals must develop cultural competence (Figure 16.20), which means they must understand and address issues of race, culture, and ethnicity. They must also
+
+Types of Psychophysiological <mark style="background-color: #ffeb3b; font-weight: bold;">disorders</mark> (adapted from Everly & Lating, 2002) Type of Psychophysiological Disorder Examples Cardiovascular hypertension, coronary heart disease Gastrointestinal irritable bowel syndrome Respiratory asthma, allergy Musculoskeletal low back pain, tension headaches Skin acne, eczema, psoriasis TABLE 14.3 Friedman and Booth-Kewley (1987) statistically reviewed 101 studies to examine the link <mark style="background-color: #ffeb3b; font-weight: bold;">between</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">personality</mark> and illness. They proposed the existence of disease-prone <mark style="background-color: #ffeb3b; font-weight: bold;">personality</mark> characteristics, including depression, anger/hostility, and anxiety. Indeed, a study of over 61,000 Norwegians identified depression as a risk factor for all major disease-related causes of death (Mykletun et al., 2007). In addition, neuroticism—a <mark style="background-color: #ffeb3b; font-weight: bold;">personality</mark> trait that reflects how anxious, <mark style="background-color: #ffeb3b; font-weight: bold;">mood</mark>y, and sad one is—has been identified as a risk factor for chronic health problems and mortality (Ploubidis & Grundy, 2009). Below, we discuss two kinds of psychophysiological <mark style="background-color: #ffeb3b; font-weight: bold;">disorders</mark> about which a great deal is known: cardiovascular <mark style="background-color: #ffeb3b; font-weight: bold;">disorders</mark> and asthma. First, however, it is necessary to turn our attention to a discussion of the immune system—one of the major pathways through which stress and emotional factors can lead to illness and disease. Social Status, Stress, and Health Care Psychologists have long been aware that social status (e.g., wealth, privilege) is intimately tied to stress, health, and well-being. Some factors that contribute to high stress and poor health among people with lower social status include lack of control and predictability (e.g., greater unemployment) and resource inequality (e.g., less access to health care and other community resources) (Marmot & Sapolsky, 2014). In the United States, resource inequalities tied to social status often create race and gender <mark style="background-color: #ffeb3b; font-weight: bold;">difference</mark>s in health care. For example, African American women have the highest rates of emergency room visits and unmet health care needs compared to any other group, and this disparity increased significantly from 2006 to 2014 (Manuel, 2018). Lesbian, gay, bisexual, and transgender youth often experience poor quality of care as a result of stigma, lack of understanding, and insensitivity among health care professionals (Hafeez, Zeshan, Tahir, Jahan, & Naveed, 2017). One goal of the U.S. government’s Healthy People 2020 initiative is to eliminate gender and race disparities in health care. Their interact  <!-- HIGHLIGHTING HERE ONLY -->
+                </div>
+            </div>
+            
+            <div class="stats">
+                <div class="stat-item">
+                    <div class="stat-label">Sections Used</div>
+                    <div class="stat-value">9</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Pages Referenced</div>
+                    <div class="stat-value">11</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Keywords Found</div>
+                    <div class="stat-value">6</div>
+                </div>
+            </div>
+            
+            <div class="footer">
+                Generated from Psychology 2e Textbook • Question 48 • 2026-02-27
+            </div>
+        </div>
+        
+        <!-- Font Awesome for icons -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
+    </body>
+    </html>

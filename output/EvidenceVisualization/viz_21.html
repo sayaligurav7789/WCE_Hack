@@ -1,432 +1,396 @@
 <!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Evidence Visualization - Question 21</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            padding: 20px;
-        }
-        
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            overflow: hidden;
-        }
-        
-        .header {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            padding: 30px;
-        }
-        
-        .header h1 {
-            font-size: 24px;
-            margin-bottom: 10px;
-        }
-        
-        .header .question {
-            font-size: 18px;
-            opacity: 0.9;
-            background: rgba(255, 255, 255, 0.2);
-            padding: 15px;
-            border-radius: 10px;
-            margin-top: 10px;
-            line-height: 1.5;
-        }
-        
-        .keywords-bar {
-            background: #f0f0f0;
-            padding: 15px 30px;
-            border-bottom: 1px solid #e0e0e0;
-        }
-        
-        .keywords-title {
-            font-size: 14px;
-            color: #666;
-            margin-bottom: 10px;
-            font-weight: 600;
-        }
-        
-        .keyword-badge {
-            display: inline-block;
-            background: #ffeb3b;
-            color: #333;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 13px;
-            margin: 0 5px 5px 0;
-            font-weight: 500;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-        
-        .answer-section {
-            padding: 30px;
-            background: #f8f9fa;
-            border-bottom: 1px solid #e0e0e0;
-        }
-        
-        .answer-section h3 {
-            color: #333;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .answer-section h3 i {
-            color: #667eea;
-        }
-        
-        .answer-content {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            line-height: 1.8;
-            color: #444;
-            border-left: 4px solid #667eea;
-        }
-        
-        .answer-content mark {
-            background-color: #ffeb3b;
-            padding: 2px 0;
-            font-weight: 500;
-        }
-        
-        .evidence-section {
-            padding: 30px;
-        }
-        
-        .evidence-section h3 {
-            color: #333;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .evidence-section h3 i {
-            color: #667eea;
-        }
-        
-        .evidence-card {
-            background: #f8f9fa;
-            border-radius: 10px;
-            padding: 20px;
-            margin-bottom: 20px;
-            border-left: 4px solid #667eea;
-        }
-        
-        .evidence-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-        
-        .section-name {
-            font-weight: 600;
-            color: #333;
-            background: #e8eaf6;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 14px;
-        }
-        
-        .page-number {
-            color: #666;
-            background: white;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 14px;
-            border: 1px solid #e0e0e0;
-        }
-        
-        .relevance {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 14px;
-        }
-        
-        .term-badge {
-            display: inline-block;
-            background: #ffeb3b;
-            color: #333;
-            padding: 3px 10px;
-            border-radius: 15px;
-            font-size: 12px;
-            margin: 0 5px 5px 0;
-            font-weight: 500;
-        }
-        
-        .evidence-text {
-            background: white;
-            padding: 15px;
-            border-radius: 8px;
-            color: #555;
-            line-height: 1.6;
-            margin: 15px 0 0 0;
-            border: 1px solid #e0e0e0;
-        }
-        
-        .evidence-text mark {
-            background-color: #ffeb3b;
-            padding: 2px 0;
-            font-weight: 500;
-        }
-        
-        .highlighted-context {
-            padding: 30px;
-            background: #f8f9fa;
-            border-top: 1px solid #e0e0e0;
-            border-bottom: 1px solid #e0e0e0;
-        }
-        
-        .highlighted-context h3 {
-            color: #333;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .context-box {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            max-height: 400px;
-            overflow-y: auto;
-            border: 1px solid #e0e0e0;
-            line-height: 1.8;
-            font-size: 14px;
-        }
-        
-        .context-box mark {
-            background-color: #ffeb3b;
-            padding: 2px 0;
-            font-weight: 500;
-        }
-        
-        .stats {
-            display: flex;
-            gap: 15px;
-            padding: 20px 30px;
-            background: white;
-            flex-wrap: wrap;
-        }
-        
-        .stat-item {
-            background: #f8f9fa;
-            padding: 10px 20px;
-            border-radius: 10px;
-            flex: 1;
-            min-width: 120px;
-            text-align: center;
-            border: 1px solid #e0e0e0;
-        }
-        
-        .stat-label {
-            font-size: 12px;
-            color: #666;
-            margin-bottom: 5px;
-        }
-        
-        .stat-value {
-            font-size: 24px;
-            font-weight: 600;
-            color: #667eea;
-        }
-        
-        .footer {
-            padding: 20px 30px;
-            background: #f0f0f0;
-            text-align: center;
-            color: #666;
-            font-size: 14px;
-            border-top: 1px solid #e0e0e0;
-        }
-        
-        @media (max-width: 768px) {
-            .header {
+    <html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Evidence Visualization - Question 21</title>
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+            
+            body {
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                min-height: 100vh;
                 padding: 20px;
             }
             
-            .answer-section,
-            .evidence-section,
-            .highlighted-context {
+            .container {
+                max-width: 1000px;
+                margin: 0 auto;
+                background: white;
+                border-radius: 20px;
+                box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+                overflow: hidden;
+            }
+            
+            .header {
+                background: linear-gradient(135deg, #667eea, #764ba2);
+                color: white;
+                padding: 30px;
+            }
+            
+            .header h1 {
+                font-size: 24px;
+                margin-bottom: 10px;
+            }
+            
+            .header .question {
+                font-size: 18px;
+                opacity: 0.9;
+                background: rgba(255, 255, 255, 0.2);
+                padding: 15px;
+                border-radius: 10px;
+                margin-top: 10px;
+                line-height: 1.5;
+            }
+            
+            .keywords-bar {
+                background: #f0f0f0;
+                padding: 15px 30px;
+                border-bottom: 1px solid #e0e0e0;
+            }
+            
+            .keywords-title {
+                font-size: 14px;
+                color: #666;
+                margin-bottom: 10px;
+                font-weight: 600;
+            }
+            
+            .keyword-badge {
+                display: inline-block;
+                background: #ffeb3b;
+                color: #333;
+                padding: 5px 12px;
+                border-radius: 20px;
+                font-size: 13px;
+                margin: 0 5px 5px 0;
+                font-weight: 500;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            }
+            
+            .answer-section {
+                padding: 30px;
+                background: #f8f9fa;
+                border-bottom: 1px solid #e0e0e0;
+            }
+            
+            .answer-section h3 {
+                color: #333;
+                margin-bottom: 15px;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+            
+            .answer-section h3 i {
+                color: #667eea;
+            }
+            
+            .answer-content {
+                background: white;
                 padding: 20px;
+                border-radius: 10px;
+                line-height: 1.8;
+                color: #444;
+                border-left: 4px solid #667eea;
+            }
+            
+            /* NO mark styling for answer - it stays plain */
+            
+            .evidence-section {
+                padding: 30px;
+            }
+            
+            .evidence-section h3 {
+                color: #333;
+                margin-bottom: 20px;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+            
+            .evidence-section h3 i {
+                color: #667eea;
+            }
+            
+            .evidence-card {
+                background: #f8f9fa;
+                border-radius: 10px;
+                padding: 20px;
+                margin-bottom: 20px;
+                border-left: 4px solid #667eea;
             }
             
             .evidence-header {
-                flex-direction: column;
-                align-items: flex-start;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 15px;
+                flex-wrap: wrap;
+                gap: 10px;
             }
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <div class="header">
-            <h1>📚 Evidence Visualization</h1>
-            <div class="question">
-                <strong>Question 21:</strong> 
+            
+            .section-name {
+                font-weight: 600;
+                color: #333;
+                background: #e8eaf6;
+                padding: 5px 12px;
+                border-radius: 20px;
+                font-size: 14px;
+            }
+            
+            .page-number {
+                color: #666;
+                background: white;
+                padding: 5px 12px;
+                border-radius: 20px;
+                font-size: 14px;
+                border: 1px solid #e0e0e0;
+            }
+            
+            .term-badge {
+                display: inline-block;
+                background: #ffeb3b;
+                color: #333;
+                padding: 3px 10px;
+                border-radius: 15px;
+                font-size: 12px;
+                margin: 0 5px 5px 0;
+                font-weight: 500;
+            }
+            
+            .evidence-text {
+                background: white;
+                padding: 15px;
+                border-radius: 8px;
+                color: #555;
+                line-height: 1.6;
+                margin: 15px 0 0 0;
+                border: 1px solid #e0e0e0;
+            }
+            
+            .evidence-text mark {
+                background-color: #ffeb3b;
+                padding: 2px 0;
+                font-weight: 500;
+            }
+            
+            .highlighted-context {
+                padding: 30px;
+                background: #f8f9fa;
+                border-top: 1px solid #e0e0e0;
+                border-bottom: 1px solid #e0e0e0;
+            }
+            
+            .highlighted-context h3 {
+                color: #333;
+                margin-bottom: 15px;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+            
+            .context-box {
+                background: white;
+                padding: 20px;
+                border-radius: 10px;
+                max-height: 400px;
+                overflow-y: auto;
+                border: 1px solid #e0e0e0;
+                line-height: 1.8;
+                font-size: 14px;
+            }
+            
+            .context-box mark {
+                background-color: #ffeb3b;
+                padding: 2px 0;
+                font-weight: 500;
+            }
+            
+            .stats {
+                display: flex;
+                gap: 15px;
+                padding: 20px 30px;
+                background: white;
+                flex-wrap: wrap;
+            }
+            
+            .stat-item {
+                background: #f8f9fa;
+                padding: 10px 20px;
+                border-radius: 10px;
+                flex: 1;
+                min-width: 120px;
+                text-align: center;
+                border: 1px solid #e0e0e0;
+            }
+            
+            .stat-label {
+                font-size: 12px;
+                color: #666;
+                margin-bottom: 5px;
+            }
+            
+            .stat-value {
+                font-size: 24px;
+                font-weight: 600;
+                color: #667eea;
+            }
+            
+            .footer {
+                padding: 20px 30px;
+                background: #f0f0f0;
+                text-align: center;
+                color: #666;
+                font-size: 14px;
+                border-top: 1px solid #e0e0e0;
+            }
+            
+            @media (max-width: 768px) {
+                .header {
+                    padding: 20px;
+                }
+                
+                .answer-section,
+                .evidence-section,
+                .highlighted-context {
+                    padding: 20px;
+                }
+                
+                .evidence-header {
+                    flex-direction: column;
+                    align-items: flex-start;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="header">
+                <h1>📚 Evidence Visualization</h1>
+                <div class="question">
+                    <strong>Question 21:</strong> What is developmental psychology?
+                </div>
             </div>
-        </div>
-        
-        <div class="keywords-bar">
-            <div class="keywords-title">🔑 Extracted Keywords:</div>
-
-        </div>
-        
-        <div class="answer-section">
-            <h3><i class="fas fa-robot"></i> Generated Answer</h3>
-            <div class="answer-content">
-                Developmental psychology explores how we change and grow from conception to death. This field of psychology focuses on how people change, and it addresses questions of change, such as whether the change is smooth or uneven, whether there is one course of development or many, and how genetics and environment interact to influence development.
+            
+            <div class="keywords-bar">
+                <div class="keywords-title">🔑 Extracted Keywords:</div>
+    <span class="keyword-badge">developmental</span><span class="keyword-badge">psychology</span>
             </div>
-        </div>
-        
-        <div class="evidence-section">
-            <h3><i class="fas fa-book"></i> Evidence by Section</h3>
-
+            
+            <div class="answer-section">
+                <h3><i class="fas fa-robot"></i> Generated Answer</h3>
+                <div class="answer-content">
+                    Developmental psychology explores how we change and grow from conception to death. This field of psychology focuses on how people change, and it addresses questions of change, such as whether the change is smooth or uneven, whether there is one course of development or many, and how genetics and environment interact to influence development.  <!-- NO HIGHLIGHTING HERE -->
+                </div>
+            </div>
+            
+            <div class="evidence-section">
+                <h3><i class="fas fa-book"></i> Evidence by Section</h3>
+    
             <div class="evidence-card">
                 <div class="evidence-header">
                     <span class="section-name">📖 1.1 What Is Psychology</span>
                     <span class="page-number">📄 Page 20</span>
-                    <span class="relevance">⭐ Relevance: 0.7</span>
-                </div>
-                <div>
-
                 </div>
                 <div class="evidence-text">
-                    This section discusses 1.1 what is psychology. The content here is relevant to your question about ...
+                    have very little control over the types and/or frequencies of displayed behavior. In a case study, <mark style="background-color: #ffeb3b; font-weight: bold;">developmental</mark> psychologists collect a great deal of information from one individual in order to better understand physical and psychological changes over the lifespan. This particular approach is an ex  <!-- HIGHLIGHTING HERE ONLY -->
                 </div>
             </div>
-
+    
             <div class="evidence-card">
                 <div class="evidence-header">
                     <span class="section-name">📖 1.10 Biological psychologists study how the structure and function of the nervous system generate
 behavior</span>
                     <span class="page-number">📄 Page 32</span>
-                    <span class="relevance">⭐ Relevance: 0.75</span>
-                </div>
-                <div>
-
                 </div>
                 <div class="evidence-text">
-                    This section discusses 1.10 biological psychologists study how the structure and function of the nervous system generate
-behavior. The content here is relevant to your question about ...
+                    have very little control over the types and/or frequencies of displayed behavior. In a case study, <mark style="background-color: #ffeb3b; font-weight: bold;">developmental</mark> psychologists collect a great deal of information from one individual in order to better understand physical and psychological changes over the lifespan. This particular approach is an ex  <!-- HIGHLIGHTING HERE ONLY -->
                 </div>
             </div>
-
+    
             <div class="evidence-card">
                 <div class="evidence-header">
                     <span class="section-name">📖 1.88
 Roediger</span>
                     <span class="page-number">📄 Page 292</span>
-                    <span class="relevance">⭐ Relevance: 0.8</span>
-                </div>
-                <div>
-
                 </div>
                 <div class="evidence-text">
-                    This section discusses 1.88
-roediger. The content here is relevant to your question about ...
+                    have very little control over the types and/or frequencies of displayed behavior. In a case study, <mark style="background-color: #ffeb3b; font-weight: bold;">developmental</mark> psychologists collect a great deal of information from one individual in order to better understand physical and psychological changes over the lifespan. This particular approach is an ex  <!-- HIGHLIGHTING HERE ONLY -->
                 </div>
             </div>
-
+    
             <div class="evidence-card">
                 <div class="evidence-header">
                     <span class="section-name">📖 11.8 Alfred Adler proposed the concept of the inferiority complex</span>
                     <span class="page-number">📄 Page 294</span>
-                    <span class="relevance">⭐ Relevance: 0.85</span>
-                </div>
-                <div>
-
                 </div>
                 <div class="evidence-text">
-                    This section discusses 11.8 alfred adler proposed the concept of the inferiority complex. The content here is relevant to your question about ...
+                    have very little control over the types and/or frequencies of displayed behavior. In a case study, <mark style="background-color: #ffeb3b; font-weight: bold;">developmental</mark> psychologists collect a great deal of information from one individual in order to better understand physical and psychological changes over the lifespan. This particular approach is an ex  <!-- HIGHLIGHTING HERE ONLY -->
                 </div>
             </div>
-
+    
             <div class="evidence-card">
                 <div class="evidence-header">
                     <span class="section-name">📖 9.1
 Cognitive Theory of Development
 Jean Piaget</span>
                     <span class="page-number">📄 Page 296</span>
-                    <span class="relevance">⭐ Relevance: 0.9</span>
-                </div>
-                <div>
-
                 </div>
                 <div class="evidence-text">
-                    This section discusses 9.1
-cognitive theory of development
-jean piaget. The content here is relevant to your question about ...
+                    have very little control over the types and/or frequencies of displayed behavior. In a case study, <mark style="background-color: #ffeb3b; font-weight: bold;">developmental</mark> psychologists collect a great deal of information from one individual in order to better understand physical and psychological changes over the lifespan. This particular approach is an ex  <!-- HIGHLIGHTING HERE ONLY -->
                 </div>
             </div>
+    
+            </div>
+            
+            <div class="highlighted-context">
+                <h3><i class="fas fa-highlighter"></i> Highlighted Context</h3>
+                <div class="context-box">
+                    have very little control over the types and/or frequencies of displayed behavior. In a case study, <mark style="background-color: #ffeb3b; font-weight: bold;">developmental</mark> psychologists collect a great deal of information from one individual in order to better understand physical and psychological changes over the lifespan. This particular approach is an excellent way to better understand individuals, who are exceptional in some way, but it is especially prone to researcher bias in interpretation, and it is difficult to generalize conclusions to the larger population. In one classic example of this research method being applied to a study of lifespan development Sigmund Freud analyzed the development of a child known as “Little Hans” (Freud, 1909/1949). Freud’s findings helped inform his theories of psychosexual development in children, which you will learn about later in this chapter. Little Genie, the CONNECT THE CONCEPTS 280 9 • Lifespan Development Access for free at openstax.org
 
-        </div>
-        
-        <div class="highlighted-context">
-            <h3><i class="fas fa-highlighter"></i> Highlighted Context</h3>
-            <div class="context-box">
-                have very little control over the types and/or frequencies of displayed behavior. In a case study, developmental psychologists collect a great deal of information from one individual in order to better understand physical and psychological changes over the lifespan. This particular approach is an excellent way to better understand individuals, who are exceptional in some way, but it is especially prone to researcher bias in interpretation, and it is difficult to generalize conclusions to the larger population. In one classic example of this research method being applied to a study of lifespan development Sigmund Freud analyzed the development of a child known as “Little Hans” (Freud, 1909/1949). Freud’s findings helped inform his theories of psychosexual development in children, which you will learn about later in this chapter. Little Genie, the CONNECT THE CONCEPTS 280 9 • Lifespan Development Access for free at openstax.org
+theories regarding how babies and children grow and develop into happy, healthy adults. We explore several of these theories in this section. Psychosexual Theory of Development Sigmund Freud (1856–1939) believed that personality develops during early childhood. For Freud, childhood experiences shape our personalities and behavior as adults. Freud viewed development as discontinuous; he believed that each of us must pass through a series of stages during childhood, and that if we lack proper nurturance and parenting during a stage, we may become stuck, or fixated, in that stage. Freud’s stages are called the stages of psychosexual development. According to Freud, children’s pleasure-seeking urges are focused on a different area of the body, called an erogenous zone, at each of the five stages of development: oral, anal, phallic, latency, and genital. While most of Freud’s ideas have not found support in modern research, we cannot discount the contributions that Freud has made to the field of <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark>. Psychologists today dispute Freud's psychosexual stages as a legitimate explanation for how one's personality develops, but what we can take away from Freud’s theory is 284 9 • Lifespan Development Access for free at openstax.org
 
-theories regarding how babies and children grow and develop into happy, healthy adults. We explore several of these theories in this section. Psychosexual Theory of Development Sigmund Freud (1856–1939) believed that personality develops during early childhood. For Freud, childhood experiences shape our personalities and behavior as adults. Freud viewed development as discontinuous; he believed that each of us must pass through a series of stages during childhood, and that if we lack proper nurturance and parenting during a stage, we may become stuck, or fixated, in that stage. Freud’s stages are called the stages of psychosexual development. According to Freud, children’s pleasure-seeking urges are focused on a different area of the body, called an erogenous zone, at each of the five stages of development: oral, anal, phallic, latency, and genital. While most of Freud’s ideas have not found support in modern research, we cannot discount the contributions that Freud has made to the field of psychology. Psychologists today dispute Freud's psychosexual stages as a legitimate explanation for how one's personality develops, but what we can take away from Freud’s theory is 284 9 • Lifespan Development Access for free at openstax.org
+later proposed a psychosocial theory of development, suggesting that an individual’s personality develops throughout the lifespan—a departure from Freud’s view that personality is fixed in early life. In his theory, Erikson emphasized the social relationships that are important at each stage of personality development, in contrast to Freud’s emphasis on sex. Erikson identified eight stages, each of which represents a conflict or <mark style="background-color: #ffeb3b; font-weight: bold;">developmental</mark> task (Table 11.2). The development of a healthy personality and a sense of competence depend on the successful completion of each task. 11.3 • Neo-Freudians: Adler, Erikson, Jung, and Horney 369
 
-later proposed a psychosocial theory of development, suggesting that an individual’s personality develops throughout the lifespan—a departure from Freud’s view that personality is fixed in early life. In his theory, Erikson emphasized the social relationships that are important at each stage of personality development, in contrast to Freud’s emphasis on sex. Erikson identified eight stages, each of which represents a conflict or developmental task (Table 11.2). The development of a healthy personality and a sense of competence depend on the successful completion of each task. 11.3 • Neo-Freudians: Adler, Erikson, Jung, and Horney 369
+by Kohlberg; humans move through three stages of moral development temperament innate traits that influence how one thinks, behaves, and reacts with the environment teratogen biological, chemical, or physical environmental agent that causes damage to the developing embryo or fetus uninvolved parenting style parents are indifferent, uninvolved, and sometimes referred to as neglectful; they don’t respond to the child’s needs and make relatively few demands zygote structure created when a sperm and egg merge at conception; begins as a single cell and rapidly divides to form the embryo and placenta Summary 9.1 What Is Lifespan Development? Lifespan development explores how we change and grow from conception to death. This field of <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> is 316 9 • Summary Access for free at openstax.org
 
-by Kohlberg; humans move through three stages of moral development temperament innate traits that influence how one thinks, behaves, and reacts with the environment teratogen biological, chemical, or physical environmental agent that causes damage to the developing embryo or fetus uninvolved parenting style parents are indifferent, uninvolved, and sometimes referred to as neglectful; they don’t respond to the child’s needs and make relatively few demands zygote structure created when a sperm and egg merge at conception; begins as a single cell and rapidly divides to form the embryo and placenta Summary 9.1 What Is Lifespan Development? Lifespan development explores how we change and grow from conception to death. This field of psychology is 316 9 • Summary Access for free at openstax.org
+LINK TO LEARNING The Centers for Disease Control and Prevention (CDC) describes the <mark style="background-color: #ffeb3b; font-weight: bold;">developmental</mark> milestones for children from 2 months through 5 years old. After reviewing the information, take this <mark style="background-color: #ffeb3b; font-weight: bold;">developmental</mark> Milestones Quiz (http://openstax.org/l/milestones) to see how well you recall what you’ve learned. If you are a parent with concerns about your child’s development, contact your pediatrician. Issues in <mark style="background-color: #ffeb3b; font-weight: bold;">developmental</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> There are many different theoretical approaches regarding human development. As we evaluate them in this chapter, recall that <mark style="background-color: #ffeb3b; font-weight: bold;">developmental</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> focuses on how people change, and keep in mind that all the approaches that we present in this chapter address questions of change: Is the change smooth or uneven (continuous versus discontinuous)? Is this pattern of change the same for everyone, or are there many different patterns of change (one course of development versus many courses)? How do genetics and environment interact to influence development (nature versus nurture)? Is Development Continuous or Discontinuous? Continuous development views development as a cumulative process, gradually improving on existing skills (Figure 9.2). With this type of development, there is gradual change. Consider, for example, a child’s physical growth: adding inches to height year by year. In contrast, theorists who view development as discontinuous believe that development takes place in unique stages: It occurs at specific times or ages. With this type of development, the change is more sudden, such as an infant’s ability to conceive object permanence. FIGURE 9.2 The concept of continuous development can be visualized as a smooth slope of progression, whereas discontinuous development sees growth in more discrete stages. Is There One Course of Development or Many? Is development essentially the same, or universal, for all children (i.e., there is one course of development) or does development follow a different course for each child, depending on the child’s specific genetics and environment (i.e., there are many courses of development)? Do people across the world share more similarities or more differences in their development? How much do culture and genetics influence a child’s behavior? Stage theories hold that the sequence of development is universal. For example, in cross-cultural studies of language development, children from around the world reach language milestones in a similar sequence (Gleitman & Newport, 1995). Infants in all cultures coo before they babble. They begin babbling at about the same age and utter their first word around 12 months old. Yet we live in diverse contexts that have
 
-LINK TO LEARNING The Centers for Disease Control and Prevention (CDC) describes the developmental milestones for children from 2 months through 5 years old. After reviewing the information, take this Developmental Milestones Quiz (http://openstax.org/l/milestones) to see how well you recall what you’ve learned. If you are a parent with concerns about your child’s development, contact your pediatrician. Issues in Developmental Psychology There are many different theoretical approaches regarding human development. As we evaluate them in this chapter, recall that developmental psychology focuses on how people change, and keep in mind that all the approaches that we present in this chapter address questions of change: Is the change smooth or uneven (continuous versus discontinuous)? Is this pattern of change the same for everyone, or are there many different patterns of change (one course of development versus many courses)? How do genetics and environment interact to influence development (nature versus nurture)? Is Development Continuous or Discontinuous? Continuous development views development as a cumulative process, gradually improving on existing skills (Figure 9.2). With this type of development, there is gradual change. Consider, for example, a child’s physical growth: adding inches to height year by year. In contrast, theorists who view development as discontinuous believe that development takes place in unique stages: It occurs at specific times or ages. With this type of development, the change is more sudden, such as an infant’s ability to conceive object permanence. FIGURE 9.2 The concept of continuous development can be visualized as a smooth slope of progression, whereas discontinuous development sees growth in more discrete stages. Is There One Course of Development or Many? Is development essentially the same, or universal, for all children (i.e., there is one course of development) or does development follow a different course for each child, depending on the child’s specific genetics and environment (i.e., there are many courses of development)? Do people across the world share more similarities or more differences in their development? How much do culture and genetics influence a child’s behavior? Stage theories hold that the sequence of development is universal. For example, in cross-cultural studies of language development, children from around the world reach language milestones in a similar sequence (Gleitman & Newport, 1995). Infants in all cultures coo before they babble. They begin babbling at about the same age and utter their first word around 12 months old. Yet we live in diverse contexts that have
-
-solutions. In adolescence, a renewed egocentrism occurs. For example, a 15-year-old with a very small pimple on her face might think it is huge and incredibly visible, under the mistaken impression that others must share her perceptions. Beyond Formal Operational Thought As with other major contributors of theories of development, several of Piaget’s ideas have come under criticism based on the results of further research. For example, several contemporary studies support a model of development that is more continuous than Piaget’s discrete stages (Courage & Howe, 2002; Siegler, 2005, 2006). Many others suggest that children reach cognitive milestones earlier than Piaget describes (Baillargeon, 2004; de Hevia & Spelke, 2010). According to Piaget, the highest level of cognitive development is formal operational thought, which develops between 11 and 20 years old. However, many developmental psychologists disagree with Piaget, suggesting a fifth stage of cognitive development, known as the postformal stage (Basseches, 1984; Commons & Bresette, 2006; Sinnott, 1998). In postformal thinking, decisions are made based on situations and circumstances, and logic is integrated with emotion as adults develop principles that depend on contexts. One way that we can see the difference between an adult in postformal thought and an adolescent in formal operations is in terms of how they handle emotionally charged issues. It seems that once we reach adulthood our problem solving abilities change: As we attempt to solve problems, we tend to think more deeply about many areas of our lives, such as relationships, work, and politics (Labouvie-Vief & Diehl, 1999). Because of this, postformal thinkers are able to draw on past experiences to help them solve new problems. Problem-solving strategies using postformal thought vary, depending on the situation. What does this mean? Adults can recognize, for example, that what seems to be an ideal solution to a problem at work involving a disagreement with a colleague may not be the best solution to a disagreement with a significant other. Neuroconstructivism The genetic environmental correlation you’ve learned about concerning the bidirectional influence of genes and the environment has been explored in more recent theories (Newcombe, 2011). One such theory, neuroconstructivism, suggests that neural brain development influences cognitive development. Experiences that a child encounters can impact or change the way that neural pathways develop in response to the environment. An individual’s behavior is based on how one understands the world. There is interaction between neural and cognitive networks at and
+solutions. In adolescence, a renewed egocentrism occurs. For example, a 15-year-old with a very small pimple on her face might think it is huge and incredibly visible, under the mistaken impression that others must share her perceptions. Beyond Formal Operational Thought As with other major contributors of theories of development, several of Piaget’s ideas have come under criticism based on the results of further research. For example, several contemporary studies support a model of development that is more continuous than Piaget’s discrete stages (Courage & Howe, 2002; Siegler, 2005, 2006). Many others suggest that children reach cognitive milestones earlier than Piaget describes (Baillargeon, 2004; de Hevia & Spelke, 2010). According to Piaget, the highest level of cognitive development is formal operational thought, which develops between 11 and 20 years old. However, many <mark style="background-color: #ffeb3b; font-weight: bold;">developmental</mark> psychologists disagree with Piaget, suggesting a fifth stage of cognitive development, known as the postformal stage (Basseches, 1984; Commons & Bresette, 2006; Sinnott, 1998). In postformal thinking, decisions are made based on situations and circumstances, and logic is integrated with emotion as adults develop principles that depend on contexts. One way that we can see the difference between an adult in postformal thought and an adolescent in formal operations is in terms of how they handle emotionally charged issues. It seems that once we reach adulthood our problem solving abilities change: As we attempt to solve problems, we tend to think more deeply about many areas of our lives, such as relationships, work, and politics (Labouvie-Vief & Diehl, 1999). Because of this, postformal thinkers are able to draw on past experiences to help them solve new problems. Problem-solving strategies using postformal thought vary, depending on the situation. What does this mean? Adults can recognize, for example, that what seems to be an ideal solution to a problem at work involving a disagreement with a colleague may not be the best solution to a disagreement with a significant other. Neuroconstructivism The genetic environmental correlation you’ve learned about concerning the bidirectional influence of genes and the environment has been explored in more recent theories (Newcombe, 2011). One such theory, neuroconstructivism, suggests that neural brain development influences cognitive development. Experiences that a child encounters can impact or change the way that neural pathways develop in response to the environment. An individual’s behavior is based on how one understands the world. There is interaction between neural and cognitive networks at and
 
 SOCIOCULTURAL THEORY OF DEVELOPMENT Lev Vygotsky was a Russian psychologist who proposed a sociocultural theory of development. He suggested that human development is rooted in one’s culture. A child’s social world, for example, forms the basis for the formation of language and thought. The language one speaks and the ways a person thinks about things is dependent on one’s cultural background. Vygotsky also considered historical influences as key to one’s development. He was interested in the process of development and the individual’s interactions with their environment (John-Steiner & Mahn, 1996). Moral Theory Of Development A major task beginning in childhood and continuing into adolescence is discerning right from wrong. Psychologist Lawrence Kohlberg (1927–1987) extended upon the foundation that Piaget built regarding cognitive development. Kohlberg believed that moral development, like cognitive development, follows a series of stages. To develop this theory, Kohlberg posed moral dilemmas to people of all ages, and then he analyzed their answers to find evidence of their particular stage of moral development. Before reading about the stages, take a minute to consider how you would answer one of Kohlberg's best-known moral dilemmas, commonly known as the Heinz dilemma: In Europe, a woman was near death from a special kind of cancer. There was one drug that the doctors thought might save her. It was a form of radium that a druggist in the same town had recently discovered. The drug was expensive to make, but the druggist was charging ten times what the drug cost him to make. He paid $200 for the radium and charged $2,000 for a small dose of the drug. The sick woman's husband, Heinz, went to everyone he knew to borrow the money, but he could only get together about $1,000, which is half of what it cost. He told the druggist that his wife was dying and asked him to sell it cheaper or let him pay later. But the druggist said: “No, I discovered the drug and I'm going to make money from it.” So Heinz got desperate and broke into the man's store to steal the drug for his wife. Should the husband have done that? (Kohlberg, 1969, p. 379) How would you answer this dilemma? Kohlberg was not interested in whether you answer yes or no to the dilemma: Instead, he was interested in the reasoning behind your answer. After presenting people with this and various other moral
 
-motor skills ability to move our body and manipulate objects nature genes and biology newborn reflexes inborn automatic response to a particular form of stimulation that all healthy babies are born with normative approach study of development using norms, or average ages, when most children reach specific developmental milestones nurture environment and culture object permanence idea that even if something is out of sight, it still exists permissive parenting style parents make few demands and rarely use punishment physical development domain of lifespan development that examines growth and changes in the
+motor skills ability to move our body and manipulate objects nature genes and biology newborn reflexes inborn automatic response to a particular form of stimulation that all healthy babies are born with normative approach study of development using norms, or average ages, when most children reach specific <mark style="background-color: #ffeb3b; font-weight: bold;">developmental</mark> milestones nurture environment and culture object permanence idea that even if something is out of sight, it still exists permissive parenting style parents make few demands and rarely use punishment physical development domain of lifespan development that examines growth and changes in the  <!-- HIGHLIGHTING HERE ONLY -->
+                </div>
+            </div>
+            
+            <div class="stats">
+                <div class="stat-item">
+                    <div class="stat-label">Sections Used</div>
+                    <div class="stat-value">9</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Pages Referenced</div>
+                    <div class="stat-value">11</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Keywords Found</div>
+                    <div class="stat-value">2</div>
+                </div>
+            </div>
+            
+            <div class="footer">
+                Generated from Psychology 2e Textbook • Question 21 • 2026-02-27
             </div>
         </div>
         
-        <div class="stats">
-            <div class="stat-item">
-                <div class="stat-label">Sections Used</div>
-                <div class="stat-value">9</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-label">Pages Referenced</div>
-                <div class="stat-value">11</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-label">Keywords Found</div>
-                <div class="stat-value">0</div>
-            </div>
-        </div>
-        
-        <div class="footer">
-            Generated from Psychology 2e Textbook • Question 21 • 2026-02-26
-        </div>
-    </div>
-    
-    <!-- Font Awesome for icons -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
-</body>
-</html>
+        <!-- Font Awesome for icons -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
+    </body>
+    </html>

@@ -1,432 +1,394 @@
 <!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Evidence Visualization - Question 41</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            padding: 20px;
-        }
-        
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            overflow: hidden;
-        }
-        
-        .header {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            padding: 30px;
-        }
-        
-        .header h1 {
-            font-size: 24px;
-            margin-bottom: 10px;
-        }
-        
-        .header .question {
-            font-size: 18px;
-            opacity: 0.9;
-            background: rgba(255, 255, 255, 0.2);
-            padding: 15px;
-            border-radius: 10px;
-            margin-top: 10px;
-            line-height: 1.5;
-        }
-        
-        .keywords-bar {
-            background: #f0f0f0;
-            padding: 15px 30px;
-            border-bottom: 1px solid #e0e0e0;
-        }
-        
-        .keywords-title {
-            font-size: 14px;
-            color: #666;
-            margin-bottom: 10px;
-            font-weight: 600;
-        }
-        
-        .keyword-badge {
-            display: inline-block;
-            background: #ffeb3b;
-            color: #333;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 13px;
-            margin: 0 5px 5px 0;
-            font-weight: 500;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-        
-        .answer-section {
-            padding: 30px;
-            background: #f8f9fa;
-            border-bottom: 1px solid #e0e0e0;
-        }
-        
-        .answer-section h3 {
-            color: #333;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .answer-section h3 i {
-            color: #667eea;
-        }
-        
-        .answer-content {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            line-height: 1.8;
-            color: #444;
-            border-left: 4px solid #667eea;
-        }
-        
-        .answer-content mark {
-            background-color: #ffeb3b;
-            padding: 2px 0;
-            font-weight: 500;
-        }
-        
-        .evidence-section {
-            padding: 30px;
-        }
-        
-        .evidence-section h3 {
-            color: #333;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .evidence-section h3 i {
-            color: #667eea;
-        }
-        
-        .evidence-card {
-            background: #f8f9fa;
-            border-radius: 10px;
-            padding: 20px;
-            margin-bottom: 20px;
-            border-left: 4px solid #667eea;
-        }
-        
-        .evidence-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-        
-        .section-name {
-            font-weight: 600;
-            color: #333;
-            background: #e8eaf6;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 14px;
-        }
-        
-        .page-number {
-            color: #666;
-            background: white;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 14px;
-            border: 1px solid #e0e0e0;
-        }
-        
-        .relevance {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 14px;
-        }
-        
-        .term-badge {
-            display: inline-block;
-            background: #ffeb3b;
-            color: #333;
-            padding: 3px 10px;
-            border-radius: 15px;
-            font-size: 12px;
-            margin: 0 5px 5px 0;
-            font-weight: 500;
-        }
-        
-        .evidence-text {
-            background: white;
-            padding: 15px;
-            border-radius: 8px;
-            color: #555;
-            line-height: 1.6;
-            margin: 15px 0 0 0;
-            border: 1px solid #e0e0e0;
-        }
-        
-        .evidence-text mark {
-            background-color: #ffeb3b;
-            padding: 2px 0;
-            font-weight: 500;
-        }
-        
-        .highlighted-context {
-            padding: 30px;
-            background: #f8f9fa;
-            border-top: 1px solid #e0e0e0;
-            border-bottom: 1px solid #e0e0e0;
-        }
-        
-        .highlighted-context h3 {
-            color: #333;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .context-box {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            max-height: 400px;
-            overflow-y: auto;
-            border: 1px solid #e0e0e0;
-            line-height: 1.8;
-            font-size: 14px;
-        }
-        
-        .context-box mark {
-            background-color: #ffeb3b;
-            padding: 2px 0;
-            font-weight: 500;
-        }
-        
-        .stats {
-            display: flex;
-            gap: 15px;
-            padding: 20px 30px;
-            background: white;
-            flex-wrap: wrap;
-        }
-        
-        .stat-item {
-            background: #f8f9fa;
-            padding: 10px 20px;
-            border-radius: 10px;
-            flex: 1;
-            min-width: 120px;
-            text-align: center;
-            border: 1px solid #e0e0e0;
-        }
-        
-        .stat-label {
-            font-size: 12px;
-            color: #666;
-            margin-bottom: 5px;
-        }
-        
-        .stat-value {
-            font-size: 24px;
-            font-weight: 600;
-            color: #667eea;
-        }
-        
-        .footer {
-            padding: 20px 30px;
-            background: #f0f0f0;
-            text-align: center;
-            color: #666;
-            font-size: 14px;
-            border-top: 1px solid #e0e0e0;
-        }
-        
-        @media (max-width: 768px) {
-            .header {
+    <html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Evidence Visualization - Question 41</title>
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+            
+            body {
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                min-height: 100vh;
                 padding: 20px;
             }
             
-            .answer-section,
-            .evidence-section,
-            .highlighted-context {
+            .container {
+                max-width: 1000px;
+                margin: 0 auto;
+                background: white;
+                border-radius: 20px;
+                box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+                overflow: hidden;
+            }
+            
+            .header {
+                background: linear-gradient(135deg, #667eea, #764ba2);
+                color: white;
+                padding: 30px;
+            }
+            
+            .header h1 {
+                font-size: 24px;
+                margin-bottom: 10px;
+            }
+            
+            .header .question {
+                font-size: 18px;
+                opacity: 0.9;
+                background: rgba(255, 255, 255, 0.2);
+                padding: 15px;
+                border-radius: 10px;
+                margin-top: 10px;
+                line-height: 1.5;
+            }
+            
+            .keywords-bar {
+                background: #f0f0f0;
+                padding: 15px 30px;
+                border-bottom: 1px solid #e0e0e0;
+            }
+            
+            .keywords-title {
+                font-size: 14px;
+                color: #666;
+                margin-bottom: 10px;
+                font-weight: 600;
+            }
+            
+            .keyword-badge {
+                display: inline-block;
+                background: #ffeb3b;
+                color: #333;
+                padding: 5px 12px;
+                border-radius: 20px;
+                font-size: 13px;
+                margin: 0 5px 5px 0;
+                font-weight: 500;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            }
+            
+            .answer-section {
+                padding: 30px;
+                background: #f8f9fa;
+                border-bottom: 1px solid #e0e0e0;
+            }
+            
+            .answer-section h3 {
+                color: #333;
+                margin-bottom: 15px;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+            
+            .answer-section h3 i {
+                color: #667eea;
+            }
+            
+            .answer-content {
+                background: white;
                 padding: 20px;
+                border-radius: 10px;
+                line-height: 1.8;
+                color: #444;
+                border-left: 4px solid #667eea;
+            }
+            
+            /* NO mark styling for answer - it stays plain */
+            
+            .evidence-section {
+                padding: 30px;
+            }
+            
+            .evidence-section h3 {
+                color: #333;
+                margin-bottom: 20px;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+            
+            .evidence-section h3 i {
+                color: #667eea;
+            }
+            
+            .evidence-card {
+                background: #f8f9fa;
+                border-radius: 10px;
+                padding: 20px;
+                margin-bottom: 20px;
+                border-left: 4px solid #667eea;
             }
             
             .evidence-header {
-                flex-direction: column;
-                align-items: flex-start;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 15px;
+                flex-wrap: wrap;
+                gap: 10px;
             }
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <div class="header">
-            <h1>📚 Evidence Visualization</h1>
-            <div class="question">
-                <strong>Question 41:</strong> 
+            
+            .section-name {
+                font-weight: 600;
+                color: #333;
+                background: #e8eaf6;
+                padding: 5px 12px;
+                border-radius: 20px;
+                font-size: 14px;
+            }
+            
+            .page-number {
+                color: #666;
+                background: white;
+                padding: 5px 12px;
+                border-radius: 20px;
+                font-size: 14px;
+                border: 1px solid #e0e0e0;
+            }
+            
+            .term-badge {
+                display: inline-block;
+                background: #ffeb3b;
+                color: #333;
+                padding: 3px 10px;
+                border-radius: 15px;
+                font-size: 12px;
+                margin: 0 5px 5px 0;
+                font-weight: 500;
+            }
+            
+            .evidence-text {
+                background: white;
+                padding: 15px;
+                border-radius: 8px;
+                color: #555;
+                line-height: 1.6;
+                margin: 15px 0 0 0;
+                border: 1px solid #e0e0e0;
+            }
+            
+            .evidence-text mark {
+                background-color: #ffeb3b;
+                padding: 2px 0;
+                font-weight: 500;
+            }
+            
+            .highlighted-context {
+                padding: 30px;
+                background: #f8f9fa;
+                border-top: 1px solid #e0e0e0;
+                border-bottom: 1px solid #e0e0e0;
+            }
+            
+            .highlighted-context h3 {
+                color: #333;
+                margin-bottom: 15px;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+            
+            .context-box {
+                background: white;
+                padding: 20px;
+                border-radius: 10px;
+                max-height: 400px;
+                overflow-y: auto;
+                border: 1px solid #e0e0e0;
+                line-height: 1.8;
+                font-size: 14px;
+            }
+            
+            .context-box mark {
+                background-color: #ffeb3b;
+                padding: 2px 0;
+                font-weight: 500;
+            }
+            
+            .stats {
+                display: flex;
+                gap: 15px;
+                padding: 20px 30px;
+                background: white;
+                flex-wrap: wrap;
+            }
+            
+            .stat-item {
+                background: #f8f9fa;
+                padding: 10px 20px;
+                border-radius: 10px;
+                flex: 1;
+                min-width: 120px;
+                text-align: center;
+                border: 1px solid #e0e0e0;
+            }
+            
+            .stat-label {
+                font-size: 12px;
+                color: #666;
+                margin-bottom: 5px;
+            }
+            
+            .stat-value {
+                font-size: 24px;
+                font-weight: 600;
+                color: #667eea;
+            }
+            
+            .footer {
+                padding: 20px 30px;
+                background: #f0f0f0;
+                text-align: center;
+                color: #666;
+                font-size: 14px;
+                border-top: 1px solid #e0e0e0;
+            }
+            
+            @media (max-width: 768px) {
+                .header {
+                    padding: 20px;
+                }
+                
+                .answer-section,
+                .evidence-section,
+                .highlighted-context {
+                    padding: 20px;
+                }
+                
+                .evidence-header {
+                    flex-direction: column;
+                    align-items: flex-start;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="header">
+                <h1>📚 Evidence Visualization</h1>
+                <div class="question">
+                    <strong>Question 41:</strong> What is the role of neurotransmitters in mental health?
+                </div>
             </div>
-        </div>
-        
-        <div class="keywords-bar">
-            <div class="keywords-title">🔑 Extracted Keywords:</div>
-
-        </div>
-        
-        <div class="answer-section">
-            <h3><i class="fas fa-robot"></i> Generated Answer</h3>
-            <div class="answer-content">
-                According to the provided textbook context, neurotransmitters play a crucial role in mental health. Imbalances in one or more neurotransmitter systems are associated with psychological disorders such as depression and schizophrenia. Psychotropic medications, which target specific neurotransmitter systems, can help improve symptoms associated with these disorders by restoring neurotransmitter balance. For example, selective serotonin reuptake inhibitors (SSRIs) are commonly used to treat depression, which is linked to reduced serotonin levels. Additionally, dopamine agonists are used to treat Parkinson's disease, which is associated with low levels of dopamine, while antipsychotics, which are antagonists for dopamine, are used to treat certain symptoms of schizophrenia. Overall, neurotransmitters play a significant role in regulating mood, sleep, learning, and other functions that are critical to mental health.
+            
+            <div class="keywords-bar">
+                <div class="keywords-title">🔑 Extracted Keywords:</div>
+    <span class="keyword-badge">role</span><span class="keyword-badge">neurotransmitters</span><span class="keyword-badge">mental</span><span class="keyword-badge">health</span>
             </div>
-        </div>
-        
-        <div class="evidence-section">
-            <h3><i class="fas fa-book"></i> Evidence by Section</h3>
-
+            
+            <div class="answer-section">
+                <h3><i class="fas fa-robot"></i> Generated Answer</h3>
+                <div class="answer-content">
+                    According to the provided textbook context, neurotransmitters play a crucial role in mental health. Imbalances in one or more neurotransmitter systems are associated with psychological disorders such as depression and schizophrenia. Psychotropic medications, which target specific neurotransmitter systems, can help improve symptoms associated with these disorders by restoring neurotransmitter balance. For example, selective serotonin reuptake inhibitors (SSRIs) are commonly used to treat depression, which is linked to reduced serotonin levels. Additionally, dopamine agonists are used to treat Parkinson's disease, which is associated with low levels of dopamine, while antipsychotics, which are antagonists for dopamine, are used to treat certain symptoms of schizophrenia. Overall, neurotransmitters play a significant role in regulating mood, sleep, learning, and other functions that are critical to mental health.  <!-- NO HIGHLIGHTING HERE -->
+                </div>
+            </div>
+            
+            <div class="evidence-section">
+                <h3><i class="fas fa-book"></i> Evidence by Section</h3>
+    
             <div class="evidence-card">
                 <div class="evidence-header">
                     <span class="section-name">📖 1.1344935
 Thompson</span>
                     <span class="page-number">📄 Page 90</span>
-                    <span class="relevance">⭐ Relevance: 0.7</span>
-                </div>
-                <div>
-
                 </div>
                 <div class="evidence-text">
-                    This section discusses 1.1344935
-thompson. The content here is relevant to your question about ...
+                    <mark style="background-color: #ffeb3b; font-weight: bold;">neurotransmitters</mark> and Drugs There are several different types of <mark style="background-color: #ffeb3b; font-weight: bold;">neurotransmitters</mark> released by different neurons, and we can speak in broad terms about the kinds of functions associated with different <mark style="background-color: #ffeb3b; font-weight: bold;">neurotransmitters</mark> (Table 3.1). Much of what psychologists know about the functions of neurotransmit  <!-- HIGHLIGHTING HERE ONLY -->
                 </div>
             </div>
-
+    
             <div class="evidence-card">
                 <div class="evidence-header">
                     <span class="section-name">📖 15.16 Many medications designed to treat mood disorders work by altering neurotransmitter activity in the
 neural synapse</span>
                     <span class="page-number">📄 Page 95</span>
-                    <span class="relevance">⭐ Relevance: 0.75</span>
-                </div>
-                <div>
-
                 </div>
                 <div class="evidence-text">
-                    This section discusses 15.16 many medications designed to treat mood disorders work by altering neurotransmitter activity in the
-neural synapse. The content here is relevant to your question about ...
+                    <mark style="background-color: #ffeb3b; font-weight: bold;">neurotransmitters</mark> and Drugs There are several different types of <mark style="background-color: #ffeb3b; font-weight: bold;">neurotransmitters</mark> released by different neurons, and we can speak in broad terms about the kinds of functions associated with different <mark style="background-color: #ffeb3b; font-weight: bold;">neurotransmitters</mark> (Table 3.1). Much of what psychologists know about the functions of neurotransmit  <!-- HIGHLIGHTING HERE ONLY -->
                 </div>
             </div>
-
+    
             <div class="evidence-card">
                 <div class="evidence-header">
                     <span class="section-name">📖 16.13 Your emotional reactions are the result of your thoughts about the situation rather than the situation
 itself</span>
                     <span class="page-number">📄 Page 96</span>
-                    <span class="relevance">⭐ Relevance: 0.8</span>
-                </div>
-                <div>
-
                 </div>
                 <div class="evidence-text">
-                    This section discusses 16.13 your emotional reactions are the result of your thoughts about the situation rather than the situation
-itself. The content here is relevant to your question about ...
+                    <mark style="background-color: #ffeb3b; font-weight: bold;">neurotransmitters</mark> and Drugs There are several different types of <mark style="background-color: #ffeb3b; font-weight: bold;">neurotransmitters</mark> released by different neurons, and we can speak in broad terms about the kinds of functions associated with different <mark style="background-color: #ffeb3b; font-weight: bold;">neurotransmitters</mark> (Table 3.1). Much of what psychologists know about the functions of neurotransmit  <!-- HIGHLIGHTING HERE ONLY -->
                 </div>
             </div>
-
+    
             <div class="evidence-card">
                 <div class="evidence-header">
                     <span class="section-name">📖 16.5 The Sociocultural Model and Therapy Utilization
 LEARNING OBJECTIVES
 By the end of this section</span>
                     <span class="page-number">📄 Page 139</span>
-                    <span class="relevance">⭐ Relevance: 0.85</span>
-                </div>
-                <div>
-
                 </div>
                 <div class="evidence-text">
-                    This section discusses 16.5 the sociocultural model and therapy utilization
-learning objectives
-by the end of this section. The content here is relevant to your question about ...
+                    <mark style="background-color: #ffeb3b; font-weight: bold;">neurotransmitters</mark> and Drugs There are several different types of <mark style="background-color: #ffeb3b; font-weight: bold;">neurotransmitters</mark> released by different neurons, and we can speak in broad terms about the kinds of functions associated with different <mark style="background-color: #ffeb3b; font-weight: bold;">neurotransmitters</mark> (Table 3.1). Much of what psychologists know about the functions of neurotransmit  <!-- HIGHLIGHTING HERE ONLY -->
                 </div>
             </div>
-
+    
             <div class="evidence-card">
                 <div class="evidence-header">
                     <span class="section-name">📖 2017.1422101
 Vella</span>
                     <span class="page-number">📄 Page 140</span>
-                    <span class="relevance">⭐ Relevance: 0.9</span>
-                </div>
-                <div>
-
                 </div>
                 <div class="evidence-text">
-                    This section discusses 2017.1422101
-vella. The content here is relevant to your question about ...
+                    <mark style="background-color: #ffeb3b; font-weight: bold;">neurotransmitters</mark> and Drugs There are several different types of <mark style="background-color: #ffeb3b; font-weight: bold;">neurotransmitters</mark> released by different neurons, and we can speak in broad terms about the kinds of functions associated with different <mark style="background-color: #ffeb3b; font-weight: bold;">neurotransmitters</mark> (Table 3.1). Much of what psychologists know about the functions of neurotransmit  <!-- HIGHLIGHTING HERE ONLY -->
                 </div>
             </div>
-
-        </div>
-        
-        <div class="highlighted-context">
-            <h3><i class="fas fa-highlighter"></i> Highlighted Context</h3>
-            <div class="context-box">
-                Neurotransmitters and Drugs There are several different types of neurotransmitters released by different neurons, and we can speak in broad terms about the kinds of functions associated with different neurotransmitters (Table 3.1). Much of what psychologists know about the functions of neurotransmitters comes from research on the effects of drugs in psychological disorders. Psychologists who take a biological perspective and focus on the physiological causes of behavior assert that psychological disorders like depression and schizophrenia are associated with imbalances in one or more neurotransmitter systems. In this perspective, psychotropic medications can help improve the symptoms associated with these disorders. Psychotropic medications are drugs that treat psychiatric symptoms by restoring neurotransmitter balance. Major Neurotransmitters and How They Affect Behavior Neurotransmitter Involved in Potential Effect on Behavior Acetylcholine Muscle action, memory Increased arousal, enhanced cognition Beta-endorphin Pain, pleasure Decreased anxiety, decreased tension Dopamine Mood, sleep, learning Increased pleasure, suppressed appetite Gamma-aminobutyric acid (GABA) Brain function, sleep Decreased anxiety, decreased tension Glutamate Memory, learning Increased learning, enhanced memory Norepinephrine Heart, intestines, alertness Increased arousal, suppressed appetite Serotonin Mood, sleep Modulated mood, suppressed appetite TABLE 3.1 Psychoactive drugs can act as agonists or antagonists for a given neurotransmitter system. Agonists are chemicals that mimic a neurotransmitter at the receptor site. An antagonist, on the other hand, blocks or impedes the normal activity of a neurotransmitter at the receptor. Agonists and antagonists represent drugs that are prescribed to correct the specific neurotransmitter imbalances underlying a person’s condition. For example, Parkinson's disease, a progressive nervous system disorder, is associated with low levels of dopamine. Therefore, a common treatment strategy for Parkinson's disease involves using dopamine agonists, which mimic the effects of dopamine by binding to dopamine receptors. Certain symptoms of schizophrenia are associated with overactive dopamine neurotransmission. The antipsychotics used to treat these symptoms are antagonists for dopamine—they block dopamine’s effects by binding its receptors without activating them. Thus, they prevent dopamine released by one neuron from signaling information to adjacent neurons. In contrast to agonists and antagonists, which both operate by binding to receptor sites, reuptake inhibitors prevent unused neurotransmitters from being transported back to the neuron. This allows neurotransmitters to remain active in the synaptic cleft for longer durations, increasing their effectiveness. Depression, which has been consistently linked with reduced serotonin levels, is commonly treated with selective serotonin reuptake inhibitors (SSRIs). By preventing reuptake, SSRIs strengthen the effect of serotonin, giving it more time
+    
+            </div>
+            
+            <div class="highlighted-context">
+                <h3><i class="fas fa-highlighter"></i> Highlighted Context</h3>
+                <div class="context-box">
+                    <mark style="background-color: #ffeb3b; font-weight: bold;">neurotransmitters</mark> and Drugs There are several different types of <mark style="background-color: #ffeb3b; font-weight: bold;">neurotransmitters</mark> released by different neurons, and we can speak in broad terms about the kinds of functions associated with different <mark style="background-color: #ffeb3b; font-weight: bold;">neurotransmitters</mark> (Table 3.1). Much of what psychologists know about the functions of <mark style="background-color: #ffeb3b; font-weight: bold;">neurotransmitters</mark> comes from research on the effects of drugs in psychological disorders. Psychologists who take a biological perspective and focus on the physiological causes of behavior assert that psychological disorders like depression and schizophrenia are associated with imbalances in one or more neurotransmitter systems. In this perspective, psychotropic medications can help improve the symptoms associated with these disorders. Psychotropic medications are drugs that treat psychiatric symptoms by restoring neurotransmitter balance. Major <mark style="background-color: #ffeb3b; font-weight: bold;">neurotransmitters</mark> and How They Affect Behavior Neurotransmitter Involved in Potential Effect on Behavior Acetylcholine Muscle action, memory Increased arousal, enhanced cognition Beta-endorphin Pain, pleasure Decreased anxiety, decreased tension Dopamine Mood, sleep, learning Increased pleasure, suppressed appetite Gamma-aminobutyric acid (GABA) Brain function, sleep Decreased anxiety, decreased tension Glutamate Memory, learning Increased learning, enhanced memory Norepinephrine Heart, intestines, alertness Increased arousal, suppressed appetite Serotonin Mood, sleep Modulated mood, suppressed appetite TABLE 3.1 Psychoactive drugs can act as agonists or antagonists for a given neurotransmitter system. Agonists are chemicals that mimic a neurotransmitter at the receptor site. An antagonist, on the other hand, blocks or impedes the normal activity of a neurotransmitter at the receptor. Agonists and antagonists represent drugs that are prescribed to correct the specific neurotransmitter imbalances underlying a person’s condition. For example, Parkinson's disease, a progressive nervous system disorder, is associated with low levels of dopamine. Therefore, a common treatment strategy for Parkinson's disease involves using dopamine agonists, which mimic the effects of dopamine by binding to dopamine receptors. Certain symptoms of schizophrenia are associated with overactive dopamine neurotransmission. The antipsychotics used to treat these symptoms are antagonists for dopamine—they block dopamine’s effects by binding its receptors without activating them. Thus, they prevent dopamine released by one neuron from signaling information to adjacent neurons. In contrast to agonists and antagonists, which both operate by binding to receptor sites, reuptake inhibitors prevent unused <mark style="background-color: #ffeb3b; font-weight: bold;">neurotransmitters</mark> from being transported back to the neuron. This allows <mark style="background-color: #ffeb3b; font-weight: bold;">neurotransmitters</mark> to remain active in the synaptic cleft for longer durations, increasing their effectiveness. Depression, which has been consistently linked with reduced serotonin levels, is commonly treated with selective serotonin reuptake inhibitors (SSRIs). By preventing reuptake, SSRIs strengthen the effect of serotonin, giving it more time
 
 FIGURE 15.16 Many medications designed to treat mood disorders work by altering neurotransmitter activity in the neural synapse. Depression is linked to abnormal activity in several regions of the brain (Fitzgerald, Laird, Maller, & Daskalakis, 2008) including those important in assessing the emotional significance of stimuli and experiencing emotions (amygdala), and in regulating and controlling emotions (like the prefrontal cortex, or PFC) (LeMoult, Castonguay, Joormann, & McAleavey, 2013). People with depression show elevated amygdala activity (Drevets, Bogers, & Raichle, 2002), especially when presented with negative emotional stimuli, such as photos of sad faces (Figure 15.17) (Surguladze et al., 2005). Interestingly, heightened amygdala activation to negative emotional stimuli among depressed persons occurs even when stimuli are presented outside of conscious awareness (Victor, Furey, Fromm, Öhman, & Drevets, 2010), and it persists even after the negative emotional stimuli are no longer present (Siegle, Thompson, Carter, Steinhauer, & Thase, 2007). Additionally, depressed individuals exhibit less activation in the prefrontal, particularly on the left side (Davidson, Pizzagalli, & Nitschke, 2009). Because the PFC can dampen amygdala activation, thereby enabling one to suppress negative emotions (Phan et al., 2005), decreased activation in certain regions of the PFC may inhibit its ability to override negative emotions that might then lead to more negative mood states (Davidson et al., 2009). These findings suggest that people with depression are more prone to react to emotionally negative stimuli, yet have greater difficulty controlling these reactions. 15.7 • Mood and Related Disorders 565
 
-Volkow N. D., Fowler J. S., Logan J., Alexoff D., Zhu W., Telang F., . . . Apelskog-Torres K. (2009). Effects of modafinil on dopamine and dopamine transporters in the male human brain: clinical implications. Journal of the American Medical Association, 301, 1148–1154. Wakefield, J. C. (1992). The concept of mental disorder: On the boundary between biological facts and social values. American Psychologist, 47, 373–388. Waller, J. (2009a). Looking back: Dancing plagues and mass hysteria. The Psychologist, 22(7), 644–647. Waller, J. (2009b, February 21). A forgotten plague: Making sense of dancing mania. The Lancet, 373(9664), 624– 625. doi:10.1016/S0140-6736(09)60386-X Weiser, E. B. (2007). The prevalence of anxiety disorders among adults with Asthma: A meta-analytic review. Journal of Clinical Psychology in Medical Settings, 14, 297–307. White, C. N., Gunderson, J. G., Zanarani, M. C., & Hudson, J. I. (2003). Family studies of borderline personality disorder: A review. Harvard Review of Psychiatry, 11, 8–19. Whooley, M. A. (2006). Depression and cardiovascular disease: Healing the broken-hearted. Journal of the American Medical Association, 295, 2874–2881. Wilcox, H. C., Conner, K. R., & Caine, E. D. (2004). Association of alcohol and drug use disorders and completed suicide: An empirical review of cohort studies. Drug and Alcohol Dependence, 76, S11–S19. Wing, L., Gould, J., & Gillberg, C. (2011). Autism spectrum disorders in the DSM-V: Better or worse than the DSM IV? Research in Developmental Disabilities, 32, 768–773. Wisner, K. L., Sit, D. K. Y., McShea, M. C., Rizzo, D. M., Zoretich, R. A., Hughes, C. L., Hanusa, B. H. (2013). Onset timing, thoughts of self-harm, and diagnoses in postpartum women with screen-positive depression findings. JAMA Psychiatry, 70, 490–498. Wolraich, M. L., Wilson, D. B., & White, J. W. (1995). The effect of sugar on behavior or cognition in children. Journal of the American Medical Association, 274, 1617–1621. World Health Organization (WHO). (2013). International classification of diseases (ICD). http://www.who.int/ classifications/icd/en/ Wyatt, W. J., & Midkiff, D. M. (2006). Biological psychiatry: A practice in search of a science. Behavior and Social Issues, 15, 132–151. Xie, P., Kranzler, H. R., Poling, J., Stein, M. B., Anton, R. F., Brady, K., Gelernter, J. (2009). Interactive effect of stressful life events and the serotonin transporter 5-HTTLPR genotype on posttraumatic stress disorder diagnosis in 2 independent populations. Archives of General Psychology, 66, 1201–1209. Zachar, P., & Kendler, K. S. (2007). Psychiatric disorders: A conceptual taxonomy. The American Journal of Psychiatry, 16, 557–565. Zuckerman,
+Volkow N. D., Fowler J. S., Logan J., Alexoff D., Zhu W., Telang F., . . . Apelskog-Torres K. (2009). Effects of modafinil on dopamine and dopamine transporters in the male human brain: clinical implications. Journal of the American Medical Association, 301, 1148–1154. Wakefield, J. C. (1992). The concept of <mark style="background-color: #ffeb3b; font-weight: bold;">mental</mark> disorder: On the boundary between biological facts and social values. American Psychologist, 47, 373–388. Waller, J. (2009a). Looking back: Dancing plagues and mass hysteria. The Psychologist, 22(7), 644–647. Waller, J. (2009b, February 21). A forgotten plague: Making sense of dancing mania. The Lancet, 373(9664), 624– 625. doi:10.1016/S0140-6736(09)60386-X Weiser, E. B. (2007). The prevalence of anxiety disorders among adults with Asthma: A meta-analytic review. Journal of Clinical Psychology in Medical Settings, 14, 297–307. White, C. N., Gunderson, J. G., Zanarani, M. C., & Hudson, J. I. (2003). Family studies of borderline personality disorder: A review. Harvard Review of Psychiatry, 11, 8–19. Whooley, M. A. (2006). Depression and cardiovascular disease: Healing the broken-hearted. Journal of the American Medical Association, 295, 2874–2881. Wilcox, H. C., Conner, K. R., & Caine, E. D. (2004). Association of alcohol and drug use disorders and completed suicide: An empirical review of cohort studies. Drug and Alcohol Dependence, 76, S11–S19. Wing, L., Gould, J., & Gillberg, C. (2011). Autism spectrum disorders in the DSM-V: Better or worse than the DSM IV? Research in Develop<mark style="background-color: #ffeb3b; font-weight: bold;">mental</mark> Disabilities, 32, 768–773. Wisner, K. L., Sit, D. K. Y., McShea, M. C., Rizzo, D. M., Zoretich, R. A., Hughes, C. L., Hanusa, B. H. (2013). Onset timing, thoughts of self-harm, and diagnoses in postpartum women with screen-positive depression findings. JAMA Psychiatry, 70, 490–498. Wolraich, M. L., Wilson, D. B., & White, J. W. (1995). The effect of sugar on behavior or cognition in children. Journal of the American Medical Association, 274, 1617–1621. World <mark style="background-color: #ffeb3b; font-weight: bold;">health</mark> Organization (WHO). (2013). International classification of diseases (ICD). http://www.who.int/ classifications/icd/en/ Wyatt, W. J., & Midkiff, D. M. (2006). Biological psychiatry: A practice in search of a science. Behavior and Social Issues, 15, 132–151. Xie, P., Kranzler, H. R., Poling, J., Stein, M. B., Anton, R. F., Brady, K., Gelernter, J. (2009). Interactive effect of stressful life events and the serotonin transporter 5-HTTLPR genotype on posttraumatic stress disorder diagnosis in 2 independent populations. Archives of General Psychology, 66, 1201–1209. Zachar, P., & Kendler, K. S. (2007). Psychiatric disorders: A conceptual taxonomy. The American Journal of Psychiatry, 16, 557–565. Zuckerman,
 
-Explain how drugs act as agonists or antagonists for a given neurotransmitter system Psychologists striving to understand the human mind may study the nervous system. Learning how the body's cells and organs function can help us understand the biological basis of human psychology. The nervous system is composed of two basic cell types: glial cells (also known as glia) and neurons. Glial cells are traditionally thought to play a supportive role to neurons, both physically and metabolically. Glial cells provide scaffolding on which the nervous system is built, help neurons line up closely with each other to allow neuronal communication, provide insulation to neurons, transport nutrients and waste products, and mediate immune responses. For years, researchers believed that there were many more glial cells than neurons; however, more recent work from Suzanna Herculano-Houzel's laboratory has called this long-standing assumption into question and has provided important evidence that there may be a nearly 1:1 ratio of glia cells to neurons. This is important because it suggests that human brains are more similar to other primate brains than previously thought (Azevedo et al, 2009; Herculano-Houzel, 2012; Herculano-Houzel, 2009). Neurons, on 78 3 • Biopsychology Access for free at openstax.org
+Explain how drugs act as agonists or antagonists for a given neurotransmitter system Psychologists striving to understand the human mind may study the nervous system. Learning how the body's cells and organs function can help us understand the biological basis of human psychology. The nervous system is composed of two basic cell types: glial cells (also known as glia) and neurons. Glial cells are traditionally thought to play a supportive <mark style="background-color: #ffeb3b; font-weight: bold;">role</mark> to neurons, both physically and metabolically. Glial cells provide scaffolding on which the nervous system is built, help neurons line up closely with each other to allow neuronal communication, provide insulation to neurons, transport nutrients and waste products, and mediate immune responses. For years, researchers believed that there were many more glial cells than neurons; however, more recent work from Suzanna Herculano-Houzel's laboratory has called this long-standing assumption into question and has provided important evidence that there may be a nearly 1:1 ratio of glia cells to neurons. This is important because it suggests that human brains are more similar to other primate brains than previously thought (Azevedo et al, 2009; Herculano-Houzel, 2012; Herculano-Houzel, 2009). Neurons, on 78 3 • Biopsychology Access for free at openstax.org
 
 to interact with serotonin receptors on dendrites. Common SSRIs on the market today include Prozac, Paxil, and Zoloft. The drug LSD is structurally very similar to serotonin, and it affects the same neurons and receptors as serotonin. Psychotropic drugs are not instant solutions for people suffering from psychological disorders. Often, an individual must take a drug for several weeks before seeing improvement, and many 3.2 • Cells of the Nervous System 83
 
-Arnold L.E., Hodgkins, P., Caci, H., Kahle, J., Young, S. (2015) Effect of Treatment Modality on Long-Term Outcomes in Attention-Deficit/Hyperactivity Disorder: A Systematic Review. PLOS ONE 10(2): e0116407. https://doi.org/10.1371/journal.pone.0116407 Asberg, M., Thorén, P., Träskman, L., Bertilsson, L., & Ringberger, V. (1976). “Serotonin depression”—a biochemical subgroup within the affective disorders? Science, 191(4226), 478–480. doi:10.1126/ science.1246632 Asperger’s syndrome dropped from psychiatrists’ handbook the DSM: DSM-5, latest revision of Diagnostic and Statistical Manual, merges Asperger's with autism and widens dyslexia category. (2012, December 1). The Guardian. http://www.theguardian.com/society/2012/dec/02/aspergers-syndrome-dropped-psychiatric- dsm Autism Genome Project Consortium. (2007). Mapping autism risk loci using genetic linkage and chromosomal rearrangements. Nature Genetics, 39, 319–328. Baes, C. V. W., Tofoli, S. M. C., Martins, C. M. S., & Juruena, M. F. (2012). Assessment of the hypothalamic–pituitary–adrenal axis activity: Glucocorticoid receptor and mineralocorticoid receptor function in depression with early life stress—a systematic review. Acta Neuropsychiatrica, 24, 4–15. Baio, J., Wiggins, L., Christensen, D. L., et al. (2018). Prevalence of Autism Spectrum Disorder among children aged 8 years — Autism and Developmental Disabilities Monitoring Network, 11 sites, United States, 2014. Surveillance Summaries, 67(6), 1–23. https://www.cdc.gov/mmwr/volumes/67/ss/ ss6706a1.htm?s_cid=ss6706a1_w#suggestedcitation Baker, L. A., Bezdjian, S., & Raine, A. (2006). Behavioral genetics: The science of antisocial behavior. Law and Contemporary Problems, 69, 7–46. Barbaresi, W. J., Colligan, R. C., Weaver, A. L., Voigt, R. G., Killian, J. M., & Katusic, S. K. (2013). Mortality, ADHD, and psychosocial adversity in adults with childhood ADHD: A prospective study. Pediatrics, 131, 637–644. Barker, P. (2010). The legacy of Thomas Szasz. http://www.centerforindependentthought.org/SzaszLegacy.html Barkley, R. A. (2006). Attention-deficit hyperactivity disorder: A handbook for diagnosis and treatment. Guilford Press. Barkley, R. A., Fischer, M., Smallish, L., & Fletcher, K. (2002). The persistence of attention-deficit/hyperactivity disorder into young adulthood as a function of reporting source and definition of disorder. Journal of Abnormal Psychology, 111, 279–289. Battista, S. R., & Kocovski, N. L. (2010). Exploring the effect of alcohol on post-event processing specific to a social event. Cognitive Behaviour Therapy, 39, 1–10. Baumeister, A. A., & Hawkins, M. F. (2004). The serotonin hypothesis of schizophrenia: A historical case study on the heuristic value of theory i
+Arnold L.E., Hodgkins, P., Caci, H., Kahle, J., Young, S. (2015) Effect of Treatment Modality on Long-Term Outcomes in Attention-Deficit/Hyperactivity Disorder: A Systematic Review. PLOS ONE 10(2): e0116407. https://doi.org/10.1371/journal.pone.0116407 Asberg, M., Thorén, P., Träskman, L., Bertilsson, L., & Ringberger, V. (1976). “Serotonin depression”—a biochemical subgroup within the affective disorders? Science, 191(4226), 478–480. doi:10.1126/ science.1246632 Asperger’s syndrome dropped from psychiatrists’ handbook the DSM: DSM-5, latest revision of Diagnostic and Statistical Manual, merges Asperger's with autism and widens dyslexia category. (2012, December 1). The Guardian. http://www.theguardian.com/society/2012/dec/02/aspergers-syndrome-dropped-psychiatric- dsm Autism Genome Project Consortium. (2007). Mapping autism risk loci using genetic linkage and chromosomal rearrangements. Nature Genetics, 39, 319–328. Baes, C. V. W., Tofoli, S. M. C., Martins, C. M. S., & Juruena, M. F. (2012). Assessment of the hypothalamic–pituitary–adrenal axis activity: Glucocorticoid receptor and mineralocorticoid receptor function in depression with early life stress—a systematic review. Acta Neuropsychiatrica, 24, 4–15. Baio, J., Wiggins, L., Christensen, D. L., et al. (2018). Prevalence of Autism Spectrum Disorder among children aged 8 years — Autism and Develop<mark style="background-color: #ffeb3b; font-weight: bold;">mental</mark> Disabilities Monitoring Network, 11 sites, United States, 2014. Surveillance Summaries, 67(6), 1–23. https://www.cdc.gov/mmwr/volumes/67/ss/ ss6706a1.htm?s_cid=ss6706a1_w#suggestedcitation Baker, L. A., Bezdjian, S., & Raine, A. (2006). Behavioral genetics: The science of antisocial behavior. Law and Contemporary Problems, 69, 7–46. Barbaresi, W. J., Colligan, R. C., Weaver, A. L., Voigt, R. G., Killian, J. M., & Katusic, S. K. (2013). Mortality, ADHD, and psychosocial adversity in adults with childhood ADHD: A prospective study. Pediatrics, 131, 637–644. Barker, P. (2010). The legacy of Thomas Szasz. http://www.centerforindependentthought.org/SzaszLegacy.html Barkley, R. A. (2006). Attention-deficit hyperactivity disorder: A handbook for diagnosis and treatment. Guilford Press. Barkley, R. A., Fischer, M., Smallish, L., & Fletcher, K. (2002). The persistence of attention-deficit/hyperactivity disorder into young adulthood as a function of reporting source and definition of disorder. Journal of Abnormal Psychology, 111, 279–289. Battista, S. R., & Kocovski, N. L. (2010). Exploring the effect of alcohol on post-event processing specific to a social event. Cognitive Behaviour Therapy, 39, 1–10. Baumeister, A. A., & Hawkins, M. F. (2004). The serotonin hypothesis of schizophrenia: A historical case study on the heuristic value of theory i  <!-- HIGHLIGHTING HERE ONLY -->
+                </div>
+            </div>
+            
+            <div class="stats">
+                <div class="stat-item">
+                    <div class="stat-label">Sections Used</div>
+                    <div class="stat-value">11</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Pages Referenced</div>
+                    <div class="stat-value">11</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Keywords Found</div>
+                    <div class="stat-value">4</div>
+                </div>
+            </div>
+            
+            <div class="footer">
+                Generated from Psychology 2e Textbook • Question 41 • 2026-02-27
             </div>
         </div>
         
-        <div class="stats">
-            <div class="stat-item">
-                <div class="stat-label">Sections Used</div>
-                <div class="stat-value">11</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-label">Pages Referenced</div>
-                <div class="stat-value">11</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-label">Keywords Found</div>
-                <div class="stat-value">0</div>
-            </div>
-        </div>
-        
-        <div class="footer">
-            Generated from Psychology 2e Textbook • Question 41 • 2026-02-26
-        </div>
-    </div>
-    
-    <!-- Font Awesome for icons -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
-</body>
-</html>
+        <!-- Font Awesome for icons -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
+    </body>
+    </html>

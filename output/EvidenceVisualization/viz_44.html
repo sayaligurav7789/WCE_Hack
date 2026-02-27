@@ -1,433 +1,398 @@
 <!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Evidence Visualization - Question 44</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            padding: 20px;
-        }
-        
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            overflow: hidden;
-        }
-        
-        .header {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            padding: 30px;
-        }
-        
-        .header h1 {
-            font-size: 24px;
-            margin-bottom: 10px;
-        }
-        
-        .header .question {
-            font-size: 18px;
-            opacity: 0.9;
-            background: rgba(255, 255, 255, 0.2);
-            padding: 15px;
-            border-radius: 10px;
-            margin-top: 10px;
-            line-height: 1.5;
-        }
-        
-        .keywords-bar {
-            background: #f0f0f0;
-            padding: 15px 30px;
-            border-bottom: 1px solid #e0e0e0;
-        }
-        
-        .keywords-title {
-            font-size: 14px;
-            color: #666;
-            margin-bottom: 10px;
-            font-weight: 600;
-        }
-        
-        .keyword-badge {
-            display: inline-block;
-            background: #ffeb3b;
-            color: #333;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 13px;
-            margin: 0 5px 5px 0;
-            font-weight: 500;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-        
-        .answer-section {
-            padding: 30px;
-            background: #f8f9fa;
-            border-bottom: 1px solid #e0e0e0;
-        }
-        
-        .answer-section h3 {
-            color: #333;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .answer-section h3 i {
-            color: #667eea;
-        }
-        
-        .answer-content {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            line-height: 1.8;
-            color: #444;
-            border-left: 4px solid #667eea;
-        }
-        
-        .answer-content mark {
-            background-color: #ffeb3b;
-            padding: 2px 0;
-            font-weight: 500;
-        }
-        
-        .evidence-section {
-            padding: 30px;
-        }
-        
-        .evidence-section h3 {
-            color: #333;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .evidence-section h3 i {
-            color: #667eea;
-        }
-        
-        .evidence-card {
-            background: #f8f9fa;
-            border-radius: 10px;
-            padding: 20px;
-            margin-bottom: 20px;
-            border-left: 4px solid #667eea;
-        }
-        
-        .evidence-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-        
-        .section-name {
-            font-weight: 600;
-            color: #333;
-            background: #e8eaf6;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 14px;
-        }
-        
-        .page-number {
-            color: #666;
-            background: white;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 14px;
-            border: 1px solid #e0e0e0;
-        }
-        
-        .relevance {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 14px;
-        }
-        
-        .term-badge {
-            display: inline-block;
-            background: #ffeb3b;
-            color: #333;
-            padding: 3px 10px;
-            border-radius: 15px;
-            font-size: 12px;
-            margin: 0 5px 5px 0;
-            font-weight: 500;
-        }
-        
-        .evidence-text {
-            background: white;
-            padding: 15px;
-            border-radius: 8px;
-            color: #555;
-            line-height: 1.6;
-            margin: 15px 0 0 0;
-            border: 1px solid #e0e0e0;
-        }
-        
-        .evidence-text mark {
-            background-color: #ffeb3b;
-            padding: 2px 0;
-            font-weight: 500;
-        }
-        
-        .highlighted-context {
-            padding: 30px;
-            background: #f8f9fa;
-            border-top: 1px solid #e0e0e0;
-            border-bottom: 1px solid #e0e0e0;
-        }
-        
-        .highlighted-context h3 {
-            color: #333;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .context-box {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            max-height: 400px;
-            overflow-y: auto;
-            border: 1px solid #e0e0e0;
-            line-height: 1.8;
-            font-size: 14px;
-        }
-        
-        .context-box mark {
-            background-color: #ffeb3b;
-            padding: 2px 0;
-            font-weight: 500;
-        }
-        
-        .stats {
-            display: flex;
-            gap: 15px;
-            padding: 20px 30px;
-            background: white;
-            flex-wrap: wrap;
-        }
-        
-        .stat-item {
-            background: #f8f9fa;
-            padding: 10px 20px;
-            border-radius: 10px;
-            flex: 1;
-            min-width: 120px;
-            text-align: center;
-            border: 1px solid #e0e0e0;
-        }
-        
-        .stat-label {
-            font-size: 12px;
-            color: #666;
-            margin-bottom: 5px;
-        }
-        
-        .stat-value {
-            font-size: 24px;
-            font-weight: 600;
-            color: #667eea;
-        }
-        
-        .footer {
-            padding: 20px 30px;
-            background: #f0f0f0;
-            text-align: center;
-            color: #666;
-            font-size: 14px;
-            border-top: 1px solid #e0e0e0;
-        }
-        
-        @media (max-width: 768px) {
-            .header {
+    <html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Evidence Visualization - Question 44</title>
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+            
+            body {
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                min-height: 100vh;
                 padding: 20px;
             }
             
-            .answer-section,
-            .evidence-section,
-            .highlighted-context {
+            .container {
+                max-width: 1000px;
+                margin: 0 auto;
+                background: white;
+                border-radius: 20px;
+                box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+                overflow: hidden;
+            }
+            
+            .header {
+                background: linear-gradient(135deg, #667eea, #764ba2);
+                color: white;
+                padding: 30px;
+            }
+            
+            .header h1 {
+                font-size: 24px;
+                margin-bottom: 10px;
+            }
+            
+            .header .question {
+                font-size: 18px;
+                opacity: 0.9;
+                background: rgba(255, 255, 255, 0.2);
+                padding: 15px;
+                border-radius: 10px;
+                margin-top: 10px;
+                line-height: 1.5;
+            }
+            
+            .keywords-bar {
+                background: #f0f0f0;
+                padding: 15px 30px;
+                border-bottom: 1px solid #e0e0e0;
+            }
+            
+            .keywords-title {
+                font-size: 14px;
+                color: #666;
+                margin-bottom: 10px;
+                font-weight: 600;
+            }
+            
+            .keyword-badge {
+                display: inline-block;
+                background: #ffeb3b;
+                color: #333;
+                padding: 5px 12px;
+                border-radius: 20px;
+                font-size: 13px;
+                margin: 0 5px 5px 0;
+                font-weight: 500;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            }
+            
+            .answer-section {
+                padding: 30px;
+                background: #f8f9fa;
+                border-bottom: 1px solid #e0e0e0;
+            }
+            
+            .answer-section h3 {
+                color: #333;
+                margin-bottom: 15px;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+            
+            .answer-section h3 i {
+                color: #667eea;
+            }
+            
+            .answer-content {
+                background: white;
                 padding: 20px;
+                border-radius: 10px;
+                line-height: 1.8;
+                color: #444;
+                border-left: 4px solid #667eea;
+            }
+            
+            /* NO mark styling for answer - it stays plain */
+            
+            .evidence-section {
+                padding: 30px;
+            }
+            
+            .evidence-section h3 {
+                color: #333;
+                margin-bottom: 20px;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+            
+            .evidence-section h3 i {
+                color: #667eea;
+            }
+            
+            .evidence-card {
+                background: #f8f9fa;
+                border-radius: 10px;
+                padding: 20px;
+                margin-bottom: 20px;
+                border-left: 4px solid #667eea;
             }
             
             .evidence-header {
-                flex-direction: column;
-                align-items: flex-start;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 15px;
+                flex-wrap: wrap;
+                gap: 10px;
             }
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <div class="header">
-            <h1>📚 Evidence Visualization</h1>
-            <div class="question">
-                <strong>Question 44:</strong> 
+            
+            .section-name {
+                font-weight: 600;
+                color: #333;
+                background: #e8eaf6;
+                padding: 5px 12px;
+                border-radius: 20px;
+                font-size: 14px;
+            }
+            
+            .page-number {
+                color: #666;
+                background: white;
+                padding: 5px 12px;
+                border-radius: 20px;
+                font-size: 14px;
+                border: 1px solid #e0e0e0;
+            }
+            
+            .term-badge {
+                display: inline-block;
+                background: #ffeb3b;
+                color: #333;
+                padding: 3px 10px;
+                border-radius: 15px;
+                font-size: 12px;
+                margin: 0 5px 5px 0;
+                font-weight: 500;
+            }
+            
+            .evidence-text {
+                background: white;
+                padding: 15px;
+                border-radius: 8px;
+                color: #555;
+                line-height: 1.6;
+                margin: 15px 0 0 0;
+                border: 1px solid #e0e0e0;
+            }
+            
+            .evidence-text mark {
+                background-color: #ffeb3b;
+                padding: 2px 0;
+                font-weight: 500;
+            }
+            
+            .highlighted-context {
+                padding: 30px;
+                background: #f8f9fa;
+                border-top: 1px solid #e0e0e0;
+                border-bottom: 1px solid #e0e0e0;
+            }
+            
+            .highlighted-context h3 {
+                color: #333;
+                margin-bottom: 15px;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+            
+            .context-box {
+                background: white;
+                padding: 20px;
+                border-radius: 10px;
+                max-height: 400px;
+                overflow-y: auto;
+                border: 1px solid #e0e0e0;
+                line-height: 1.8;
+                font-size: 14px;
+            }
+            
+            .context-box mark {
+                background-color: #ffeb3b;
+                padding: 2px 0;
+                font-weight: 500;
+            }
+            
+            .stats {
+                display: flex;
+                gap: 15px;
+                padding: 20px 30px;
+                background: white;
+                flex-wrap: wrap;
+            }
+            
+            .stat-item {
+                background: #f8f9fa;
+                padding: 10px 20px;
+                border-radius: 10px;
+                flex: 1;
+                min-width: 120px;
+                text-align: center;
+                border: 1px solid #e0e0e0;
+            }
+            
+            .stat-label {
+                font-size: 12px;
+                color: #666;
+                margin-bottom: 5px;
+            }
+            
+            .stat-value {
+                font-size: 24px;
+                font-weight: 600;
+                color: #667eea;
+            }
+            
+            .footer {
+                padding: 20px 30px;
+                background: #f0f0f0;
+                text-align: center;
+                color: #666;
+                font-size: 14px;
+                border-top: 1px solid #e0e0e0;
+            }
+            
+            @media (max-width: 768px) {
+                .header {
+                    padding: 20px;
+                }
+                
+                .answer-section,
+                .evidence-section,
+                .highlighted-context {
+                    padding: 20px;
+                }
+                
+                .evidence-header {
+                    flex-direction: column;
+                    align-items: flex-start;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="header">
+                <h1>📚 Evidence Visualization</h1>
+                <div class="question">
+                    <strong>Question 44:</strong> What is the difference between prejudice and discrimination?
+                </div>
             </div>
-        </div>
-        
-        <div class="keywords-bar">
-            <div class="keywords-title">🔑 Extracted Keywords:</div>
-
-        </div>
-        
-        <div class="answer-section">
-            <h3><i class="fas fa-robot"></i> Generated Answer</h3>
-            <div class="answer-content">
-                According to the provided textbook context, the difference between prejudice and discrimination is as follows:
+            
+            <div class="keywords-bar">
+                <div class="keywords-title">🔑 Extracted Keywords:</div>
+    <span class="keyword-badge">difference</span><span class="keyword-badge">between</span><span class="keyword-badge">prejudice</span><span class="keyword-badge">discrimination</span>
+            </div>
+            
+            <div class="answer-section">
+                <h3><i class="fas fa-robot"></i> Generated Answer</h3>
+                <div class="answer-content">
+                    According to the provided textbook context, the difference between prejudice and discrimination is as follows:
 
 * Prejudice is an affective component, referring to feelings or attitudes towards a group or individual based on their membership in a particular social group. It is a negative attitude and feeling towards an individual solely based on their membership in a particular social group.
 * Discrimination, on the other hand, is a behavioral component, referring to the positive or negative treatment of others based on their group membership. It involves acting on prejudices, leading to excluding, avoiding, or biased treatment of group members.
 
-In other words, prejudice is the negative attitude or feeling, while discrimination is the action or behavior that results from that attitude.
+In other words, prejudice is the negative attitude or feeling, while discrimination is the action or behavior that results from that attitude.  <!-- NO HIGHLIGHTING HERE -->
+                </div>
             </div>
-        </div>
-        
-        <div class="evidence-section">
-            <h3><i class="fas fa-book"></i> Evidence by Section</h3>
-
+            
+            <div class="evidence-section">
+                <h3><i class="fas fa-book"></i> Evidence by Section</h3>
+    
             <div class="evidence-card">
                 <div class="evidence-header">
                     <span class="section-name">📖 12.1 What Is Social Psychology</span>
                     <span class="page-number">📄 Page 435</span>
-                    <span class="relevance">⭐ Relevance: 0.7</span>
-                </div>
-                <div>
-
                 </div>
                 <div class="evidence-text">
-                    This section discusses 12.1 what is social psychology. The content here is relevant to your question about ...
+                    summarizes the characteristics of stereotypes, <mark style="background-color: #ffeb3b; font-weight: bold;">prejudice</mark>, and <mark style="background-color: #ffeb3b; font-weight: bold;">discrimination</mark>. Have you ever been the target of <mark style="background-color: #ffeb3b; font-weight: bold;">discrimination</mark>? If so, how did this negative treatment make you feel? Connecting Stereotypes, <mark style="background-color: #ffeb3b; font-weight: bold;">prejudice</mark>, and <mark style="background-color: #ffeb3b; font-weight: bold;">discrimination</mark> Item Function Connection Example Stereotype Cognitive; thoughts a  <!-- HIGHLIGHTING HERE ONLY -->
                 </div>
             </div>
-
+    
             <div class="evidence-card">
                 <div class="evidence-header">
                     <span class="section-name">📖 12.22 Women now have many jobs previously closed to them</span>
                     <span class="page-number">📄 Page 436</span>
-                    <span class="relevance">⭐ Relevance: 0.75</span>
-                </div>
-                <div>
-
                 </div>
                 <div class="evidence-text">
-                    This section discusses 12.22 women now have many jobs previously closed to them. The content here is relevant to your question about ...
+                    summarizes the characteristics of stereotypes, <mark style="background-color: #ffeb3b; font-weight: bold;">prejudice</mark>, and <mark style="background-color: #ffeb3b; font-weight: bold;">discrimination</mark>. Have you ever been the target of <mark style="background-color: #ffeb3b; font-weight: bold;">discrimination</mark>? If so, how did this negative treatment make you feel? Connecting Stereotypes, <mark style="background-color: #ffeb3b; font-weight: bold;">prejudice</mark>, and <mark style="background-color: #ffeb3b; font-weight: bold;">discrimination</mark> Item Function Connection Example Stereotype Cognitive; thoughts a  <!-- HIGHLIGHTING HERE ONLY -->
                 </div>
             </div>
-
+    
             <div class="evidence-card">
                 <div class="evidence-header">
                     <span class="section-name">📖 12.23 These children are very young</span>
                     <span class="page-number">📄 Page 438</span>
-                    <span class="relevance">⭐ Relevance: 0.8</span>
-                </div>
-                <div>
-
                 </div>
                 <div class="evidence-text">
-                    This section discusses 12.23 these children are very young. The content here is relevant to your question about ...
+                    summarizes the characteristics of stereotypes, <mark style="background-color: #ffeb3b; font-weight: bold;">prejudice</mark>, and <mark style="background-color: #ffeb3b; font-weight: bold;">discrimination</mark>. Have you ever been the target of <mark style="background-color: #ffeb3b; font-weight: bold;">discrimination</mark>? If so, how did this negative treatment make you feel? Connecting Stereotypes, <mark style="background-color: #ffeb3b; font-weight: bold;">prejudice</mark>, and <mark style="background-color: #ffeb3b; font-weight: bold;">discrimination</mark> Item Function Connection Example Stereotype Cognitive; thoughts a  <!-- HIGHLIGHTING HERE ONLY -->
                 </div>
             </div>
-
+    
             <div class="evidence-card">
                 <div class="evidence-header">
                     <span class="section-name">📖 12.3
 So far</span>
                     <span class="page-number">📄 Page 439</span>
-                    <span class="relevance">⭐ Relevance: 0.85</span>
-                </div>
-                <div>
-
                 </div>
                 <div class="evidence-text">
-                    This section discusses 12.3
-so far. The content here is relevant to your question about ...
+                    summarizes the characteristics of stereotypes, <mark style="background-color: #ffeb3b; font-weight: bold;">prejudice</mark>, and <mark style="background-color: #ffeb3b; font-weight: bold;">discrimination</mark>. Have you ever been the target of <mark style="background-color: #ffeb3b; font-weight: bold;">discrimination</mark>? If so, how did this negative treatment make you feel? Connecting Stereotypes, <mark style="background-color: #ffeb3b; font-weight: bold;">prejudice</mark>, and <mark style="background-color: #ffeb3b; font-weight: bold;">discrimination</mark> Item Function Connection Example Stereotype Cognitive; thoughts a  <!-- HIGHLIGHTING HERE ONLY -->
                 </div>
             </div>
-
+    
             <div class="evidence-card">
                 <div class="evidence-header">
                     <span class="section-name">📖 12.5 Prejudice and Discrimination
 LEARNING OBJECTIVES
 By the end of this section</span>
                     <span class="page-number">📄 Page 440</span>
-                    <span class="relevance">⭐ Relevance: 0.9</span>
-                </div>
-                <div>
-
                 </div>
                 <div class="evidence-text">
-                    This section discusses 12.5 prejudice and discrimination
-learning objectives
-by the end of this section. The content here is relevant to your question about ...
+                    summarizes the characteristics of stereotypes, <mark style="background-color: #ffeb3b; font-weight: bold;">prejudice</mark>, and <mark style="background-color: #ffeb3b; font-weight: bold;">discrimination</mark>. Have you ever been the target of <mark style="background-color: #ffeb3b; font-weight: bold;">discrimination</mark>? If so, how did this negative treatment make you feel? Connecting Stereotypes, <mark style="background-color: #ffeb3b; font-weight: bold;">prejudice</mark>, and <mark style="background-color: #ffeb3b; font-weight: bold;">discrimination</mark> Item Function Connection Example Stereotype Cognitive; thoughts a  <!-- HIGHLIGHTING HERE ONLY -->
                 </div>
             </div>
-
-        </div>
-        
-        <div class="highlighted-context">
-            <h3><i class="fas fa-highlighter"></i> Highlighted Context</h3>
-            <div class="context-box">
-                summarizes the characteristics of stereotypes, prejudice, and discrimination. Have you ever been the target of discrimination? If so, how did this negative treatment make you feel? Connecting Stereotypes, Prejudice, and Discrimination Item Function Connection Example Stereotype Cognitive; thoughts about people Overgeneralized beliefs about people may lead to prejudice. “Yankees fans are arrogant and obnoxious.” Prejudice Affective; feelings about people, both positive and negative Feelings may influence treatment of others, leading to discrimination. “I hate Yankees fans; they make me angry.” Discrimination Behavior; positive or negative treatment of others Holding stereotypes and harboring prejudice may lead to excluding, avoiding, and biased treatment of group members. “I would never hire nor become friends with a person if I knew they were a Yankees fan.” TABLE 12.3 So far, we’ve discussed stereotypes, prejudice, and discrimination as negative thoughts, feelings, and behaviors because these are typically the most problematic. However, it is important to also point out that people can hold positive thoughts, feelings, and behaviors toward individuals based on group membership; for example, they would show preferential treatment for people who are like themselves—that is, who share the same gender, race, or favorite sports team. LINK TO LEARNING Watch this video of a social experiment conducted in a park (http://openstax.org/l/racismexp) that demonstrates the concepts of prejudice, stereotypes, and discrimination. In the video, three people try to steal a bike out in the open. The race and gender of the thief is varied: a White male teenager, a Black male teenager, and a White female. Does anyone try to stop them? The treatment of the teenagers in the video demonstrates the concept of racism. Prejudice and Discrimination When we meet strangers we automatically process three pieces of information about them: their race, gender, and age (Ito & Urland, 2003). Why are these aspects of an unfamiliar person so important? Why don’t we instead notice whether their eyes are friendly, whether they are smiling, their height, the type of clothes they are wearing? Although these secondary characteristics are important in forming a first impression of a stranger, the social categories of race, gender, and age provide a wealth of information about an individual. This information, however, often is based on stereotypes. We may have different expectations of strangers depending on their race, gender, and age. What stereotypes and prejudices do you hold about people who are from a race, gender, and age group different from
-
-warns “No Entrance for Poles!” (b) An African-American male drinks from a designated “colored” water fountain in Oklahoma in 1939 during the era of racial segregation as a practice of discrimination. (credit b: modification of work by United States Farm Security Administration) Understanding Prejudice and Discrimination As we discussed in the opening story of Trayvon Martin, humans are very diverse and although we share many similarities, we also have many differences. The social groups we belong to help form our identities (Tajfel, 1974). These differences may be difficult for some people to reconcile, which may lead to prejudice toward people who are different. Prejudice is a negative attitude and feeling toward an individual based solely on one’s membership in a particular social group (Allport, 1954; Brown, 2010). Prejudice is common against people who are members of an unfamiliar cultural group. Thus, certain types of education, contact, interactions, and building relationships with members of different cultural groups can reduce the tendency toward prejudice. In fact, simply imagining interacting with members of different cultural groups might affect prejudice. Indeed, when experimental participants were asked to imagine themselves positively interacting with someone from a different group, this led to an increased positive attitude toward the other group and an increase in positive traits associated with the other group. Furthermore, imagined social interaction can reduce anxiety associated with inter-group interactions (Crisp & Turner, 2009). What are some examples of social groups that you belong to that contribute to your identity? Social groups can include gender, race, ethnicity, nationality, social class, religion, sexual orientation, profession, and many more. And, as is true for social roles, you can simultaneously be a member of more than one social group. An example of prejudice is having a negative attitude toward people who are not born in the United States. Although people holding this prejudiced attitude do not know all people who were not born in the United States, they dislike them due to their status as foreigners. Can you think of a prejudiced attitude you have held toward a group of people? How did your prejudice develop? Prejudice often begins in the form of a stereotype—that is, a specific belief or assumption about individuals based solely on their membership in a group, regardless of their individual characteristics. Stereotypes become overgeneralized and applied to all members of a group. For example, someone holding prejudiced attitudes toward older adults, may
-
-diet, exercising, smoking cessation, and cooperation with medical regimens (Uchino, 2009). Stress and Discrimination Being the recipient of prejudice and discrimination is associated with a number of negative outcomes. Many studies have shown how discrimination is a significant stressor for marginalized groups (Pascoe & Smart Richman, 2009). Discrimination negatively impacts both physical and mental health for individuals in stigmatized groups. As you’ll learn when you study social psychology, various social identities (such as gender, age, religion, sexuality, ethnicity) often lead people to simultaneously be exposed to multiple forms of discrimination, which can have even stronger negative effects on mental and physical health (Vines, Ward, Cordoba, & Black, 2017). For example, the amplified levels of discrimination faced by Latinx transgender women may have related effects, leading to high stress levels and poor mental and physical health outcomes. Perceived control and the general adaptation syndrome help explain the process by which discrimination affects mental and physical health. Discrimination can be conceptualized as an uncontrollable, persistent, and unpredictable stressor. When a discriminatory event occurs, the target of the event initially experiences an acute stress response (alarm stage). This acute reaction alone does not typically have a great impact on health. However, discrimination tends to be a chronic stressor. As people in marginalized groups experience repeated discrimination, they develop a heightened reactivity as their bodies prepare to act quickly (resistance stage). This long-term accumulation of stress responses can eventually lead to increases in negative emotion and wear on physical health (exhaustion stage). This explains why a history of perceived discrimination is associated with a host of mental and physical health problems including depression, cardiovascular disease, and cancer (Pascoe & Smart Richman, 2009). Protecting stigmatized groups from the negative impact of discrimination-induced stress may involve reducing the incidence of discriminatory behaviors in conjunction with protective strategies that reduce the impact of discriminatory events when they occur. Civil rights legislation has protected some stigmatized groups by making discrimination a prosecutable offense in many social contexts. However, some groups (e.g., transgender people) often lack important legal recourse when discrimination occurs. Moreover, most modern discrimination comes in subtle forms that fall below the radar of the law. For example, discrimination may be experienced as selective inhospitality toward people of specific races or ethnicities, but little is done in response since it would be easy to attribute the behavior to other causes. Although some cultural changes are increasingly helping
-
-some of the criteria on which hiring decisions cannot legally be made. (credit a: modification of work by Sean McGrath; credit b: modification of work by Ze’ev Barkan; credit c: modification of work by David Hodgson) The U.S. Equal Employment Opportunity Commission (EEOC) The U.S. Equal Employment Opportunity Commission (EEOC) is responsible for enforcing federal laws that make it illegal to discriminate against a job applicant or an employee because of the person's race, color, religion, sex (including pregnancy), sexual orientation, national origin, age (40 or older), disability, or genetic information. Figure 13.12 provides some of the legal language from laws that have been passed to prevent discrimination. 13.2 • Industrial Psychology: Selecting and Evaluating Employees 463
-
-wealthy families could afford to attend private schools, whereas children from middle- and low-income families typically attended public schools. If a child from a low-income family received a merit scholarship to attend a private school, how might the child be treated by classmates? Can you recall a time when you held prejudiced attitudes or beliefs or acted in a discriminatory manner because your group of friends expected you to? Stereotypes and Self-Fulfilling Prophecy When we hold a stereotype about a person, we have expectations that they will fulfill that stereotype. A self- fulfilling prophecy is an expectation held by a person that alters their behavior in a way that tends to make it true. When we hold stereotypes about a person, we tend to treat the person according to our expectations. This treatment can influence the person to act according to our stereotypic expectations, thus confirming our stereotypic beliefs. Research by Rosenthal and Jacobson (1968) found that disadvantaged students whose teachers expected them to perform well had higher grades than disadvantaged students whose teachers expected them to do poorly. Consider this example of cause and effect in a self-fulfilling prophecy: If an employer expects an openly gay job applicant to be incompetent, the potential employer might treat the applicant negatively during the interview by engaging in less conversation, making little eye contact, and generally behaving coldly toward the applicant DIG DEEPER 12.5 • Prejudice and Discrimination 427
-
-your own? Racism Racism is prejudice and discrimination against an individual based solely on one’s membership in a specific racial group (such as toward African Americans, Asian Americans, Latinos, Native Americans, European Americans). What are some stereotypes of various racial or ethnic groups? Research suggests cultural stereotypes for Asian Americans include cold, sly, and intelligent; for Latinos, cold and unintelligent; for 424 12 • Social Psychology Access for free at openstax.org
-
-with the group, even in the face of inaccurate information. Conformity to group norms is driven by two motivations, the desire to fit in and be liked and the desire to be accurate and gain information from the group. Authority figures also have influence over our behaviors, and many people become obedient and follow orders even if the orders are contrary to their personal values. Conformity to group pressures can also result in groupthink, or the faulty decision- making process that results from cohesive group members trying to maintain group harmony. Group situations can improve human behavior through facilitating performance on easy tasks, but inhibiting performance on difficult tasks. The presence of others can also lead to social loafing when individual efforts cannot be evaluated. 12.5 Prejudice and Discrimination As diverse individuals, humans can experience conflict when interacting with people who are different from each other. Prejudice, or negative feelings and evaluations, is common when people
-            </div>
-        </div>
-        
-        <div class="stats">
-            <div class="stat-item">
-                <div class="stat-label">Sections Used</div>
-                <div class="stat-value">8</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-label">Pages Referenced</div>
-                <div class="stat-value">9</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-label">Keywords Found</div>
-                <div class="stat-value">0</div>
-            </div>
-        </div>
-        
-        <div class="footer">
-            Generated from Psychology 2e Textbook • Question 44 • 2026-02-26
-        </div>
-    </div>
     
-    <!-- Font Awesome for icons -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
-</body>
-</html>
+            </div>
+            
+            <div class="highlighted-context">
+                <h3><i class="fas fa-highlighter"></i> Highlighted Context</h3>
+                <div class="context-box">
+                    summarizes the characteristics of stereotypes, <mark style="background-color: #ffeb3b; font-weight: bold;">prejudice</mark>, and <mark style="background-color: #ffeb3b; font-weight: bold;">discrimination</mark>. Have you ever been the target of <mark style="background-color: #ffeb3b; font-weight: bold;">discrimination</mark>? If so, how did this negative treatment make you feel? Connecting Stereotypes, <mark style="background-color: #ffeb3b; font-weight: bold;">prejudice</mark>, and <mark style="background-color: #ffeb3b; font-weight: bold;">discrimination</mark> Item Function Connection Example Stereotype Cognitive; thoughts about people Overgeneralized beliefs about people may lead to <mark style="background-color: #ffeb3b; font-weight: bold;">prejudice</mark>. “Yankees fans are arrogant and obnoxious.” <mark style="background-color: #ffeb3b; font-weight: bold;">prejudice</mark> Affective; feelings about people, both positive and negative Feelings may influence treatment of others, leading to <mark style="background-color: #ffeb3b; font-weight: bold;">discrimination</mark>. “I hate Yankees fans; they make me angry.” <mark style="background-color: #ffeb3b; font-weight: bold;">discrimination</mark> Behavior; positive or negative treatment of others Holding stereotypes and harboring <mark style="background-color: #ffeb3b; font-weight: bold;">prejudice</mark> may lead to excluding, avoiding, and biased treatment of group members. “I would never hire nor become friends with a person if I knew they were a Yankees fan.” TABLE 12.3 So far, we’ve discussed stereotypes, <mark style="background-color: #ffeb3b; font-weight: bold;">prejudice</mark>, and <mark style="background-color: #ffeb3b; font-weight: bold;">discrimination</mark> as negative thoughts, feelings, and behaviors because these are typically the most problematic. However, it is important to also point out that people can hold positive thoughts, feelings, and behaviors toward individuals based on group membership; for example, they would show preferential treatment for people who are like themselves—that is, who share the same gender, race, or favorite sports team. LINK TO LEARNING Watch this video of a social experiment conducted in a park (http://openstax.org/l/racismexp) that demonstrates the concepts of <mark style="background-color: #ffeb3b; font-weight: bold;">prejudice</mark>, stereotypes, and <mark style="background-color: #ffeb3b; font-weight: bold;">discrimination</mark>. In the video, three people try to steal a bike out in the open. The race and gender of the thief is varied: a White male teenager, a Black male teenager, and a White female. Does anyone try to stop them? The treatment of the teenagers in the video demonstrates the concept of racism. <mark style="background-color: #ffeb3b; font-weight: bold;">prejudice</mark> and <mark style="background-color: #ffeb3b; font-weight: bold;">discrimination</mark> When we meet strangers we automatically process three pieces of information about them: their race, gender, and age (Ito & Urland, 2003). Why are these aspects of an unfamiliar person so important? Why don’t we instead notice whether their eyes are friendly, whether they are smiling, their height, the type of clothes they are wearing? Although these secondary characteristics are important in forming a first impression of a stranger, the social categories of race, gender, and age provide a wealth of information about an individual. This information, however, often is based on stereotypes. We may have different expectations of strangers depending on their race, gender, and age. What stereotypes and <mark style="background-color: #ffeb3b; font-weight: bold;">prejudice</mark>s do you hold about people who are from a race, gender, and age group different from
+
+warns “No Entrance for Poles!” (b) An African-American male drinks from a designated “colored” water fountain in Oklahoma in 1939 during the era of racial segregation as a practice of <mark style="background-color: #ffeb3b; font-weight: bold;">discrimination</mark>. (credit b: modification of work by United States Farm Security Administration) Understanding <mark style="background-color: #ffeb3b; font-weight: bold;">prejudice</mark> and <mark style="background-color: #ffeb3b; font-weight: bold;">discrimination</mark> As we discussed in the opening story of Trayvon Martin, humans are very diverse and although we share many similarities, we also have many <mark style="background-color: #ffeb3b; font-weight: bold;">difference</mark>s. The social groups we belong to help form our identities (Tajfel, 1974). These <mark style="background-color: #ffeb3b; font-weight: bold;">difference</mark>s may be difficult for some people to reconcile, which may lead to <mark style="background-color: #ffeb3b; font-weight: bold;">prejudice</mark> toward people who are different. <mark style="background-color: #ffeb3b; font-weight: bold;">prejudice</mark> is a negative attitude and feeling toward an individual based solely on one’s membership in a particular social group (Allport, 1954; Brown, 2010). <mark style="background-color: #ffeb3b; font-weight: bold;">prejudice</mark> is common against people who are members of an unfamiliar cultural group. Thus, certain types of education, contact, interactions, and building relationships with members of different cultural groups can reduce the tendency toward <mark style="background-color: #ffeb3b; font-weight: bold;">prejudice</mark>. In fact, simply imagining interacting with members of different cultural groups might affect <mark style="background-color: #ffeb3b; font-weight: bold;">prejudice</mark>. Indeed, when experimental participants were asked to imagine themselves positively interacting with someone from a different group, this led to an increased positive attitude toward the other group and an increase in positive traits associated with the other group. Furthermore, imagined social interaction can reduce anxiety associated with inter-group interactions (Crisp & Turner, 2009). What are some examples of social groups that you belong to that contribute to your identity? Social groups can include gender, race, ethnicity, nationality, social class, religion, sexual orientation, profession, and many more. And, as is true for social roles, you can simultaneously be a member of more than one social group. An example of <mark style="background-color: #ffeb3b; font-weight: bold;">prejudice</mark> is having a negative attitude toward people who are not born in the United States. Although people holding this <mark style="background-color: #ffeb3b; font-weight: bold;">prejudice</mark>d attitude do not know all people who were not born in the United States, they dislike them due to their status as foreigners. Can you think of a <mark style="background-color: #ffeb3b; font-weight: bold;">prejudice</mark>d attitude you have held toward a group of people? How did your <mark style="background-color: #ffeb3b; font-weight: bold;">prejudice</mark> develop? <mark style="background-color: #ffeb3b; font-weight: bold;">prejudice</mark> often begins in the form of a stereotype—that is, a specific belief or assumption about individuals based solely on their membership in a group, regardless of their individual characteristics. Stereotypes become overgeneralized and applied to all members of a group. For example, someone holding <mark style="background-color: #ffeb3b; font-weight: bold;">prejudice</mark>d attitudes toward older adults, may
+
+diet, exercising, smoking cessation, and cooperation with medical regimens (Uchino, 2009). Stress and <mark style="background-color: #ffeb3b; font-weight: bold;">discrimination</mark> Being the recipient of <mark style="background-color: #ffeb3b; font-weight: bold;">prejudice</mark> and <mark style="background-color: #ffeb3b; font-weight: bold;">discrimination</mark> is associated with a number of negative outcomes. Many studies have shown how <mark style="background-color: #ffeb3b; font-weight: bold;">discrimination</mark> is a significant stressor for marginalized groups (Pascoe & Smart Richman, 2009). <mark style="background-color: #ffeb3b; font-weight: bold;">discrimination</mark> negatively impacts both physical and mental health for individuals in stigmatized groups. As you’ll learn when you study social psychology, various social identities (such as gender, age, religion, sexuality, ethnicity) often lead people to simultaneously be exposed to multiple forms of <mark style="background-color: #ffeb3b; font-weight: bold;">discrimination</mark>, which can have even stronger negative effects on mental and physical health (Vines, Ward, Cordoba, & Black, 2017). For example, the amplified levels of <mark style="background-color: #ffeb3b; font-weight: bold;">discrimination</mark> faced by Latinx transgender women may have related effects, leading to high stress levels and poor mental and physical health outcomes. Perceived control and the general adaptation syndrome help explain the process by which <mark style="background-color: #ffeb3b; font-weight: bold;">discrimination</mark> affects mental and physical health. <mark style="background-color: #ffeb3b; font-weight: bold;">discrimination</mark> can be conceptualized as an uncontrollable, persistent, and unpredictable stressor. When a discriminatory event occurs, the target of the event initially experiences an acute stress response (alarm stage). This acute reaction alone does not typically have a great impact on health. However, <mark style="background-color: #ffeb3b; font-weight: bold;">discrimination</mark> tends to be a chronic stressor. As people in marginalized groups experience repeated <mark style="background-color: #ffeb3b; font-weight: bold;">discrimination</mark>, they develop a heightened reactivity as their bodies prepare to act quickly (resistance stage). This long-term accumulation of stress responses can eventually lead to increases in negative emotion and wear on physical health (exhaustion stage). This explains why a history of perceived <mark style="background-color: #ffeb3b; font-weight: bold;">discrimination</mark> is associated with a host of mental and physical health problems including depression, cardiovascular disease, and cancer (Pascoe & Smart Richman, 2009). Protecting stigmatized groups from the negative impact of <mark style="background-color: #ffeb3b; font-weight: bold;">discrimination</mark>-induced stress may involve reducing the incidence of discriminatory behaviors in conjunction with protective strategies that reduce the impact of discriminatory events when they occur. Civil rights legislation has protected some stigmatized groups by making <mark style="background-color: #ffeb3b; font-weight: bold;">discrimination</mark> a prosecutable offense in many social contexts. However, some groups (e.g., transgender people) often lack important legal recourse when <mark style="background-color: #ffeb3b; font-weight: bold;">discrimination</mark> occurs. Moreover, most modern <mark style="background-color: #ffeb3b; font-weight: bold;">discrimination</mark> comes in subtle forms that fall below the radar of the law. For example, <mark style="background-color: #ffeb3b; font-weight: bold;">discrimination</mark> may be experienced as selective inhospitality toward people of specific races or ethnicities, but little is done in response since it would be easy to attribute the behavior to other causes. Although some cultural changes are increasingly helping
+
+some of the criteria on which hiring decisions cannot legally be made. (credit a: modification of work by Sean McGrath; credit b: modification of work by Ze’ev Barkan; credit c: modification of work by David Hodgson) The U.S. Equal Employment Opportunity Commission (EEOC) The U.S. Equal Employment Opportunity Commission (EEOC) is responsible for enforcing federal laws that make it illegal to discriminate against a job applicant or an employee because of the person's race, color, religion, sex (including pregnancy), sexual orientation, national origin, age (40 or older), disability, or genetic information. Figure 13.12 provides some of the legal language from laws that have been passed to prevent <mark style="background-color: #ffeb3b; font-weight: bold;">discrimination</mark>. 13.2 • Industrial Psychology: Selecting and Evaluating Employees 463
+
+wealthy families could afford to attend private schools, whereas children from middle- and low-income families typically attended public schools. If a child from a low-income family received a merit scholarship to attend a private school, how might the child be treated by classmates? Can you recall a time when you held <mark style="background-color: #ffeb3b; font-weight: bold;">prejudice</mark>d attitudes or beliefs or acted in a discriminatory manner because your group of friends expected you to? Stereotypes and Self-Fulfilling Prophecy When we hold a stereotype about a person, we have expectations that they will fulfill that stereotype. A self- fulfilling prophecy is an expectation held by a person that alters their behavior in a way that tends to make it true. When we hold stereotypes about a person, we tend to treat the person according to our expectations. This treatment can influence the person to act according to our stereotypic expectations, thus confirming our stereotypic beliefs. Research by Rosenthal and Jacobson (1968) found that disadvantaged students whose teachers expected them to perform well had higher grades than disadvantaged students whose teachers expected them to do poorly. Consider this example of cause and effect in a self-fulfilling prophecy: If an employer expects an openly gay job applicant to be incompetent, the potential employer might treat the applicant negatively during the interview by engaging in less conversation, making little eye contact, and generally behaving coldly toward the applicant DIG DEEPER 12.5 • <mark style="background-color: #ffeb3b; font-weight: bold;">prejudice</mark> and <mark style="background-color: #ffeb3b; font-weight: bold;">discrimination</mark> 427
+
+your own? Racism Racism is <mark style="background-color: #ffeb3b; font-weight: bold;">prejudice</mark> and <mark style="background-color: #ffeb3b; font-weight: bold;">discrimination</mark> against an individual based solely on one’s membership in a specific racial group (such as toward African Americans, Asian Americans, Latinos, Native Americans, European Americans). What are some stereotypes of various racial or ethnic groups? Research suggests cultural stereotypes for Asian Americans include cold, sly, and intelligent; for Latinos, cold and unintelligent; for 424 12 • Social Psychology Access for free at openstax.org
+
+with the group, even in the face of inaccurate information. Conformity to group norms is driven by two motivations, the desire to fit in and be liked and the desire to be accurate and gain information from the group. Authority figures also have influence over our behaviors, and many people become obedient and follow orders even if the orders are contrary to their personal values. Conformity to group pressures can also result in groupthink, or the faulty decision- making process that results from cohesive group members trying to maintain group harmony. Group situations can improve human behavior through facilitating performance on easy tasks, but inhibiting performance on difficult tasks. The presence of others can also lead to social loafing when individual efforts cannot be evaluated. 12.5 <mark style="background-color: #ffeb3b; font-weight: bold;">prejudice</mark> and <mark style="background-color: #ffeb3b; font-weight: bold;">discrimination</mark> As diverse individuals, humans can experience conflict when interacting with people who are different from each other. <mark style="background-color: #ffeb3b; font-weight: bold;">prejudice</mark>, or negative feelings and evaluations, is common when people  <!-- HIGHLIGHTING HERE ONLY -->
+                </div>
+            </div>
+            
+            <div class="stats">
+                <div class="stat-item">
+                    <div class="stat-label">Sections Used</div>
+                    <div class="stat-value">8</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Pages Referenced</div>
+                    <div class="stat-value">9</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Keywords Found</div>
+                    <div class="stat-value">4</div>
+                </div>
+            </div>
+            
+            <div class="footer">
+                Generated from Psychology 2e Textbook • Question 44 • 2026-02-27
+            </div>
+        </div>
+        
+        <!-- Font Awesome for icons -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
+    </body>
+    </html>

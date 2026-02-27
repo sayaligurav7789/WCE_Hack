@@ -1,428 +1,392 @@
 <!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Evidence Visualization - Question 43</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            padding: 20px;
-        }
-        
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            overflow: hidden;
-        }
-        
-        .header {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            padding: 30px;
-        }
-        
-        .header h1 {
-            font-size: 24px;
-            margin-bottom: 10px;
-        }
-        
-        .header .question {
-            font-size: 18px;
-            opacity: 0.9;
-            background: rgba(255, 255, 255, 0.2);
-            padding: 15px;
-            border-radius: 10px;
-            margin-top: 10px;
-            line-height: 1.5;
-        }
-        
-        .keywords-bar {
-            background: #f0f0f0;
-            padding: 15px 30px;
-            border-bottom: 1px solid #e0e0e0;
-        }
-        
-        .keywords-title {
-            font-size: 14px;
-            color: #666;
-            margin-bottom: 10px;
-            font-weight: 600;
-        }
-        
-        .keyword-badge {
-            display: inline-block;
-            background: #ffeb3b;
-            color: #333;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 13px;
-            margin: 0 5px 5px 0;
-            font-weight: 500;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-        
-        .answer-section {
-            padding: 30px;
-            background: #f8f9fa;
-            border-bottom: 1px solid #e0e0e0;
-        }
-        
-        .answer-section h3 {
-            color: #333;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .answer-section h3 i {
-            color: #667eea;
-        }
-        
-        .answer-content {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            line-height: 1.8;
-            color: #444;
-            border-left: 4px solid #667eea;
-        }
-        
-        .answer-content mark {
-            background-color: #ffeb3b;
-            padding: 2px 0;
-            font-weight: 500;
-        }
-        
-        .evidence-section {
-            padding: 30px;
-        }
-        
-        .evidence-section h3 {
-            color: #333;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .evidence-section h3 i {
-            color: #667eea;
-        }
-        
-        .evidence-card {
-            background: #f8f9fa;
-            border-radius: 10px;
-            padding: 20px;
-            margin-bottom: 20px;
-            border-left: 4px solid #667eea;
-        }
-        
-        .evidence-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-        
-        .section-name {
-            font-weight: 600;
-            color: #333;
-            background: #e8eaf6;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 14px;
-        }
-        
-        .page-number {
-            color: #666;
-            background: white;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 14px;
-            border: 1px solid #e0e0e0;
-        }
-        
-        .relevance {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 14px;
-        }
-        
-        .term-badge {
-            display: inline-block;
-            background: #ffeb3b;
-            color: #333;
-            padding: 3px 10px;
-            border-radius: 15px;
-            font-size: 12px;
-            margin: 0 5px 5px 0;
-            font-weight: 500;
-        }
-        
-        .evidence-text {
-            background: white;
-            padding: 15px;
-            border-radius: 8px;
-            color: #555;
-            line-height: 1.6;
-            margin: 15px 0 0 0;
-            border: 1px solid #e0e0e0;
-        }
-        
-        .evidence-text mark {
-            background-color: #ffeb3b;
-            padding: 2px 0;
-            font-weight: 500;
-        }
-        
-        .highlighted-context {
-            padding: 30px;
-            background: #f8f9fa;
-            border-top: 1px solid #e0e0e0;
-            border-bottom: 1px solid #e0e0e0;
-        }
-        
-        .highlighted-context h3 {
-            color: #333;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .context-box {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            max-height: 400px;
-            overflow-y: auto;
-            border: 1px solid #e0e0e0;
-            line-height: 1.8;
-            font-size: 14px;
-        }
-        
-        .context-box mark {
-            background-color: #ffeb3b;
-            padding: 2px 0;
-            font-weight: 500;
-        }
-        
-        .stats {
-            display: flex;
-            gap: 15px;
-            padding: 20px 30px;
-            background: white;
-            flex-wrap: wrap;
-        }
-        
-        .stat-item {
-            background: #f8f9fa;
-            padding: 10px 20px;
-            border-radius: 10px;
-            flex: 1;
-            min-width: 120px;
-            text-align: center;
-            border: 1px solid #e0e0e0;
-        }
-        
-        .stat-label {
-            font-size: 12px;
-            color: #666;
-            margin-bottom: 5px;
-        }
-        
-        .stat-value {
-            font-size: 24px;
-            font-weight: 600;
-            color: #667eea;
-        }
-        
-        .footer {
-            padding: 20px 30px;
-            background: #f0f0f0;
-            text-align: center;
-            color: #666;
-            font-size: 14px;
-            border-top: 1px solid #e0e0e0;
-        }
-        
-        @media (max-width: 768px) {
-            .header {
+    <html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Evidence Visualization - Question 43</title>
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+            
+            body {
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                min-height: 100vh;
                 padding: 20px;
             }
             
-            .answer-section,
-            .evidence-section,
-            .highlighted-context {
+            .container {
+                max-width: 1000px;
+                margin: 0 auto;
+                background: white;
+                border-radius: 20px;
+                box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+                overflow: hidden;
+            }
+            
+            .header {
+                background: linear-gradient(135deg, #667eea, #764ba2);
+                color: white;
+                padding: 30px;
+            }
+            
+            .header h1 {
+                font-size: 24px;
+                margin-bottom: 10px;
+            }
+            
+            .header .question {
+                font-size: 18px;
+                opacity: 0.9;
+                background: rgba(255, 255, 255, 0.2);
+                padding: 15px;
+                border-radius: 10px;
+                margin-top: 10px;
+                line-height: 1.5;
+            }
+            
+            .keywords-bar {
+                background: #f0f0f0;
+                padding: 15px 30px;
+                border-bottom: 1px solid #e0e0e0;
+            }
+            
+            .keywords-title {
+                font-size: 14px;
+                color: #666;
+                margin-bottom: 10px;
+                font-weight: 600;
+            }
+            
+            .keyword-badge {
+                display: inline-block;
+                background: #ffeb3b;
+                color: #333;
+                padding: 5px 12px;
+                border-radius: 20px;
+                font-size: 13px;
+                margin: 0 5px 5px 0;
+                font-weight: 500;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            }
+            
+            .answer-section {
+                padding: 30px;
+                background: #f8f9fa;
+                border-bottom: 1px solid #e0e0e0;
+            }
+            
+            .answer-section h3 {
+                color: #333;
+                margin-bottom: 15px;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+            
+            .answer-section h3 i {
+                color: #667eea;
+            }
+            
+            .answer-content {
+                background: white;
                 padding: 20px;
+                border-radius: 10px;
+                line-height: 1.8;
+                color: #444;
+                border-left: 4px solid #667eea;
+            }
+            
+            /* NO mark styling for answer - it stays plain */
+            
+            .evidence-section {
+                padding: 30px;
+            }
+            
+            .evidence-section h3 {
+                color: #333;
+                margin-bottom: 20px;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+            
+            .evidence-section h3 i {
+                color: #667eea;
+            }
+            
+            .evidence-card {
+                background: #f8f9fa;
+                border-radius: 10px;
+                padding: 20px;
+                margin-bottom: 20px;
+                border-left: 4px solid #667eea;
             }
             
             .evidence-header {
-                flex-direction: column;
-                align-items: flex-start;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 15px;
+                flex-wrap: wrap;
+                gap: 10px;
             }
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <div class="header">
-            <h1>📚 Evidence Visualization</h1>
-            <div class="question">
-                <strong>Question 43:</strong> 
+            
+            .section-name {
+                font-weight: 600;
+                color: #333;
+                background: #e8eaf6;
+                padding: 5px 12px;
+                border-radius: 20px;
+                font-size: 14px;
+            }
+            
+            .page-number {
+                color: #666;
+                background: white;
+                padding: 5px 12px;
+                border-radius: 20px;
+                font-size: 14px;
+                border: 1px solid #e0e0e0;
+            }
+            
+            .term-badge {
+                display: inline-block;
+                background: #ffeb3b;
+                color: #333;
+                padding: 3px 10px;
+                border-radius: 15px;
+                font-size: 12px;
+                margin: 0 5px 5px 0;
+                font-weight: 500;
+            }
+            
+            .evidence-text {
+                background: white;
+                padding: 15px;
+                border-radius: 8px;
+                color: #555;
+                line-height: 1.6;
+                margin: 15px 0 0 0;
+                border: 1px solid #e0e0e0;
+            }
+            
+            .evidence-text mark {
+                background-color: #ffeb3b;
+                padding: 2px 0;
+                font-weight: 500;
+            }
+            
+            .highlighted-context {
+                padding: 30px;
+                background: #f8f9fa;
+                border-top: 1px solid #e0e0e0;
+                border-bottom: 1px solid #e0e0e0;
+            }
+            
+            .highlighted-context h3 {
+                color: #333;
+                margin-bottom: 15px;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+            
+            .context-box {
+                background: white;
+                padding: 20px;
+                border-radius: 10px;
+                max-height: 400px;
+                overflow-y: auto;
+                border: 1px solid #e0e0e0;
+                line-height: 1.8;
+                font-size: 14px;
+            }
+            
+            .context-box mark {
+                background-color: #ffeb3b;
+                padding: 2px 0;
+                font-weight: 500;
+            }
+            
+            .stats {
+                display: flex;
+                gap: 15px;
+                padding: 20px 30px;
+                background: white;
+                flex-wrap: wrap;
+            }
+            
+            .stat-item {
+                background: #f8f9fa;
+                padding: 10px 20px;
+                border-radius: 10px;
+                flex: 1;
+                min-width: 120px;
+                text-align: center;
+                border: 1px solid #e0e0e0;
+            }
+            
+            .stat-label {
+                font-size: 12px;
+                color: #666;
+                margin-bottom: 5px;
+            }
+            
+            .stat-value {
+                font-size: 24px;
+                font-weight: 600;
+                color: #667eea;
+            }
+            
+            .footer {
+                padding: 20px 30px;
+                background: #f0f0f0;
+                text-align: center;
+                color: #666;
+                font-size: 14px;
+                border-top: 1px solid #e0e0e0;
+            }
+            
+            @media (max-width: 768px) {
+                .header {
+                    padding: 20px;
+                }
+                
+                .answer-section,
+                .evidence-section,
+                .highlighted-context {
+                    padding: 20px;
+                }
+                
+                .evidence-header {
+                    flex-direction: column;
+                    align-items: flex-start;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="header">
+                <h1>📚 Evidence Visualization</h1>
+                <div class="question">
+                    <strong>Question 43:</strong> What is the role of social norms in behavior?
+                </div>
             </div>
-        </div>
-        
-        <div class="keywords-bar">
-            <div class="keywords-title">🔑 Extracted Keywords:</div>
-
-        </div>
-        
-        <div class="answer-section">
-            <h3><i class="fas fa-robot"></i> Generated Answer</h3>
-            <div class="answer-content">
-                According to the textbook, social norms play a significant role in shaping human behavior. Social norms are "a group's expectation of what is appropriate and acceptable behavior for its members—how they are supposed to behave and think" (Deutsch & Gerard, 1955; Berkowitz, 2004). They dictate the behavior that is considered appropriate or inappropriate for each social role, and individuals are expected to conform to these norms in order to fit in and be accepted by the group. Social norms influence behavior by providing a shared cultural knowledge of what is expected of an individual in a specific role, and individuals use these norms as cues on how to behave in a given situation.
+            
+            <div class="keywords-bar">
+                <div class="keywords-title">🔑 Extracted Keywords:</div>
+    <span class="keyword-badge">role</span><span class="keyword-badge">social</span><span class="keyword-badge">norms</span><span class="keyword-badge">behavior</span>
             </div>
-        </div>
-        
-        <div class="evidence-section">
-            <h3><i class="fas fa-book"></i> Evidence by Section</h3>
-
+            
+            <div class="answer-section">
+                <h3><i class="fas fa-robot"></i> Generated Answer</h3>
+                <div class="answer-content">
+                    According to the textbook, social norms play a significant role in shaping human behavior. Social norms are "a group's expectation of what is appropriate and acceptable behavior for its members—how they are supposed to behave and think" (Deutsch & Gerard, 1955; Berkowitz, 2004). They dictate the behavior that is considered appropriate or inappropriate for each social role, and individuals are expected to conform to these norms in order to fit in and be accepted by the group. Social norms influence behavior by providing a shared cultural knowledge of what is expected of an individual in a specific role, and individuals use these norms as cues on how to behave in a given situation.  <!-- NO HIGHLIGHTING HERE -->
+                </div>
+            </div>
+            
+            <div class="evidence-section">
+                <h3><i class="fas fa-book"></i> Evidence by Section</h3>
+    
             <div class="evidence-card">
                 <div class="evidence-header">
                     <span class="section-name">📖 1.98
 Geen</span>
                     <span class="page-number">📄 Page 412</span>
-                    <span class="relevance">⭐ Relevance: 0.7</span>
-                </div>
-                <div>
-
                 </div>
                 <div class="evidence-text">
-                    This section discusses 1.98
-geen. The content here is relevant to your question about ...
+                    that were not available in the used car. 12.4 Conformity, Compliance, and Obedience LEARNING OBJECTIVES By the end of this section, you will be able to: • Explain the Asch effect • Define conformity and types of <mark style="background-color: #ffeb3b; font-weight: bold;">social</mark> influence • Describe Stanley Milgram’s experiment and its implications • Define g  <!-- HIGHLIGHTING HERE ONLY -->
                 </div>
             </div>
-
+    
             <div class="evidence-card">
                 <div class="evidence-header">
                     <span class="section-name">📖 12.1 What Is Social Psychology</span>
                     <span class="page-number">📄 Page 418</span>
-                    <span class="relevance">⭐ Relevance: 0.75</span>
-                </div>
-                <div>
-
                 </div>
                 <div class="evidence-text">
-                    This section discusses 12.1 what is social psychology. The content here is relevant to your question about ...
+                    that were not available in the used car. 12.4 Conformity, Compliance, and Obedience LEARNING OBJECTIVES By the end of this section, you will be able to: • Explain the Asch effect • Define conformity and types of <mark style="background-color: #ffeb3b; font-weight: bold;">social</mark> influence • Describe Stanley Milgram’s experiment and its implications • Define g  <!-- HIGHLIGHTING HERE ONLY -->
                 </div>
             </div>
-
+    
             <div class="evidence-card">
                 <div class="evidence-header">
                     <span class="section-name">📖 12.16 With the foot-in-the-door technique</span>
                     <span class="page-number">📄 Page 419</span>
-                    <span class="relevance">⭐ Relevance: 0.8</span>
-                </div>
-                <div>
-
                 </div>
                 <div class="evidence-text">
-                    This section discusses 12.16 with the foot-in-the-door technique. The content here is relevant to your question about ...
+                    that were not available in the used car. 12.4 Conformity, Compliance, and Obedience LEARNING OBJECTIVES By the end of this section, you will be able to: • Explain the Asch effect • Define conformity and types of <mark style="background-color: #ffeb3b; font-weight: bold;">social</mark> influence • Describe Stanley Milgram’s experiment and its implications • Define g  <!-- HIGHLIGHTING HERE ONLY -->
                 </div>
             </div>
-
+    
             <div class="evidence-card">
                 <div class="evidence-header">
                     <span class="section-name">📖 12.2 Self-presentation
 LEARNING OBJECTIVES
 By the end of this section</span>
                     <span class="page-number">📄 Page 427</span>
-                    <span class="relevance">⭐ Relevance: 0.85</span>
-                </div>
-                <div>
-
                 </div>
                 <div class="evidence-text">
-                    This section discusses 12.2 self-presentation
-learning objectives
-by the end of this section. The content here is relevant to your question about ...
+                    that were not available in the used car. 12.4 Conformity, Compliance, and Obedience LEARNING OBJECTIVES By the end of this section, you will be able to: • Explain the Asch effect • Define conformity and types of <mark style="background-color: #ffeb3b; font-weight: bold;">social</mark> influence • Describe Stanley Milgram’s experiment and its implications • Define g  <!-- HIGHLIGHTING HERE ONLY -->
                 </div>
             </div>
-
+    
             <div class="evidence-card">
                 <div class="evidence-header">
                     <span class="section-name">📖 12.24 Human males and nonhuman male primates endeavor to gain and display dominance over other
 males</span>
                     <span class="page-number">📄 Page 434</span>
-                    <span class="relevance">⭐ Relevance: 0.9</span>
-                </div>
-                <div>
-
                 </div>
                 <div class="evidence-text">
-                    This section discusses 12.24 human males and nonhuman male primates endeavor to gain and display dominance over other
-males. The content here is relevant to your question about ...
+                    that were not available in the used car. 12.4 Conformity, Compliance, and Obedience LEARNING OBJECTIVES By the end of this section, you will be able to: • Explain the Asch effect • Define conformity and types of <mark style="background-color: #ffeb3b; font-weight: bold;">social</mark> influence • Describe Stanley Milgram’s experiment and its implications • Define g  <!-- HIGHLIGHTING HERE ONLY -->
                 </div>
             </div>
-
-        </div>
-        
-        <div class="highlighted-context">
-            <h3><i class="fas fa-highlighter"></i> Highlighted Context</h3>
-            <div class="context-box">
-                that were not available in the used car. 12.4 Conformity, Compliance, and Obedience LEARNING OBJECTIVES By the end of this section, you will be able to: • Explain the Asch effect • Define conformity and types of social influence • Describe Stanley Milgram’s experiment and its implications • Define groupthink, social facilitation, and social loafing In this section, we discuss additional ways in which people influence others. The topics of conformity, social influence, obedience, and group processes demonstrate the power of the social situation to change our thoughts, feelings, and behaviors. We begin this section with a discussion of a famous social psychology experiment that demonstrated how susceptible humans are to outside social pressures. 12.4 • Conformity, Compliance, and Obedience 415
-
-Social Norms As discussed previously, social roles are defined by a culture’s shared knowledge of what is expected behavior of an individual in a specific role. This shared knowledge comes from social norms. A social norm is a group’s expectation of what is appropriate and acceptable behavior for its members—how they are supposed to behave and think (Deutsch & Gerard, 1955; Berkowitz, 2004). How are we expected to act? What are we expected to talk about? What are we expected to wear? In our discussion of social roles we noted that colleges have social norms for students’ behavior in the role of student and workplaces have social norms for employees’ behaviors in the role of employee. Social norms are everywhere including in families, gangs, and on social media outlets. What are some social norms on Instagram? Tweens, Teens, and Social Norms My 11-year-old daughter, Janelle, recently told me she needed shorts and shirts for the summer, and that she wanted me to take her to a store at the mall that is popular with preteens and teens to buy them. I have noticed that many girls have clothes from that store, so I tried teasing her. I said, “All the shirts say ‘Aero’ on the front. If you are wearing a shirt like that and you have a substitute teacher, and the other girls are all wearing that type of shirt, won’t the substitute teacher think you are all named ‘Aero’?” My daughter replied, in typical 11-year-old fashion, “Mom, you are not funny. Can we please go shopping?” I tried a different tactic. I asked Janelle if having clothing from that particular store will make her popular. She replied, “No, it will not make me popular. It is what the popular kids wear. It will make me feel happier.” How can a label or name brand make someone feel happier? Think back to what you’ve learned about lifespan development. What is it about pre-teens and young teens that make them want to fit in (Figure 12.9)? Does this change over time? Think back to your high school experience, or look around your college campus. What is the main name brand clothing you see? What messages do we get from the media about how to fit in? FIGURE 12.9 Young people struggle to become independent at the same time they are desperately trying to fit in with their peers. (credit: Monica
-
-Summary 12.1 What Is Social Psychology? Social psychology is the subfield of psychology that studies the power of the situation to influence individuals’ thoughts, feelings, and behaviors. Psychologists categorize the causes of human behavior as those due to internal factors, such as personality, or those due to external factors, such as cultural and other social influences. Behavior is better explained, however, by using both approaches. Lay people tend to over-rely on dispositional explanations for behavior and ignore the power of situational influences, a perspective called the fundamental attribution error. People from individualistic cultures are more likely to display this bias versus people from collectivistic cultures. Our explanations for our own and others behaviors can be biased due to not having enough information about others’ motivations for behaviors and by providing explanations that bolster our self-esteem. 12.2 Self-presentation Human behavior is largely influenced by our social roles, norms, and scripts. In order to know how to act in a given situation, we have shared cultural knowledge of how to behave depending on our role in society. Social norms dictate the behavior that is appropriate or inappropriate for each role. Each social role has scripts that help humans learn the sequence of appropriate behaviors in a given setting. The famous Stanford prison experiment is an example of how the power of the situation can dictate the social roles, norms, and scripts we follow in a given situation, even if this behavior is contrary to our typical behavior. 12.3 Attitudes and Persuasion Attitudes are our evaluations or feelings toward a person, idea, or object and typically are positive or negative. Our attitudes and beliefs are influenced not only by external forces, but also by internal influences that we control. An internal form of attitude change is cognitive dissonance or the tension we experience when our thoughts, feelings, and behaviors are in conflict. In order to reduce dissonance, individuals can change their behavior, attitudes, or cognitions, or add a new cognition. External forces of persuasion include advertising; the features of advertising that influence our behaviors include the source, message, and audience. There are two primary routes to persuasion. The central route to persuasion uses facts and information to persuade potential consumers. The peripheral route uses positive association with cues such as beauty, fame, and positive emotions. 12.4 Conformity, Compliance, and Obedience The power of the situation can lead people to conform, or go along
-
-Bartels, J. M., Milovich, M. M., & Moussier, S. (2016). Coverage of the Stanford prison experiment in introductory psychology courses: A survey of introductory psychology instructors. Teaching of Psychology, 43(2), 136–141. Batson, C. D. (1991). The altruism question: Toward a social-psychological answer. Erlbaum. Berkowitz, A. D. (2004). The social norms approach: Theory, research and annotated bibliography. http://www.alanberkowitz.com/articles/social_norms.pdf. Berkowitz, L. (1993). Aggression: Its causes, consequences, and control. McGraw-Hill. Betz, N. E. (2008). Women’s career development. In F. Denmark & M. Paludi (Eds.), Psychology of women: Handbook of issues and theories (2nd ed., pp. 717–752). Praeger. Blau, F. D., Ferber, M. A., & Winkler, A. E. (2010). The economics of women, men, and work (6th ed.). Prentice Hall. Bond, C. F., & Titus, L. J. (1983). Social facilitation: A meta-analysis of 241 studies. Psychological Bulletin, 94, 265–292. Bond, R., & Smith, P. B. (1996). Culture and conformity: A meta-analysis of studies using Asch’s (1952b, 1956) line judgment task. Psychological Bulletin, 119(1), 111–137. Bowen, L. (2011). Bullying may contribute to lower test scores. Monitor on Psychology, 42(9), 19. Brown, R. (2010). Prejudice: Its social psychology (2nd ed.). Wiley-Blackwell. Burger, J. (2009). Replicating Milgram: Would people still obey today? American Psychologist, 64, 1–11. https://www.ncbi.nlm.nih.gov/pubmed/19209958 Buss, D. M. (2004). Evolutionary psychology: The new science of the mind (2nd ed.). Allyn and Bacon. Buss, D. M. (1989). Sex differences in human mate preferences: Evolutionary hypotheses tested in 37 cultures. Behavioral and Brain Sciences, 12, 1–49. Carnahan, T., & McFarland, S. (2007). Revisiting the Stanford Prison Experiment: Could participant self- selection have led to the cruelty? Personality and Social Psychology Bulletin, 33(5), 603–614. Ceci, S. J., & Williams, W. M. (2011). Understanding current causes of women’s underrepresentation in science. Proceedings of the National Academy of Sciences, 108, 3157–3162. Chang, E., Kannoth, S., Levy, S., Wang, S., Lee, J., & Levy, B. (2020). Global reach of ageism on older persons' health: A systematic review. PLoS ONE, 15, 1–24. Choi, I., & Nisbett R. E. (1998). Situational salience and cultural differences in the correspondence bias and actor-observer bias. Personality and Social Psychology Bulletin, 24(9), 949–960. doi:10.1177/ 0146167298249003. Cialdini, R. B. (2001). Harnessing the science of persuasion. Harvard Business Review, 79, 72–81. Cialdini, R. B., Brown, S. L., Lewis, B. P., Luce, C., & Neuberg, S. L. (1997). Reinterpreting the empathy-altruism relationship: When one into one equals oneness. Journal of Personality and Social Psychology, 73, 481–494. Colin Powell regrets Iraq
-
-12.2 Self-presentation LEARNING OBJECTIVES By the end of this section, you will be able to: • Describe social roles and how they influence behavior • Explain what social norms are and how they influence behavior • Define script • Describe the findings and criticisms of Zimbardo’s Stanford prison experiment As you’ve learned, social psychology is the study of how people affect one another’s thoughts, feelings, and behaviors. We have discussed situational perspectives and social psychology’s emphasis on the ways in which a person’s environment, including culture and other social influences, affect behavior. In this section, we examine situational forces that have a strong influence on human behavior including social roles, social norms, and scripts. We discuss how humans use the social environment as a source of information, or cues, on how to behave. Situational influences on our behavior have important consequences, such as whether we will help a stranger in an emergency or how we would behave in an unfamiliar environment. Social Roles One major social determinant of human behavior is our social roles. A social role is a pattern of behavior that is expected of a person in a given setting or group (Hare, 2003). Each one of us has several social roles. You may be, at the same time, a student, a parent, an aspiring teacher, a son or daughter, a spouse, and a lifeguard. How do these social roles influence your behavior? Social roles are defined by culturally shared knowledge. That is, nearly everyone in a given culture knows what behavior is expected of a person in a given role. For example, what is the social role for a student? If you look around a college classroom you will likely see students engaging in studious behavior, taking notes, listening to the professor, reading the textbook, and sitting quietly at their desks (Figure 12.8). Of course you may see students deviating from the expected studious behavior such as texting on their phones or using Facebook on their laptops, but in all cases, the students that you observe are attending class—a part of the social role of students. FIGURE 12.8 Being a student is just one of the many social roles you have. (credit: modification of work by “Rural Institute”/Flickr) Social roles, and our related behavior, can vary across different settings. How do you behave when you are engaging in the role of a child attending a family function?
-
-with the group, even in the face of inaccurate information. Conformity to group norms is driven by two motivations, the desire to fit in and be liked and the desire to be accurate and gain information from the group. Authority figures also have influence over our behaviors, and many people become obedient and follow orders even if the orders are contrary to their personal values. Conformity to group pressures can also result in groupthink, or the faulty decision- making process that results from cohesive group members trying to maintain group harmony. Group situations can improve human behavior through facilitating performance on easy tasks, but inhibiting performance on difficult tasks. The presence of others can also lead to social loafing when individual efforts cannot be evaluated. 12.5 Prejudice and Discrimination As diverse individuals, humans can experience conflict when interacting with people who are different from each other. Prejudice, or negative feelings and evaluations, is common when people are from a differe
-            </div>
-        </div>
-        
-        <div class="stats">
-            <div class="stat-item">
-                <div class="stat-label">Sections Used</div>
-                <div class="stat-value">8</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-label">Pages Referenced</div>
-                <div class="stat-value">9</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-label">Keywords Found</div>
-                <div class="stat-value">0</div>
-            </div>
-        </div>
-        
-        <div class="footer">
-            Generated from Psychology 2e Textbook • Question 43 • 2026-02-26
-        </div>
-    </div>
     
-    <!-- Font Awesome for icons -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
-</body>
-</html>
+            </div>
+            
+            <div class="highlighted-context">
+                <h3><i class="fas fa-highlighter"></i> Highlighted Context</h3>
+                <div class="context-box">
+                    that were not available in the used car. 12.4 Conformity, Compliance, and Obedience LEARNING OBJECTIVES By the end of this section, you will be able to: • Explain the Asch effect • Define conformity and types of <mark style="background-color: #ffeb3b; font-weight: bold;">social</mark> influence • Describe Stanley Milgram’s experiment and its implications • Define groupthink, <mark style="background-color: #ffeb3b; font-weight: bold;">social</mark> facilitation, and <mark style="background-color: #ffeb3b; font-weight: bold;">social</mark> loafing In this section, we discuss additional ways in which people influence others. The topics of conformity, <mark style="background-color: #ffeb3b; font-weight: bold;">social</mark> influence, obedience, and group processes demonstrate the power of the <mark style="background-color: #ffeb3b; font-weight: bold;">social</mark> situation to change our thoughts, feelings, and <mark style="background-color: #ffeb3b; font-weight: bold;">behavior</mark>s. We begin this section with a discussion of a famous <mark style="background-color: #ffeb3b; font-weight: bold;">social</mark> psychology experiment that demonstrated how susceptible humans are to outside <mark style="background-color: #ffeb3b; font-weight: bold;">social</mark> pressures. 12.4 • Conformity, Compliance, and Obedience 415
+
+<mark style="background-color: #ffeb3b; font-weight: bold;">social</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">norms</mark> As discussed previously, <mark style="background-color: #ffeb3b; font-weight: bold;">social</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">role</mark>s are defined by a culture’s shared knowledge of what is expected <mark style="background-color: #ffeb3b; font-weight: bold;">behavior</mark> of an individual in a specific <mark style="background-color: #ffeb3b; font-weight: bold;">role</mark>. This shared knowledge comes from <mark style="background-color: #ffeb3b; font-weight: bold;">social</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">norms</mark>. A <mark style="background-color: #ffeb3b; font-weight: bold;">social</mark> norm is a group’s expectation of what is appropriate and acceptable <mark style="background-color: #ffeb3b; font-weight: bold;">behavior</mark> for its members—how they are supposed to behave and think (Deutsch & Gerard, 1955; Berkowitz, 2004). How are we expected to act? What are we expected to talk about? What are we expected to wear? In our discussion of <mark style="background-color: #ffeb3b; font-weight: bold;">social</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">role</mark>s we noted that colleges have <mark style="background-color: #ffeb3b; font-weight: bold;">social</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">norms</mark> for students’ <mark style="background-color: #ffeb3b; font-weight: bold;">behavior</mark> in the <mark style="background-color: #ffeb3b; font-weight: bold;">role</mark> of student and workplaces have <mark style="background-color: #ffeb3b; font-weight: bold;">social</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">norms</mark> for employees’ <mark style="background-color: #ffeb3b; font-weight: bold;">behavior</mark>s in the <mark style="background-color: #ffeb3b; font-weight: bold;">role</mark> of employee. <mark style="background-color: #ffeb3b; font-weight: bold;">social</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">norms</mark> are everywhere including in families, gangs, and on <mark style="background-color: #ffeb3b; font-weight: bold;">social</mark> media outlets. What are some <mark style="background-color: #ffeb3b; font-weight: bold;">social</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">norms</mark> on Instagram? Tweens, Teens, and <mark style="background-color: #ffeb3b; font-weight: bold;">social</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">norms</mark> My 11-year-old daughter, Janelle, recently told me she needed shorts and shirts for the summer, and that she wanted me to take her to a store at the mall that is popular with preteens and teens to buy them. I have noticed that many girls have clothes from that store, so I tried teasing her. I said, “All the shirts say ‘Aero’ on the front. If you are wearing a shirt like that and you have a substitute teacher, and the other girls are all wearing that type of shirt, won’t the substitute teacher think you are all named ‘Aero’?” My daughter replied, in typical 11-year-old fashion, “Mom, you are not funny. Can we please go shopping?” I tried a different tactic. I asked Janelle if having clothing from that particular store will make her popular. She replied, “No, it will not make me popular. It is what the popular kids wear. It will make me feel happier.” How can a label or name brand make someone feel happier? Think back to what you’ve learned about lifespan development. What is it about pre-teens and young teens that make them want to fit in (Figure 12.9)? Does this change over time? Think back to your high school experience, or look around your college campus. What is the main name brand clothing you see? What messages do we get from the media about how to fit in? FIGURE 12.9 Young people struggle to become independent at the same time they are desperately trying to fit in with their peers. (credit: Monica
+
+Summary 12.1 What Is <mark style="background-color: #ffeb3b; font-weight: bold;">social</mark> Psychology? <mark style="background-color: #ffeb3b; font-weight: bold;">social</mark> psychology is the subfield of psychology that studies the power of the situation to influence individuals’ thoughts, feelings, and <mark style="background-color: #ffeb3b; font-weight: bold;">behavior</mark>s. Psychologists categorize the causes of human <mark style="background-color: #ffeb3b; font-weight: bold;">behavior</mark> as those due to internal factors, such as personality, or those due to external factors, such as cultural and other <mark style="background-color: #ffeb3b; font-weight: bold;">social</mark> influences. <mark style="background-color: #ffeb3b; font-weight: bold;">behavior</mark> is better explained, however, by using both approaches. Lay people tend to over-rely on dispositional explanations for <mark style="background-color: #ffeb3b; font-weight: bold;">behavior</mark> and ignore the power of situational influences, a perspective called the fundamental attribution error. People from individualistic cultures are more likely to display this bias versus people from collectivistic cultures. Our explanations for our own and others <mark style="background-color: #ffeb3b; font-weight: bold;">behavior</mark>s can be biased due to not having enough information about others’ motivations for <mark style="background-color: #ffeb3b; font-weight: bold;">behavior</mark>s and by providing explanations that bolster our self-esteem. 12.2 Self-presentation Human <mark style="background-color: #ffeb3b; font-weight: bold;">behavior</mark> is largely influenced by our <mark style="background-color: #ffeb3b; font-weight: bold;">social</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">role</mark>s, <mark style="background-color: #ffeb3b; font-weight: bold;">norms</mark>, and scripts. In order to know how to act in a given situation, we have shared cultural knowledge of how to behave depending on our <mark style="background-color: #ffeb3b; font-weight: bold;">role</mark> in society. <mark style="background-color: #ffeb3b; font-weight: bold;">social</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">norms</mark> dictate the <mark style="background-color: #ffeb3b; font-weight: bold;">behavior</mark> that is appropriate or inappropriate for each <mark style="background-color: #ffeb3b; font-weight: bold;">role</mark>. Each <mark style="background-color: #ffeb3b; font-weight: bold;">social</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">role</mark> has scripts that help humans learn the sequence of appropriate <mark style="background-color: #ffeb3b; font-weight: bold;">behavior</mark>s in a given setting. The famous Stanford prison experiment is an example of how the power of the situation can dictate the <mark style="background-color: #ffeb3b; font-weight: bold;">social</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">role</mark>s, <mark style="background-color: #ffeb3b; font-weight: bold;">norms</mark>, and scripts we follow in a given situation, even if this <mark style="background-color: #ffeb3b; font-weight: bold;">behavior</mark> is contrary to our typical <mark style="background-color: #ffeb3b; font-weight: bold;">behavior</mark>. 12.3 Attitudes and Persuasion Attitudes are our evaluations or feelings toward a person, idea, or object and typically are positive or negative. Our attitudes and beliefs are influenced not only by external forces, but also by internal influences that we control. An internal form of attitude change is cognitive dissonance or the tension we experience when our thoughts, feelings, and <mark style="background-color: #ffeb3b; font-weight: bold;">behavior</mark>s are in conflict. In order to reduce dissonance, individuals can change their <mark style="background-color: #ffeb3b; font-weight: bold;">behavior</mark>, attitudes, or cognitions, or add a new cognition. External forces of persuasion include advertising; the features of advertising that influence our <mark style="background-color: #ffeb3b; font-weight: bold;">behavior</mark>s include the source, message, and audience. There are two primary routes to persuasion. The central route to persuasion uses facts and information to persuade potential consumers. The peripheral route uses positive association with cues such as beauty, fame, and positive emotions. 12.4 Conformity, Compliance, and Obedience The power of the situation can lead people to conform, or go along
+
+Bartels, J. M., Milovich, M. M., & Moussier, S. (2016). Coverage of the Stanford prison experiment in introductory psychology courses: A survey of introductory psychology instructors. Teaching of Psychology, 43(2), 136–141. Batson, C. D. (1991). The altruism question: Toward a <mark style="background-color: #ffeb3b; font-weight: bold;">social</mark>-psychological answer. Erlbaum. Berkowitz, A. D. (2004). The <mark style="background-color: #ffeb3b; font-weight: bold;">social</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">norms</mark> approach: Theory, research and annotated bibliography. http://www.alanberkowitz.com/articles/<mark style="background-color: #ffeb3b; font-weight: bold;">social</mark>_<mark style="background-color: #ffeb3b; font-weight: bold;">norms</mark>.pdf. Berkowitz, L. (1993). Aggression: Its causes, consequences, and control. McGraw-Hill. Betz, N. E. (2008). Women’s career development. In F. Denmark & M. Paludi (Eds.), Psychology of women: Handbook of issues and theories (2nd ed., pp. 717–752). Praeger. Blau, F. D., Ferber, M. A., & Winkler, A. E. (2010). The economics of women, men, and work (6th ed.). Prentice Hall. Bond, C. F., & Titus, L. J. (1983). <mark style="background-color: #ffeb3b; font-weight: bold;">social</mark> facilitation: A meta-analysis of 241 studies. Psychological Bulletin, 94, 265–292. Bond, R., & Smith, P. B. (1996). Culture and conformity: A meta-analysis of studies using Asch’s (1952b, 1956) line judgment task. Psychological Bulletin, 119(1), 111–137. Bowen, L. (2011). Bullying may contribute to lower test scores. Monitor on Psychology, 42(9), 19. Brown, R. (2010). Prejudice: Its <mark style="background-color: #ffeb3b; font-weight: bold;">social</mark> psychology (2nd ed.). Wiley-Blackwell. Burger, J. (2009). Replicating Milgram: Would people still obey today? American Psychologist, 64, 1–11. https://www.ncbi.nlm.nih.gov/pubmed/19209958 Buss, D. M. (2004). Evolutionary psychology: The new science of the mind (2nd ed.). Allyn and Bacon. Buss, D. M. (1989). Sex differences in human mate preferences: Evolutionary hypotheses tested in 37 cultures. <mark style="background-color: #ffeb3b; font-weight: bold;">behavior</mark>al and Brain Sciences, 12, 1–49. Carnahan, T., & McFarland, S. (2007). Revisiting the Stanford Prison Experiment: Could participant self- selection have led to the cruelty? Personality and <mark style="background-color: #ffeb3b; font-weight: bold;">social</mark> Psychology Bulletin, 33(5), 603–614. Ceci, S. J., & Williams, W. M. (2011). Understanding current causes of women’s underrepresentation in science. Proceedings of the National Academy of Sciences, 108, 3157–3162. Chang, E., Kannoth, S., Levy, S., Wang, S., Lee, J., & Levy, B. (2020). Global reach of ageism on older persons' health: A systematic review. PLoS ONE, 15, 1–24. Choi, I., & Nisbett R. E. (1998). Situational salience and cultural differences in the correspondence bias and actor-observer bias. Personality and <mark style="background-color: #ffeb3b; font-weight: bold;">social</mark> Psychology Bulletin, 24(9), 949–960. doi:10.1177/ 0146167298249003. Cialdini, R. B. (2001). Harnessing the science of persuasion. Harvard Business Review, 79, 72–81. Cialdini, R. B., Brown, S. L., Lewis, B. P., Luce, C., & Neuberg, S. L. (1997). Reinterpreting the empathy-altruism relationship: When one into one equals oneness. Journal of Personality and <mark style="background-color: #ffeb3b; font-weight: bold;">social</mark> Psychology, 73, 481–494. Colin Powell regrets Iraq
+
+12.2 Self-presentation LEARNING OBJECTIVES By the end of this section, you will be able to: • Describe <mark style="background-color: #ffeb3b; font-weight: bold;">social</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">role</mark>s and how they influence <mark style="background-color: #ffeb3b; font-weight: bold;">behavior</mark> • Explain what <mark style="background-color: #ffeb3b; font-weight: bold;">social</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">norms</mark> are and how they influence <mark style="background-color: #ffeb3b; font-weight: bold;">behavior</mark> • Define script • Describe the findings and criticisms of Zimbardo’s Stanford prison experiment As you’ve learned, <mark style="background-color: #ffeb3b; font-weight: bold;">social</mark> psychology is the study of how people affect one another’s thoughts, feelings, and <mark style="background-color: #ffeb3b; font-weight: bold;">behavior</mark>s. We have discussed situational perspectives and <mark style="background-color: #ffeb3b; font-weight: bold;">social</mark> psychology’s emphasis on the ways in which a person’s environment, including culture and other <mark style="background-color: #ffeb3b; font-weight: bold;">social</mark> influences, affect <mark style="background-color: #ffeb3b; font-weight: bold;">behavior</mark>. In this section, we examine situational forces that have a strong influence on human <mark style="background-color: #ffeb3b; font-weight: bold;">behavior</mark> including <mark style="background-color: #ffeb3b; font-weight: bold;">social</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">role</mark>s, <mark style="background-color: #ffeb3b; font-weight: bold;">social</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">norms</mark>, and scripts. We discuss how humans use the <mark style="background-color: #ffeb3b; font-weight: bold;">social</mark> environment as a source of information, or cues, on how to behave. Situational influences on our <mark style="background-color: #ffeb3b; font-weight: bold;">behavior</mark> have important consequences, such as whether we will help a stranger in an emergency or how we would behave in an unfamiliar environment. <mark style="background-color: #ffeb3b; font-weight: bold;">social</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">role</mark>s One major <mark style="background-color: #ffeb3b; font-weight: bold;">social</mark> determinant of human <mark style="background-color: #ffeb3b; font-weight: bold;">behavior</mark> is our <mark style="background-color: #ffeb3b; font-weight: bold;">social</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">role</mark>s. A <mark style="background-color: #ffeb3b; font-weight: bold;">social</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">role</mark> is a pattern of <mark style="background-color: #ffeb3b; font-weight: bold;">behavior</mark> that is expected of a person in a given setting or group (Hare, 2003). Each one of us has several <mark style="background-color: #ffeb3b; font-weight: bold;">social</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">role</mark>s. You may be, at the same time, a student, a parent, an aspiring teacher, a son or daughter, a spouse, and a lifeguard. How do these <mark style="background-color: #ffeb3b; font-weight: bold;">social</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">role</mark>s influence your <mark style="background-color: #ffeb3b; font-weight: bold;">behavior</mark>? <mark style="background-color: #ffeb3b; font-weight: bold;">social</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">role</mark>s are defined by culturally shared knowledge. That is, nearly everyone in a given culture knows what <mark style="background-color: #ffeb3b; font-weight: bold;">behavior</mark> is expected of a person in a given <mark style="background-color: #ffeb3b; font-weight: bold;">role</mark>. For example, what is the <mark style="background-color: #ffeb3b; font-weight: bold;">social</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">role</mark> for a student? If you look around a college classroom you will likely see students engaging in studious <mark style="background-color: #ffeb3b; font-weight: bold;">behavior</mark>, taking notes, listening to the professor, reading the textbook, and sitting quietly at their desks (Figure 12.8). Of course you may see students deviating from the expected studious <mark style="background-color: #ffeb3b; font-weight: bold;">behavior</mark> such as texting on their phones or using Facebook on their laptops, but in all cases, the students that you observe are attending class—a part of the <mark style="background-color: #ffeb3b; font-weight: bold;">social</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">role</mark> of students. FIGURE 12.8 Being a student is just one of the many <mark style="background-color: #ffeb3b; font-weight: bold;">social</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">role</mark>s you have. (credit: modification of work by “Rural Institute”/Flickr) <mark style="background-color: #ffeb3b; font-weight: bold;">social</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">role</mark>s, and our related <mark style="background-color: #ffeb3b; font-weight: bold;">behavior</mark>, can vary across different settings. How do you behave when you are engaging in the <mark style="background-color: #ffeb3b; font-weight: bold;">role</mark> of a child attending a family function?
+
+with the group, even in the face of inaccurate information. Conformity to group <mark style="background-color: #ffeb3b; font-weight: bold;">norms</mark> is driven by two motivations, the desire to fit in and be liked and the desire to be accurate and gain information from the group. Authority figures also have influence over our <mark style="background-color: #ffeb3b; font-weight: bold;">behavior</mark>s, and many people become obedient and follow orders even if the orders are contrary to their personal values. Conformity to group pressures can also result in groupthink, or the faulty decision- making process that results from cohesive group members trying to maintain group harmony. Group situations can improve human <mark style="background-color: #ffeb3b; font-weight: bold;">behavior</mark> through facilitating performance on easy tasks, but inhibiting performance on difficult tasks. The presence of others can also lead to <mark style="background-color: #ffeb3b; font-weight: bold;">social</mark> loafing when individual efforts cannot be evaluated. 12.5 Prejudice and Discrimination As diverse individuals, humans can experience conflict when interacting with people who are different from each other. Prejudice, or negative feelings and evaluations, is common when people are from a differe  <!-- HIGHLIGHTING HERE ONLY -->
+                </div>
+            </div>
+            
+            <div class="stats">
+                <div class="stat-item">
+                    <div class="stat-label">Sections Used</div>
+                    <div class="stat-value">8</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Pages Referenced</div>
+                    <div class="stat-value">9</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Keywords Found</div>
+                    <div class="stat-value">4</div>
+                </div>
+            </div>
+            
+            <div class="footer">
+                Generated from Psychology 2e Textbook • Question 43 • 2026-02-27
+            </div>
+        </div>
+        
+        <!-- Font Awesome for icons -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
+    </body>
+    </html>

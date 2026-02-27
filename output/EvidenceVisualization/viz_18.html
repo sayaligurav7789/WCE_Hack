@@ -1,428 +1,391 @@
 <!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Evidence Visualization - Question 18</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            padding: 20px;
-        }
-        
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            overflow: hidden;
-        }
-        
-        .header {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            padding: 30px;
-        }
-        
-        .header h1 {
-            font-size: 24px;
-            margin-bottom: 10px;
-        }
-        
-        .header .question {
-            font-size: 18px;
-            opacity: 0.9;
-            background: rgba(255, 255, 255, 0.2);
-            padding: 15px;
-            border-radius: 10px;
-            margin-top: 10px;
-            line-height: 1.5;
-        }
-        
-        .keywords-bar {
-            background: #f0f0f0;
-            padding: 15px 30px;
-            border-bottom: 1px solid #e0e0e0;
-        }
-        
-        .keywords-title {
-            font-size: 14px;
-            color: #666;
-            margin-bottom: 10px;
-            font-weight: 600;
-        }
-        
-        .keyword-badge {
-            display: inline-block;
-            background: #ffeb3b;
-            color: #333;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 13px;
-            margin: 0 5px 5px 0;
-            font-weight: 500;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-        
-        .answer-section {
-            padding: 30px;
-            background: #f8f9fa;
-            border-bottom: 1px solid #e0e0e0;
-        }
-        
-        .answer-section h3 {
-            color: #333;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .answer-section h3 i {
-            color: #667eea;
-        }
-        
-        .answer-content {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            line-height: 1.8;
-            color: #444;
-            border-left: 4px solid #667eea;
-        }
-        
-        .answer-content mark {
-            background-color: #ffeb3b;
-            padding: 2px 0;
-            font-weight: 500;
-        }
-        
-        .evidence-section {
-            padding: 30px;
-        }
-        
-        .evidence-section h3 {
-            color: #333;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .evidence-section h3 i {
-            color: #667eea;
-        }
-        
-        .evidence-card {
-            background: #f8f9fa;
-            border-radius: 10px;
-            padding: 20px;
-            margin-bottom: 20px;
-            border-left: 4px solid #667eea;
-        }
-        
-        .evidence-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-        
-        .section-name {
-            font-weight: 600;
-            color: #333;
-            background: #e8eaf6;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 14px;
-        }
-        
-        .page-number {
-            color: #666;
-            background: white;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 14px;
-            border: 1px solid #e0e0e0;
-        }
-        
-        .relevance {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 14px;
-        }
-        
-        .term-badge {
-            display: inline-block;
-            background: #ffeb3b;
-            color: #333;
-            padding: 3px 10px;
-            border-radius: 15px;
-            font-size: 12px;
-            margin: 0 5px 5px 0;
-            font-weight: 500;
-        }
-        
-        .evidence-text {
-            background: white;
-            padding: 15px;
-            border-radius: 8px;
-            color: #555;
-            line-height: 1.6;
-            margin: 15px 0 0 0;
-            border: 1px solid #e0e0e0;
-        }
-        
-        .evidence-text mark {
-            background-color: #ffeb3b;
-            padding: 2px 0;
-            font-weight: 500;
-        }
-        
-        .highlighted-context {
-            padding: 30px;
-            background: #f8f9fa;
-            border-top: 1px solid #e0e0e0;
-            border-bottom: 1px solid #e0e0e0;
-        }
-        
-        .highlighted-context h3 {
-            color: #333;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .context-box {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            max-height: 400px;
-            overflow-y: auto;
-            border: 1px solid #e0e0e0;
-            line-height: 1.8;
-            font-size: 14px;
-        }
-        
-        .context-box mark {
-            background-color: #ffeb3b;
-            padding: 2px 0;
-            font-weight: 500;
-        }
-        
-        .stats {
-            display: flex;
-            gap: 15px;
-            padding: 20px 30px;
-            background: white;
-            flex-wrap: wrap;
-        }
-        
-        .stat-item {
-            background: #f8f9fa;
-            padding: 10px 20px;
-            border-radius: 10px;
-            flex: 1;
-            min-width: 120px;
-            text-align: center;
-            border: 1px solid #e0e0e0;
-        }
-        
-        .stat-label {
-            font-size: 12px;
-            color: #666;
-            margin-bottom: 5px;
-        }
-        
-        .stat-value {
-            font-size: 24px;
-            font-weight: 600;
-            color: #667eea;
-        }
-        
-        .footer {
-            padding: 20px 30px;
-            background: #f0f0f0;
-            text-align: center;
-            color: #666;
-            font-size: 14px;
-            border-top: 1px solid #e0e0e0;
-        }
-        
-        @media (max-width: 768px) {
-            .header {
+    <html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Evidence Visualization - Question 18</title>
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+            
+            body {
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                min-height: 100vh;
                 padding: 20px;
             }
             
-            .answer-section,
-            .evidence-section,
-            .highlighted-context {
+            .container {
+                max-width: 1000px;
+                margin: 0 auto;
+                background: white;
+                border-radius: 20px;
+                box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+                overflow: hidden;
+            }
+            
+            .header {
+                background: linear-gradient(135deg, #667eea, #764ba2);
+                color: white;
+                padding: 30px;
+            }
+            
+            .header h1 {
+                font-size: 24px;
+                margin-bottom: 10px;
+            }
+            
+            .header .question {
+                font-size: 18px;
+                opacity: 0.9;
+                background: rgba(255, 255, 255, 0.2);
+                padding: 15px;
+                border-radius: 10px;
+                margin-top: 10px;
+                line-height: 1.5;
+            }
+            
+            .keywords-bar {
+                background: #f0f0f0;
+                padding: 15px 30px;
+                border-bottom: 1px solid #e0e0e0;
+            }
+            
+            .keywords-title {
+                font-size: 14px;
+                color: #666;
+                margin-bottom: 10px;
+                font-weight: 600;
+            }
+            
+            .keyword-badge {
+                display: inline-block;
+                background: #ffeb3b;
+                color: #333;
+                padding: 5px 12px;
+                border-radius: 20px;
+                font-size: 13px;
+                margin: 0 5px 5px 0;
+                font-weight: 500;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            }
+            
+            .answer-section {
+                padding: 30px;
+                background: #f8f9fa;
+                border-bottom: 1px solid #e0e0e0;
+            }
+            
+            .answer-section h3 {
+                color: #333;
+                margin-bottom: 15px;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+            
+            .answer-section h3 i {
+                color: #667eea;
+            }
+            
+            .answer-content {
+                background: white;
                 padding: 20px;
+                border-radius: 10px;
+                line-height: 1.8;
+                color: #444;
+                border-left: 4px solid #667eea;
+            }
+            
+            /* NO mark styling for answer - it stays plain */
+            
+            .evidence-section {
+                padding: 30px;
+            }
+            
+            .evidence-section h3 {
+                color: #333;
+                margin-bottom: 20px;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+            
+            .evidence-section h3 i {
+                color: #667eea;
+            }
+            
+            .evidence-card {
+                background: #f8f9fa;
+                border-radius: 10px;
+                padding: 20px;
+                margin-bottom: 20px;
+                border-left: 4px solid #667eea;
             }
             
             .evidence-header {
-                flex-direction: column;
-                align-items: flex-start;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 15px;
+                flex-wrap: wrap;
+                gap: 10px;
             }
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <div class="header">
-            <h1>📚 Evidence Visualization</h1>
-            <div class="question">
-                <strong>Question 18:</strong> 
+            
+            .section-name {
+                font-weight: 600;
+                color: #333;
+                background: #e8eaf6;
+                padding: 5px 12px;
+                border-radius: 20px;
+                font-size: 14px;
+            }
+            
+            .page-number {
+                color: #666;
+                background: white;
+                padding: 5px 12px;
+                border-radius: 20px;
+                font-size: 14px;
+                border: 1px solid #e0e0e0;
+            }
+            
+            .term-badge {
+                display: inline-block;
+                background: #ffeb3b;
+                color: #333;
+                padding: 3px 10px;
+                border-radius: 15px;
+                font-size: 12px;
+                margin: 0 5px 5px 0;
+                font-weight: 500;
+            }
+            
+            .evidence-text {
+                background: white;
+                padding: 15px;
+                border-radius: 8px;
+                color: #555;
+                line-height: 1.6;
+                margin: 15px 0 0 0;
+                border: 1px solid #e0e0e0;
+            }
+            
+            .evidence-text mark {
+                background-color: #ffeb3b;
+                padding: 2px 0;
+                font-weight: 500;
+            }
+            
+            .highlighted-context {
+                padding: 30px;
+                background: #f8f9fa;
+                border-top: 1px solid #e0e0e0;
+                border-bottom: 1px solid #e0e0e0;
+            }
+            
+            .highlighted-context h3 {
+                color: #333;
+                margin-bottom: 15px;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+            
+            .context-box {
+                background: white;
+                padding: 20px;
+                border-radius: 10px;
+                max-height: 400px;
+                overflow-y: auto;
+                border: 1px solid #e0e0e0;
+                line-height: 1.8;
+                font-size: 14px;
+            }
+            
+            .context-box mark {
+                background-color: #ffeb3b;
+                padding: 2px 0;
+                font-weight: 500;
+            }
+            
+            .stats {
+                display: flex;
+                gap: 15px;
+                padding: 20px 30px;
+                background: white;
+                flex-wrap: wrap;
+            }
+            
+            .stat-item {
+                background: #f8f9fa;
+                padding: 10px 20px;
+                border-radius: 10px;
+                flex: 1;
+                min-width: 120px;
+                text-align: center;
+                border: 1px solid #e0e0e0;
+            }
+            
+            .stat-label {
+                font-size: 12px;
+                color: #666;
+                margin-bottom: 5px;
+            }
+            
+            .stat-value {
+                font-size: 24px;
+                font-weight: 600;
+                color: #667eea;
+            }
+            
+            .footer {
+                padding: 20px 30px;
+                background: #f0f0f0;
+                text-align: center;
+                color: #666;
+                font-size: 14px;
+                border-top: 1px solid #e0e0e0;
+            }
+            
+            @media (max-width: 768px) {
+                .header {
+                    padding: 20px;
+                }
+                
+                .answer-section,
+                .evidence-section,
+                .highlighted-context {
+                    padding: 20px;
+                }
+                
+                .evidence-header {
+                    flex-direction: column;
+                    align-items: flex-start;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="header">
+                <h1>📚 Evidence Visualization</h1>
+                <div class="question">
+                    <strong>Question 18:</strong> What is Maslow's hierarchy of needs?
+                </div>
             </div>
-        </div>
-        
-        <div class="keywords-bar">
-            <div class="keywords-title">🔑 Extracted Keywords:</div>
-
-        </div>
-        
-        <div class="answer-section">
-            <h3><i class="fas fa-robot"></i> Generated Answer</h3>
-            <div class="answer-content">
-                According to the provided textbook context, Maslow's hierarchy of needs is a pyramid-shaped model that illustrates the different levels of human needs, ranging from basic physiological needs to self-actualization. The hierarchy is divided into several tiers, with the most basic physiological needs (such as food, water, and shelter) at the base, followed by safety and security needs, love and belonging needs, esteem needs, and finally, self-actualization needs at the top. The theory suggests that lower-level needs must be met before higher-level needs can be addressed, and that self-actualization can only be achieved when all the lower-level needs have been satisfied.
+            
+            <div class="keywords-bar">
+                <div class="keywords-title">🔑 Extracted Keywords:</div>
+    <span class="keyword-badge">maslow</span><span class="keyword-badge">hierarchy</span><span class="keyword-badge">needs</span>
             </div>
-        </div>
-        
-        <div class="evidence-section">
-            <h3><i class="fas fa-book"></i> Evidence by Section</h3>
-
+            
+            <div class="answer-section">
+                <h3><i class="fas fa-robot"></i> Generated Answer</h3>
+                <div class="answer-content">
+                    According to the provided textbook context, Maslow's hierarchy of needs is a pyramid-shaped model that illustrates the different levels of human needs, ranging from basic physiological needs to self-actualization. The hierarchy is divided into several tiers, with the most basic physiological needs (such as food, water, and shelter) at the base, followed by safety and security needs, love and belonging needs, esteem needs, and finally, self-actualization needs at the top. The theory suggests that lower-level needs must be met before higher-level needs can be addressed, and that self-actualization can only be achieved when all the lower-level needs have been satisfied.  <!-- NO HIGHLIGHTING HERE -->
+                </div>
+            </div>
+            
+            <div class="evidence-section">
+                <h3><i class="fas fa-book"></i> Evidence by Section</h3>
+    
             <div class="evidence-card">
                 <div class="evidence-header">
                     <span class="section-name">📖 020189.001341
 Ahima</span>
                     <span class="page-number">📄 Page 27</span>
-                    <span class="relevance">⭐ Relevance: 0.7</span>
-                </div>
-                <div>
-
                 </div>
                 <div class="evidence-text">
-                    This section discusses 020189.001341
-ahima. The content here is relevant to your question about ...
+                    FIGURE 10.8 <mark style="background-color: #ffeb3b; font-weight: bold;">maslow</mark>’s <mark style="background-color: #ffeb3b; font-weight: bold;">hierarchy</mark> of <mark style="background-color: #ffeb3b; font-weight: bold;">needs</mark> is illustrated here. In some versions of the pyramid, cognitive and aesthetic <mark style="background-color: #ffeb3b; font-weight: bold;">needs</mark> are also included between esteem and self-actualization. Others include another tier at the top of the pyramid for self-transcendence. At the base of the pyramid are all of the  <!-- HIGHLIGHTING HERE ONLY -->
                 </div>
             </div>
-
+    
             <div class="evidence-card">
                 <div class="evidence-header">
                     <span class="section-name">📖 1.7 Maslow</span>
                     <span class="page-number">📄 Page 298</span>
-                    <span class="relevance">⭐ Relevance: 0.75</span>
-                </div>
-                <div>
-
                 </div>
                 <div class="evidence-text">
-                    This section discusses 1.7 maslow. The content here is relevant to your question about ...
+                    FIGURE 10.8 <mark style="background-color: #ffeb3b; font-weight: bold;">maslow</mark>’s <mark style="background-color: #ffeb3b; font-weight: bold;">hierarchy</mark> of <mark style="background-color: #ffeb3b; font-weight: bold;">needs</mark> is illustrated here. In some versions of the pyramid, cognitive and aesthetic <mark style="background-color: #ffeb3b; font-weight: bold;">needs</mark> are also included between esteem and self-actualization. Others include another tier at the top of the pyramid for self-transcendence. At the base of the pyramid are all of the  <!-- HIGHLIGHTING HERE ONLY -->
                 </div>
             </div>
-
+    
             <div class="evidence-card">
                 <div class="evidence-header">
                     <span class="section-name">📖 10.1 Motivation
 LEARNING OBJECTIVES
 By the end of this section</span>
                     <span class="page-number">📄 Page 334</span>
-                    <span class="relevance">⭐ Relevance: 0.8</span>
-                </div>
-                <div>
-
                 </div>
                 <div class="evidence-text">
-                    This section discusses 10.1 motivation
-learning objectives
-by the end of this section. The content here is relevant to your question about ...
+                    FIGURE 10.8 <mark style="background-color: #ffeb3b; font-weight: bold;">maslow</mark>’s <mark style="background-color: #ffeb3b; font-weight: bold;">hierarchy</mark> of <mark style="background-color: #ffeb3b; font-weight: bold;">needs</mark> is illustrated here. In some versions of the pyramid, cognitive and aesthetic <mark style="background-color: #ffeb3b; font-weight: bold;">needs</mark> are also included between esteem and self-actualization. Others include another tier at the top of the pyramid for self-transcendence. At the base of the pyramid are all of the  <!-- HIGHLIGHTING HERE ONLY -->
                 </div>
             </div>
-
+    
             <div class="evidence-card">
                 <div class="evidence-header">
                     <span class="section-name">📖 10.8 Maslow</span>
                     <span class="page-number">📄 Page 339</span>
-                    <span class="relevance">⭐ Relevance: 0.85</span>
-                </div>
-                <div>
-
                 </div>
                 <div class="evidence-text">
-                    This section discusses 10.8 maslow. The content here is relevant to your question about ...
+                    FIGURE 10.8 <mark style="background-color: #ffeb3b; font-weight: bold;">maslow</mark>’s <mark style="background-color: #ffeb3b; font-weight: bold;">hierarchy</mark> of <mark style="background-color: #ffeb3b; font-weight: bold;">needs</mark> is illustrated here. In some versions of the pyramid, cognitive and aesthetic <mark style="background-color: #ffeb3b; font-weight: bold;">needs</mark> are also included between esteem and self-actualization. Others include another tier at the top of the pyramid for self-transcendence. At the base of the pyramid are all of the  <!-- HIGHLIGHTING HERE ONLY -->
                 </div>
             </div>
-
+    
             <div class="evidence-card">
                 <div class="evidence-header">
                     <span class="section-name">📖 11.2
 Carl Jung
 Carl Jung</span>
                     <span class="page-number">📄 Page 381</span>
-                    <span class="relevance">⭐ Relevance: 0.9</span>
-                </div>
-                <div>
-
                 </div>
                 <div class="evidence-text">
-                    This section discusses 11.2
-carl jung
-carl jung. The content here is relevant to your question about ...
+                    FIGURE 10.8 <mark style="background-color: #ffeb3b; font-weight: bold;">maslow</mark>’s <mark style="background-color: #ffeb3b; font-weight: bold;">hierarchy</mark> of <mark style="background-color: #ffeb3b; font-weight: bold;">needs</mark> is illustrated here. In some versions of the pyramid, cognitive and aesthetic <mark style="background-color: #ffeb3b; font-weight: bold;">needs</mark> are also included between esteem and self-actualization. Others include another tier at the top of the pyramid for self-transcendence. At the base of the pyramid are all of the  <!-- HIGHLIGHTING HERE ONLY -->
                 </div>
             </div>
-
-        </div>
-        
-        <div class="highlighted-context">
-            <h3><i class="fas fa-highlighter"></i> Highlighted Context</h3>
-            <div class="context-box">
-                FIGURE 10.8 Maslow’s hierarchy of needs is illustrated here. In some versions of the pyramid, cognitive and aesthetic needs are also included between esteem and self-actualization. Others include another tier at the top of the pyramid for self-transcendence. At the base of the pyramid are all of the physiological needs that are necessary for survival. These are followed by basic needs for security and safety, the need to be loved and to have a sense of belonging, and the need to have self-worth and confidence. The top tier of the pyramid is self-actualization, which is a need that essentially equates to achieving one’s full potential, and it can only be realized when needs lower on the pyramid have been met. To Maslow and humanistic theorists, self-actualization reflects the humanistic emphasis on positive aspects of human nature. Maslow suggested that this is an ongoing, life-long process and that only a small percentage of people actually achieve a self-actualized state (Francis & Kritsonis, 2006; Maslow, 1943). According to Maslow (1943), one must satisfy lower-level needs before addressing those needs that occur higher in the pyramid. So, for example, if someone is struggling to find enough food to meet their nutritional requirements, it is quite unlikely that they would spend an inordinate amount of time thinking about whether others viewed them as a good person or not. Instead, all of their energies would be geared toward finding something to eat. However, it should be pointed out that Maslow’s theory has been criticized for its subjective nature and its inability to account for phenomena that occur in the real world (Leonard, 1982). Other research has more recently addressed that late in life, Maslow proposed a self-transcendence level above self- actualization—to represent striving for meaning and purpose beyond the concerns of oneself (Koltko-Rivera, 2006). For example, people sometimes make self-sacrifices in order to make a political statement or in an attempt to improve the conditions of others. Mohandas K. Gandhi, a world-renowned advocate for independence through nonviolent protest, on several occasions went on hunger strikes to protest a particular situation. People may starve themselves or otherwise put themselves in danger displaying higher-level motives beyond their own needs. LINK TO LEARNING Check out this interactive exercise about Maslow's hierarchy of needs (http://openstax.org/l/hierneeds) to learn more. 10.1 • Motivation 327
-
-Kennedy, K. (2017). Coverage in transition: Considerations when expanding employer-provided health coverage to LGBTI employees and beneficiaries. The John Marhsall Institutional Repository, 24(1). https://repository.jmls.edu/cgi/viewcontent.cgi?article=1691&context=facpubs Kinsey, A. C., Pomeroy, W. B., & Martin, C. E. (1948). Sexual behavior in the human male. W.B. Saunders Company. Koltko-Rivera, M. E. (2006). Rediscovering the later version of Maslow’s hierarchy of needs: Self-transcendence and opportunities for theory, research, and unification. Review of General Psychology, 10, 302–317. Konturek, S. J., Pepera, J., Zabielski, K., Konturek, P. C., Pawlick, T., Szlachcic, A., & Hahn. (2003). Brain-gut axis in pancreatic secretion and appetite control. Journal of Physiology and Pharmacology, 54, 293–317. Lang, P. J. (1994). The varieties of emotional experience: A meditation on James-Lange theory. Psychological Review, 101, 211–221. Lazarus, R. S. (1991). Cognition and motivation in emotion. American Psychologist, 46, 352–367. https://psycnet.apa.org/record/1991-23402-001 Lazarus, R. S. (1991). Emotion and adaptation. Oxford University Press. LeDoux, J. E. (1996). The Emotional Brain: The Mysterious Underpinnings of Emotional Life. Simon & Schuster. LeDoux, J. E. (2002). The synaptic self. Macmillan. Leonard, G. (1982). The failure of self-actualization theory: A critique of Carl Rogers and Abraham Maslow. Journal of Humanistic Psychology, 22, 56–73. LeVay, S. (1991). A difference in the hypothalamic structure between heterosexual and homosexual men. Science, 253, 1034–1037. LeVay, S. (1996). Queer science: The use and abuse of research into homosexuality. The MIT Press. Levenson, R. W., Carstensen, L. L., Friesen, W. V., & Ekman, P. (1991). Emotion, physiology, and expression in old age. Psychology and Aging, 6, 28–35. https://psycnet.apa.org/record/1991-18170-001 Levy-Gigi, E., Szabó, C., Kelemen, O., & Kéri, S. (2013). Association among clinical response, hippocampal volume, and FKBP5 gene expression in individuals with posttraumatic stress disorder receiving cognitive behavioral therapy. Biological Psychiatry, 74, 793–800. Lippa, R. A. (2003). Handedness, sexual orientation, and gender-related personality traits in men and women. Archives of Sexual Behavior, 32, 103–114. Loehlin, J. C., & McFadden, D. (2003). Otoacoustic emissions, auditory evoked potentials, and traits related to sex and sexual orientation. Archives of Sexual Behavior, 32, 115–127. Macdonald, H., Rutter, M., Howlin, P., Rios, P., Conteur, A. L., Evered, C., & Folstein, S. (1989). Recognition and expression of emotional cues by autistic and normal adults. Journal of Child Psychology and Psychiatry, 30, 865–877. Malatesta, C. Z., & Haviland, J. M. (1982). Learning display rules: The socialization of emotion expression in infancy. Child Development, 53, 991–1003. Maren, S., Phan, K. L., & Liberzon, I. (2013). The contextual
-
-FIGURE 1.7 Maslow’s hierarchy of needs is shown. Carl Rogers (1902–1987) was also an American psychologist who, like Maslow, emphasized the potential for good that exists within all people (Figure 1.8). Rogers used a therapeutic technique known as client-centered therapy in helping his clients deal with problematic issues that resulted in their seeking psychotherapy. Unlike a psychoanalytic approach in which the therapist plays an important role in interpreting what conscious behavior reveals about the unconscious mind, client-centered therapy involves the patient taking a lead role in the therapy session. Rogers believed that a therapist needed to display three features to maximize the effectiveness of this particular approach: unconditional positive regard, genuineness, and empathy. Unconditional positive regard refers to the fact that the therapist accepts their client for who they are, no matter what they might say. Provided these factors, Rogers believed that people were more than capable of dealing with and working through their own issues (Thorne & Henley, 2005). FIGURE 1.8 Carl Rogers, shown in this portrait, developed a client-centered therapy method that has been influential in clinical settings. (credit: "Didius"/Wikimedia Commons) Humanism has been influential to psychology as a whole. Both Maslow and Rogers are well-known names among students of psychology (you will read more about both later in this text), and their ideas have influenced many scholars. Furthermore, Rogers’ client-centered approach to therapy is still commonly used in psychotherapeutic settings today (O’hara, n.d.) 1.2 • History of Psychology 15
-
-Quan, 2018) and measures of achievement in adolescence. However, researchers also found that the associations were not as strong as those reported during Mischel's initial experiment and were quite sensitive to situational factors such as early measures of cognitive capacity, family background, and home environment. This research suggests that consideration of situational factors is important to better understand behavior. LINK TO LEARNING Watch Joachim de Posada's TEDTalk about the marshmallow test (http://openstax.org/l/TEDPosada) to learn more and to see the test given to children in Colombia. Today, the debate is mostly resolved, and most psychologists consider both the situation and personal factors in understanding behavior. For Mischel (1993), people are situation processors. The children in the marshmallow test each processed, or interpreted, the rewards structure of that situation in their own way. Mischel’s approach to personality stresses the importance of both the situation and the way the person perceives the situation. Instead of behavior being determined by the situation, people use cognitive processes to interpret the situation and then behave in accordance with that interpretation. 11.5 Humanistic Approaches LEARNING OBJECTIVES By the end of this section, you will be able to: • Discuss the contributions of Abraham Maslow and Carl Rogers to personality development As the “third force” in psychology, humanism is touted as a reaction both to the pessimistic determinism of psychoanalysis, with its emphasis on psychological disturbance, and to the behaviorists’ view of humans passively reacting to the environment, which has been criticized as making people out to be personality-less robots. It does not suggest that psychoanalytic, behaviorist, and other points of view are incorrect but argues that these perspectives do not recognize the depth and meaning of human experience, and fail to recognize the innate capacity for self-directed change and transforming personal experiences. This perspective focuses on how healthy people develop. One pioneering humanist, Abraham Maslow, studied people who he considered to be healthy, creative, and productive, including Albert Einstein, Eleanor Roosevelt, Thomas Jefferson, Abraham Lincoln, and others. Maslow (1950, 1970) found that such people share similar characteristics, such as being open, creative, loving, spontaneous, compassionate, concerned for others, and accepting of themselves. When you studied motivation, you learned about one of the best-known humanistic theories, Maslow's hierarchy of needs theory, in which Maslow proposes that human beings have certain needs in common and that these needs must be met in a certain order. The highest need is
-
-needed to fulfill family obligations. In contrast, flextime did not help with coping and telecommuting actually made things worse, perhaps reflecting the fact that being at home intensifies the conflict between work and family because with the employee in the home, the demands of family are more evident. Posig & Kickul (2004) identify exemplar corporations with policies designed to reduce work–family conflict. Examples include IBM’s policy of three years of job-guaranteed leave after the birth of a child, Lucent Technologies offer of one year’s childbirth leave at half pay, and SC Johnson’s program of concierge services for daytime errands. LINK TO LEARNING The Glassdoor website (http://openstax.org/l/glassdoor) posts job satisfaction reviews for different careers and organizations. Use this site to research possible careers and/or organizations that interest you. Management and Organizational Structure A significant portion of I-O research focuses on management and human relations. Douglas McGregor (1960) combined scientific management (a theory of management that analyzes and synthesizes workflows with the main objective of improving economic efficiency, especially labor productivity) and human relations into the notion of leadership behavior. His theory lays out two different styles called Theory X and Theory Y. In the Theory X approach to management, managers assume that most people dislike work and are not innately self- directed. Theory X managers perceive employees as people who prefer to be led and told which tasks to perform and when. Their employees have to be watched carefully to be sure that they work hard enough to fulfill the organization’s goals. Theory X workplaces will often have employees punch a clock when arriving and leaving the workplace: Tardiness is punished. Supervisors, not employees, determine whether an employee needs to stay late, and even this decision would require someone higher up in the command chain to approve the extra hours. Theory X supervisors will ignore employees’ suggestions for improved efficiency and reprimand employees for speaking out of order. These supervisors blam
-            </div>
-        </div>
-        
-        <div class="stats">
-            <div class="stat-item">
-                <div class="stat-label">Sections Used</div>
-                <div class="stat-value">10</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-label">Pages Referenced</div>
-                <div class="stat-value">11</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-label">Keywords Found</div>
-                <div class="stat-value">0</div>
-            </div>
-        </div>
-        
-        <div class="footer">
-            Generated from Psychology 2e Textbook • Question 18 • 2026-02-26
-        </div>
-    </div>
     
-    <!-- Font Awesome for icons -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
-</body>
-</html>
+            </div>
+            
+            <div class="highlighted-context">
+                <h3><i class="fas fa-highlighter"></i> Highlighted Context</h3>
+                <div class="context-box">
+                    FIGURE 10.8 <mark style="background-color: #ffeb3b; font-weight: bold;">maslow</mark>’s <mark style="background-color: #ffeb3b; font-weight: bold;">hierarchy</mark> of <mark style="background-color: #ffeb3b; font-weight: bold;">needs</mark> is illustrated here. In some versions of the pyramid, cognitive and aesthetic <mark style="background-color: #ffeb3b; font-weight: bold;">needs</mark> are also included between esteem and self-actualization. Others include another tier at the top of the pyramid for self-transcendence. At the base of the pyramid are all of the physiological <mark style="background-color: #ffeb3b; font-weight: bold;">needs</mark> that are necessary for survival. These are followed by basic <mark style="background-color: #ffeb3b; font-weight: bold;">needs</mark> for security and safety, the need to be loved and to have a sense of belonging, and the need to have self-worth and confidence. The top tier of the pyramid is self-actualization, which is a need that essentially equates to achieving one’s full potential, and it can only be realized when <mark style="background-color: #ffeb3b; font-weight: bold;">needs</mark> lower on the pyramid have been met. To <mark style="background-color: #ffeb3b; font-weight: bold;">maslow</mark> and humanistic theorists, self-actualization reflects the humanistic emphasis on positive aspects of human nature. <mark style="background-color: #ffeb3b; font-weight: bold;">maslow</mark> suggested that this is an ongoing, life-long process and that only a small percentage of people actually achieve a self-actualized state (Francis & Kritsonis, 2006; <mark style="background-color: #ffeb3b; font-weight: bold;">maslow</mark>, 1943). According to <mark style="background-color: #ffeb3b; font-weight: bold;">maslow</mark> (1943), one must satisfy lower-level <mark style="background-color: #ffeb3b; font-weight: bold;">needs</mark> before addressing those <mark style="background-color: #ffeb3b; font-weight: bold;">needs</mark> that occur higher in the pyramid. So, for example, if someone is struggling to find enough food to meet their nutritional requirements, it is quite unlikely that they would spend an inordinate amount of time thinking about whether others viewed them as a good person or not. Instead, all of their energies would be geared toward finding something to eat. However, it should be pointed out that <mark style="background-color: #ffeb3b; font-weight: bold;">maslow</mark>’s theory has been criticized for its subjective nature and its inability to account for phenomena that occur in the real world (Leonard, 1982). Other research has more recently addressed that late in life, <mark style="background-color: #ffeb3b; font-weight: bold;">maslow</mark> proposed a self-transcendence level above self- actualization—to represent striving for meaning and purpose beyond the concerns of oneself (Koltko-Rivera, 2006). For example, people sometimes make self-sacrifices in order to make a political statement or in an attempt to improve the conditions of others. Mohandas K. Gandhi, a world-renowned advocate for independence through nonviolent protest, on several occasions went on hunger strikes to protest a particular situation. People may starve themselves or otherwise put themselves in danger displaying higher-level motives beyond their own <mark style="background-color: #ffeb3b; font-weight: bold;">needs</mark>. LINK TO LEARNING Check out this interactive exercise about <mark style="background-color: #ffeb3b; font-weight: bold;">maslow</mark>'s <mark style="background-color: #ffeb3b; font-weight: bold;">hierarchy</mark> of <mark style="background-color: #ffeb3b; font-weight: bold;">needs</mark> (http://openstax.org/l/hier<mark style="background-color: #ffeb3b; font-weight: bold;">needs</mark>) to learn more. 10.1 • Motivation 327
+
+Kennedy, K. (2017). Coverage in transition: Considerations when expanding employer-provided health coverage to LGBTI employees and beneficiaries. The John Marhsall Institutional Repository, 24(1). https://repository.jmls.edu/cgi/viewcontent.cgi?article=1691&context=facpubs Kinsey, A. C., Pomeroy, W. B., & Martin, C. E. (1948). Sexual behavior in the human male. W.B. Saunders Company. Koltko-Rivera, M. E. (2006). Rediscovering the later version of <mark style="background-color: #ffeb3b; font-weight: bold;">maslow</mark>’s <mark style="background-color: #ffeb3b; font-weight: bold;">hierarchy</mark> of <mark style="background-color: #ffeb3b; font-weight: bold;">needs</mark>: Self-transcendence and opportunities for theory, research, and unification. Review of General Psychology, 10, 302–317. Konturek, S. J., Pepera, J., Zabielski, K., Konturek, P. C., Pawlick, T., Szlachcic, A., & Hahn. (2003). Brain-gut axis in pancreatic secretion and appetite control. Journal of Physiology and Pharmacology, 54, 293–317. Lang, P. J. (1994). The varieties of emotional experience: A meditation on James-Lange theory. Psychological Review, 101, 211–221. Lazarus, R. S. (1991). Cognition and motivation in emotion. American Psychologist, 46, 352–367. https://psycnet.apa.org/record/1991-23402-001 Lazarus, R. S. (1991). Emotion and adaptation. Oxford University Press. LeDoux, J. E. (1996). The Emotional Brain: The Mysterious Underpinnings of Emotional Life. Simon & Schuster. LeDoux, J. E. (2002). The synaptic self. Macmillan. Leonard, G. (1982). The failure of self-actualization theory: A critique of Carl Rogers and Abraham <mark style="background-color: #ffeb3b; font-weight: bold;">maslow</mark>. Journal of Humanistic Psychology, 22, 56–73. LeVay, S. (1991). A difference in the hypothalamic structure between heterosexual and homosexual men. Science, 253, 1034–1037. LeVay, S. (1996). Queer science: The use and abuse of research into homosexuality. The MIT Press. Levenson, R. W., Carstensen, L. L., Friesen, W. V., & Ekman, P. (1991). Emotion, physiology, and expression in old age. Psychology and Aging, 6, 28–35. https://psycnet.apa.org/record/1991-18170-001 Levy-Gigi, E., Szabó, C., Kelemen, O., & Kéri, S. (2013). Association among clinical response, hippocampal volume, and FKBP5 gene expression in individuals with posttraumatic stress disorder receiving cognitive behavioral therapy. Biological Psychiatry, 74, 793–800. Lippa, R. A. (2003). Handedness, sexual orientation, and gender-related personality traits in men and women. Archives of Sexual Behavior, 32, 103–114. Loehlin, J. C., & McFadden, D. (2003). Otoacoustic emissions, auditory evoked potentials, and traits related to sex and sexual orientation. Archives of Sexual Behavior, 32, 115–127. Macdonald, H., Rutter, M., Howlin, P., Rios, P., Conteur, A. L., Evered, C., & Folstein, S. (1989). Recognition and expression of emotional cues by autistic and normal adults. Journal of Child Psychology and Psychiatry, 30, 865–877. Malatesta, C. Z., & Haviland, J. M. (1982). Learning display rules: The socialization of emotion expression in infancy. Child Development, 53, 991–1003. Maren, S., Phan, K. L., & Liberzon, I. (2013). The contextual
+
+FIGURE 1.7 <mark style="background-color: #ffeb3b; font-weight: bold;">maslow</mark>’s <mark style="background-color: #ffeb3b; font-weight: bold;">hierarchy</mark> of <mark style="background-color: #ffeb3b; font-weight: bold;">needs</mark> is shown. Carl Rogers (1902–1987) was also an American psychologist who, like <mark style="background-color: #ffeb3b; font-weight: bold;">maslow</mark>, emphasized the potential for good that exists within all people (Figure 1.8). Rogers used a therapeutic technique known as client-centered therapy in helping his clients deal with problematic issues that resulted in their seeking psychotherapy. Unlike a psychoanalytic approach in which the therapist plays an important role in interpreting what conscious behavior reveals about the unconscious mind, client-centered therapy involves the patient taking a lead role in the therapy session. Rogers believed that a therapist needed to display three features to maximize the effectiveness of this particular approach: unconditional positive regard, genuineness, and empathy. Unconditional positive regard refers to the fact that the therapist accepts their client for who they are, no matter what they might say. Provided these factors, Rogers believed that people were more than capable of dealing with and working through their own issues (Thorne & Henley, 2005). FIGURE 1.8 Carl Rogers, shown in this portrait, developed a client-centered therapy method that has been influential in clinical settings. (credit: "Didius"/Wikimedia Commons) Humanism has been influential to psychology as a whole. Both <mark style="background-color: #ffeb3b; font-weight: bold;">maslow</mark> and Rogers are well-known names among students of psychology (you will read more about both later in this text), and their ideas have influenced many scholars. Furthermore, Rogers’ client-centered approach to therapy is still commonly used in psychotherapeutic settings today (O’hara, n.d.) 1.2 • History of Psychology 15
+
+Quan, 2018) and measures of achievement in adolescence. However, researchers also found that the associations were not as strong as those reported during Mischel's initial experiment and were quite sensitive to situational factors such as early measures of cognitive capacity, family background, and home environment. This research suggests that consideration of situational factors is important to better understand behavior. LINK TO LEARNING Watch Joachim de Posada's TEDTalk about the marshmallow test (http://openstax.org/l/TEDPosada) to learn more and to see the test given to children in Colombia. Today, the debate is mostly resolved, and most psychologists consider both the situation and personal factors in understanding behavior. For Mischel (1993), people are situation processors. The children in the marshmallow test each processed, or interpreted, the rewards structure of that situation in their own way. Mischel’s approach to personality stresses the importance of both the situation and the way the person perceives the situation. Instead of behavior being determined by the situation, people use cognitive processes to interpret the situation and then behave in accordance with that interpretation. 11.5 Humanistic Approaches LEARNING OBJECTIVES By the end of this section, you will be able to: • Discuss the contributions of Abraham <mark style="background-color: #ffeb3b; font-weight: bold;">maslow</mark> and Carl Rogers to personality development As the “third force” in psychology, humanism is touted as a reaction both to the pessimistic determinism of psychoanalysis, with its emphasis on psychological disturbance, and to the behaviorists’ view of humans passively reacting to the environment, which has been criticized as making people out to be personality-less robots. It does not suggest that psychoanalytic, behaviorist, and other points of view are incorrect but argues that these perspectives do not recognize the depth and meaning of human experience, and fail to recognize the innate capacity for self-directed change and transforming personal experiences. This perspective focuses on how healthy people develop. One pioneering humanist, Abraham <mark style="background-color: #ffeb3b; font-weight: bold;">maslow</mark>, studied people who he considered to be healthy, creative, and productive, including Albert Einstein, Eleanor Roosevelt, Thomas Jefferson, Abraham Lincoln, and others. <mark style="background-color: #ffeb3b; font-weight: bold;">maslow</mark> (1950, 1970) found that such people share similar characteristics, such as being open, creative, loving, spontaneous, compassionate, concerned for others, and accepting of themselves. When you studied motivation, you learned about one of the best-known humanistic theories, <mark style="background-color: #ffeb3b; font-weight: bold;">maslow</mark>'s <mark style="background-color: #ffeb3b; font-weight: bold;">hierarchy</mark> of <mark style="background-color: #ffeb3b; font-weight: bold;">needs</mark> theory, in which <mark style="background-color: #ffeb3b; font-weight: bold;">maslow</mark> proposes that human beings have certain <mark style="background-color: #ffeb3b; font-weight: bold;">needs</mark> in common and that these <mark style="background-color: #ffeb3b; font-weight: bold;">needs</mark> must be met in a certain order. The highest need is
+
+needed to fulfill family obligations. In contrast, flextime did not help with coping and telecommuting actually made things worse, perhaps reflecting the fact that being at home intensifies the conflict between work and family because with the employee in the home, the demands of family are more evident. Posig & Kickul (2004) identify exemplar corporations with policies designed to reduce work–family conflict. Examples include IBM’s policy of three years of job-guaranteed leave after the birth of a child, Lucent Technologies offer of one year’s childbirth leave at half pay, and SC Johnson’s program of concierge services for daytime errands. LINK TO LEARNING The Glassdoor website (http://openstax.org/l/glassdoor) posts job satisfaction reviews for different careers and organizations. Use this site to research possible careers and/or organizations that interest you. Management and Organizational Structure A significant portion of I-O research focuses on management and human relations. Douglas McGregor (1960) combined scientific management (a theory of management that analyzes and synthesizes workflows with the main objective of improving economic efficiency, especially labor productivity) and human relations into the notion of leadership behavior. His theory lays out two different styles called Theory X and Theory Y. In the Theory X approach to management, managers assume that most people dislike work and are not innately self- directed. Theory X managers perceive employees as people who prefer to be led and told which tasks to perform and when. Their employees have to be watched carefully to be sure that they work hard enough to fulfill the organization’s goals. Theory X workplaces will often have employees punch a clock when arriving and leaving the workplace: Tardiness is punished. Supervisors, not employees, determine whether an employee <mark style="background-color: #ffeb3b; font-weight: bold;">needs</mark> to stay late, and even this decision would require someone higher up in the command chain to approve the extra hours. Theory X supervisors will ignore employees’ suggestions for improved efficiency and reprimand employees for speaking out of order. These supervisors blam  <!-- HIGHLIGHTING HERE ONLY -->
+                </div>
+            </div>
+            
+            <div class="stats">
+                <div class="stat-item">
+                    <div class="stat-label">Sections Used</div>
+                    <div class="stat-value">10</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Pages Referenced</div>
+                    <div class="stat-value">11</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Keywords Found</div>
+                    <div class="stat-value">3</div>
+                </div>
+            </div>
+            
+            <div class="footer">
+                Generated from Psychology 2e Textbook • Question 18 • 2026-02-27
+            </div>
+        </div>
+        
+        <!-- Font Awesome for icons -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
+    </body>
+    </html>

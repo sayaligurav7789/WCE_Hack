@@ -1,430 +1,393 @@
 <!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Evidence Visualization - Question 5</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            padding: 20px;
-        }
-        
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            overflow: hidden;
-        }
-        
-        .header {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            padding: 30px;
-        }
-        
-        .header h1 {
-            font-size: 24px;
-            margin-bottom: 10px;
-        }
-        
-        .header .question {
-            font-size: 18px;
-            opacity: 0.9;
-            background: rgba(255, 255, 255, 0.2);
-            padding: 15px;
-            border-radius: 10px;
-            margin-top: 10px;
-            line-height: 1.5;
-        }
-        
-        .keywords-bar {
-            background: #f0f0f0;
-            padding: 15px 30px;
-            border-bottom: 1px solid #e0e0e0;
-        }
-        
-        .keywords-title {
-            font-size: 14px;
-            color: #666;
-            margin-bottom: 10px;
-            font-weight: 600;
-        }
-        
-        .keyword-badge {
-            display: inline-block;
-            background: #ffeb3b;
-            color: #333;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 13px;
-            margin: 0 5px 5px 0;
-            font-weight: 500;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-        
-        .answer-section {
-            padding: 30px;
-            background: #f8f9fa;
-            border-bottom: 1px solid #e0e0e0;
-        }
-        
-        .answer-section h3 {
-            color: #333;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .answer-section h3 i {
-            color: #667eea;
-        }
-        
-        .answer-content {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            line-height: 1.8;
-            color: #444;
-            border-left: 4px solid #667eea;
-        }
-        
-        .answer-content mark {
-            background-color: #ffeb3b;
-            padding: 2px 0;
-            font-weight: 500;
-        }
-        
-        .evidence-section {
-            padding: 30px;
-        }
-        
-        .evidence-section h3 {
-            color: #333;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .evidence-section h3 i {
-            color: #667eea;
-        }
-        
-        .evidence-card {
-            background: #f8f9fa;
-            border-radius: 10px;
-            padding: 20px;
-            margin-bottom: 20px;
-            border-left: 4px solid #667eea;
-        }
-        
-        .evidence-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-        
-        .section-name {
-            font-weight: 600;
-            color: #333;
-            background: #e8eaf6;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 14px;
-        }
-        
-        .page-number {
-            color: #666;
-            background: white;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 14px;
-            border: 1px solid #e0e0e0;
-        }
-        
-        .relevance {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 14px;
-        }
-        
-        .term-badge {
-            display: inline-block;
-            background: #ffeb3b;
-            color: #333;
-            padding: 3px 10px;
-            border-radius: 15px;
-            font-size: 12px;
-            margin: 0 5px 5px 0;
-            font-weight: 500;
-        }
-        
-        .evidence-text {
-            background: white;
-            padding: 15px;
-            border-radius: 8px;
-            color: #555;
-            line-height: 1.6;
-            margin: 15px 0 0 0;
-            border: 1px solid #e0e0e0;
-        }
-        
-        .evidence-text mark {
-            background-color: #ffeb3b;
-            padding: 2px 0;
-            font-weight: 500;
-        }
-        
-        .highlighted-context {
-            padding: 30px;
-            background: #f8f9fa;
-            border-top: 1px solid #e0e0e0;
-            border-bottom: 1px solid #e0e0e0;
-        }
-        
-        .highlighted-context h3 {
-            color: #333;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .context-box {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            max-height: 400px;
-            overflow-y: auto;
-            border: 1px solid #e0e0e0;
-            line-height: 1.8;
-            font-size: 14px;
-        }
-        
-        .context-box mark {
-            background-color: #ffeb3b;
-            padding: 2px 0;
-            font-weight: 500;
-        }
-        
-        .stats {
-            display: flex;
-            gap: 15px;
-            padding: 20px 30px;
-            background: white;
-            flex-wrap: wrap;
-        }
-        
-        .stat-item {
-            background: #f8f9fa;
-            padding: 10px 20px;
-            border-radius: 10px;
-            flex: 1;
-            min-width: 120px;
-            text-align: center;
-            border: 1px solid #e0e0e0;
-        }
-        
-        .stat-label {
-            font-size: 12px;
-            color: #666;
-            margin-bottom: 5px;
-        }
-        
-        .stat-value {
-            font-size: 24px;
-            font-weight: 600;
-            color: #667eea;
-        }
-        
-        .footer {
-            padding: 20px 30px;
-            background: #f0f0f0;
-            text-align: center;
-            color: #666;
-            font-size: 14px;
-            border-top: 1px solid #e0e0e0;
-        }
-        
-        @media (max-width: 768px) {
-            .header {
+    <html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Evidence Visualization - Question 5</title>
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+            
+            body {
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                min-height: 100vh;
                 padding: 20px;
             }
             
-            .answer-section,
-            .evidence-section,
-            .highlighted-context {
+            .container {
+                max-width: 1000px;
+                margin: 0 auto;
+                background: white;
+                border-radius: 20px;
+                box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+                overflow: hidden;
+            }
+            
+            .header {
+                background: linear-gradient(135deg, #667eea, #764ba2);
+                color: white;
+                padding: 30px;
+            }
+            
+            .header h1 {
+                font-size: 24px;
+                margin-bottom: 10px;
+            }
+            
+            .header .question {
+                font-size: 18px;
+                opacity: 0.9;
+                background: rgba(255, 255, 255, 0.2);
+                padding: 15px;
+                border-radius: 10px;
+                margin-top: 10px;
+                line-height: 1.5;
+            }
+            
+            .keywords-bar {
+                background: #f0f0f0;
+                padding: 15px 30px;
+                border-bottom: 1px solid #e0e0e0;
+            }
+            
+            .keywords-title {
+                font-size: 14px;
+                color: #666;
+                margin-bottom: 10px;
+                font-weight: 600;
+            }
+            
+            .keyword-badge {
+                display: inline-block;
+                background: #ffeb3b;
+                color: #333;
+                padding: 5px 12px;
+                border-radius: 20px;
+                font-size: 13px;
+                margin: 0 5px 5px 0;
+                font-weight: 500;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            }
+            
+            .answer-section {
+                padding: 30px;
+                background: #f8f9fa;
+                border-bottom: 1px solid #e0e0e0;
+            }
+            
+            .answer-section h3 {
+                color: #333;
+                margin-bottom: 15px;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+            
+            .answer-section h3 i {
+                color: #667eea;
+            }
+            
+            .answer-content {
+                background: white;
                 padding: 20px;
+                border-radius: 10px;
+                line-height: 1.8;
+                color: #444;
+                border-left: 4px solid #667eea;
+            }
+            
+            /* NO mark styling for answer - it stays plain */
+            
+            .evidence-section {
+                padding: 30px;
+            }
+            
+            .evidence-section h3 {
+                color: #333;
+                margin-bottom: 20px;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+            
+            .evidence-section h3 i {
+                color: #667eea;
+            }
+            
+            .evidence-card {
+                background: #f8f9fa;
+                border-radius: 10px;
+                padding: 20px;
+                margin-bottom: 20px;
+                border-left: 4px solid #667eea;
             }
             
             .evidence-header {
-                flex-direction: column;
-                align-items: flex-start;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 15px;
+                flex-wrap: wrap;
+                gap: 10px;
             }
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <div class="header">
-            <h1>📚 Evidence Visualization</h1>
-            <div class="question">
-                <strong>Question 5:</strong> 
+            
+            .section-name {
+                font-weight: 600;
+                color: #333;
+                background: #e8eaf6;
+                padding: 5px 12px;
+                border-radius: 20px;
+                font-size: 14px;
+            }
+            
+            .page-number {
+                color: #666;
+                background: white;
+                padding: 5px 12px;
+                border-radius: 20px;
+                font-size: 14px;
+                border: 1px solid #e0e0e0;
+            }
+            
+            .term-badge {
+                display: inline-block;
+                background: #ffeb3b;
+                color: #333;
+                padding: 3px 10px;
+                border-radius: 15px;
+                font-size: 12px;
+                margin: 0 5px 5px 0;
+                font-weight: 500;
+            }
+            
+            .evidence-text {
+                background: white;
+                padding: 15px;
+                border-radius: 8px;
+                color: #555;
+                line-height: 1.6;
+                margin: 15px 0 0 0;
+                border: 1px solid #e0e0e0;
+            }
+            
+            .evidence-text mark {
+                background-color: #ffeb3b;
+                padding: 2px 0;
+                font-weight: 500;
+            }
+            
+            .highlighted-context {
+                padding: 30px;
+                background: #f8f9fa;
+                border-top: 1px solid #e0e0e0;
+                border-bottom: 1px solid #e0e0e0;
+            }
+            
+            .highlighted-context h3 {
+                color: #333;
+                margin-bottom: 15px;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+            
+            .context-box {
+                background: white;
+                padding: 20px;
+                border-radius: 10px;
+                max-height: 400px;
+                overflow-y: auto;
+                border: 1px solid #e0e0e0;
+                line-height: 1.8;
+                font-size: 14px;
+            }
+            
+            .context-box mark {
+                background-color: #ffeb3b;
+                padding: 2px 0;
+                font-weight: 500;
+            }
+            
+            .stats {
+                display: flex;
+                gap: 15px;
+                padding: 20px 30px;
+                background: white;
+                flex-wrap: wrap;
+            }
+            
+            .stat-item {
+                background: #f8f9fa;
+                padding: 10px 20px;
+                border-radius: 10px;
+                flex: 1;
+                min-width: 120px;
+                text-align: center;
+                border: 1px solid #e0e0e0;
+            }
+            
+            .stat-label {
+                font-size: 12px;
+                color: #666;
+                margin-bottom: 5px;
+            }
+            
+            .stat-value {
+                font-size: 24px;
+                font-weight: 600;
+                color: #667eea;
+            }
+            
+            .footer {
+                padding: 20px 30px;
+                background: #f0f0f0;
+                text-align: center;
+                color: #666;
+                font-size: 14px;
+                border-top: 1px solid #e0e0e0;
+            }
+            
+            @media (max-width: 768px) {
+                .header {
+                    padding: 20px;
+                }
+                
+                .answer-section,
+                .evidence-section,
+                .highlighted-context {
+                    padding: 20px;
+                }
+                
+                .evidence-header {
+                    flex-direction: column;
+                    align-items: flex-start;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="header">
+                <h1>📚 Evidence Visualization</h1>
+                <div class="question">
+                    <strong>Question 5:</strong> What is problem-solving in psychology?
+                </div>
             </div>
-        </div>
-        
-        <div class="keywords-bar">
-            <div class="keywords-title">🔑 Extracted Keywords:</div>
-
-        </div>
-        
-        <div class="answer-section">
-            <h3><i class="fas fa-robot"></i> Generated Answer</h3>
-            <div class="answer-content">
-                In psychology, problem-solving refers to the process of identifying a problem and applying a strategy to find a solution. It involves a plan of action used to find a solution, and different strategies have different action plans associated with them. Problem-solving strategies include trial and error, algorithm, and heuristic. Effective problem-solving involves overcoming common roadblocks such as mental sets and functional fixedness.
+            
+            <div class="keywords-bar">
+                <div class="keywords-title">🔑 Extracted Keywords:</div>
+    <span class="keyword-badge">problem</span><span class="keyword-badge">solving</span><span class="keyword-badge">psychology</span>
             </div>
-        </div>
-        
-        <div class="evidence-section">
-            <h3><i class="fas fa-book"></i> Evidence by Section</h3>
-
+            
+            <div class="answer-section">
+                <h3><i class="fas fa-robot"></i> Generated Answer</h3>
+                <div class="answer-content">
+                    In psychology, problem-solving refers to the process of identifying a problem and applying a strategy to find a solution. It involves a plan of action used to find a solution, and different strategies have different action plans associated with them. Problem-solving strategies include trial and error, algorithm, and heuristic. Effective problem-solving involves overcoming common roadblocks such as mental sets and functional fixedness.  <!-- NO HIGHLIGHTING HERE -->
+                </div>
+            </div>
+            
+            <div class="evidence-section">
+                <h3><i class="fas fa-book"></i> Evidence by Section</h3>
+    
             <div class="evidence-card">
                 <div class="evidence-header">
                     <span class="section-name">📖 1.1 What Is Psychology</span>
                     <span class="page-number">📄 Page 20</span>
-                    <span class="relevance">⭐ Relevance: 0.7</span>
-                </div>
-                <div>
-
                 </div>
                 <div class="evidence-text">
-                    This section discusses 1.1 what is psychology. The content here is relevant to your question about ...
+                    linguistic hemisphere) of the brain is less affected by linguistic influences on perception (Regier & Kay, 2009) 7.3 <mark style="background-color: #ffeb3b; font-weight: bold;">problem</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">solving</mark> LEARNING OBJECTIVES By the end of this section, you will be able to: • Describe <mark style="background-color: #ffeb3b; font-weight: bold;">problem</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">solving</mark> strategies • Define algorithm and heuristic • Explain some common roadb  <!-- HIGHLIGHTING HERE ONLY -->
                 </div>
             </div>
-
+    
             <div class="evidence-card">
                 <div class="evidence-header">
                     <span class="section-name">📖 1.11 When you look at this image</span>
                     <span class="page-number">📄 Page 33</span>
-                    <span class="relevance">⭐ Relevance: 0.75</span>
-                </div>
-                <div>
-
                 </div>
                 <div class="evidence-text">
-                    This section discusses 1.11 when you look at this image. The content here is relevant to your question about ...
+                    linguistic hemisphere) of the brain is less affected by linguistic influences on perception (Regier & Kay, 2009) 7.3 <mark style="background-color: #ffeb3b; font-weight: bold;">problem</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">solving</mark> LEARNING OBJECTIVES By the end of this section, you will be able to: • Describe <mark style="background-color: #ffeb3b; font-weight: bold;">problem</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">solving</mark> strategies • Define algorithm and heuristic • Explain some common roadb  <!-- HIGHLIGHTING HERE ONLY -->
                 </div>
             </div>
-
+    
             <div class="evidence-card">
                 <div class="evidence-header">
                     <span class="section-name">📖 11.4
 Horney believed these three styles are ways in which people typically cope with day-to-day problems</span>
                     <span class="page-number">📄 Page 48</span>
-                    <span class="relevance">⭐ Relevance: 0.8</span>
-                </div>
-                <div>
-
                 </div>
                 <div class="evidence-text">
-                    This section discusses 11.4
-horney believed these three styles are ways in which people typically cope with day-to-day problems. The content here is relevant to your question about ...
+                    linguistic hemisphere) of the brain is less affected by linguistic influences on perception (Regier & Kay, 2009) 7.3 <mark style="background-color: #ffeb3b; font-weight: bold;">problem</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">solving</mark> LEARNING OBJECTIVES By the end of this section, you will be able to: • Describe <mark style="background-color: #ffeb3b; font-weight: bold;">problem</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">solving</mark> strategies • Define algorithm and heuristic • Explain some common roadb  <!-- HIGHLIGHTING HERE ONLY -->
                 </div>
             </div>
-
+    
             <div class="evidence-card">
                 <div class="evidence-header">
                     <span class="section-name">📖 11.5 Humanistic Approaches
 LEARNING OBJECTIVES
 By the end of this section</span>
                     <span class="page-number">📄 Page 234</span>
-                    <span class="relevance">⭐ Relevance: 0.85</span>
-                </div>
-                <div>
-
                 </div>
                 <div class="evidence-text">
-                    This section discusses 11.5 humanistic approaches
-learning objectives
-by the end of this section. The content here is relevant to your question about ...
+                    linguistic hemisphere) of the brain is less affected by linguistic influences on perception (Regier & Kay, 2009) 7.3 <mark style="background-color: #ffeb3b; font-weight: bold;">problem</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">solving</mark> LEARNING OBJECTIVES By the end of this section, you will be able to: • Describe <mark style="background-color: #ffeb3b; font-weight: bold;">problem</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">solving</mark> strategies • Define algorithm and heuristic • Explain some common roadb  <!-- HIGHLIGHTING HERE ONLY -->
                 </div>
             </div>
-
+    
             <div class="evidence-card">
                 <div class="evidence-header">
                     <span class="section-name">📖 14.4 Regulation of Stress
 LEARNING OBJECTIVES
 By the end of this section</span>
                     <span class="page-number">📄 Page 235</span>
-                    <span class="relevance">⭐ Relevance: 0.9</span>
-                </div>
-                <div>
-
                 </div>
                 <div class="evidence-text">
-                    This section discusses 14.4 regulation of stress
-learning objectives
-by the end of this section. The content here is relevant to your question about ...
+                    linguistic hemisphere) of the brain is less affected by linguistic influences on perception (Regier & Kay, 2009) 7.3 <mark style="background-color: #ffeb3b; font-weight: bold;">problem</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">solving</mark> LEARNING OBJECTIVES By the end of this section, you will be able to: • Describe <mark style="background-color: #ffeb3b; font-weight: bold;">problem</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">solving</mark> strategies • Define algorithm and heuristic • Explain some common roadb  <!-- HIGHLIGHTING HERE ONLY -->
                 </div>
             </div>
-
-        </div>
-        
-        <div class="highlighted-context">
-            <h3><i class="fas fa-highlighter"></i> Highlighted Context</h3>
-            <div class="context-box">
-                linguistic hemisphere) of the brain is less affected by linguistic influences on perception (Regier & Kay, 2009) 7.3 Problem Solving LEARNING OBJECTIVES By the end of this section, you will be able to: • Describe problem solving strategies • Define algorithm and heuristic • Explain some common roadblocks to effective problem solving and decision making People face problems every day—usually, multiple problems throughout the day. Sometimes these problems are straightforward: To double a recipe for pizza dough, for example, all that is required is that each ingredient in the recipe be doubled. Sometimes, however, the problems we encounter are more complex. For example, say you have a work deadline, and you must mail a printed copy of a report to your supervisor by the end of the business day. The report is time-sensitive and must be sent overnight. You finished the report last night, but your printer will not work today. What should you do? First, you need to identify the problem and then apply a strategy for solving the problem. Problem-Solving Strategies When you are presented with a problem—whether it is a complex mathematical problem or a broken printer, how do you solve it? Before finding a solution to the problem, the problem must first be clearly identified. After that, one of many problem solving strategies can be applied, hopefully resulting in a solution. A problem-solving strategy is a plan of action used to find a solution. Different strategies have different action plans associated with them (Table 7.2). For example, a well-known strategy is trial and error. The old adage, “If at first you don’t succeed, try, try again” describes trial and error. In terms of your broken printer, you could try checking the ink levels, and if that doesn’t work, you could check to make sure the paper tray isn’t jammed. Or maybe the printer isn’t actually connected to your laptop. When using trial and error, you would continue to try different solutions until you solved your problem. Although trial and error is not typically one of the most time-efficient strategies, it is a commonly used one. Problem-Solving Strategies Method Description Example Trial and error Continue trying different solutions until problem is solved Restarting phone, turning off WiFi, turning off bluetooth in order to determine why your phone is malfunctioning Algorithm Step-by-step problem-solving formula Instructional video for installing new software on your computer Heuristic General problem-solving framework Working
-
-FIGURE 7.9 What steps did you take to solve this puzzle? You can read the solution at the end of this section. Pitfalls to Problem Solving Not all problems are successfully solved, however. What challenges stop us from successfully solving a problem? Imagine a person in a room that has four doorways. One doorway that has always been open in the past is now locked. The person, accustomed to exiting the room by that particular doorway, keeps trying to get out through the same doorway even though the other three doorways are open. The person is stuck—but they just need to go to another doorway, instead of trying to get out through the locked doorway. A mental set is where you persist in approaching a problem in a way that has worked in the past but is clearly not working now. Functional fixedness is a type of mental set where you cannot perceive an object being used for something other than what it was designed for. Duncker (1945) conducted foundational research on functional fixedness. He created an experiment in which participants were given a candle, a book of matches, and a box of thumbtacks. They were instructed to use those items to attach the candle to the wall so that it did not drip wax onto the table below. Participants had to use functional fixedness to overcome the problem (Figure 7.10). During the Apollo 13 mission to the moon, NASA engineers at Mission Control had to overcome functional fixedness to save the lives of the astronauts aboard the spacecraft. An explosion in a module of the spacecraft damaged multiple systems. The astronauts were in danger of being poisoned by rising levels of carbon dioxide because of problems with the carbon dioxide filters. The engineers found a way for the astronauts to use spare plastic bags, tape, and air hoses to create a makeshift air filter, which saved the lives of the astronauts. 7.3 • Problem Solving 225
-
-2002). Nash was the subject of the 2001 movie A Beautiful Mind. Why did these people have these experiences? How does the human brain work? And what is the connection between the brain’s internal processes and people’s external behaviors? This textbook will introduce you to various ways that the field of psychology has explored these questions. 1.1 What Is Psychology? LEARNING OBJECTIVES By the end of this section, you will be able to: • Define psychology • Understand the merits of an education in psychology What is creativity? What are prejudice and discrimination? What is consciousness? The field of psychology explores questions like these. Psychology refers to the scientific study of the mind and behavior. Psychologists use the scientific method to acquire knowledge. To apply the scientific method, a researcher with a question about how or why something happens will propose a tentative explanation, called a hypothesis, to explain the phenomenon. A hypothesis should fit into the context of a scientific theory, which is a broad explanation or group of explanations for some aspect of the natural world that is consistently supported by evidence over time. A theory is the best understanding we have of that part of the natural world. The researcher then makes observations or carries out an experiment to test the validity of the hypothesis. Those results are then published or presented at research conferences so that others can replicate or build on the results. Scientists test that which is perceivable and measurable. For example, the hypothesis that a bird sings because it is happy is not a hypothesis that can be tested since we have no way to measure the happiness of a bird. We must ask a different question, perhaps about the brain state of the bird, since this can be measured. However, we can ask individuals about whether they sing because they are happy since they are able to tell us. Thus, psychological science is empirical, based on measurable data. In general, science deals only with matter and energy, that is, those things that can be measured, and it cannot arrive at knowledge about values and morality. This is one reason why our scientific understanding of the mind is so limited, since thoughts, at least as we experience them, are neither matter nor energy. The scientific method is also a form of empiricism. An empirical method for acquiring knowledge is one based on observation,
-
-including experimentation, rather than a method based only on forms of logical argument or previous authorities. It was not until the late 1800s that psychology became accepted as its own academic discipline. Before this time, the workings of the mind were considered under the auspices of philosophy. Given that any behavior is, at its roots, biological, some areas of psychology take on aspects of a natural science like biology. No biological organism exists in isolation, and our behavior is influenced by our interactions with others. Therefore, psychology is also a social science. WHY STUDY PSYCHOLOGY? Often, students take their first psychology course because they are interested in helping others and want to learn more about themselves and why they act the way they do. Sometimes, students take a psychology course because it either satisfies a general education requirement or is required for a program of study such as nursing or pre-med. Many of these students develop such an interest in the area that they go on to declare psychology as their major. As a result, psychology is one of the most popular majors on college campuses across the United States (Johnson & Lubin, 2011). A number of well-known individuals were psychology majors. Just a few famous names on this list are Facebook’s creator Mark Zuckerberg, television personality and political satirist Jon Stewart, actress Natalie Portman, and filmmaker Wes Craven (Halonen, 2011). About 6 percent of all bachelor degrees granted in the United States are in the discipline of psychology (U.S. Department of Education, 2016). 8 1 • Introduction to Psychology Access for free at openstax.org
-
-sensitivity in already-sensitive pain pathways in tension headache sufferers (Cathcart, Petkov, & Pritchard, 2008). 14.4 Regulation of Stress LEARNING OBJECTIVES By the end of this section, you will be able to: • Define coping and differentiate between problem-focused and emotion-focused coping • Describe the importance of perceived control in our reactions to stress • Explain how social support is vital in health and longevity As we learned in the previous section, stress—especially if it is chronic—takes a toll on our bodies and can have enormously negative health implications. When we experience events in our lives that we appraise as stressful, it is essential that we use effective coping strategies to manage our stress. Coping refers to mental and behavioral efforts that we use to deal with problems relating to stress. Coping Styles Lazarus and Folkman (1984) distinguished two fundamental kinds of coping: problem-focused coping and emotion-focused coping. In problem-focused coping, one attempts to manage or alter the problem that is causing one to experience stress (i.e., the stressor). Problem-focused coping strategies are similar to strategies used in everyday problem-solving: they typically involve identifying the problem, considering possible solutions, weighing the costs and benefits of these solutions, and then selecting an alternative (Lazarus & Folkman, 1984). As an example, suppose Bradford receives a midterm notice that he is failing statistics class. If Bradford adopts a problem-focused coping approach to managing his stress, he would be proactive in trying to alleviate the source of the stress. He might contact his professor to discuss what must be done to raise his grade, he might also decide to set aside two hours daily to study statistics assignments, and he may seek tutoring assistance. A problem-focused approach to managing stress means we actively try to do things to address the problem. Emotion-focused coping, in contrast, consists of efforts to change or reduce the negative emotions associated with stress. These efforts may include avoiding, minimizing, or distancing oneself from the problem, or positive comparisons with others (“I’m not as bad off as she is”), or seeking something positive in a negative event (“Now that I’ve been fired, I can sleep in for a few days”). In some cases, emotion-focused coping strategies involve reappraisal, whereby the stressor is construed differently (and somewhat self-deceptively) without changing its objective level of threat (Lazarus & Folkman, 1984). For example, a person sentenced to federal prison who thinks, “This will give
-
-all factors of interest to someone working in the domain of sensation and perception. FIGURE 1.11 When you look at this image, you may see a duck or a rabbit. The sensory information remains the same, but your perception can vary dramatically. As described in a later chapter that focuses on the results of studies in sensation and perception, our experience of our world is not as simple as the sum total of all of the sensory information (or sensations) together. Rather, our experience (or perception) is complex and is influenced by where we focus our attention, our previous experiences, and even our cultural backgrounds. Cognitive Psychology As mentioned in the previous section, the cognitive revolution created an impetus for psychologists to focus their attention on better understanding the mind and mental processes that underlie behavio
-            </div>
-        </div>
-        
-        <div class="stats">
-            <div class="stat-item">
-                <div class="stat-label">Sections Used</div>
-                <div class="stat-value">10</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-label">Pages Referenced</div>
-                <div class="stat-value">11</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-label">Keywords Found</div>
-                <div class="stat-value">0</div>
-            </div>
-        </div>
-        
-        <div class="footer">
-            Generated from Psychology 2e Textbook • Question 5 • 2026-02-26
-        </div>
-    </div>
     
-    <!-- Font Awesome for icons -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
-</body>
-</html>
+            </div>
+            
+            <div class="highlighted-context">
+                <h3><i class="fas fa-highlighter"></i> Highlighted Context</h3>
+                <div class="context-box">
+                    linguistic hemisphere) of the brain is less affected by linguistic influences on perception (Regier & Kay, 2009) 7.3 <mark style="background-color: #ffeb3b; font-weight: bold;">problem</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">solving</mark> LEARNING OBJECTIVES By the end of this section, you will be able to: • Describe <mark style="background-color: #ffeb3b; font-weight: bold;">problem</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">solving</mark> strategies • Define algorithm and heuristic • Explain some common roadblocks to effective <mark style="background-color: #ffeb3b; font-weight: bold;">problem</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">solving</mark> and decision making People face <mark style="background-color: #ffeb3b; font-weight: bold;">problem</mark>s every day—usually, multiple <mark style="background-color: #ffeb3b; font-weight: bold;">problem</mark>s throughout the day. Sometimes these <mark style="background-color: #ffeb3b; font-weight: bold;">problem</mark>s are straightforward: To double a recipe for pizza dough, for example, all that is required is that each ingredient in the recipe be doubled. Sometimes, however, the <mark style="background-color: #ffeb3b; font-weight: bold;">problem</mark>s we encounter are more complex. For example, say you have a work deadline, and you must mail a printed copy of a report to your supervisor by the end of the business day. The report is time-sensitive and must be sent overnight. You finished the report last night, but your printer will not work today. What should you do? First, you need to identify the <mark style="background-color: #ffeb3b; font-weight: bold;">problem</mark> and then apply a strategy for <mark style="background-color: #ffeb3b; font-weight: bold;">solving</mark> the <mark style="background-color: #ffeb3b; font-weight: bold;">problem</mark>. <mark style="background-color: #ffeb3b; font-weight: bold;">problem</mark>-<mark style="background-color: #ffeb3b; font-weight: bold;">solving</mark> Strategies When you are presented with a <mark style="background-color: #ffeb3b; font-weight: bold;">problem</mark>—whether it is a complex mathematical <mark style="background-color: #ffeb3b; font-weight: bold;">problem</mark> or a broken printer, how do you solve it? Before finding a solution to the <mark style="background-color: #ffeb3b; font-weight: bold;">problem</mark>, the <mark style="background-color: #ffeb3b; font-weight: bold;">problem</mark> must first be clearly identified. After that, one of many <mark style="background-color: #ffeb3b; font-weight: bold;">problem</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">solving</mark> strategies can be applied, hopefully resulting in a solution. A <mark style="background-color: #ffeb3b; font-weight: bold;">problem</mark>-<mark style="background-color: #ffeb3b; font-weight: bold;">solving</mark> strategy is a plan of action used to find a solution. Different strategies have different action plans associated with them (Table 7.2). For example, a well-known strategy is trial and error. The old adage, “If at first you don’t succeed, try, try again” describes trial and error. In terms of your broken printer, you could try checking the ink levels, and if that doesn’t work, you could check to make sure the paper tray isn’t jammed. Or maybe the printer isn’t actually connected to your laptop. When using trial and error, you would continue to try different solutions until you solved your <mark style="background-color: #ffeb3b; font-weight: bold;">problem</mark>. Although trial and error is not typically one of the most time-efficient strategies, it is a commonly used one. <mark style="background-color: #ffeb3b; font-weight: bold;">problem</mark>-<mark style="background-color: #ffeb3b; font-weight: bold;">solving</mark> Strategies Method Description Example Trial and error Continue trying different solutions until <mark style="background-color: #ffeb3b; font-weight: bold;">problem</mark> is solved Restarting phone, turning off WiFi, turning off bluetooth in order to determine why your phone is malfunctioning Algorithm Step-by-step <mark style="background-color: #ffeb3b; font-weight: bold;">problem</mark>-<mark style="background-color: #ffeb3b; font-weight: bold;">solving</mark> formula Instructional video for installing new software on your computer Heuristic General <mark style="background-color: #ffeb3b; font-weight: bold;">problem</mark>-<mark style="background-color: #ffeb3b; font-weight: bold;">solving</mark> framework Working
+
+FIGURE 7.9 What steps did you take to solve this puzzle? You can read the solution at the end of this section. Pitfalls to <mark style="background-color: #ffeb3b; font-weight: bold;">problem</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">solving</mark> Not all <mark style="background-color: #ffeb3b; font-weight: bold;">problem</mark>s are successfully solved, however. What challenges stop us from successfully <mark style="background-color: #ffeb3b; font-weight: bold;">solving</mark> a <mark style="background-color: #ffeb3b; font-weight: bold;">problem</mark>? Imagine a person in a room that has four doorways. One doorway that has always been open in the past is now locked. The person, accustomed to exiting the room by that particular doorway, keeps trying to get out through the same doorway even though the other three doorways are open. The person is stuck—but they just need to go to another doorway, instead of trying to get out through the locked doorway. A mental set is where you persist in approaching a <mark style="background-color: #ffeb3b; font-weight: bold;">problem</mark> in a way that has worked in the past but is clearly not working now. Functional fixedness is a type of mental set where you cannot perceive an object being used for something other than what it was designed for. Duncker (1945) conducted foundational research on functional fixedness. He created an experiment in which participants were given a candle, a book of matches, and a box of thumbtacks. They were instructed to use those items to attach the candle to the wall so that it did not drip wax onto the table below. Participants had to use functional fixedness to overcome the <mark style="background-color: #ffeb3b; font-weight: bold;">problem</mark> (Figure 7.10). During the Apollo 13 mission to the moon, NASA engineers at Mission Control had to overcome functional fixedness to save the lives of the astronauts aboard the spacecraft. An explosion in a module of the spacecraft damaged multiple systems. The astronauts were in danger of being poisoned by rising levels of carbon dioxide because of <mark style="background-color: #ffeb3b; font-weight: bold;">problem</mark>s with the carbon dioxide filters. The engineers found a way for the astronauts to use spare plastic bags, tape, and air hoses to create a makeshift air filter, which saved the lives of the astronauts. 7.3 • <mark style="background-color: #ffeb3b; font-weight: bold;">problem</mark> <mark style="background-color: #ffeb3b; font-weight: bold;">solving</mark> 225
+
+2002). Nash was the subject of the 2001 movie A Beautiful Mind. Why did these people have these experiences? How does the human brain work? And what is the connection between the brain’s internal processes and people’s external behaviors? This textbook will introduce you to various ways that the field of <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> has explored these questions. 1.1 What Is <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark>? LEARNING OBJECTIVES By the end of this section, you will be able to: • Define <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> • Understand the merits of an education in <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> What is creativity? What are prejudice and discrimination? What is consciousness? The field of <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> explores questions like these. <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> refers to the scientific study of the mind and behavior. Psychologists use the scientific method to acquire knowledge. To apply the scientific method, a researcher with a question about how or why something happens will propose a tentative explanation, called a hypothesis, to explain the phenomenon. A hypothesis should fit into the context of a scientific theory, which is a broad explanation or group of explanations for some aspect of the natural world that is consistently supported by evidence over time. A theory is the best understanding we have of that part of the natural world. The researcher then makes observations or carries out an experiment to test the validity of the hypothesis. Those results are then published or presented at research conferences so that others can replicate or build on the results. Scientists test that which is perceivable and measurable. For example, the hypothesis that a bird sings because it is happy is not a hypothesis that can be tested since we have no way to measure the happiness of a bird. We must ask a different question, perhaps about the brain state of the bird, since this can be measured. However, we can ask individuals about whether they sing because they are happy since they are able to tell us. Thus, psychological science is empirical, based on measurable data. In general, science deals only with matter and energy, that is, those things that can be measured, and it cannot arrive at knowledge about values and morality. This is one reason why our scientific understanding of the mind is so limited, since thoughts, at least as we experience them, are neither matter nor energy. The scientific method is also a form of empiricism. An empirical method for acquiring knowledge is one based on observation,
+
+including experimentation, rather than a method based only on forms of logical argument or previous authorities. It was not until the late 1800s that <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> became accepted as its own academic discipline. Before this time, the workings of the mind were considered under the auspices of philosophy. Given that any behavior is, at its roots, biological, some areas of <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> take on aspects of a natural science like biology. No biological organism exists in isolation, and our behavior is influenced by our interactions with others. Therefore, <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> is also a social science. WHY STUDY <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark>? Often, students take their first <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> course because they are interested in helping others and want to learn more about themselves and why they act the way they do. Sometimes, students take a <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> course because it either satisfies a general education requirement or is required for a program of study such as nursing or pre-med. Many of these students develop such an interest in the area that they go on to declare <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> as their major. As a result, <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> is one of the most popular majors on college campuses across the United States (Johnson & Lubin, 2011). A number of well-known individuals were <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> majors. Just a few famous names on this list are Facebook’s creator Mark Zuckerberg, television personality and political satirist Jon Stewart, actress Natalie Portman, and filmmaker Wes Craven (Halonen, 2011). About 6 percent of all bachelor degrees granted in the United States are in the discipline of <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> (U.S. Department of Education, 2016). 8 1 • Introduction to <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> Access for free at openstax.org
+
+sensitivity in already-sensitive pain pathways in tension headache sufferers (Cathcart, Petkov, & Pritchard, 2008). 14.4 Regulation of Stress LEARNING OBJECTIVES By the end of this section, you will be able to: • Define coping and differentiate between <mark style="background-color: #ffeb3b; font-weight: bold;">problem</mark>-focused and emotion-focused coping • Describe the importance of perceived control in our reactions to stress • Explain how social support is vital in health and longevity As we learned in the previous section, stress—especially if it is chronic—takes a toll on our bodies and can have enormously negative health implications. When we experience events in our lives that we appraise as stressful, it is essential that we use effective coping strategies to manage our stress. Coping refers to mental and behavioral efforts that we use to deal with <mark style="background-color: #ffeb3b; font-weight: bold;">problem</mark>s relating to stress. Coping Styles Lazarus and Folkman (1984) distinguished two fundamental kinds of coping: <mark style="background-color: #ffeb3b; font-weight: bold;">problem</mark>-focused coping and emotion-focused coping. In <mark style="background-color: #ffeb3b; font-weight: bold;">problem</mark>-focused coping, one attempts to manage or alter the <mark style="background-color: #ffeb3b; font-weight: bold;">problem</mark> that is causing one to experience stress (i.e., the stressor). <mark style="background-color: #ffeb3b; font-weight: bold;">problem</mark>-focused coping strategies are similar to strategies used in everyday <mark style="background-color: #ffeb3b; font-weight: bold;">problem</mark>-<mark style="background-color: #ffeb3b; font-weight: bold;">solving</mark>: they typically involve identifying the <mark style="background-color: #ffeb3b; font-weight: bold;">problem</mark>, considering possible solutions, weighing the costs and benefits of these solutions, and then selecting an alternative (Lazarus & Folkman, 1984). As an example, suppose Bradford receives a midterm notice that he is failing statistics class. If Bradford adopts a <mark style="background-color: #ffeb3b; font-weight: bold;">problem</mark>-focused coping approach to managing his stress, he would be proactive in trying to alleviate the source of the stress. He might contact his professor to discuss what must be done to raise his grade, he might also decide to set aside two hours daily to study statistics assignments, and he may seek tutoring assistance. A <mark style="background-color: #ffeb3b; font-weight: bold;">problem</mark>-focused approach to managing stress means we actively try to do things to address the <mark style="background-color: #ffeb3b; font-weight: bold;">problem</mark>. Emotion-focused coping, in contrast, consists of efforts to change or reduce the negative emotions associated with stress. These efforts may include avoiding, minimizing, or distancing oneself from the <mark style="background-color: #ffeb3b; font-weight: bold;">problem</mark>, or positive comparisons with others (“I’m not as bad off as she is”), or seeking something positive in a negative event (“Now that I’ve been fired, I can sleep in for a few days”). In some cases, emotion-focused coping strategies involve reappraisal, whereby the stressor is construed differently (and somewhat self-deceptively) without changing its objective level of threat (Lazarus & Folkman, 1984). For example, a person sentenced to federal prison who thinks, “This will give
+
+all factors of interest to someone working in the domain of sensation and perception. FIGURE 1.11 When you look at this image, you may see a duck or a rabbit. The sensory information remains the same, but your perception can vary dramatically. As described in a later chapter that focuses on the results of studies in sensation and perception, our experience of our world is not as simple as the sum total of all of the sensory information (or sensations) together. Rather, our experience (or perception) is complex and is influenced by where we focus our attention, our previous experiences, and even our cultural backgrounds. Cognitive <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> As mentioned in the previous section, the cognitive revolution created an impetus for psychologists to focus their attention on better understanding the mind and mental processes that underlie behavio  <!-- HIGHLIGHTING HERE ONLY -->
+                </div>
+            </div>
+            
+            <div class="stats">
+                <div class="stat-item">
+                    <div class="stat-label">Sections Used</div>
+                    <div class="stat-value">10</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Pages Referenced</div>
+                    <div class="stat-value">11</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Keywords Found</div>
+                    <div class="stat-value">3</div>
+                </div>
+            </div>
+            
+            <div class="footer">
+                Generated from Psychology 2e Textbook • Question 5 • 2026-02-27
+            </div>
+        </div>
+        
+        <!-- Font Awesome for icons -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
+    </body>
+    </html>

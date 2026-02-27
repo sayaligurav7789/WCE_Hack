@@ -1,304 +1,292 @@
 <!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Evidence Visualization - Question 14</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            padding: 20px;
-        }
-        
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            overflow: hidden;
-        }
-        
-        .header {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            padding: 30px;
-        }
-        
-        .header h1 {
-            font-size: 24px;
-            margin-bottom: 10px;
-        }
-        
-        .header .question {
-            font-size: 18px;
-            opacity: 0.9;
-            background: rgba(255, 255, 255, 0.2);
-            padding: 15px;
-            border-radius: 10px;
-            margin-top: 10px;
-            line-height: 1.5;
-        }
-        
-        .keywords-bar {
-            background: #f0f0f0;
-            padding: 15px 30px;
-            border-bottom: 1px solid #e0e0e0;
-        }
-        
-        .keywords-title {
-            font-size: 14px;
-            color: #666;
-            margin-bottom: 10px;
-            font-weight: 600;
-        }
-        
-        .keyword-badge {
-            display: inline-block;
-            background: #ffeb3b;
-            color: #333;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 13px;
-            margin: 0 5px 5px 0;
-            font-weight: 500;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-        
-        .answer-section {
-            padding: 30px;
-            background: #f8f9fa;
-            border-bottom: 1px solid #e0e0e0;
-        }
-        
-        .answer-section h3 {
-            color: #333;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .answer-section h3 i {
-            color: #667eea;
-        }
-        
-        .answer-content {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            line-height: 1.8;
-            color: #444;
-            border-left: 4px solid #667eea;
-        }
-        
-        .answer-content mark {
-            background-color: #ffeb3b;
-            padding: 2px 0;
-            font-weight: 500;
-        }
-        
-        .evidence-section {
-            padding: 30px;
-        }
-        
-        .evidence-section h3 {
-            color: #333;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .evidence-section h3 i {
-            color: #667eea;
-        }
-        
-        .evidence-card {
-            background: #f8f9fa;
-            border-radius: 10px;
-            padding: 20px;
-            margin-bottom: 20px;
-            border-left: 4px solid #667eea;
-        }
-        
-        .evidence-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-        
-        .section-name {
-            font-weight: 600;
-            color: #333;
-            background: #e8eaf6;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 14px;
-        }
-        
-        .page-number {
-            color: #666;
-            background: white;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 14px;
-            border: 1px solid #e0e0e0;
-        }
-        
-        .relevance {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 14px;
-        }
-        
-        .term-badge {
-            display: inline-block;
-            background: #ffeb3b;
-            color: #333;
-            padding: 3px 10px;
-            border-radius: 15px;
-            font-size: 12px;
-            margin: 0 5px 5px 0;
-            font-weight: 500;
-        }
-        
-        .evidence-text {
-            background: white;
-            padding: 15px;
-            border-radius: 8px;
-            color: #555;
-            line-height: 1.6;
-            margin: 15px 0 0 0;
-            border: 1px solid #e0e0e0;
-        }
-        
-        .evidence-text mark {
-            background-color: #ffeb3b;
-            padding: 2px 0;
-            font-weight: 500;
-        }
-        
-        .highlighted-context {
-            padding: 30px;
-            background: #f8f9fa;
-            border-top: 1px solid #e0e0e0;
-            border-bottom: 1px solid #e0e0e0;
-        }
-        
-        .highlighted-context h3 {
-            color: #333;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .context-box {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            max-height: 400px;
-            overflow-y: auto;
-            border: 1px solid #e0e0e0;
-            line-height: 1.8;
-            font-size: 14px;
-        }
-        
-        .context-box mark {
-            background-color: #ffeb3b;
-            padding: 2px 0;
-            font-weight: 500;
-        }
-        
-        .stats {
-            display: flex;
-            gap: 15px;
-            padding: 20px 30px;
-            background: white;
-            flex-wrap: wrap;
-        }
-        
-        .stat-item {
-            background: #f8f9fa;
-            padding: 10px 20px;
-            border-radius: 10px;
-            flex: 1;
-            min-width: 120px;
-            text-align: center;
-            border: 1px solid #e0e0e0;
-        }
-        
-        .stat-label {
-            font-size: 12px;
-            color: #666;
-            margin-bottom: 5px;
-        }
-        
-        .stat-value {
-            font-size: 24px;
-            font-weight: 600;
-            color: #667eea;
-        }
-        
-        .footer {
-            padding: 20px 30px;
-            background: #f0f0f0;
-            text-align: center;
-            color: #666;
-            font-size: 14px;
-            border-top: 1px solid #e0e0e0;
-        }
-        
-        @media (max-width: 768px) {
-            .header {
+    <html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Evidence Visualization - Question 14</title>
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+            
+            body {
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                min-height: 100vh;
                 padding: 20px;
             }
             
-            .answer-section,
-            .evidence-section,
-            .highlighted-context {
+            .container {
+                max-width: 1000px;
+                margin: 0 auto;
+                background: white;
+                border-radius: 20px;
+                box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+                overflow: hidden;
+            }
+            
+            .header {
+                background: linear-gradient(135deg, #667eea, #764ba2);
+                color: white;
+                padding: 30px;
+            }
+            
+            .header h1 {
+                font-size: 24px;
+                margin-bottom: 10px;
+            }
+            
+            .header .question {
+                font-size: 18px;
+                opacity: 0.9;
+                background: rgba(255, 255, 255, 0.2);
+                padding: 15px;
+                border-radius: 10px;
+                margin-top: 10px;
+                line-height: 1.5;
+            }
+            
+            .keywords-bar {
+                background: #f0f0f0;
+                padding: 15px 30px;
+                border-bottom: 1px solid #e0e0e0;
+            }
+            
+            .keywords-title {
+                font-size: 14px;
+                color: #666;
+                margin-bottom: 10px;
+                font-weight: 600;
+            }
+            
+            .keyword-badge {
+                display: inline-block;
+                background: #ffeb3b;
+                color: #333;
+                padding: 5px 12px;
+                border-radius: 20px;
+                font-size: 13px;
+                margin: 0 5px 5px 0;
+                font-weight: 500;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            }
+            
+            .answer-section {
+                padding: 30px;
+                background: #f8f9fa;
+                border-bottom: 1px solid #e0e0e0;
+            }
+            
+            .answer-section h3 {
+                color: #333;
+                margin-bottom: 15px;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+            
+            .answer-section h3 i {
+                color: #667eea;
+            }
+            
+            .answer-content {
+                background: white;
                 padding: 20px;
+                border-radius: 10px;
+                line-height: 1.8;
+                color: #444;
+                border-left: 4px solid #667eea;
+            }
+            
+            /* NO mark styling for answer - it stays plain */
+            
+            .evidence-section {
+                padding: 30px;
+            }
+            
+            .evidence-section h3 {
+                color: #333;
+                margin-bottom: 20px;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+            
+            .evidence-section h3 i {
+                color: #667eea;
+            }
+            
+            .evidence-card {
+                background: #f8f9fa;
+                border-radius: 10px;
+                padding: 20px;
+                margin-bottom: 20px;
+                border-left: 4px solid #667eea;
             }
             
             .evidence-header {
-                flex-direction: column;
-                align-items: flex-start;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 15px;
+                flex-wrap: wrap;
+                gap: 10px;
             }
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <div class="header">
-            <h1>📚 Evidence Visualization</h1>
-            <div class="question">
-                <strong>Question 14:</strong> 
+            
+            .section-name {
+                font-weight: 600;
+                color: #333;
+                background: #e8eaf6;
+                padding: 5px 12px;
+                border-radius: 20px;
+                font-size: 14px;
+            }
+            
+            .page-number {
+                color: #666;
+                background: white;
+                padding: 5px 12px;
+                border-radius: 20px;
+                font-size: 14px;
+                border: 1px solid #e0e0e0;
+            }
+            
+            .term-badge {
+                display: inline-block;
+                background: #ffeb3b;
+                color: #333;
+                padding: 3px 10px;
+                border-radius: 15px;
+                font-size: 12px;
+                margin: 0 5px 5px 0;
+                font-weight: 500;
+            }
+            
+            .evidence-text {
+                background: white;
+                padding: 15px;
+                border-radius: 8px;
+                color: #555;
+                line-height: 1.6;
+                margin: 15px 0 0 0;
+                border: 1px solid #e0e0e0;
+            }
+            
+            .evidence-text mark {
+                background-color: #ffeb3b;
+                padding: 2px 0;
+                font-weight: 500;
+            }
+            
+            .highlighted-context {
+                padding: 30px;
+                background: #f8f9fa;
+                border-top: 1px solid #e0e0e0;
+                border-bottom: 1px solid #e0e0e0;
+            }
+            
+            .highlighted-context h3 {
+                color: #333;
+                margin-bottom: 15px;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+            
+            .context-box {
+                background: white;
+                padding: 20px;
+                border-radius: 10px;
+                max-height: 400px;
+                overflow-y: auto;
+                border: 1px solid #e0e0e0;
+                line-height: 1.8;
+                font-size: 14px;
+            }
+            
+            .context-box mark {
+                background-color: #ffeb3b;
+                padding: 2px 0;
+                font-weight: 500;
+            }
+            
+            .stats {
+                display: flex;
+                gap: 15px;
+                padding: 20px 30px;
+                background: white;
+                flex-wrap: wrap;
+            }
+            
+            .stat-item {
+                background: #f8f9fa;
+                padding: 10px 20px;
+                border-radius: 10px;
+                flex: 1;
+                min-width: 120px;
+                text-align: center;
+                border: 1px solid #e0e0e0;
+            }
+            
+            .stat-label {
+                font-size: 12px;
+                color: #666;
+                margin-bottom: 5px;
+            }
+            
+            .stat-value {
+                font-size: 24px;
+                font-weight: 600;
+                color: #667eea;
+            }
+            
+            .footer {
+                padding: 20px 30px;
+                background: #f0f0f0;
+                text-align: center;
+                color: #666;
+                font-size: 14px;
+                border-top: 1px solid #e0e0e0;
+            }
+            
+            @media (max-width: 768px) {
+                .header {
+                    padding: 20px;
+                }
+                
+                .answer-section,
+                .evidence-section,
+                .highlighted-context {
+                    padding: 20px;
+                }
+                
+                .evidence-header {
+                    flex-direction: column;
+                    align-items: flex-start;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="header">
+                <h1>📚 Evidence Visualization</h1>
+                <div class="question">
+                    <strong>Question 14:</strong> What are Freud's contributions to psychology?
+                </div>
             </div>
-        </div>
-        
-        <div class="keywords-bar">
-            <div class="keywords-title">🔑 Extracted Keywords:</div>
-
-        </div>
-        
-        <div class="answer-section">
-            <h3><i class="fas fa-robot"></i> Generated Answer</h3>
-            <div class="answer-content">
-                According to the provided textbook context, Freud's contributions to psychology include:
+            
+            <div class="keywords-bar">
+                <div class="keywords-title">🔑 Extracted Keywords:</div>
+    <span class="keyword-badge">freud</span><span class="keyword-badge">contributions</span><span class="keyword-badge">psychology</span>
+            </div>
+            
+            <div class="answer-section">
+                <h3><i class="fas fa-robot"></i> Generated Answer</h3>
+                <div class="answer-content">
+                    According to the provided textbook context, Freud's contributions to psychology include:
 
 1. Introducing the concept of the unconscious mind and its role in shaping behavior.
 2. Developing the theory of psychoanalysis, which emphasizes the importance of childhood experiences and the unconscious mind in understanding personality and behavior.
@@ -308,125 +296,104 @@
 6. Recognizing the impact of mental representations of ourselves and others in guiding our interactions.
 7. Developing the concept of personality development over time.
 
-Additionally, Freud's work paved the way for others, and his ideas have had a significant influence on the development of psychology, particularly in the areas of personality, psychotherapy, and lifespan development.
+Additionally, Freud's work paved the way for others, and his ideas have had a significant influence on the development of psychology, particularly in the areas of personality, psychotherapy, and lifespan development.  <!-- NO HIGHLIGHTING HERE -->
+                </div>
             </div>
-        </div>
-        
-        <div class="evidence-section">
-            <h3><i class="fas fa-book"></i> Evidence by Section</h3>
-
+            
+            <div class="evidence-section">
+                <h3><i class="fas fa-book"></i> Evidence by Section</h3>
+    
             <div class="evidence-card">
                 <div class="evidence-header">
                     <span class="section-name">📖 1.3 Contemporary Psychology
 Psychology is a diverse discipline that is made up of several major subdivisions with unique perspectives</span>
                     <span class="page-number">📄 Page 23</span>
-                    <span class="relevance">⭐ Relevance: 0.7</span>
-                </div>
-                <div>
-
                 </div>
                 <div class="evidence-text">
-                    This section discusses 1.3 contemporary psychology
-psychology is a diverse discipline that is made up of several major subdivisions with unique perspectives. The content here is relevant to your question about ...
+                    <mark style="background-color: #ffeb3b; font-weight: bold;">freud</mark> also proposed three components to our personality: the id, ego, and superego. The job of the ego is to balance the sexual and aggressive drives of the id with the moral ideal of the superego. <mark style="background-color: #ffeb3b; font-weight: bold;">freud</mark> also said that personality develops through a series of psychosexual stages. In each stage, plea  <!-- HIGHLIGHTING HERE ONLY -->
                 </div>
             </div>
-
+    
             <div class="evidence-card">
                 <div class="evidence-header">
                     <span class="section-name">📖 1.3 William James</span>
                     <span class="page-number">📄 Page 24</span>
-                    <span class="relevance">⭐ Relevance: 0.75</span>
-                </div>
-                <div>
-
                 </div>
                 <div class="evidence-text">
-                    This section discusses 1.3 william james. The content here is relevant to your question about ...
+                    <mark style="background-color: #ffeb3b; font-weight: bold;">freud</mark> also proposed three components to our personality: the id, ego, and superego. The job of the ego is to balance the sexual and aggressive drives of the id with the moral ideal of the superego. <mark style="background-color: #ffeb3b; font-weight: bold;">freud</mark> also said that personality develops through a series of psychosexual stages. In each stage, plea  <!-- HIGHLIGHTING HERE ONLY -->
                 </div>
             </div>
-
+    
             <div class="evidence-card">
                 <div class="evidence-header">
                     <span class="section-name">📖 11.1 What Is Personality</span>
                     <span class="page-number">📄 Page 43</span>
-                    <span class="relevance">⭐ Relevance: 0.8</span>
-                </div>
-                <div>
-
                 </div>
                 <div class="evidence-text">
-                    This section discusses 11.1 what is personality. The content here is relevant to your question about ...
+                    <mark style="background-color: #ffeb3b; font-weight: bold;">freud</mark> also proposed three components to our personality: the id, ego, and superego. The job of the ego is to balance the sexual and aggressive drives of the id with the moral ideal of the superego. <mark style="background-color: #ffeb3b; font-weight: bold;">freud</mark> also said that personality develops through a series of psychosexual stages. In each stage, plea  <!-- HIGHLIGHTING HERE ONLY -->
                 </div>
             </div>
-
+    
             <div class="evidence-card">
                 <div class="evidence-header">
                     <span class="section-name">📖 11.3 Neo-Freudians: Adler</span>
                     <span class="page-number">📄 Page 53</span>
-                    <span class="relevance">⭐ Relevance: 0.85</span>
-                </div>
-                <div>
-
                 </div>
                 <div class="evidence-text">
-                    This section discusses 11.3 neo-freudians: adler. The content here is relevant to your question about ...
+                    <mark style="background-color: #ffeb3b; font-weight: bold;">freud</mark> also proposed three components to our personality: the id, ego, and superego. The job of the ego is to balance the sexual and aggressive drives of the id with the moral ideal of the superego. <mark style="background-color: #ffeb3b; font-weight: bold;">freud</mark> also said that personality develops through a series of psychosexual stages. In each stage, plea  <!-- HIGHLIGHTING HERE ONLY -->
                 </div>
             </div>
-
+    
             <div class="evidence-card">
                 <div class="evidence-header">
                     <span class="section-name">📖 11.4 Developed from Galen</span>
                     <span class="page-number">📄 Page 296</span>
-                    <span class="relevance">⭐ Relevance: 0.9</span>
-                </div>
-                <div>
-
                 </div>
                 <div class="evidence-text">
-                    This section discusses 11.4 developed from galen. The content here is relevant to your question about ...
+                    <mark style="background-color: #ffeb3b; font-weight: bold;">freud</mark> also proposed three components to our personality: the id, ego, and superego. The job of the ego is to balance the sexual and aggressive drives of the id with the moral ideal of the superego. <mark style="background-color: #ffeb3b; font-weight: bold;">freud</mark> also said that personality develops through a series of psychosexual stages. In each stage, plea  <!-- HIGHLIGHTING HERE ONLY -->
                 </div>
             </div>
-
-        </div>
-        
-        <div class="highlighted-context">
-            <h3><i class="fas fa-highlighter"></i> Highlighted Context</h3>
-            <div class="context-box">
-                Freud also proposed three components to our personality: the id, ego, and superego. The job of the ego is to balance the sexual and aggressive drives of the id with the moral ideal of the superego. Freud also said that personality develops through a series of psychosexual stages. In each stage, pleasure focuses on a specific erogenous zone. Failure to resolve a stage can lead one to become fixated in that stage, leading to unhealthy personality traits. Successful resolution of the stages leads to a healthy adult. 11.3 Neo-Freudians: Adler, Erikson, Jung, and Horney The neo-Freudians were psychologists whose work followed from Freud’s. They generally agreed with Freud that childhood experiences matter, but they decreased the emphasis on sex and focused more on the social 392 11 • Summary Access for free at openstax.org
-
-early childhood experiences on the rest of a person’s life. The method of psychoanalysis, which involves the patient talking about their experiences and selves, while not invented by Freud, was certainly popularized by him and is still used today. Many of Freud’s other ideas, however, are controversial. Drew Westen (1998) argues that many of the criticisms of Freud’s ideas are misplaced, in that they attack his older ideas without taking into account later writings. Westen also argues that critics fail to consider the success of the broad ideas that Freud introduced or developed, such as the importance of childhood experiences in adult motivations, the role of unconscious versus conscious motivations in driving our behavior, the fact that motivations can cause conflicts that affect behavior, the effects of mental representations of ourselves and others in guiding our interactions, and the development of personality over time. Westen identifies subsequent research support for all of these ideas. More modern iterations of Freud’s clinical approach have been empirically demonstrated to be effective (Knekt et al., 2008; Shedler, 2010). Some current practices in psychotherapy involve examining unconscious aspects of the self and relationships, often through the relationship between the therapist and the client. Freud’s historical significance and contributions to clinical practice merit his inclusion in a discussion of the historical movements within psychology. Wertheimer, Koffka, Köhler, and Gestalt Psychology Max Wertheimer (1880–1943), Kurt Koffka (1886–1941), and Wolfgang Köhler (1887–1967) were three German psychologists who immigrated to the United States in the early 20th century to escape Nazi Germany. These scholars are credited with introducing psychologists in the United States to various Gestalt principles. The word Gestalt roughly translates to “whole;” a major emphasis of Gestalt psychology deals with the fact that although a sensory experience can be broken down into individual parts, how those parts relate to each other as a whole is often what the individual responds to in perception. For example, a song may be made up of individual notes played by different instruments, but the real nature of the song is perceived in the combinations of these notes as they form the melody, rhythm, and harmony. In many ways, this particular perspective would have directly contradicted Wundt’s ideas of structuralism (Thorne & Henley, 2005). Unfortunately, in moving to the United States, these scientists were forced to abandon much of their work and were unable to continue to conduct research on a large
-
-environment and effects of culture on personality. Some of the notable neo-Freudians are Alfred Adler, Carl Jung, Erik Erikson, and Karen Horney. The neo-Freudian approaches have been criticized, because they tend to be philosophical rather than based on sound scientific research. For example, Jung’s conclusions about the existence of the collective unconscious are based on myths, legends, dreams, and art. In addition, as with Freud’s psychoanalytic theory, the neo-Freudians based much of their theories of personality on information from their patients. 11.4 Learning Approaches Behavioral theorists view personality as significantly shaped and impacted by the reinforcements and consequences outside of the organism. People behave in a consistent manner based on prior learning. B. F. Skinner, a prominent behaviorist, said that we demonstrate consistent behavior patterns, because we have developed certain response tendencies. Mischel focused on how personal goals play a role in the self- regulation process. Albert Bandura said that one’s environment can determine behavior, but at the same time, people can influence the environment with both their thoughts and behaviors, which is known as reciprocal determinism. Bandura also emphasized how we learn from watching others. He felt that this type of learning also plays a part in the development of our personality. Bandura discussed the concept of self-efficacy, which is our level of confidence in our own abilities. Finally, Rotter proposed the concept of locus of control, which refers to our beliefs about the power we have over our lives. He said that people fall along a continuum between a purely internal and a purely external locus of control. 11.5 Humanistic Approaches Humanistic psychologists Abraham Maslow and Carl Rogers focused on the growth potential of healthy individuals. They believed that people strive to become self-actualized. Both Rogers’s and Maslow’s theories greatly contributed to our understanding of the self. They emphasized free will and self-determination, with each individual desiring to become the best person they can become. 11.6 Biological Approaches Some aspects of our personalities are largely controlled by genetics; however, environmental factors (such as family interactions) and maturation can affect the ways in which children’s personalities are expressed. 11.7 Trait Theorists Trait theorists attempt to explain our personality by identifying our stable characteristics and ways of behaving. They have identified important dimensions of personality. The Five Factor Model is the most widely accepted theory today. The five factors are openness, conscientiousness, extroversion, agreeableness, and neuroticism. These factors occur along
-
-Genital Stage The final stage is the genital stage (from puberty on). In this stage, there is a sexual reawakening as the incestuous urges resurface. The young person redirects these urges to other, more socially acceptable partners (who often resemble the other-sex parent). People in this stage have mature sexual interests, which for Freud meant a strong desire for the opposite sex. Individuals who successfully completed the previous stages, reaching the genital stage with no fixations, are said to be well-balanced, healthy adults. While most of Freud’s ideas have not found support in modern research, and several contemporary researchers rejected his premises, we cannot discount the contributions that Freud has made to the field of psychology. It was Freud who pointed out that a large part of our mental life is influenced by the experiences of early childhood and takes place outside of our conscious awareness; his theories paved the way for others. While Freud's focus on biological drives led him to emphasize the impact of sociocultural factors on personality development, his followers quickly realized that biology alone could not account for the diversity they encountered as the practice of psychoanalysis spread during the time of the Nazi Holocaust. The antisemitism which was prevalent during this period of time may have led mainstream psychoanalysts to focus primarily on the universality of the psychological structures of the mind. 11.3 Neo-Freudians: Adler, Erikson, Jung, and Horney LEARNING OBJECTIVES By the end of this section, you will be able to: • Discuss the concept of the inferiority complex • Discuss the core differences between Erikson’s and Freud’s views on personality • Discuss Jung’s ideas of the collective unconscious and archetypes • Discuss the work of Karen Horney, including her revision of Freud’s “penis envy” Freud attracted many followers who modified his ideas to create new theories about personality. These theorists, referred to as neo-Freudians, generally agreed with Freud that childhood experiences matter, but deemphasized sex, focusing more on the social environment and effects of culture on personality. Four notable neo-Freudians include Alfred Adler, Erik Erikson, Carl Jung (pronounced “Yoong”), and Karen Horney (pronounced “HORN-eye”). Alfred Adler Alfred Adler, a colleague of Freud’s and the first president of the Vienna Psychoanalytical Society (Freud’s inner circle of colleagues), was the first major theorist to break away from Freud (Figure 11.8). He subsequently founded a school of psychology called individual psychology, which focuses on our drive
-
-FIGURE 1.3 William James, shown here in a self-portrait, was the first American psychologist. Freud and Psychoanalytic Theory Perhaps one of the most influential and well-known figures in psychology’s history was Sigmund Freud (Figure 1.4). Freud (1856–1939) was an Austrian neurologist who was fascinated by patients suffering from “hysteria” and neurosis. Hysteria was an ancient diagnosis for disorders, primarily of women with a wide variety of symptoms, including physical symptoms and emotional disturbances, none of which had an apparent physical cause. Freud theorized that many of his patients’ problems arose from the unconscious mind. In Freud’s view, the unconscious mind was a repository of feelings and urges of which we have no awareness. Gaining access to the unconscious, then, was crucial to the successful resolution of the patient’s problems. According to Freud, the unconscious mind could be accessed through dream analysis, by examinations of the first words that came to people’s minds, and through seemingly innocent slips of the tongue. Psychoanalytic theory focuses on the role of a person’s unconscious, as well as early childhood experiences, and this particular perspective dominated clinical psychology for several decades (Thorne & Henley, 2005). FIGURE 1.4 (a) Sigmund Freud was a highly influential figure in the history of psychology. (b) One of his many books, A General Introduction to Psychoanalysis, shared his ideas about psychoanalytical therapy; it was published in 1922. Freud’s ideas were influential, and you will learn more about them when you study lifespan development, personality, and therapy. For instance, many therapists believe strongly in the unconscious and the impact of 1.2 • History of Psychology 11
-
-feeling of fear. A hypothesis that could be derived from this theory might be that a person who is unaware of the physiological arousal that the sight of the snake elicits will not feel fear. A scientific hypothesis is also falsifiable, or capable of being shown to be incorrect. Recall from the introductory chapter that Sigmund Freud had lots of interesting ideas to explain various human behaviors (Figure 2.6). However, a major criticism of Freud’s theories is that many of his ideas are not falsifiable; for example, it is impossible to imagine empirical observations that would disprove the existence of the id, the ego, and the superego—the three elements of personality described in Freud’s theories. Despite this, Freud’s theories are widely taught in introductory psychology texts because of their historical significance for personality psychology and psychotherapy, and these remain the root of all modern forms of therapy. FIGURE 2.6 Many of the specifics of (a) Freud's theories, such as (b) his division of the mind into id, ego, and superego, have fallen out of favor in recent decades because they are not falsifiable. In broader strokes, his views set the stage for much of psychological thinking today, such as the unconscious nature of the majority of psychological processes. In contrast, the James-Lange theory does generate falsifiable hypotheses, such as t
-            </div>
-        </div>
-        
-        <div class="stats">
-            <div class="stat-item">
-                <div class="stat-label">Sections Used</div>
-                <div class="stat-value">10</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-label">Pages Referenced</div>
-                <div class="stat-value">11</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-label">Keywords Found</div>
-                <div class="stat-value">0</div>
-            </div>
-        </div>
-        
-        <div class="footer">
-            Generated from Psychology 2e Textbook • Question 14 • 2026-02-26
-        </div>
-    </div>
     
-    <!-- Font Awesome for icons -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
-</body>
-</html>
+            </div>
+            
+            <div class="highlighted-context">
+                <h3><i class="fas fa-highlighter"></i> Highlighted Context</h3>
+                <div class="context-box">
+                    <mark style="background-color: #ffeb3b; font-weight: bold;">freud</mark> also proposed three components to our personality: the id, ego, and superego. The job of the ego is to balance the sexual and aggressive drives of the id with the moral ideal of the superego. <mark style="background-color: #ffeb3b; font-weight: bold;">freud</mark> also said that personality develops through a series of psychosexual stages. In each stage, pleasure focuses on a specific erogenous zone. Failure to resolve a stage can lead one to become fixated in that stage, leading to unhealthy personality traits. Successful resolution of the stages leads to a healthy adult. 11.3 Neo-<mark style="background-color: #ffeb3b; font-weight: bold;">freud</mark>ians: Adler, Erikson, Jung, and Horney The neo-<mark style="background-color: #ffeb3b; font-weight: bold;">freud</mark>ians were psychologists whose work followed from <mark style="background-color: #ffeb3b; font-weight: bold;">freud</mark>’s. They generally agreed with <mark style="background-color: #ffeb3b; font-weight: bold;">freud</mark> that childhood experiences matter, but they decreased the emphasis on sex and focused more on the social 392 11 • Summary Access for free at openstax.org
+
+early childhood experiences on the rest of a person’s life. The method of psychoanalysis, which involves the patient talking about their experiences and selves, while not invented by <mark style="background-color: #ffeb3b; font-weight: bold;">freud</mark>, was certainly popularized by him and is still used today. Many of <mark style="background-color: #ffeb3b; font-weight: bold;">freud</mark>’s other ideas, however, are controversial. Drew Westen (1998) argues that many of the criticisms of <mark style="background-color: #ffeb3b; font-weight: bold;">freud</mark>’s ideas are misplaced, in that they attack his older ideas without taking into account later writings. Westen also argues that critics fail to consider the success of the broad ideas that <mark style="background-color: #ffeb3b; font-weight: bold;">freud</mark> introduced or developed, such as the importance of childhood experiences in adult motivations, the role of unconscious versus conscious motivations in driving our behavior, the fact that motivations can cause conflicts that affect behavior, the effects of mental representations of ourselves and others in guiding our interactions, and the development of personality over time. Westen identifies subsequent research support for all of these ideas. More modern iterations of <mark style="background-color: #ffeb3b; font-weight: bold;">freud</mark>’s clinical approach have been empirically demonstrated to be effective (Knekt et al., 2008; Shedler, 2010). Some current practices in psychotherapy involve examining unconscious aspects of the self and relationships, often through the relationship between the therapist and the client. <mark style="background-color: #ffeb3b; font-weight: bold;">freud</mark>’s historical significance and <mark style="background-color: #ffeb3b; font-weight: bold;">contributions</mark> to clinical practice merit his inclusion in a discussion of the historical movements within <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark>. Wertheimer, Koffka, Köhler, and Gestalt <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> Max Wertheimer (1880–1943), Kurt Koffka (1886–1941), and Wolfgang Köhler (1887–1967) were three German psychologists who immigrated to the United States in the early 20th century to escape Nazi Germany. These scholars are credited with introducing psychologists in the United States to various Gestalt principles. The word Gestalt roughly translates to “whole;” a major emphasis of Gestalt <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> deals with the fact that although a sensory experience can be broken down into individual parts, how those parts relate to each other as a whole is often what the individual responds to in perception. For example, a song may be made up of individual notes played by different instruments, but the real nature of the song is perceived in the combinations of these notes as they form the melody, rhythm, and harmony. In many ways, this particular perspective would have directly contradicted Wundt’s ideas of structuralism (Thorne & Henley, 2005). Unfortunately, in moving to the United States, these scientists were forced to abandon much of their work and were unable to continue to conduct research on a large
+
+environment and effects of culture on personality. Some of the notable neo-<mark style="background-color: #ffeb3b; font-weight: bold;">freud</mark>ians are Alfred Adler, Carl Jung, Erik Erikson, and Karen Horney. The neo-<mark style="background-color: #ffeb3b; font-weight: bold;">freud</mark>ian approaches have been criticized, because they tend to be philosophical rather than based on sound scientific research. For example, Jung’s conclusions about the existence of the collective unconscious are based on myths, legends, dreams, and art. In addition, as with <mark style="background-color: #ffeb3b; font-weight: bold;">freud</mark>’s psychoanalytic theory, the neo-<mark style="background-color: #ffeb3b; font-weight: bold;">freud</mark>ians based much of their theories of personality on information from their patients. 11.4 Learning Approaches Behavioral theorists view personality as significantly shaped and impacted by the reinforcements and consequences outside of the organism. People behave in a consistent manner based on prior learning. B. F. Skinner, a prominent behaviorist, said that we demonstrate consistent behavior patterns, because we have developed certain response tendencies. Mischel focused on how personal goals play a role in the self- regulation process. Albert Bandura said that one’s environment can determine behavior, but at the same time, people can influence the environment with both their thoughts and behaviors, which is known as reciprocal determinism. Bandura also emphasized how we learn from watching others. He felt that this type of learning also plays a part in the development of our personality. Bandura discussed the concept of self-efficacy, which is our level of confidence in our own abilities. Finally, Rotter proposed the concept of locus of control, which refers to our beliefs about the power we have over our lives. He said that people fall along a continuum between a purely internal and a purely external locus of control. 11.5 Humanistic Approaches Humanistic psychologists Abraham Maslow and Carl Rogers focused on the growth potential of healthy individuals. They believed that people strive to become self-actualized. Both Rogers’s and Maslow’s theories greatly contributed to our understanding of the self. They emphasized free will and self-determination, with each individual desiring to become the best person they can become. 11.6 Biological Approaches Some aspects of our personalities are largely controlled by genetics; however, environmental factors (such as family interactions) and maturation can affect the ways in which children’s personalities are expressed. 11.7 Trait Theorists Trait theorists attempt to explain our personality by identifying our stable characteristics and ways of behaving. They have identified important dimensions of personality. The Five Factor Model is the most widely accepted theory today. The five factors are openness, conscientiousness, extroversion, agreeableness, and neuroticism. These factors occur along
+
+Genital Stage The final stage is the genital stage (from puberty on). In this stage, there is a sexual reawakening as the incestuous urges resurface. The young person redirects these urges to other, more socially acceptable partners (who often resemble the other-sex parent). People in this stage have mature sexual interests, which for <mark style="background-color: #ffeb3b; font-weight: bold;">freud</mark> meant a strong desire for the opposite sex. Individuals who successfully completed the previous stages, reaching the genital stage with no fixations, are said to be well-balanced, healthy adults. While most of <mark style="background-color: #ffeb3b; font-weight: bold;">freud</mark>’s ideas have not found support in modern research, and several contemporary researchers rejected his premises, we cannot discount the <mark style="background-color: #ffeb3b; font-weight: bold;">contributions</mark> that <mark style="background-color: #ffeb3b; font-weight: bold;">freud</mark> has made to the field of <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark>. It was <mark style="background-color: #ffeb3b; font-weight: bold;">freud</mark> who pointed out that a large part of our mental life is influenced by the experiences of early childhood and takes place outside of our conscious awareness; his theories paved the way for others. While <mark style="background-color: #ffeb3b; font-weight: bold;">freud</mark>'s focus on biological drives led him to emphasize the impact of sociocultural factors on personality development, his followers quickly realized that biology alone could not account for the diversity they encountered as the practice of psychoanalysis spread during the time of the Nazi Holocaust. The antisemitism which was prevalent during this period of time may have led mainstream psychoanalysts to focus primarily on the universality of the psychological structures of the mind. 11.3 Neo-<mark style="background-color: #ffeb3b; font-weight: bold;">freud</mark>ians: Adler, Erikson, Jung, and Horney LEARNING OBJECTIVES By the end of this section, you will be able to: • Discuss the concept of the inferiority complex • Discuss the core differences between Erikson’s and <mark style="background-color: #ffeb3b; font-weight: bold;">freud</mark>’s views on personality • Discuss Jung’s ideas of the collective unconscious and archetypes • Discuss the work of Karen Horney, including her revision of <mark style="background-color: #ffeb3b; font-weight: bold;">freud</mark>’s “penis envy” <mark style="background-color: #ffeb3b; font-weight: bold;">freud</mark> attracted many followers who modified his ideas to create new theories about personality. These theorists, referred to as neo-<mark style="background-color: #ffeb3b; font-weight: bold;">freud</mark>ians, generally agreed with <mark style="background-color: #ffeb3b; font-weight: bold;">freud</mark> that childhood experiences matter, but deemphasized sex, focusing more on the social environment and effects of culture on personality. Four notable neo-<mark style="background-color: #ffeb3b; font-weight: bold;">freud</mark>ians include Alfred Adler, Erik Erikson, Carl Jung (pronounced “Yoong”), and Karen Horney (pronounced “HORN-eye”). Alfred Adler Alfred Adler, a colleague of <mark style="background-color: #ffeb3b; font-weight: bold;">freud</mark>’s and the first president of the Vienna Psychoanalytical Society (<mark style="background-color: #ffeb3b; font-weight: bold;">freud</mark>’s inner circle of colleagues), was the first major theorist to break away from <mark style="background-color: #ffeb3b; font-weight: bold;">freud</mark> (Figure 11.8). He subsequently founded a school of <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> called individual <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark>, which focuses on our drive
+
+FIGURE 1.3 William James, shown here in a self-portrait, was the first American psychologist. <mark style="background-color: #ffeb3b; font-weight: bold;">freud</mark> and Psychoanalytic Theory Perhaps one of the most influential and well-known figures in <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark>’s history was Sigmund <mark style="background-color: #ffeb3b; font-weight: bold;">freud</mark> (Figure 1.4). <mark style="background-color: #ffeb3b; font-weight: bold;">freud</mark> (1856–1939) was an Austrian neurologist who was fascinated by patients suffering from “hysteria” and neurosis. Hysteria was an ancient diagnosis for disorders, primarily of women with a wide variety of symptoms, including physical symptoms and emotional disturbances, none of which had an apparent physical cause. <mark style="background-color: #ffeb3b; font-weight: bold;">freud</mark> theorized that many of his patients’ problems arose from the unconscious mind. In <mark style="background-color: #ffeb3b; font-weight: bold;">freud</mark>’s view, the unconscious mind was a repository of feelings and urges of which we have no awareness. Gaining access to the unconscious, then, was crucial to the successful resolution of the patient’s problems. According to <mark style="background-color: #ffeb3b; font-weight: bold;">freud</mark>, the unconscious mind could be accessed through dream analysis, by examinations of the first words that came to people’s minds, and through seemingly innocent slips of the tongue. Psychoanalytic theory focuses on the role of a person’s unconscious, as well as early childhood experiences, and this particular perspective dominated clinical <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> for several decades (Thorne & Henley, 2005). FIGURE 1.4 (a) Sigmund <mark style="background-color: #ffeb3b; font-weight: bold;">freud</mark> was a highly influential figure in the history of <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark>. (b) One of his many books, A General Introduction to Psychoanalysis, shared his ideas about psychoanalytical therapy; it was published in 1922. <mark style="background-color: #ffeb3b; font-weight: bold;">freud</mark>’s ideas were influential, and you will learn more about them when you study lifespan development, personality, and therapy. For instance, many therapists believe strongly in the unconscious and the impact of 1.2 • History of <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> 11
+
+feeling of fear. A hypothesis that could be derived from this theory might be that a person who is unaware of the physiological arousal that the sight of the snake elicits will not feel fear. A scientific hypothesis is also falsifiable, or capable of being shown to be incorrect. Recall from the introductory chapter that Sigmund <mark style="background-color: #ffeb3b; font-weight: bold;">freud</mark> had lots of interesting ideas to explain various human behaviors (Figure 2.6). However, a major criticism of <mark style="background-color: #ffeb3b; font-weight: bold;">freud</mark>’s theories is that many of his ideas are not falsifiable; for example, it is impossible to imagine empirical observations that would disprove the existence of the id, the ego, and the superego—the three elements of personality described in <mark style="background-color: #ffeb3b; font-weight: bold;">freud</mark>’s theories. Despite this, <mark style="background-color: #ffeb3b; font-weight: bold;">freud</mark>’s theories are widely taught in introductory <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> texts because of their historical significance for personality <mark style="background-color: #ffeb3b; font-weight: bold;">psychology</mark> and psychotherapy, and these remain the root of all modern forms of therapy. FIGURE 2.6 Many of the specifics of (a) <mark style="background-color: #ffeb3b; font-weight: bold;">freud</mark>'s theories, such as (b) his division of the mind into id, ego, and superego, have fallen out of favor in recent decades because they are not falsifiable. In broader strokes, his views set the stage for much of psychological thinking today, such as the unconscious nature of the majority of psychological processes. In contrast, the James-Lange theory does generate falsifiable hypotheses, such as t  <!-- HIGHLIGHTING HERE ONLY -->
+                </div>
+            </div>
+            
+            <div class="stats">
+                <div class="stat-item">
+                    <div class="stat-label">Sections Used</div>
+                    <div class="stat-value">10</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Pages Referenced</div>
+                    <div class="stat-value">11</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Keywords Found</div>
+                    <div class="stat-value">3</div>
+                </div>
+            </div>
+            
+            <div class="footer">
+                Generated from Psychology 2e Textbook • Question 14 • 2026-02-27
+            </div>
+        </div>
+        
+        <!-- Font Awesome for icons -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
+    </body>
+    </html>
