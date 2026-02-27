@@ -76,7 +76,7 @@ print("Submission generation completed.")
 # ==================================================
 # Generate Evidence Visualizations
 # ==================================================
-print("\n📊 Generating evidence visualizations...")
+print("\n Generating evidence visualizations...")
 
 class EvidenceVisualizer:
     def highlight_keywords(self, text, keywords):
@@ -96,7 +96,7 @@ visualizer = EvidenceVisualizer()
 # CHANGED: Save to output/EvidenceVisualization folder
 viz_dir = os.path.join(OUTPUT_DIR, "EvidenceVisualization")
 os.makedirs(viz_dir, exist_ok=True)
-print(f"📁 Saving visualizations to: {viz_dir}")
+print(f"Saving visualizations to: {viz_dir}")
 
 for item in tqdm(results, desc="Creating visualizations"):
     query_id = item["ID"]
