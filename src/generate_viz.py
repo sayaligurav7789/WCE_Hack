@@ -47,6 +47,29 @@ class EvidenceVisualizer:
         
         return keywords[:10]  # Limit to top 10 keywords
     
+    def calculate_confidence(self, answer, context, sections, pages):
+        """Calculate confidence score based on multiple factors"""
+        confidence = 0.85  # Default high confidence
+        
+        # Factor 1: If answer contains "Not found", confidence is low
+        if "not found" in answer.lower():
+            return 0.0
+        
+        # Factor 2: More sections/pages = higher confidence
+        section_score = min(len(sections) / 5, 0.3)  # Max 0.3
+        page_score = min(len(pages) / 10, 0.3)       # Max 0.3
+        
+        # Factor 3: Answer length indicates completeness
+        length_score = min(len(answer) / 500, 0.2)   # Max 0.2
+        
+        # Factor 4: Context presence
+        context_score = 0.2 if context and len(context) > 100 else 0.0
+        
+        confidence = section_score + page_score + length_score + context_score
+        
+        # Ensure between 0 and 1
+        return round(min(max(confidence, 0), 1), 3)
+        
     def generate_html(self, query_id, question, answer, context, sections, pages):
         """Generate HTML for a single query"""
         
@@ -57,7 +80,27 @@ class EvidenceVisualizer:
         highlighted_context = self.highlight_keywords(context, keywords)
         
         # Keep answer as-is (NO highlighting)
-        clean_answer = answer  # No highlighting applied
+        clean_answer = answer
+        
+        # Calculate confidence
+        confidence = self.calculate_confidence(answer, context, sections, pages)
+        
+        # Determine confidence level and color
+        if confidence >= 0.8:
+            confidence_level = "high"
+            confidence_label = "HIGH"
+        elif confidence >= 0.6:
+            confidence_level = "medium"
+            confidence_label = "MEDIUM"
+        else:
+            confidence_level = "low"
+            confidence_label = "LOW"
+        
+        # Calculate factors for display
+        section_factor = min(len(sections) / 5, 1.0)
+        page_factor = min(len(pages) / 10, 1.0)
+        length_factor = min(len(answer) / 500, 1.0)
+        context_factor = 1.0 if context and len(context) > 100 else 0.0
         
         # Create HTML
         html = f"""<!DOCTYPE html>
@@ -135,6 +178,45 @@ class EvidenceVisualizer:
                 box-shadow: 0 2px 4px rgba(0,0,0,0.1);
             }}
             
+            .confidence-meter {{
+                background: #f0f0f0;
+                padding: 15px 30px;
+                border-bottom: 1px solid #e0e0e0;
+                display: flex;
+                align-items: center;
+                gap: 20px;
+                flex-wrap: wrap;
+            }}
+            
+            .confidence-bar {{
+                flex: 1;
+                height: 20px;
+                background: #e0e0e0;
+                border-radius: 10px;
+                overflow: hidden;
+            }}
+            
+            .confidence-fill {{
+                height: 100%;
+                border-radius: 10px;
+                transition: width 0.3s ease;
+            }}
+            
+            .confidence-fill.high {{ background: linear-gradient(90deg, #4caf50, #8bc34a); }}
+            .confidence-fill.medium {{ background: linear-gradient(90deg, #ff9800, #ffc107); }}
+            .confidence-fill.low {{ background: linear-gradient(90deg, #f44336, #ff7043); }}
+            
+            .confidence-text {{
+                font-size: 18px;
+                font-weight: 600;
+                min-width: 100px;
+                text-align: center;
+            }}
+            
+            .confidence-text.high {{ color: #4caf50; }}
+            .confidence-text.medium {{ color: #ff9800; }}
+            .confidence-text.low {{ color: #f44336; }}
+            
             .answer-section {{
                 padding: 30px;
                 background: #f8f9fa;
@@ -161,8 +243,6 @@ class EvidenceVisualizer:
                 color: #444;
                 border-left: 4px solid #667eea;
             }}
-            
-            /* NO mark styling for answer - it stays plain */
             
             .evidence-section {{
                 padding: 30px;
@@ -215,17 +295,6 @@ class EvidenceVisualizer:
                 border: 1px solid #e0e0e0;
             }}
             
-            .term-badge {{
-                display: inline-block;
-                background: #ffeb3b;
-                color: #333;
-                padding: 3px 10px;
-                border-radius: 15px;
-                font-size: 12px;
-                margin: 0 5px 5px 0;
-                font-weight: 500;
-            }}
-            
             .evidence-text {{
                 background: white;
                 padding: 15px;
@@ -275,19 +344,17 @@ class EvidenceVisualizer:
             }}
             
             .stats {{
-                display: flex;
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
                 gap: 15px;
                 padding: 20px 30px;
                 background: white;
-                flex-wrap: wrap;
             }}
             
             .stat-item {{
                 background: #f8f9fa;
-                padding: 10px 20px;
+                padding: 15px;
                 border-radius: 10px;
-                flex: 1;
-                min-width: 120px;
                 text-align: center;
                 border: 1px solid #e0e0e0;
             }}
@@ -304,6 +371,12 @@ class EvidenceVisualizer:
                 color: #667eea;
             }}
             
+            .stat-factor {{
+                font-size: 11px;
+                color: #999;
+                margin-top: 5px;
+            }}
+            
             .footer {{
                 padding: 20px 30px;
                 background: #f0f0f0;
@@ -314,6 +387,10 @@ class EvidenceVisualizer:
             }}
             
             @media (max-width: 768px) {{
+                .stats {{
+                    grid-template-columns: repeat(2, 1fr);
+                }}
+                
                 .header {{
                     padding: 20px;
                 }}
@@ -341,20 +418,28 @@ class EvidenceVisualizer:
             </div>
             
             <div class="keywords-bar">
-                <div class="keywords-title">🔑 Extracted Keywords:</div>
+                <div class="keywords-title"><i class="fas fa-key"></i> Extracted Keywords:</div>
     """
         
         # Add keyword badges
-        for keyword in keywords[:8]:  # Show top 8 keywords
+        for keyword in keywords[:8]:
             html += f'<span class="keyword-badge">{keyword}</span>'
         
         html += f"""
             </div>
             
+            <div class="confidence-meter">
+                <i class="fas fa-bullseye"></i><span style="font-weight: 600;">Confidence:</span>
+                <div class="confidence-bar">
+                    <div class="confidence-fill {confidence_level}" style="width: {confidence*100}%;"></div>
+                </div>
+                <div class="confidence-text {confidence_level}">{confidence_label} ({confidence*100:.0f}%)</div>
+            </div>
+            
             <div class="answer-section">
                 <h3><i class="fas fa-robot"></i> Generated Answer</h3>
                 <div class="answer-content">
-                    {clean_answer}  <!-- NO HIGHLIGHTING HERE -->
+                    {clean_answer}
                 </div>
             </div>
             
@@ -364,10 +449,7 @@ class EvidenceVisualizer:
         
         # Add evidence cards
         for i, section in enumerate(sections[:5]):
-            # Get page for this section
             page = pages[i] if i < len(pages) else (pages[0] if pages else "N/A")
-            
-            # Get a snippet of context for this section
             sample_text = context[:300] if context else f"Content from {section}..."
             highlighted_sample = self.highlight_keywords(sample_text, keywords)
             
@@ -378,7 +460,7 @@ class EvidenceVisualizer:
                     <span class="page-number">📄 Page {page}</span>
                 </div>
                 <div class="evidence-text">
-                    {highlighted_sample}  <!-- HIGHLIGHTING HERE ONLY -->
+                    {highlighted_sample}
                 </div>
             </div>
     """
@@ -389,7 +471,7 @@ class EvidenceVisualizer:
             <div class="highlighted-context">
                 <h3><i class="fas fa-highlighter"></i> Highlighted Context</h3>
                 <div class="context-box">
-                    {highlighted_context}  <!-- HIGHLIGHTING HERE ONLY -->
+                    {highlighted_context}
                 </div>
             </div>
             
@@ -397,14 +479,22 @@ class EvidenceVisualizer:
                 <div class="stat-item">
                     <div class="stat-label">Sections Used</div>
                     <div class="stat-value">{len(sections)}</div>
+                    <div class="stat-factor">Factor: {section_factor:.2f}</div>
                 </div>
                 <div class="stat-item">
                     <div class="stat-label">Pages Referenced</div>
                     <div class="stat-value">{len(pages)}</div>
+                    <div class="stat-factor">Factor: {page_factor:.2f}</div>
                 </div>
                 <div class="stat-item">
-                    <div class="stat-label">Keywords Found</div>
-                    <div class="stat-value">{len(keywords)}</div>
+                    <div class="stat-label">Answer Length</div>
+                    <div class="stat-value">{len(answer)}</div>
+                    <div class="stat-factor">Factor: {length_factor:.2f}</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Overall</div>
+                    <div class="stat-value">{confidence*100:.0f}%</div>
+                    <div class="stat-factor">{confidence_label}</div>
                 </div>
             </div>
             
