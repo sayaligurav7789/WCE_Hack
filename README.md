@@ -21,7 +21,7 @@ Students and learners often struggle to quickly find accurate answers from large
 - Ensures responses are reliable and verifiable
 
   ---
-  ### ❌ **How Current Solutions Fall Back**
+## ❌ **How Current Solutions Fall Back**
 | Solution | Limitation |
 |----------|------------|
 | ChatGPT/LLMs | Lack verifiable sources |
@@ -44,7 +44,7 @@ Students and learners often struggle to quickly find accurate answers from large
 
 ---
 
-### 🏆 **Key Statistics**
+## 🏆 **Key Statistics**
 - **Textbook Pages:** 753
 - **Chunks Created:** 1076
 - **Chunk Size:** 400 words
@@ -138,7 +138,7 @@ The system:
 
 ---
 
-### 📂 **Directory Details**
+## 📂 **Directory Details**
 
 | Folder | Description |
 |--------|-------------|
@@ -148,7 +148,7 @@ The system:
 | **output/** | Generated results and visualizations |
 | **frontend/** | Web interface files (HTML, CSS, JS) |
 
-### 📄 **Key Files**
+## 📄 **Key Files**
 
 | File | Description |
 |------|-------------|
@@ -186,4 +186,17 @@ ID	context	answer	references
 ### Evidence by Section Cards
 <img width="1919" height="910" alt="image" src="https://github.com/user-attachments/assets/7d4cc03b-a974-45a0-a0f0-a91cf353f48e" />
 
+---
+## 📚 EvidenceVisualization 
+### 1.confidence score and Generated Answer 
+<img width="1898" height="910" alt="image" src="https://github.com/user-attachments/assets/8ed1655f-f4b4-496f-8542-044efb7b5a90" />
 
+---
+### 2.Evidence by Section
+<img width="1896" height="906" alt="image" src="https://github.com/user-attachments/assets/6de5be01-a310-40f8-a44c-e59acc8e12aa" />
+
+---
+### 4.Highlighted Context
+<img width="1897" height="907" alt="image" src="https://github.com/user-attachments/assets/7c29af9f-af98-4b5f-8b16-c5386460ad36" />
+
+---
