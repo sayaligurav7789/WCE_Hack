@@ -162,7 +162,7 @@ The system:
 
 ---
 
-## Output
+## 📤 Output
 1. submission.csv
 ```
 ID	context	answer	references
@@ -170,3 +170,20 @@ ID	context	answer	references
 2	"..."	"A neuron consists of..."	{"sections": ["2.3"], "pages": [45]}
 3	"..."	"The stages of sleep are..."	{"sections": ["4.3"], "pages": [156,157,160]}
 ```
+## 🖼️ Snapshots
+###  Chat Interface - Successful Answer with Citations
+<img width="1770" height="827" alt="image" src="https://github.com/user-attachments/assets/c5dfc3fb-6354-4556-b46d-603caa2f8948" />
+
+---
+###  "Not Found" Fallback Response
+<img width="1919" height="906" alt="image" src="https://github.com/user-attachments/assets/46594e40-5a86-4835-bd74-d74117acd8c8" />
+
+---
+###  New Chat, Delete chat
+<img width="1919" height="907" alt="image" src="https://github.com/user-attachments/assets/d5b5b0c0-9d81-4626-bb85-2fe055035ce7" />
+
+---
+### Evidence by Section Cards
+<img width="1919" height="910" alt="image" src="https://github.com/user-attachments/assets/7d4cc03b-a974-45a0-a0f0-a91cf353f48e" />
+
+
