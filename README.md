@@ -5,7 +5,6 @@
 [![Python 3.9+](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/downloads/)
 [![NVIDIA Llama 3](https://img.shields.io/badge/NVIDIA-Llama%203%2070B-green.svg)](https://build.nvidia.com/)
 [![FAISS](https://img.shields.io/badge/FAISS-Vector%20Search-orange.svg)](https://github.com/facebookresearch/faiss)
-[![License: CC BY 4.0](https://img.shields.io/badge/License-CC%20BY%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by/4.0/)
 
 A **Retrieval-Augmented Generation (RAG)** system that answers questions from the **OpenStax Psychology 2e** textbook with **verifiable page-level citations**. Built for the hackathon challenge: *"Build a RAG system that returns verifiable references (sections AND page numbers)"*.
 
@@ -21,7 +20,7 @@ Students and learners often struggle to quickly find accurate answers from large
 - Ensures responses are reliable and verifiable
 
   ---
-  ### ❌ **How Current Solutions Fall Back**
+## ❌ **How Current Solutions Fall Back**
 | Solution | Limitation |
 |----------|------------|
 | ChatGPT/LLMs | Lack verifiable sources |
@@ -44,7 +43,7 @@ Students and learners often struggle to quickly find accurate answers from large
 
 ---
 
-### 🏆 **Key Statistics**
+## 🏆 **Key Statistics**
 - **Textbook Pages:** 753
 - **Chunks Created:** 1076
 - **Chunk Size:** 400 words
@@ -138,7 +137,7 @@ The system:
 
 ---
 
-### 📂 **Directory Details**
+## 📂 **Directory Details**
 
 | Folder | Description |
 |--------|-------------|
@@ -148,7 +147,7 @@ The system:
 | **output/** | Generated results and visualizations |
 | **frontend/** | Web interface files (HTML, CSS, JS) |
 
-### 📄 **Key Files**
+## 📄 **Key Files**
 
 | File | Description |
 |------|-------------|
@@ -186,4 +185,17 @@ ID	context	answer	references
 ### Evidence by Section Cards
 <img width="1919" height="910" alt="image" src="https://github.com/user-attachments/assets/7d4cc03b-a974-45a0-a0f0-a91cf353f48e" />
 
+---
+## 📚 EvidenceVisualization 
+### 1.confidence score and Generated Answer 
+<img width="1898" height="910" alt="image" src="https://github.com/user-attachments/assets/8ed1655f-f4b4-496f-8542-044efb7b5a90" />
 
+---
+### 2.Evidence by Section
+<img width="1896" height="906" alt="image" src="https://github.com/user-attachments/assets/6de5be01-a310-40f8-a44c-e59acc8e12aa" />
+
+---
+### 4.Highlighted Context
+<img width="1897" height="907" alt="image" src="https://github.com/user-attachments/assets/7c29af9f-af98-4b5f-8b16-c5386460ad36" />
+
+---
