@@ -14,16 +14,25 @@
                 <i class="fas fa-brain"></i>
                 <span>Psychology 2e</span>
             </div>
+            
             <button class="new-chat-btn" id="new-chat-btn">
                 <i class="fas fa-plus"></i> New Chat
             </button>
+            
+            <!-- SEARCH BAR ADDED -->
+            <div class="search-container">
+                <i class="fas fa-search"></i>
+                <input type="text" id="search-chats" placeholder="Search chats..." class="search-input">
+            </div>
+            
             <div class="history-list" id="history-list">
                 <!-- History items will be injected here -->
             </div>
+            
             <div class="sidebar-footer">
                 <div class="user-info">
                     <i class="fas fa-user-circle"></i>
-                    <span>Psychology Student</span>
+                    <span>Sayali Gurav</span>
                 </div>
             </div>
         </aside>
@@ -31,6 +40,10 @@
         <main class="chat-area">
             <header class="chat-header">
                 <h1>Psychology 2e RAG</h1>
+                <!-- DOWNLOAD BUTTON ADDED -->
+                <button class="download-btn" id="download-chat-btn" title="Download chat">
+                    <i class="fas fa-download"></i>
+                </button>
             </header>
             
             <div class="messages-container" id="messages-container">
@@ -54,6 +67,10 @@
             </footer>
         </main>
     </div>
+    
+    <!-- NOTIFICATION CONTAINER ADDED -->
+    <div id="notification-container"></div>
+    
     <script src="{{ url_for('static', filename='js/chat.js') }}"></script>
 </body>
 </html>
