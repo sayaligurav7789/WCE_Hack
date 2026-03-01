@@ -206,7 +206,7 @@ ID	context	answer	references
 ---
 
 ### Evidence by Section Cards
-<img width="1919" height="910" alt="image" src="https://github.com/user-attachments/assets/7d4cc03b-a974-45a0-a0f0-a91cf353f48e" />
+<img width="1909" height="906" alt="image" src="https://github.com/user-attachments/assets/2b5fb5c2-0d5a-49b2-9e39-0ad4ba1f7682" />
 
 ---
 ## 📚 EvidenceVisualization 
