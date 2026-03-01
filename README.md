@@ -170,18 +170,41 @@ ID	context	answer	references
 3	"..."	"The stages of sleep are..."	{"sections": ["4.3"], "pages": [156,157,160]}
 ```
 ## 🖼️ Snapshots
+
+### Homepage
+<img width="1919" height="911" alt="image" src="https://github.com/user-attachments/assets/2a0a0025-f9ef-499e-a1d2-48ffb104991c" />
+
+---
+
 ###  Chat Interface - Successful Answer with Citations
-<img width="1770" height="827" alt="image" src="https://github.com/user-attachments/assets/c5dfc3fb-6354-4556-b46d-603caa2f8948" />
+<img width="1910" height="902" alt="image" src="https://github.com/user-attachments/assets/03514a23-b4e3-4066-b9c4-03db24d18ce7" />
+
+---
+
+<img width="1909" height="907" alt="image" src="https://github.com/user-attachments/assets/42e02f78-dd7e-4cf8-8540-0625259263dd" />
 
 ---
 ###  "Not Found" Fallback Response
-<img width="1919" height="906" alt="image" src="https://github.com/user-attachments/assets/46594e40-5a86-4835-bd74-d74117acd8c8" />
+<img width="1914" height="905" alt="image" src="https://github.com/user-attachments/assets/8e6f9441-57ce-4551-85e1-352971388725" />
 
 ---
-###  New Chat, Delete chat
-<img width="1919" height="907" alt="image" src="https://github.com/user-attachments/assets/d5b5b0c0-9d81-4626-bb85-2fe055035ce7" />
+## ✨ Priority Features
+---
+###  New Chat, Search Chat 
+<img width="1910" height="907" alt="image" src="https://github.com/user-attachments/assets/2e3079e8-5bf2-43bc-a2b5-87ccfde9eb1f" />
 
 ---
+
+### Delete Chat 
+<img width="1910" height="904" alt="image" src="https://github.com/user-attachments/assets/d2b2407a-c9b4-447e-bdd0-d1266b46e1bb" />
+
+---
+
+### Copy Answer, Text-to-Speech, Download Chat, Share Chat
+<img width="1904" height="906" alt="image" src="https://github.com/user-attachments/assets/32f7483e-9005-4e2c-a7ae-a04bd092ac63" />
+
+---
+
 ### Evidence by Section Cards
 <img width="1919" height="910" alt="image" src="https://github.com/user-attachments/assets/7d4cc03b-a974-45a0-a0f0-a91cf353f48e" />
 
