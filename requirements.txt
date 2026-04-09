@@ -12,3 +12,5 @@ requests==2.31.0
 matplotlib==3.7.2
 flask
 python-dotenv
+gunicorn==21.2.0
+nltk==3.8.1
